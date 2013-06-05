@@ -18,7 +18,7 @@ Basically, it just reads/writes the satis.json file and provides a web CRUD.
 ### Get composer
 
     1. Download composer `wget http://getcomposer.org/composer.phar
-    2. Install `php composer.phar create-project ludofleury/satisfy --stability=dev`
+    2. Install `php composer.phar create-project playbloom/satisfy --stability=dev`
 
 ### Satis configuration
 
