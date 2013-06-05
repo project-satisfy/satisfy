@@ -51,7 +51,11 @@ class RepositoryController implements ControllerProviderInterface
          * Get the form to add a new repository definition
          */
         $controllers->get('/new', function () use ($app) {
-            $form = $app['form.factory']->create(new RepositoryType(), new Repository());
+            $repository = (new Repository())
+                ->setType($app['composer.repository.type_default'])
+                ->setUrl($app['composer.repository.url_default']);
+
+            $form = $app['form.factory']->create(new RepositoryType(), $repository);
 
             return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
         })

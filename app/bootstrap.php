@@ -63,9 +63,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 Request::enableHttpMethodParameterOverride();
 
-// Define the Satis repository name
-$app->before(function() use ($app) {
-    // $app['twig']->addGlobal('title', $app['satis']->getName());
-});
+// Default value for a new composer repository
+$app['composer.repository.type_default'] = isset($app['composer.repository.type_default']) ? $app['composer.repository.type_default'] : 'git';
+$app['composer.repository.url_default'] = isset($app['composer.repository.url_default']) ? $app['composer.repository.url_default'] : '';
 
 return $app;

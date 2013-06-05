@@ -1,8 +1,25 @@
 <?php
 
+/**
+ * Satis configuration file
+ */
 $app['satis.filename'] = __DIR__.'/../satis.json';
+
+/**
+ * Satis auditlog (cheap backup/versioning) path
+ */
 $app['satis.auditlog'] = __DIR__.'/data';
+
+/**
+ * Satis main configuration class
+ */
 $app['satis.class'] = 'Playbloom\\Satisfy\\Model\\Configuration';
+
+/**
+ * Default values for a new repository
+ */
+$app['composer.repository.type_default'] = 'git';
+$app['composer.repository.url_default'] = 'git@github.com:MyLittleParis/';
 
 /**
  * More restrictive username/email constraints for production
