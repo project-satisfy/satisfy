@@ -23,7 +23,7 @@ Basically, it just reads/writes the satis.json file and provides a web CRUD.
 
 ### Get composer
 
-* Download composer `wget http://getcomposer.org/composer.phar
+* Download composer `wget http://getcomposer.org/composer.phar`
 * Install `php composer.phar install create-project ludofleury/satisfy --stability=dev`
 
 ### Satis configuration
