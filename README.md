@@ -1,24 +1,30 @@
 # Satisfy
 
-Satis Composer repository manager with a simple web UI.
+[Satis Composer repository manager](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md) with a simple web UI.
 
 ## Introduction
 
-Satisfy ease your satis configuration management. It provides simple web UI over Satis to avoid a hand-editing of the satis.json file. It's shipped with Satis, so you don't need anyting else.
+Satisfy provides:
+
+* a Web UI: A CRUD to your manage satis configuration file
+* a simple security layer with Google Open ID
+* Satis itself
+
+Satisfy ease your satis configuration management. It provides simple web UI over Satis to avoid a hand-editing of the satis.json configuration file. It's secured with google open ID and you can apply an google apps organization constraint (check `app/config.php.dist`).
 
 ## How it works ?
 
 Basically, it just reads/writes the satis.json file and provides a web CRUD.
 
-    1. On each HTTP request, the satis.json is loaded.
-    2. If a write occurs in this file, a backup is made in app/data/
+* On each HTTP request, the satis.json is loaded.
+* If a write occurs in this file, a backup is made in app/data/
 
 ## Installation
 
 ### Get composer
 
-    1. Download composer `wget http://getcomposer.org/composer.phar
-    2. Install `php composer.phar create-project playbloom/satisfy --stability=dev`
+* Download composer `wget http://getcomposer.org/composer.phar
+* Install `php composer.phar install create-project ludofleury/satisfy --stability=dev`
 
 ### Satis configuration
 
@@ -28,8 +34,13 @@ By default, the `satis.json` file is expected at the project root.
 
 ### Application configuration
 
-    1. Define your configuration `cp app/config.php.dist app/config.php`
-    2. Customize `app/config.php` according to your needs.
+* Define your configuration `cp app/config.php.dist app/config.php`
+* Customize `app/config.php` according to your needs.
+
+## Satis packages definition generation
+
+You still need to generate your packages definitions as mentioned in Satis documentation.
+Satsify just provide a bin shortcut in bin/satis.
 
 ## Known limitation
 

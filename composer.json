@@ -25,7 +25,7 @@
         "symfony/translation": ">=2.1,<2.4-dev",
         "fp/lightopenid": "dev-master",
         "jms/serializer": "dev-master",
-        "doctrine/common": "*"
+        "doctrine/common": "2.4.*@dev"
     },
     "autoload": {
         "psr-0": { "Playbloom\\Satisfy": "src/" }
