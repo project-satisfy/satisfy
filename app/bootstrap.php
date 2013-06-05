@@ -19,7 +19,7 @@ $app = new Silex\Application();
  * Import configuration
  */
 if (!file_exists(__DIR__.'/config.php')) {
-    throw new RuntimeException('You must create your own configuration file ("src/config.php"). See "src/config.php.dist" for an example config file.');
+    throw new RuntimeException('You must create your own configuration file ("app/config.php"). See "app/config.php.dist" for an example config file.');
 }
 
 require_once __DIR__.'/config.php';
