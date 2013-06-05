@@ -1,0 +1,70 @@
+app/config.php
+/vendor/
+/composer.phar
+composer.lock
+
+# Satis default configuration
+satis.json
+web/packages.json
+
+# Test
+.atoum.php
+phpunit.xml
+behat.yml
+
+# Continuous integration
+/build/
+
+# Packed / Packaged format
+# unpack these files & commit the raw source. git has its own built in compression.
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.bzip
+*.bz2
+*.xz
+*.lzma
+*.iso
+*.tar
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+.Spotlight-V100
+.Trashes
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Netbeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Phpstorm
+.idea/
+
+# SublimeText
+*.sublime-workspace
+
+# TextMate
+*.tmproj
+*.tmproject
+tmtags

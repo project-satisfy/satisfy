@@ -1,0 +1,14 @@
+<?php
+
+$app['satis.filename'] = __DIR__.'/../satis.json';
+$app['satis.auditlog'] = __DIR__.'/data';
+$app['satis.class'] = 'Playbloom\\Satisfy\\Model\\Configuration';
+
+/**
+ * More restrictive username/email constraints for production
+ */
+$app['auth'] = $app->share(function() {
+    return function($username) {
+        return (bool) preg_match('#@your-organization\.tld$#', $username);
+    };
+});

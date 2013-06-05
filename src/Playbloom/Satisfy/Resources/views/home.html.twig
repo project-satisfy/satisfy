@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<pre>
+<code>{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "{{ app.request.host }}"
+        }
+    ]
+}</code>
+</pre>
+
+    <a href="{{ path('repository_new') }}" class="btn btn-large btn-block btn-primary">
+        <i class="fui-plus">&nbsp;&nbsp;</i>
+        Add a new repository
+    </a>
+
+    <ul class="nav nav-pills nav-stacked">
+    {% for repository in repositories %}
+        <li>
+            <a href="{{ path('repository_edit', {'repository': repository.id }) }}">
+                {{ repository.url }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+

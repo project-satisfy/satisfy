@@ -1,0 +1,38 @@
+{
+    "name": "playbloom/satisfy",
+    "license": "MIT",
+    "type": "project",
+    "keywords": ["satis", "composer", "backend", "ui"],
+    "description": "Satis composer repository manager with a Web UI",
+    "authors": [
+        {
+            "name": "Ludovic Fleury",
+            "email": "ludo.fleury@gmail.com"
+        }
+    ],
+    "support": {
+        "email": "ludo.fleury@gmail.com"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "composer/satis": "dev-master",
+        "silex/silex": "1.0.*@dev",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/twig-bridge": "2.1.*",
+        "symfony/config": ">=2.1,<2.4-dev",
+        "symfony/form": ">=2.1.4,<2.4-dev",
+        "symfony/validator": ">=2.1,<2.4-dev",
+        "symfony/translation": ">=2.1,<2.4-dev",
+        "fp/lightopenid": "dev-master",
+        "jms/serializer": "dev-master",
+        "doctrine/common": "*"
+    },
+    "autoload": {
+        "psr-0": { "Playbloom\\Satisfy": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
