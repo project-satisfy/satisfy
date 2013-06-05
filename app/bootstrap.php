@@ -65,8 +65,7 @@ Request::enableHttpMethodParameterOverride();
 
 // Define the Satis repository name
 $app->before(function() use ($app) {
-    $app['twig']->addGlobal('title', $app['satis']->getName());
+    // $app['twig']->addGlobal('title', $app['satis']->getName());
 });
-
 
 return $app;

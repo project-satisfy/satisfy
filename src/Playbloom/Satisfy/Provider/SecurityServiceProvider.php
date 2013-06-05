@@ -48,7 +48,7 @@ class SecurityServiceProvider implements ServiceProviderInterface
                 }
             }
 
-            if (isset($app['auth']) && !$app['auth']($app['session']->get('username'))) {
+            if (isset($app['auth']) && $app['auth']($app['session']->get('username'))) {
                 return new Response($app['twig']->render('forbidden.html.twig'), 403);
             }
 
