@@ -3,9 +3,9 @@
 [Satis Composer repository manager](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md) with a simple web UI.
 
 <p>
-  <img src="http://ludofleury.github.io/satisfy/images/list.png" withd="280" height="235" alt="Satis: list composer repositories"/>
-  <img src="http://ludofleury.github.io/satisfy/images/create.png" withd="280" height="235" alt="Satis: add a new composer repository"/>
-  <img src="http://ludofleury.github.io/satisfy/images/update.png" withd="280" height="235" alt="Satis: update an existing composer repository"/>
+  <img src="http://ludofleury.github.io/satisfy/images/list.png" width="280" height="235" alt="Satis: list composer repositories"/>
+  <img src="http://ludofleury.github.io/satisfy/images/create.png" width="280" height="235" alt="Satis: add a new composer repository"/>
+  <img src="http://ludofleury.github.io/satisfy/images/update.png" width="280" height="235" alt="Satis: update an existing composer repository"/>
 </p>
 
 ## Introduction
