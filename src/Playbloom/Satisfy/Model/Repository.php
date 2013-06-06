@@ -30,7 +30,7 @@ class Repository implements RepositoryInterface
     public function __construct()
     {
         $this->type = 'git';
-        $this->url = 'git@github.com:MyLittleParis/';
+        $this->url = '';
     }
 
     /**
