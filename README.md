@@ -2,9 +2,11 @@
 
 [Satis Composer repository manager](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md) with a simple web UI.
 
-<img src="https://www.evernote.com/shard/s282/sh/d1d7901f-aeb6-4194-832d-e6790c256d3c/0a847c7b590b5fba7dfe260216576b9c/res/b9ccfe6a-e054-40a2-bdbd-cfdc5aecf3a6/skitch.png" witdh="280" height="175" alt="Satis: list composer repositories">
-<img src="https://www.evernote.com/shard/s282/sh/8e527b48-007c-40ec-b1d9-139268e7f88c/201ad2a502dfe99e7a1b8b0cf9b46165/res/a17e81f5-3f25-4bed-b56e-a431519496e9/skitch.png" witdh="280" height="175" alt="Satis: add a new composer repository">
-<img src="https://www.evernote.com/shard/s282/sh/c7c0e6ce-baea-459c-a346-5a5828e5f7d7/dd4c726ccfbecd6ce4a9061e5249743c/res/8461327d-8695-4a7d-bdfe-6a24beae2ed1/skitch.png" witdh="280" height="175" alt="Satis: update an existing composer repository">
+<p>
+  <img src="http://ludofleury.github.io/satisfy/images/list.png" withd="280" height="235" alt="Satis: list composer repositories"/>
+  <img src="http://ludofleury.github.io/satisfy/images/create.png" withd="280" height="235" alt="Satis: add a new composer repository"/>
+  <img src="http://ludofleury.github.io/satisfy/images/update.png" withd="280" height="235" alt="Satis: update an existing composer repository"/>
+</p>
 
 ## Introduction
 
