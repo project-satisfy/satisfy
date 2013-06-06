@@ -17,7 +17,7 @@ class RepositoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $urlPattern = 'git@github.com:MyLittleParis/[a-zA-Z0-9-_]+.git';
+        $urlPattern = 'git@github.com:[a-zA-Z0-9-_]+/[a-zA-Z0-9-_]+.git';
 
         $builder
             ->add(
@@ -44,7 +44,7 @@ class RepositoryType extends AbstractType
                     ),
                     'attr' => array(
                         'pattern' => $urlPattern,
-                        'title' => 'Github repository: git@github.com:MyLittleParis/your-github-repository.git',
+                        'title' => 'Github repository: git@github.com:YourName/your-github-repository.git',
                         'placeholder' => 'Github repository url',
                         'class' => 'input-block-level'
                     )
