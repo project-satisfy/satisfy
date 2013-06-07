@@ -26,6 +26,6 @@ $app['composer.repository.url_default'] = 'git@github.com:MyLittleParis/';
  */
 $app['auth'] = $app->share(function() {
     return function($username) {
-        return (bool) preg_match('#@your-organization\.tld$#', $username);
+        return (bool) preg_match('/@your-organization\.tld$/', $username);
     };
 });
