@@ -30,7 +30,7 @@ Basically, it just reads/writes the satis.json file and provides a web CRUD.
 ### Composer
 
 * Download composer `wget http://getcomposer.org/composer.phar`
-* Install `php composer.phar install create-project playbloom/satisfy --stability=dev`
+* Install `php composer.phar create-project playbloom/satisfy --stability=dev`
 
 ### Satis configuration
 
