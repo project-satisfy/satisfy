@@ -48,12 +48,15 @@ class SecurityServiceProvider implements ServiceProviderInterface
                 }
             }
 
-            if (isset($app['auth']) && !$app['auth']($app['session']->get('username'))) {
-                return new Response($app['twig']->render('forbidden.html.twig'), 403);
-            }
-
             $app['twig']->addGlobal('username', $app['session']->get('username'));
             $app['twig']->addGlobal('fullname', $app['session']->get('fullname'));
+
+            if (isset($app['auth']) && !$app['auth']($app['session']->get('username'))) {
+                $app['session']->remove('username');
+                $app['session']->remove('fullname');
+
+                return new Response($app['twig']->render('forbidden.html.twig'), 403);
+            }
         });
     }
 
