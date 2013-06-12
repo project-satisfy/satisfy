@@ -26,6 +26,9 @@ class JsonPersister implements PersisterInterface
     public function load()
     {
         $jsonString = $this->persister->load();
+        if('' == trim($jsonString)) {
+            throw new \InvalidArgumentException("The used satis file is empty. Create using this site 'http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md'.");
+        }
         return $this->serializer->deserialize($jsonString, $this->satisClass, 'json');
     }
 

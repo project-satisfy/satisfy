@@ -29,3 +29,8 @@ $app['auth'] = $app->share(function() {
         return (bool) preg_match('/@your-organization\.tld$/', $username);
     };
 });
+
+/**
+ * If OpenID auth via Google should be used.
+ */
+$app['auth.use_google_openid'] = false;
