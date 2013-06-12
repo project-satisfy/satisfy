@@ -56,7 +56,12 @@ $app->register(new SatisServiceProvider(), array(
     'satis.auditlog' => $app['satis.auditlog'],
     'satis.class' =>  $app['satis.class']
 ));
-$app->register(new SecurityServiceProvider());
+
+//
+$app['auth.use_google_openid'] = isset($app['auth.use_google_openid']) ? $app['auth.use_google_openid'] : true;
+if($app['auth.use_google_openid']) {
+    $app->register(new SecurityServiceProvider());
+}
 
 // Allow PUT & DELETE http method
 use Symfony\Component\HttpFoundation\Request;
