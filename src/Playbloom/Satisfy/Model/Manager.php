@@ -75,6 +75,23 @@ class Manager
     }
 
     /**
+     * Adds a array of repositories.
+     *
+     * @param array $repositories
+     */
+    public function addAll(array $repositories)
+    {
+        foreach($repositories as $repository) {
+            $this
+              ->configuration
+              ->getRepositories()
+              ->set($repository->getId(), $repository)
+            ;
+        }
+        $this->flush();
+    }
+
+    /**
      * Update an existing repository
      *
      * @param  RepositoryInterface $repository

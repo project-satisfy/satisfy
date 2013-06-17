@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}New repository{% endblock %}
+
+{% block content %}
+    <form method="POST" action="{{ path('repository_upload') }}" {{ form_enctype(form) }} class="form-horizontal">
+        <h2 class="form-signin-heading">
+            Upload composer.lock
+        </h2>
+
+        {{ form_errors(form._token) }}
+        {{ form_widget(form._token) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_errors(form.file) }}
+        {{ form_widget(form.file) }}
+
+        <button class="btn btn-large btn-block btn-primary" type="submit">Upload</button>
+    </form>
+{% endblock %}

@@ -2,11 +2,12 @@
 
 namespace Playbloom\Satisfy\Controller;
 
+use Playbloom\Satisfy\Form\Type\RepositoryType;
+use Playbloom\Satisfy\Form\Type\UploadType;
+use Playbloom\Satisfy\Model\Repository;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
-use Playbloom\Satisfy\Model\Repository;
-use Playbloom\Satisfy\Form\Type\RepositoryType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -60,6 +61,55 @@ class RepositoryController implements ControllerProviderInterface
             return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
         })
         ->bind('repository_new');
+
+        /**
+         * repository_upload_form
+         *
+         * GET /upload
+         * Get the form to upload a composer.lock file
+         */
+        $controllers->get('/upload', function () use ($app) {
+          $form = $app['form.factory']->create(new UploadType());
+
+          return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
+        })
+        ->bind('repository_upload_form');
+
+        /**
+         * repository_upload
+         *
+         * POST /
+         * Add repository definitions from a composer.lock file
+         */
+        $controllers->post('/upload', function (Request $request) use ($app) {
+          $form = $app['form.factory']->create(new UploadType());
+
+          $form->bind($request);
+
+          if ($form->isValid()) {
+
+            // Parse json
+            $file = $form['file']->getData()->getRealPath();
+            $json = file_get_contents($file);
+            $content = json_decode($json);
+
+            // Add all repos
+            $repos = array();
+            foreach($content->packages as $package) {
+              $source = $package->source;
+              $repo = new Repository();
+              $repo->setUrl($source->url);
+              $repo->setType($source->type);
+              $repos[] = $repo;
+            }
+            $app['satis']->addAll($repos);
+
+            return $app->redirect($app['url_generator']->generate('repository'));
+          }
+
+          return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
+        })
+        ->bind('repository_upload');
 
         /**
          * repository_create
