@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Provider;
 
+use Playbloom\Satisfy\Model\LockValidator;
 use Silex\ServiceProviderInterface;
 use Silex\Application;
 use PhpCollection\Map;
@@ -12,6 +13,7 @@ use JMS\Serializer\Context;
 use Playbloom\Satisfy\Model\Manager;
 use Playbloom\Satisfy\Model\JsonPersister;
 use Playbloom\Satisfy\Model\FilePersister;
+use Playbloom\Satisfy\Model\LockProcessor;
 
 /**
  * Satis Silex service provider class
@@ -64,6 +66,11 @@ class SatisServiceProvider implements ServiceProviderInterface
 
             return new Manager($jsonPersister) ;
         });
+
+        $app['satis.lock'] = $app->share(function () use ($app) {
+            return new LockProcessor($app['satis']);
+        });
+
     }
 
     public function boot(Application $app)

@@ -1,0 +1,37 @@
+{
+    "title": "Composer Lock Schema",
+    "type": "object",
+    "properties": {
+
+        "packages": {
+            "type": "array",
+            "items": {
+
+                "type": "object",
+                "properties": {
+
+                    "source": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "reference": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["type", "url", "reference"]
+                    }
+
+                },
+                "required": ["source"]
+
+            }
+        }
+
+    },
+    "required": ["packages"]
+}
