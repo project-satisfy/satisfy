@@ -3,7 +3,7 @@
 namespace Playbloom\Satisfy\Controller;
 
 use Playbloom\Satisfy\Form\Type\RepositoryType;
-use Playbloom\Satisfy\Form\Type\UploadType;
+use Playbloom\Satisfy\Form\Type\ComposerLockType;
 use Playbloom\Satisfy\Model\Repository;
 use Silex\Application;
 use Silex\ControllerCollection;
@@ -53,8 +53,8 @@ class RepositoryController implements ControllerProviderInterface
          */
         $controllers->get('/new', function () use ($app) {
             $repository = (new Repository())
-                ->setType($app['composer.repository.type_default'])
-                ->setUrl($app['composer.repository.url_default']);
+            ->setType($app['composer.repository.type_default'])
+            ->setUrl($app['composer.repository.url_default']);
 
             $form = $app['form.factory']->create(new RepositoryType(), $repository);
 
@@ -69,9 +69,9 @@ class RepositoryController implements ControllerProviderInterface
          * Get the form to upload a composer.lock file
          */
         $controllers->get('/upload', function () use ($app) {
-          $form = $app['form.factory']->create(new UploadType());
+            $form = $app['form.factory']->create(new ComposerLockType());
 
-          return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
+            return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
         })
         ->bind('repository_upload_form');
 
@@ -82,32 +82,18 @@ class RepositoryController implements ControllerProviderInterface
          * Add repository definitions from a composer.lock file
          */
         $controllers->post('/upload', function (Request $request) use ($app) {
-          $form = $app['form.factory']->create(new UploadType());
+            $form = $app['form.factory']->create(new ComposerLockType());
 
-          $form->bind($request);
+            $form->bind($request);
 
-          if ($form->isValid()) {
+            if ($form->isValid()) {
+                $lockFile = $form['file']->getData()->openFile();
+                $app['satis.lock']->processFile($lockFile);
 
-            // Parse json
-            $file = $form['file']->getData()->getRealPath();
-            $json = file_get_contents($file);
-            $content = json_decode($json);
-
-            // Add all repos
-            $repos = array();
-            foreach($content->packages as $package) {
-              $source = $package->source;
-              $repo = new Repository();
-              $repo->setUrl($source->url);
-              $repo->setType($source->type);
-              $repos[] = $repo;
+                return $app->redirect($app['url_generator']->generate('repository'));
             }
-            $app['satis']->addAll($repos);
 
-            return $app->redirect($app['url_generator']->generate('repository'));
-          }
-
-          return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
+            return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
         })
         ->bind('repository_upload');
 
