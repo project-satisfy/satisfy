@@ -17,34 +17,50 @@ class LockProcessor
      *
      * @param Manager $manager
      */
-    public function __construct(Manager $manager) {
+    public function __construct(Manager $manager)
+    {
         $this->manager = $manager;
     }
 
     /**
-     * Adds respositories from composer.lock JSON file.
+     * Adds repositories from composer.lock JSON file.
      *
      * @param \SplFileObject $file
      */
-    public function processFile(\SplFileObject $file) {
+    public function processFile(\SplFileObject $file)
+    {
         $data = $this->getComposerLockData($file);
         $this->addReposFromData($data);
     }
 
     /**
-     * Adds all repos from conposer.lock data.
+     * Reads and decodes json from given file.
+     *
+     * @param \SplFileObject $file
+     * @return mixed
+     */
+    private function getComposerLockData(\SplFileObject $file)
+    {
+        $json = file_get_contents($file->getRealPath());
+        return json_decode($json);
+    }
+
+    /**
+     * Adds all repos from composer.lock data.
      *
      * @param $data
+     * @return void
      */
-    private function addReposFromData($data) {
+    private function addReposFromData($data)
+    {
         // Had to use the isset, because current version of json-schema
         // cant handle "require" constraints,
         $repos = array();
-        if(isset($data->packages)) {
-            foreach($data->packages as $package) {
-                if(isset($package->source)) {
+        if (isset($data->packages)) {
+            foreach ($data->packages as $package) {
+                if (isset($package->source)) {
                     $source = $package->source;
-                    if(isset($source->url) && isset($source->type)) {
+                    if (isset($source->url) && isset($source->type)) {
                         $repo = new Repository();
                         $repo->setUrl($source->url);
                         $repo->setType($source->type);
@@ -55,17 +71,6 @@ class LockProcessor
         }
 
         $this->manager->addAll($repos);
-    }
-
-    /**
-     * Reads and decodes json from given file.
-     *
-     * @param \SplFileObject $file
-     * @return mixed
-     */
-    private function getComposerLockData(\SplFileObject $file) {
-        $json = file_get_contents($file->getRealPath());
-        return json_decode($json);
     }
 
 }
