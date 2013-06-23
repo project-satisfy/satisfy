@@ -36,6 +36,12 @@ class Configuration implements ConfigurationInterface
     private $require;
 
     /**
+     * @var Archive
+     * @Type("Playbloom\Satisfy\Model\Archive")
+     */
+    private $archive;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -87,4 +93,21 @@ class Configuration implements ConfigurationInterface
 
         return $this;
     }
+
+    /**
+     * @param Archive $archive
+     */
+    public function setArchive(Archive $archive=null)
+    {
+        $this->archive = $archive;
+    }
+
+    /**
+     * @return Archive
+     */
+    public function getArchive()
+    {
+        return $this->archive;
+    }
+
 }
