@@ -65,12 +65,21 @@ class Manager
      */
     public function add(RepositoryInterface $repository)
     {
-        $this
-            ->configuration
-            ->getRepositories()
-            ->set($repository->getId(), $repository)
-        ;
+        $this->doAdd($repository);
 
+        $this->flush();
+    }
+
+    /**
+     * Adds a array of repositories.
+     *
+     * @param array $repositories
+     */
+    public function addAll(array $repositories)
+    {
+        foreach($repositories as $repository) {
+            $this->doAdd($repository);
+        }
         $this->flush();
     }
 
@@ -115,5 +124,19 @@ class Manager
     private function flush()
     {
         $this->persister->flush($this->configuration);
+    }
+
+    /**
+     * Adds a single Repository without flush
+     *
+     * @param RepositoryInterface $repository
+     */
+    private function doAdd(RepositoryInterface $repository)
+    {
+        $this
+            ->configuration
+            ->getRepositories()
+            ->set($repository->getId(), $repository)
+        ;
     }
 }
