@@ -56,6 +56,7 @@ This could be avoided by extending the project with a simple SQLite layer for ex
 ## Author
 
 Ludovic Fleury - <ludo.fleury@gmail.com> - <http://twitter.com/ludofleury>
+Julius Beckmann - <satisfy@h4cc.de> - <https://twitter.com/h4cc>
 
 ## Credits
 
