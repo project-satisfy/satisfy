@@ -12,8 +12,14 @@ use Symfony\Component\Validator\Constraint;
 class ComposerLock extends Constraint
 {
 
-    public function getSchemaPath() {
-        return __DIR__.'/../../Resources/schemas/composer_lock.json';
+    /**
+     * Returns the path to the composer.lock Schema file.
+     *
+     * @return string
+     */
+    public function getSchemaPath()
+    {
+        return __DIR__ . '/../../Resources/schemas/composer_lock.json';
     }
 
     /**

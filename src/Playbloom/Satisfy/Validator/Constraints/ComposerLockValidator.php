@@ -20,7 +20,10 @@ class ComposerLockValidator extends ConstraintValidator
     public function validate($data, Constraint $constraint)
     {
         if (!is_object($data) || !$data instanceof UploadedFile) {
-            throw new InvalidArgumentException(sprintf('This validator expects a UploadedFile, given "%s"', get_class($data)));
+            throw new InvalidArgumentException(sprintf(
+                'This validator expects a UploadedFile, given "%s"',
+                get_class($data)
+            ));
         }
 
         $composerData = json_decode(file_get_contents($data->openFile()->getRealPath()));
@@ -31,12 +34,12 @@ class ComposerLockValidator extends ConstraintValidator
         $validator = new \JsonSchema\Validator();
         $validator->check($composerData, $schema);
 
-        if(!$validator->isValid()) {
+        if (!$validator->isValid()) {
             $this->context->addViolation("Invalid composer.lock file given:");
         }
 
-        foreach($validator->getErrors() as $error) {
-            $this->context->addViolation(sprintf("[%s] %s\n",$error['property'], $error['message']));
+        foreach ($validator->getErrors() as $error) {
+            $this->context->addViolation(sprintf("[%s] %s\n", $error['property'], $error['message']));
         }
     }
 
@@ -46,7 +49,8 @@ class ComposerLockValidator extends ConstraintValidator
      * @param $path
      * @return mixed
      */
-    private function getSchema($path) {
+    private function getSchema($path)
+    {
         $schema_json = file_get_contents($path);
         return json_decode($schema_json);
     }
