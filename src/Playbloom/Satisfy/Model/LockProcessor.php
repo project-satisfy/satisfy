@@ -54,23 +54,31 @@ class LockProcessor
     private function addReposFromData($data)
     {
         // Had to use the isset, because current version of json-schema
-        // cant handle "require" constraints,
-        $repos = array();
+        // cant handle "require" constraints.
+
+        // Combine package lists.
+        $packages = array();
         if (isset($data->packages)) {
-            foreach ($data->packages as $package) {
-                if (isset($package->source)) {
-                    $source = $package->source;
-                    if (isset($source->url) && isset($source->type)) {
-                        $repo = new Repository();
-                        $repo->setUrl($source->url);
-                        $repo->setType($source->type);
-                        $repos[] = $repo;
-                    }
+            $packages = array_merge($packages, $data->packages);
+        }
+        if (isset($data->{'packages-dev'})) {
+            $packages = array_merge($packages, $data->{'packages-dev'});
+        }
+
+        // Collect all valid repos.
+        $repos = array();
+        foreach ($packages as $package) {
+            if (isset($package->source)) {
+                $source = $package->source;
+                if (isset($source->url) && isset($source->type)) {
+                    $repo = new Repository();
+                    $repo->setUrl($source->url);
+                    $repo->setType($source->type);
+                    $repos[] = $repo;
                 }
             }
         }
 
         $this->manager->addAll($repos);
     }
-
 }
