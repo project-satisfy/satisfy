@@ -46,26 +46,30 @@ class LockProcessor
     }
 
     /**
-     * Adds all repos from composer.lock data.
+     * Adds all repos from composer.lock data, even require-dev ones.
      *
      * @param $data
      * @return void
      */
     private function addReposFromData($data)
     {
-        // Had to use the isset, because current version of json-schema
+        // Had to use isset, because current version of json-schema
         // cant handle "require" constraints,
+
+        $packages = array_merge(
+            (isset($data->packages)) ? $data->packages : array(),
+            (isset($data->{'packages-dev'})) ? $data->{'packages-dev'} : array()
+        );
+
         $repos = array();
-        if (isset($data->packages)) {
-            foreach ($data->packages as $package) {
-                if (isset($package->source)) {
-                    $source = $package->source;
-                    if (isset($source->url) && isset($source->type)) {
-                        $repo = new Repository();
-                        $repo->setUrl($source->url);
-                        $repo->setType($source->type);
-                        $repos[] = $repo;
-                    }
+        foreach ($packages as $package) {
+            if (isset($package->source)) {
+                $source = $package->source;
+                if (isset($source->url) && isset($source->type)) {
+                    $repo = new Repository();
+                    $repo->setUrl($source->url);
+                    $repo->setType($source->type);
+                    $repos[] = $repo;
                 }
             }
         }
