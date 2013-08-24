@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Model;
 
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Exception;
 use RuntimeException;
@@ -50,8 +51,8 @@ class FilePersister implements PersisterInterface
         try {
             $backupFilename = $this->generateBackupFilename();
 
-            $this->filesystem->rename($this->filename, $backupFilename);
-            $this->filesystem->dumpFile($this->filename, $content, 0644);
+            $this->filesystem->copy($this->filename, $backupFilename);
+            $this->dumpFile($this->filename, $content);
         } catch (Exception $exception) {
             throw new RuntimeException(
                 sprintf('Unable to persist the data to "%s"', $this->filename),
@@ -67,5 +68,12 @@ class FilePersister implements PersisterInterface
         $name = sprintf('%s.json', (new DateTime())->format('Y-m-d_his'));
 
         return $path.'/'.$name;
+    }
+
+    protected function dumpFile($filename, $content)
+    {
+        if (false === @file_put_contents($filename, $content)) {
+            throw new IOException(sprintf('Failed to write file "%s".', $filename));
+        }
     }
 }
