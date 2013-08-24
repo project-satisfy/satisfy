@@ -49,6 +49,8 @@ class FilePersister implements PersisterInterface
     public function flush($content)
     {
         try {
+            $this->checkPermissions();
+
             $backupFilename = $this->generateBackupFilename();
 
             $this->filesystem->copy($this->filename, $backupFilename);
@@ -70,6 +72,32 @@ class FilePersister implements PersisterInterface
         return $path.'/'.$name;
     }
 
+    /**
+     * Checks write permission on all needed paths.
+     *
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
+     */
+    protected function checkPermissions()
+    {
+        $paths = array(
+            $this->auditlog,
+            $this->filename
+        );
+
+        foreach($paths as $path) {
+            if(!is_writeable($path)) {
+                throw new IOException(sprintf('Path "%s" is not writeable.', $path));
+            }
+        }
+    }
+
+    /**
+     * Puts given content to file.
+     *
+     * @param $filename
+     * @param $content
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
+     */
     protected function dumpFile($filename, $content)
     {
         if (false === @file_put_contents($filename, $content)) {
