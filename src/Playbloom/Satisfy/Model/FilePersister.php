@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Model;
 
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Exception;
 use RuntimeException;
@@ -48,10 +49,12 @@ class FilePersister implements PersisterInterface
     public function flush($content)
     {
         try {
+            $this->checkPermissions();
+
             $backupFilename = $this->generateBackupFilename();
 
-            $this->filesystem->rename($this->filename, $backupFilename);
-            $this->filesystem->dumpFile($this->filename, $content, 0644);
+            $this->filesystem->copy($this->filename, $backupFilename);
+            $this->dumpFile($this->filename, $content);
         } catch (Exception $exception) {
             throw new RuntimeException(
                 sprintf('Unable to persist the data to "%s"', $this->filename),
@@ -67,5 +70,38 @@ class FilePersister implements PersisterInterface
         $name = sprintf('%s.json', (new DateTime())->format('Y-m-d_his'));
 
         return $path.'/'.$name;
+    }
+
+    /**
+     * Checks write permission on all needed paths.
+     *
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
+     */
+    protected function checkPermissions()
+    {
+        $paths = array(
+            $this->auditlog,
+            $this->filename
+        );
+
+        foreach($paths as $path) {
+            if(!is_writeable($path)) {
+                throw new IOException(sprintf('Path "%s" is not writeable.', $path));
+            }
+        }
+    }
+
+    /**
+     * Puts given content to file.
+     *
+     * @param $filename
+     * @param $content
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
+     */
+    protected function dumpFile($filename, $content)
+    {
+        if (false === @file_put_contents($filename, $content)) {
+            throw new IOException(sprintf('Failed to write file "%s".', $filename));
+        }
     }
 }
