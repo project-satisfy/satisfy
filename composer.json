@@ -17,19 +17,19 @@
     "support": {
         "email": "ludo.fleury@gmail.com"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "composer/satis": "dev-master",
-        "silex/silex": "1.0.*@dev",
-        "twig/twig": ">=1.8,<2.0-dev",
-        "symfony/twig-bridge": "2.1.*",
-        "symfony/config": ">=2.1,<2.4-dev",
-        "symfony/form": ">=2.1.4,<2.4-dev",
-        "symfony/validator": ">=2.1,<2.4-dev",
-        "symfony/translation": ">=2.1,<2.4-dev",
+        "composer/composer": "1.0.*@dev",
         "fp/lightopenid": "dev-master",
-        "jms/serializer": "dev-master",
-        "doctrine/common": "2.4.*@dev"
+        "doctrine/common": "2.4.0-RC4",
+        "silex/silex": "~1.1",
+        "symfony/twig-bridge": "2.1.*",
+        "symfony/config": "~2.3",
+        "symfony/form": "~2.3",
+        "symfony/validator": "~2.3",
+        "symfony/translation": "~2.3",
+        "jms/serializer": "~0.13"
     },
     "autoload": {
         "psr-0": { "Playbloom\\Satisfy": "src/" }
