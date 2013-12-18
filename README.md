@@ -65,3 +65,7 @@ Julius Beckmann - <satisfy@h4cc.de> - <https://twitter.com/h4cc>
 ## License
 
 Satisfy is licensed under the MIT License - see the LICENSE file for details
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ludofleury/satisfy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
