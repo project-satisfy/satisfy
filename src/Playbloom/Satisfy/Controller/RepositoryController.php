@@ -56,7 +56,9 @@ class RepositoryController implements ControllerProviderInterface
             ->setType($app['composer.repository.type_default'])
             ->setUrl($app['composer.repository.url_default']);
 
-            $form = $app['form.factory']->create(new RepositoryType(), $repository);
+            $form = $app['form.factory']->create(new RepositoryType(), $repository, array(
+                'pattern' => $app['repository.pattern']
+            ));
 
             return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
         })
@@ -104,7 +106,9 @@ class RepositoryController implements ControllerProviderInterface
          * Add a new repository definition
          */
         $controllers->post('/', function (Request $request) use ($app) {
-            $form = $app['form.factory']->create(new RepositoryType(), new Repository());
+            $form = $app['form.factory']->create(new RepositoryType(), new Repository(), array(
+                'pattern' => $app['repository.pattern']
+            ));
 
             $form->bind($request);
 
@@ -125,7 +129,9 @@ class RepositoryController implements ControllerProviderInterface
          * Get the form to edit an existing repository definition
          */
         $controllers->get('/edit/{repository}', function (Repository $repository) use ($app) {
-            $form = $app['form.factory']->create(new RepositoryType(), $repository);
+            $form = $app['form.factory']->create(new RepositoryType(), $repository, array(
+                'pattern' => $app['repository.pattern']
+            ));
 
             return $app['twig']->render('edit.html.twig', array('form' => $form->createView()));
         })
@@ -140,7 +146,9 @@ class RepositoryController implements ControllerProviderInterface
          * Update an existing repository definition
          */
         $controllers->put('/{repository}', function (Repository $repository, Request $request) use ($app) {
-            $form = $app['form.factory']->create(new RepositoryType(), new Repository());
+            $form = $app['form.factory']->create(new RepositoryType(), new Repository(), array(
+                'pattern' => $app['repository.pattern']
+            ));
 
             $form->bind($request);
 

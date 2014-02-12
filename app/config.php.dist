@@ -22,6 +22,11 @@ $app['composer.repository.type_default'] = 'git';
 $app['composer.repository.url_default'] = 'git@github.com:MyLittleParis/';
 
 /**
+ * Default repository url pattern
+ */
+$app['repository.pattern'] = 'https://github.com/[a-zA-Z0-9-_]+/[a-zA-Z0-9-_]+(.git)?|git@github.com:[a-zA-Z0-9-_]+/[a-zA-Z0-9-_]+.git';
+
+/**
  * More restrictive username/email constraints for production
  */
 $app['auth'] = $app->share(function() {
