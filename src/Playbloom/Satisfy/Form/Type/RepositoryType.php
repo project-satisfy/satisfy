@@ -17,7 +17,6 @@ class RepositoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attr =
         $builder
             ->add(
                 'type',
@@ -53,7 +52,6 @@ class RepositoryType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Playbloom\\Satisfy\\Model\\Repository',
             'pattern' => null
-            ,
         ));
     }
 
