@@ -17,10 +17,6 @@ class RepositoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $urlPatternHttps = 'https://github.com/[a-zA-Z0-9-_]+/[a-zA-Z0-9-_]+/';
-        $urlPatternGit = 'git@github.com:[a-zA-Z0-9-_]+/[a-zA-Z0-9-_]+.git';
-        $urlPattern = $urlPatternGit.'|'.$urlPatternHttps;
-
         $builder
             ->add(
                 'type',
@@ -41,23 +37,21 @@ class RepositoryType extends AbstractType
                 array(
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\Regex(sprintf('#^%s$#', $urlPattern))
+                        new Assert\Regex(sprintf('#^%s$#', $options['pattern']))
                     ),
-                    'attr' => array(
-                        'pattern' => $urlPattern,
-                        'title' => 'Github repository: git@github.com:YourName/your-repository.git or https://github.com/YourAccount/your-repo/',
+                    'attr' => array_merge(array(
                         'placeholder' => 'Github repository url',
                         'class' => 'input-block-level'
-                    )
+                    ), $options['pattern']?array('pattern' => $options['pattern']):array())
                 )
-            )
-        ;
+            );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Playbloom\\Satisfy\\Model\\Repository',
+            'pattern' => null
         ));
     }
 
