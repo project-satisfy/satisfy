@@ -48,7 +48,6 @@ $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new SerializerServiceProvider());
-$app->register(new SerializerServiceProvider());
 $app->register(new TranslationServiceProvider(), array(
     'translator.messages' => array(),
 ));
