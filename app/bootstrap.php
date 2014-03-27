@@ -48,6 +48,7 @@ $app->register(new FormServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new SerializerServiceProvider());
+$app->register(new SerializerServiceProvider());
 $app->register(new TranslationServiceProvider(), array(
     'translator.messages' => array(),
 ));
@@ -57,9 +58,46 @@ $app->register(new SatisServiceProvider(), array(
     'satis.class' =>  $app['satis.class']
 ));
 
-//
-$app['auth.use_google_openid'] = isset($app['auth.use_google_openid']) ? $app['auth.use_google_openid'] : true;
-if($app['auth.use_google_openid']) {
+$app['auth.use_login_form'] = isset($app['auth.use_login_form']) ? $app['auth.use_login_form'] : false;
+$app['auth.use_google_openid'] = isset($app['auth.use_google_openid']) ? $app['auth.use_google_openid'] : false;
+
+if ($app['auth.use_login_form']) {
+
+    $users = array();
+    foreach ($app['auth.users'] as $username => $password) {
+        $users[$username] = array('ROLE_ADMIN', $password);
+    }
+
+
+    $app['security.firewalls'] = array(
+        //no authentication for the most part of the app
+        'login' => array(
+            'pattern' => '^/admin/login$',
+            'anonymous' => true
+        ),
+        //admin section is protected by a authentication form
+        'secured' => array(
+            'pattern' => '^/admin/.*$',
+            'form' => array(
+                'login_path' => '/admin/login',
+                'check_path' => '/admin/login_check'
+            ),
+            'logout' => array(
+                'logout_path' => '/admin/logout',
+                'target_url' => '/admin/'
+            ),
+            'users' => $users
+        ),
+    );
+
+    $app->register(new \Silex\Provider\SecurityServiceProvider());
+
+    $app['security.encoder.digest'] = $app->share(function ($app) {
+
+        return new Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha1', false, 0);
+    });
+
+} else if ($app['auth.use_google_openid']) {
     $app->register(new SecurityServiceProvider());
 }
 

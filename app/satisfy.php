@@ -3,7 +3,7 @@
 $app = require_once __DIR__.'/bootstrap.php';
 
 /**
- * Homepage, shows satis index.html file if available 
+ * Homepage, shows satis index.html file if available
  * and adds a link to satisfy backend.
  */
 $app->get('/', function() use ($app) {
@@ -29,6 +29,7 @@ HTML404;
         return $content;
 })->bind('home');
 
+$app->mount('/admin/', new \Playbloom\Satisfy\Controller\SecurityController());
 $app->mount('/admin/', new \Playbloom\Satisfy\Controller\RepositoryController());
 
 return $app;

@@ -43,6 +43,16 @@ By default, the `satis.json` file is expected at the project root.
 * Define your configuration `cp app/config.php.dist app/config.php`
 * Customize `app/config.php` according to your needs.
 
+### Security
+
+You can restrist the access setting `auth.use_login_form` parameter (in `app/config.php`) to `true`. Set authorized users in `auth.users` config array.
+
+Use the following command to encode the password you want to use:
+
+```
+php -r "echo hash('sha1', 'mypassword');"
+```
+
 ## Satis packages definition generation
 
 You still need to generate your packages definitions as mentioned in Satis documentation.
