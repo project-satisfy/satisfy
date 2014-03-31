@@ -58,6 +58,9 @@
   </head>
     <body>
         <div class="container">
+            {% if  app['auth.use_login_form'] %}
+            {% include '_user.html.twig' %}
+            {% endif %}
             <h1>
                 {% block header %}
                     <a href="{{ path('repository') }}">
@@ -65,7 +68,6 @@
                     </a>
                 {% endblock %}
             </h1>
-
             {% block content %}
             {% endblock %}
         </div>
