@@ -45,7 +45,7 @@ By default, the `satis.json` file is expected at the project root.
 
 ### Security
 
-You can restrist the access setting `auth.use_login_form` parameter (in `app/config.php`) to `true`. Set authorized users in `auth.users` config array.
+You can restrict the access setting `auth.use_login_form` parameter (in `app/config.php`) to `true`. Set authorized users in `auth.users` config array.
 
 Use the following command to encode the password you want to use:
 
