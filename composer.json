@@ -29,6 +29,7 @@
         "symfony/form": "~2.3",
         "symfony/validator": "~2.3",
         "symfony/translation": "~2.3",
+        "symfony/security": "~2.3",
         "jms/serializer": "~0.13"
     },
     "autoload": {
