@@ -30,6 +30,7 @@
         "symfony/validator": "~2.3",
         "symfony/translation": "~2.3",
         "symfony/security": "~2.3",
+        "symfony/security-csrf": "~2.4",
         "jms/serializer": "~0.13"
     },
     "autoload": {
