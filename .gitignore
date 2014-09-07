@@ -5,6 +5,8 @@ app/config.php
 # Satis default configuration
 satis.json
 web/packages.json
+web/index.html
+web/include/*
 
 # Test
 .atoum.php
