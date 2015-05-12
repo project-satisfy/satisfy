@@ -12,11 +12,11 @@
 
 Satisfy provides:
 
-* a Web UI: A CRUD to your manage satis configuration file
+* a Web UI: A CRUD to manage your satis configuration file
 * a simple security layer with Google Open ID or a login form
 * Satis itself
 
-Satisfy ease your satis configuration management. It provides simple web UI over Satis to avoid a hand-editing of the satis.json configuration file. All repositories from a composer.lock file can also be imported via upload. It's secured with google open ID  and you can apply an google apps organization constraint (check `app/config.php.dist`).
+Satisfy ease your satis configuration management. It provides simple web UI over Satis to avoid a hand-editing of the satis.json configuration file. All repositories from a composer.lock file can also be imported via upload. It's secured with google open ID  and you can apply a google apps organization constraint (check `app/config.php.dist`).
 
 ## How it works ?
 
