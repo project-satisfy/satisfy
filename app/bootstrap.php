@@ -36,7 +36,6 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\SerializerServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Playbloom\Satisfy\Provider\SatisServiceProvider;
-use Playbloom\Satisfy\Provider\SecurityServiceProvider;
 
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new TwigServiceProvider(), array(
@@ -58,7 +57,6 @@ $app->register(new SatisServiceProvider(), array(
 ));
 
 $app['auth.use_login_form'] = isset($app['auth.use_login_form']) ? $app['auth.use_login_form'] : false;
-$app['auth.use_google_openid'] = isset($app['auth.use_google_openid']) ? $app['auth.use_google_openid'] : false;
 
 if ($app['auth.use_login_form']) {
 
@@ -96,8 +94,6 @@ if ($app['auth.use_login_form']) {
         return new Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha1', false, 0);
     });
 
-} else if ($app['auth.use_google_openid']) {
-    $app->register(new SecurityServiceProvider());
 }
 
 // Allow PUT & DELETE http method
