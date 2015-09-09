@@ -19,7 +19,7 @@ $app['satis.class'] = 'Playbloom\\Satisfy\\Model\\Configuration';
  * Default values for a new repository
  */
 $app['composer.repository.type_default'] = 'git';
-$app['composer.repository.url_default'] = 'git@github.com:MyLittleParis/';
+$app['composer.repository.url_default'] = 'git@github.com:YourAccount/';
 
 /**
  * Default repository url pattern
@@ -53,9 +53,3 @@ $app['auth.users'] = array(
     'admin' => '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33',
     'john' => 'd6b4e84ee7f31d88617a6b60421451272ebf1a3a',
 );
-
-/**
- * If OpenID auth via Google should be used.
- * Ignored if auth.use_login_form is set to true
- */
-$app['auth.use_google_openid'] = false;
