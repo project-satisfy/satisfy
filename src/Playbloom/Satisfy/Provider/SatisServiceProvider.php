@@ -29,12 +29,16 @@ class SatisServiceProvider implements ServiceProviderInterface
             $filesystem = new Filesystem();
 
             $serializer = SerializerBuilder::create()
-                ->configureHandlers(function(HandlerRegistry $registry) {
+                ->configureHandlers(function(HandlerRegistry $registry) use ($app) {
                     $registry->registerHandler('serialization', 'RepositoryCollection', 'json',
-                        function($visitor, Map $map, array $type, Context $context) {
+                        function($visitor, Map $map, array $type, Context $context) use ($app) {
                             // We change the base type, and pass through possible parameters.
                             $type['name'] = 'array';
                             $data = $map->values();
+
+                            if (!empty($app['satis.file_formatting'])) {
+                                $visitor->setOptions(JSON_PRETTY_PRINT);
+                            }
 
                             return $visitor->visitArray($data, $type, $context);
                         }

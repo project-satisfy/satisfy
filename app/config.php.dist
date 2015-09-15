@@ -6,6 +6,13 @@
 $app['satis.filename'] = __DIR__.'/../satis.json';
 
 /**
+ * Satis file formating options
+ *
+ * See http://php.net/manual/en/json.constants.php for constants description
+ */
+$app['satis.file_formatting'] = JSON_PRETTY_PRINT;
+
+/**
  * Satis auditlog (cheap backup/versioning) path
  */
 $app['satis.auditlog'] = __DIR__.'/data';
