@@ -11,10 +11,20 @@ use DateTime;
 
 class FilePersister implements PersisterInterface
 {
+    /** @var Filesystem */
     private $filesystem;
+
+    /** @var string */
     private $filename;
+
+    /** @var string */
     private $auditlog;
 
+    /**
+     * @param Filesystem $filesystem
+     * @param string $filename
+     * @param string $auditlog
+     */
     public function __construct(Filesystem $filesystem, $filename, $auditlog)
     {
         $this->filesystem = $filesystem;
@@ -31,6 +41,11 @@ class FilePersister implements PersisterInterface
         $this->auditlog = $auditlog;
     }
 
+    /**
+     * Load content from file
+     *
+     * @return string
+     */
     public function load()
     {
         try {
@@ -46,6 +61,11 @@ class FilePersister implements PersisterInterface
         return $content;
     }
 
+    /**
+     * Flush content to file
+     *
+     * @param string $content
+     */
     public function flush($content)
     {
         try {
@@ -54,7 +74,7 @@ class FilePersister implements PersisterInterface
             $backupFilename = $this->generateBackupFilename();
 
             $this->filesystem->copy($this->filename, $backupFilename);
-            $this->dumpFile($this->filename, $content);
+            $this->filesystem->dumpFile($this->filename, $content, null);
         } catch (Exception $exception) {
             throw new RuntimeException(
                 sprintf('Unable to persist the data to "%s"', $this->filename),
@@ -64,6 +84,11 @@ class FilePersister implements PersisterInterface
         }
     }
 
+    /**
+     * Generate filename for file backup
+     *
+     * @return string
+     */
     public function generateBackupFilename()
     {
         $path = rtrim($this->auditlog, '/');
@@ -88,20 +113,6 @@ class FilePersister implements PersisterInterface
             if(!is_writeable($path)) {
                 throw new IOException(sprintf('Path "%s" is not writeable.', $path));
             }
-        }
-    }
-
-    /**
-     * Puts given content to file.
-     *
-     * @param $filename
-     * @param $content
-     * @throws \Symfony\Component\Filesystem\Exception\IOException
-     */
-    protected function dumpFile($filename, $content)
-    {
-        if (false === @file_put_contents($filename, $content)) {
-            throw new IOException(sprintf('Failed to write file "%s".', $filename));
         }
     }
 }
