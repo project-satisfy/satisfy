@@ -29,6 +29,8 @@ class FilePersister implements PersisterInterface
     {
         $this->filesystem = $filesystem;
 
+        $filename = realpath($filename);
+
         if (!$this->filesystem->exists($filename)) {
             throw new InvalidArgumentException(sprintf('The file "%s" is unavailable', $filename));
         }
@@ -74,7 +76,7 @@ class FilePersister implements PersisterInterface
             $backupFilename = $this->generateBackupFilename();
 
             $this->filesystem->copy($this->filename, $backupFilename);
-            $this->filesystem->dumpFile($this->filename, $content, null);
+            $this->dumpFile($this->filename, $content);
         } catch (Exception $exception) {
             throw new RuntimeException(
                 sprintf('Unable to persist the data to "%s"', $this->filename),
@@ -114,5 +116,26 @@ class FilePersister implements PersisterInterface
                 throw new IOException(sprintf('Path "%s" is not writeable.', $path));
             }
         }
+    }
+
+    /**
+     * @param string $filename
+     * @param string $content
+     */
+    protected function dumpFile($filename, $content)
+    {
+        $handle = fopen($filename, 'r+');
+        if (!$handle) {
+            throw new IOException(sprintf('Failed to open file "%s" for write', $filename), 0, null, $filename);
+        }
+
+        $locked = flock($handle, LOCK_EX | LOCK_NB);
+        if (!$locked) {
+            throw new IOException(sprintf('Failed to lock file "%s"', $filename), 0, null, $filename);
+        }
+
+        ftruncate($handle);
+        fwrite($handle, $content);
+        fclose($handle);
     }
 }
