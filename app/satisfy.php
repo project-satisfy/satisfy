@@ -1,13 +1,13 @@
 <?php
 
-$app = require_once __DIR__.'/bootstrap.php';
+$app = require_once __DIR__ . '/bootstrap.php';
 
 /**
  * Homepage, shows satis index.html file if available
  * and adds a link to satisfy backend.
  */
-$app->get('/', function() use ($app) {
-    $indexPath = __DIR__.'/../web/index.html';
+$app->get('/', function () use ($app) {
+    $indexPath = __DIR__ . '/../web/index.html';
     if (file_exists($indexPath)) {
         return file_get_contents($indexPath);
     }
@@ -19,8 +19,8 @@ $app->get('/', function() use ($app) {
     </head>
     <body>
         <h1>Composer Repository currently not available.</h1>
+        <p><a href="/admin/">Manage Repositories</a></p>
     </body>
-    <p><a href="/admin/">Manage Repositories</a></p></body>
 </html>
 HTML404;
 
