@@ -37,10 +37,10 @@ class Configuration implements ConfigurationInterface
     private $repositories = array();
 
     /**
-     * @Type("boolean")
+     * @Type("array")
      * @SerializedName("require")
      */
-    private $require = true;
+    private $require = array();
 
     /**
      * @var boolean
