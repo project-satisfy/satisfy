@@ -25,15 +25,43 @@ class Configuration implements ConfigurationInterface
     private $homepage;
 
     /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("output-dir")
+     */
+    private $outputDir = '';
+
+    /**
      * @Type("RepositoryCollection<Playbloom\Satisfy\Model\Repository>")
      */
-    private $repositories;
+    private $repositories = array();
 
     /**
      * @Type("boolean")
+     * @SerializedName("require")
+     */
+    private $require = true;
+
+    /**
+     * @var boolean
+     * @Type("boolean")
      * @SerializedName("require-all")
      */
-    private $require;
+    private $requireAll = true;
+
+    /**
+     * @var boolean
+     * @Type("boolean")
+     * @SerializedName("require-dependencies")
+     */
+    private $requireDependencies = true;
+
+    /**
+     * @var boolean
+     * @Type("boolean")
+     * @SerializedName("require-dev-dependencies")
+     */
+    private $requireDevDependencies = true;
 
     /**
      * @var Archive
@@ -42,13 +70,11 @@ class Configuration implements ConfigurationInterface
     private $archive;
 
     /**
-     * Constructor
+     * @var string
+     * @Type("string")
+     * @SerializedName("minimum-stability")
      */
-    public function __construct()
-    {
-        $this->repositories = array();
-        $this->require = true;
-    }
+    private $minimumStability = '';
 
     /**
      * Get name
@@ -97,7 +123,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param Archive $archive
      */
-    public function setArchive(Archive $archive=null)
+    public function setArchive(Archive $archive = null)
     {
         $this->archive = $archive;
     }
@@ -109,5 +135,4 @@ class Configuration implements ConfigurationInterface
     {
         return $this->archive;
     }
-
 }
