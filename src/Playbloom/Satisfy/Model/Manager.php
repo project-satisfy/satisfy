@@ -2,9 +2,6 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use Playbloom\Satisfy\Model\Persister;
-use Playbloom\Satisfy\Model\RepositoryInterface;
-
 /**
  * Satis configuration definition manager
  *
@@ -12,7 +9,10 @@ use Playbloom\Satisfy\Model\RepositoryInterface;
  */
 class Manager
 {
+    /** @var PersisterInterface */
     private $persister;
+
+    /** @var ConfigurationInterface */
     private $configuration;
 
     /**
@@ -39,7 +39,7 @@ class Manager
     /**
      * Find repositories
      *
-     * @return Map A RepositoryInterface map
+     * @return array A RepositoryInterface map
      */
     public function findAllRepositories()
     {
