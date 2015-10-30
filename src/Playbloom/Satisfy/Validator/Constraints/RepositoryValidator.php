@@ -4,9 +4,8 @@ namespace MyLittle\MylittlePackages\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\InvalidArgumentException;
-use MyLittle\Bundle\StoreBundle\Model\ProductInterface;
+use Playbloom\Satisfy\Model\RepositoryInterface;
 
 /**
  * Repository validator

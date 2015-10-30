@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Validator\Constraints;
 
+use JsonSchema\Validator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -31,7 +32,7 @@ class ComposerLockValidator extends ConstraintValidator
 
         // In version 1.1.0 of the validator, "required" attributes are not used.
         // So data structure might be partially unset.
-        $validator = new \JsonSchema\Validator();
+        $validator = new Validator();
         $validator->check($composerData, $schema);
 
         if (!$validator->isValid()) {

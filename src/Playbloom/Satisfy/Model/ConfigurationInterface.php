@@ -2,8 +2,6 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use Playbloom\Satisfy\Model\ConfigurationInterface;
-
 /**
  * Configuration interface
  *

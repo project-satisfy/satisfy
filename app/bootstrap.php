@@ -89,8 +89,7 @@ if ($app['auth.use_login_form']) {
 
     $app->register(new \Silex\Provider\SecurityServiceProvider());
 
-    $app['security.encoder.digest'] = $app->share(function ($app) {
-
+    $app['security.encoder.digest'] = $app->share(function () {
         return new Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha1', false, 0);
     });
 

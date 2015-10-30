@@ -2,7 +2,6 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use Playbloom\Satisfy\Model\RepositoryInterface;
 use JMS\Serializer\Annotation\Type;
 
 /**

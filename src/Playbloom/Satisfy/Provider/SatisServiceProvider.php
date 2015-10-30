@@ -2,7 +2,6 @@
 
 namespace Playbloom\Satisfy\Provider;
 
-use Playbloom\Satisfy\Model\LockValidator;
 use Silex\ServiceProviderInterface;
 use Silex\Application;
 use PhpCollection\Map;
