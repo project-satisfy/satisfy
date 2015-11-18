@@ -134,7 +134,8 @@ class FilePersister implements PersisterInterface
             throw new IOException(sprintf('Failed to lock file "%s"', $filename), 0, null, $filename);
         }
 
-        ftruncate($handle);
+        ftruncate($handle, 0);
+        rewind($handle);
         fwrite($handle, $content);
         fclose($handle);
     }
