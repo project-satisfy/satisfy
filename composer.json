@@ -12,6 +12,10 @@
         {
             "name": "Julius Beckmann",
             "email": "satisfy@h4cc.de"
+        },
+        {
+            "name": "Ramūnas Dronga",
+            "email": "ieskok@ramuno.lt"
         }
     ],
     "support": {
@@ -30,10 +34,16 @@
         "symfony/translation": "~2.3",
         "symfony/security": "~2.3",
         "symfony/security-csrf": "~2.4",
-        "jms/serializer": "~0.13"
+        "jms/serializer": "~1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.x"
     },
     "autoload": {
         "psr-0": { "Playbloom\\Satisfy": "src/" }
+    },
+    "autoload-dev": {
+        "psr-0": { "Tests\\Playbloom\\Satisfy": "tests/" }
     },
     "extra": {
         "branch-alias": {
