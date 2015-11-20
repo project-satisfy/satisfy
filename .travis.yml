@@ -7,3 +7,6 @@ php:
 
 install:
   - composer install -n --dev
+
+before_script:
+  - 'cp -f app/config.php.dist app/config.php'
