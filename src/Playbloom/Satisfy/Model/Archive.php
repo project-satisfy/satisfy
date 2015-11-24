@@ -12,8 +12,8 @@ use JMS\Serializer\Annotation\SerializedName;
  *
  * @author Julius Beckmann <php@h4cc.de>
  */
-class Archive {
-
+class Archive
+{
     /**
      * @var string
      * @Type("string")
@@ -103,9 +103,4 @@ class Archive {
     {
         return $this->skip_dev;
     }
-
-
-
-
-
 }

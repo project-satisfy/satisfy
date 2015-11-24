@@ -13,6 +13,10 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ComposerLockType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -30,6 +34,9 @@ class ComposerLockType extends AbstractType
             );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'upload';

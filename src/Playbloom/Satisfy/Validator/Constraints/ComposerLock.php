@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class ComposerLock extends Constraint
 {
-
     /**
      * Returns the path to the composer.lock Schema file.
      *

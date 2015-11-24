@@ -38,12 +38,16 @@ class RepositoryController implements ControllerProviderInterface
          * GET /
          * List all repositories definitions
          */
-        $controllers->get('/', function () use ($app) {
-            $repositories = $app['satis']->findAllRepositories();
+        $controllers
+            ->get(
+                '/',
+                function () use ($app) {
+                    $repositories = $app['satis']->findAllRepositories();
 
-            return $app['twig']->render('home.html.twig', array('repositories' => $repositories));
-        })
-        ->bind('repository');
+                    return $app['twig']->render('home.html.twig', array('repositories' => $repositories));
+                }
+            )
+            ->bind('repository');
 
         /**
          * repository_new
@@ -51,18 +55,26 @@ class RepositoryController implements ControllerProviderInterface
          * GET /new
          * Get the form to add a new repository definition
          */
-        $controllers->get('/new', function () use ($app) {
-            $repository = (new Repository())
-            ->setType($app['composer.repository.type_default'])
-            ->setUrl($app['composer.repository.url_default']);
+        $controllers
+            ->get(
+                '/new',
+                function () use ($app) {
+                    $repository = (new Repository())
+                        ->setType($app['composer.repository.type_default'])
+                        ->setUrl($app['composer.repository.url_default']);
 
-            $form = $app['form.factory']->create(new RepositoryType(), $repository, array(
-                'pattern' => $app['repository.pattern']
-            ));
+                    $form = $app['form.factory']->create(
+                        new RepositoryType(),
+                        $repository,
+                        array(
+                            'pattern' => $app['repository.pattern'],
+                        )
+                    );
 
-            return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
-        })
-        ->bind('repository_new');
+                    return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
+                }
+            )
+            ->bind('repository_new');
 
         /**
          * repository_upload_form
@@ -70,12 +82,16 @@ class RepositoryController implements ControllerProviderInterface
          * GET /upload
          * Get the form to upload a composer.lock file
          */
-        $controllers->get('/upload', function () use ($app) {
-            $form = $app['form.factory']->create(new ComposerLockType());
+        $controllers
+            ->get(
+                '/upload',
+                function () use ($app) {
+                    $form = $app['form.factory']->create(new ComposerLockType());
 
-            return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
-        })
-        ->bind('repository_upload_form');
+                    return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
+                }
+            )
+            ->bind('repository_upload_form');
 
         /**
          * repository_upload
@@ -83,21 +99,25 @@ class RepositoryController implements ControllerProviderInterface
          * POST /
          * Add repository definitions from a composer.lock file
          */
-        $controllers->post('/upload', function (Request $request) use ($app) {
-            $form = $app['form.factory']->create(new ComposerLockType());
+        $controllers
+            ->post(
+                '/upload',
+                function (Request $request) use ($app) {
+                    $form = $app['form.factory']->create(new ComposerLockType());
 
-            $form->bind($request);
+                    $form->bind($request);
 
-            if ($form->isValid()) {
-                $lockFile = $form['file']->getData()->openFile();
-                $app['satis.lock']->processFile($lockFile);
+                    if ($form->isValid()) {
+                        $lockFile = $form['file']->getData()->openFile();
+                        $app['satis.lock']->processFile($lockFile);
 
-                return $app->redirect($app['url_generator']->generate('repository'));
-            }
+                        return $app->redirect($app['url_generator']->generate('repository'));
+                    }
 
-            return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
-        })
-        ->bind('repository_upload');
+                    return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
+                }
+            )
+            ->bind('repository_upload');
 
         /**
          * repository_create
@@ -105,22 +125,30 @@ class RepositoryController implements ControllerProviderInterface
          * POST /
          * Add a new repository definition
          */
-        $controllers->post('/', function (Request $request) use ($app) {
-            $form = $app['form.factory']->create(new RepositoryType(), new Repository(), array(
-                'pattern' => $app['repository.pattern']
-            ));
+        $controllers
+            ->post(
+                '/',
+                function (Request $request) use ($app) {
+                    $form = $app['form.factory']->create(
+                        new RepositoryType(),
+                        new Repository(),
+                        array(
+                            'pattern' => $app['repository.pattern'],
+                        )
+                    );
 
-            $form->bind($request);
+                    $form->bind($request);
 
-            if ($form->isValid()) {
-                $app['satis']->add($form->getData());
+                    if ($form->isValid()) {
+                        $app['satis']->add($form->getData());
 
-                return $app->redirect($app['url_generator']->generate('repository'));
-            }
+                        return $app->redirect($app['url_generator']->generate('repository'));
+                    }
 
-            return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
-        })
-        ->bind('repository_create');
+                    return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
+                }
+            )
+            ->bind('repository_create');
 
         /**
          * repository_edit
@@ -128,16 +156,24 @@ class RepositoryController implements ControllerProviderInterface
          * GET /edit
          * Get the form to edit an existing repository definition
          */
-        $controllers->get('/edit/{repository}', function (Repository $repository) use ($app) {
-            $form = $app['form.factory']->create(new RepositoryType(), $repository, array(
-                'pattern' => $app['repository.pattern']
-            ));
+        $controllers
+            ->get(
+                '/edit/{repository}',
+                function (Repository $repository) use ($app) {
+                    $form = $app['form.factory']->create(
+                        new RepositoryType(),
+                        $repository,
+                        array(
+                            'pattern' => $app['repository.pattern'],
+                        )
+                    );
 
-            return $app['twig']->render('edit.html.twig', array('form' => $form->createView()));
-        })
-        ->bind('repository_edit')
-        ->assert('repository', '[a-zA-Z0-9_-]+')
-        ->convert('repository', $repositoryProvider);
+                    return $app['twig']->render('edit.html.twig', array('form' => $form->createView()));
+                }
+            )
+            ->bind('repository_edit')
+            ->assert('repository', '[a-zA-Z0-9_-]+')
+            ->convert('repository', $repositoryProvider);
 
         /**
          * repository_update
@@ -145,24 +181,32 @@ class RepositoryController implements ControllerProviderInterface
          * PUT /
          * Update an existing repository definition
          */
-        $controllers->put('/{repository}', function (Repository $repository, Request $request) use ($app) {
-            $form = $app['form.factory']->create(new RepositoryType(), new Repository(), array(
-                'pattern' => $app['repository.pattern']
-            ));
+        $controllers
+            ->put(
+                '/{repository}',
+                function (Repository $repository, Request $request) use ($app) {
+                    $form = $app['form.factory']->create(
+                        new RepositoryType(),
+                        new Repository(),
+                        array(
+                            'pattern' => $app['repository.pattern'],
+                        )
+                    );
 
-            $form->bind($request);
+                    $form->bind($request);
 
-            if ($form->isValid()) {
-                $app['satis']->update($repository, $form->getData()->getUrl());
+                    if ($form->isValid()) {
+                        $app['satis']->update($repository, $form->getData()->getUrl());
 
-                return $app->redirect($app['url_generator']->generate('repository'));
-            }
+                        return $app->redirect($app['url_generator']->generate('repository'));
+                    }
 
-            return $app['twig']->render('edit.html.twig', array('form' => $form->createView()));
-        })
-        ->bind('repository_update')
-        ->assert('repository', '[a-zA-Z0-9_-]+')
-        ->convert('repository', $repositoryProvider);
+                    return $app['twig']->render('edit.html.twig', array('form' => $form->createView()));
+                }
+            )
+            ->bind('repository_update')
+            ->assert('repository', '[a-zA-Z0-9_-]+')
+            ->convert('repository', $repositoryProvider);
 
         /**
          * repository_erase
@@ -170,14 +214,21 @@ class RepositoryController implements ControllerProviderInterface
          * GET /delete/{repository}
          * Get the form to delete a repository definition
          */
-        $controllers->get('/delete/{repository}', function (Repository $repository) use ($app) {
-            $form = $app['form.factory']->create();
+        $controllers
+            ->get(
+                '/delete/{repository}',
+                function (Repository $repository) use ($app) {
+                    $form = $app['form.factory']->create();
 
-            return $app['twig']->render('delete.html.twig', array('form' => $form->createView(), 'repository' => $repository));
-        })
-        ->bind('repository_erase')
-        ->assert('repository', '[a-zA-Z0-9_-]+')
-        ->convert('repository', $repositoryProvider);
+                    return $app['twig']->render(
+                        'delete.html.twig',
+                        array('form' => $form->createView(), 'repository' => $repository)
+                    );
+                }
+            )
+            ->bind('repository_erase')
+            ->assert('repository', '[a-zA-Z0-9_-]+')
+            ->convert('repository', $repositoryProvider);
 
         /**
          * repository_delete
@@ -185,22 +236,29 @@ class RepositoryController implements ControllerProviderInterface
          * DELETE /{repository}
          * Delete a repository definition
          */
-        $controllers->delete('/{repository}', function (Repository $repository, Request $request) use ($app) {
-            $form = $app['form.factory']->create();
+        $controllers
+            ->delete(
+                '/{repository}',
+                function (Repository $repository, Request $request) use ($app) {
+                    $form = $app['form.factory']->create();
 
-            $form->bind($request);
+                    $form->bind($request);
 
-            if ($form->isValid()) {
-                $app['satis']->delete($repository);
+                    if ($form->isValid()) {
+                        $app['satis']->delete($repository);
 
-                return $app->redirect($app['url_generator']->generate('repository'));
-            }
+                        return $app->redirect($app['url_generator']->generate('repository'));
+                    }
 
-            return $app['twig']->render('delete.html.twig', array('form' => $form->createView(), 'repository' => $repository));
-        })
-        ->bind('repository_delete')
-        ->assert('repository', '[a-zA-Z0-9_-]+')
-        ->convert('repository', $repositoryProvider);
+                    return $app['twig']->render(
+                        'delete.html.twig',
+                        array('form' => $form->createView(), 'repository' => $repository)
+                    );
+                }
+            )
+            ->bind('repository_delete')
+            ->assert('repository', '[a-zA-Z0-9_-]+')
+            ->convert('repository', $repositoryProvider);
 
         return $controllers;
     }

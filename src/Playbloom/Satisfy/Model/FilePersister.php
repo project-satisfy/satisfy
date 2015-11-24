@@ -67,6 +67,7 @@ class FilePersister implements PersisterInterface
      * Flush content to file
      *
      * @param string $content
+     * @throws RuntimeException
      */
     public function flush($content)
     {
@@ -111,8 +112,8 @@ class FilePersister implements PersisterInterface
             $this->filename
         );
 
-        foreach($paths as $path) {
-            if(!is_writeable($path)) {
+        foreach ($paths as $path) {
+            if (!is_writeable($path)) {
                 throw new IOException(sprintf('Path "%s" is not writeable.', $path));
             }
         }

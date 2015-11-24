@@ -55,5 +55,4 @@ class ComposerLockValidator extends ConstraintValidator
         $schema_json = file_get_contents($path);
         return json_decode($schema_json);
     }
-
 }
