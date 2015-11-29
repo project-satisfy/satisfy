@@ -77,7 +77,7 @@ class Manager
      */
     public function addAll(array $repositories)
     {
-        foreach($repositories as $repository) {
+        foreach ($repositories as $repository) {
             $this->doAdd($repository);
         }
         $this->flush();

@@ -21,6 +21,9 @@ use Playbloom\Satisfy\Model\LockProcessor;
  */
 class SatisServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param Application $app
+     */
     public function register(Application $app)
     {
         $app['satis'] = $app->share(function () use ($app) {
@@ -28,9 +31,9 @@ class SatisServiceProvider implements ServiceProviderInterface
             $filesystem = new Filesystem();
 
             $serializer = SerializerBuilder::create()
-                ->configureHandlers(function(HandlerRegistry $registry) use ($app) {
+                ->configureHandlers(function (HandlerRegistry $registry) use ($app) {
                     $registry->registerHandler('serialization', 'RepositoryCollection', 'json',
-                        function($visitor, Map $map, array $type, Context $context) use ($app) {
+                        function ($visitor, Map $map, array $type, Context $context) use ($app) {
                             // We change the base type, and pass through possible parameters.
                             $type['name'] = 'array';
                             $data = $map->values();
@@ -43,9 +46,9 @@ class SatisServiceProvider implements ServiceProviderInterface
                         }
                     );
                 })
-                ->configureHandlers(function(HandlerRegistry $registry) {
+                ->configureHandlers(function (HandlerRegistry $registry) {
                     $registry->registerHandler('deserialization', 'RepositoryCollection', 'json',
-                        function($visitor, array $data, array $type, Context $context) {
+                        function ($visitor, array $data, array $type, Context $context) {
 
                             // We change the base type, and pass through possible parameters.
                             $type['name'] = 'array';
@@ -73,9 +76,11 @@ class SatisServiceProvider implements ServiceProviderInterface
         $app['satis.lock'] = $app->share(function () use ($app) {
             return new LockProcessor($app['satis']);
         });
-
     }
 
+    /**
+     * @param Application $app
+     */
     public function boot(Application $app)
     {
     }

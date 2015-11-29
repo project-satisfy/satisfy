@@ -9,7 +9,7 @@ namespace Playbloom\Satisfy\Model;
  */
 class LockProcessor
 {
-
+    /** @var Manager */
     private $manager;
 
     /**
@@ -76,5 +76,4 @@ class LockProcessor
 
         $this->manager->addAll($repos);
     }
-
 }

@@ -77,6 +77,13 @@ class Configuration implements ConfigurationInterface
     private $minimumStability = '';
 
     /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("twig-template")
+     */
+    private $twigTemplate;
+
+    /**
      * Get name
      *
      * @return string $name
@@ -134,5 +141,13 @@ class Configuration implements ConfigurationInterface
     public function getArchive()
     {
         return $this->archive;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigTemplate()
+    {
+        return $this->twigTemplate;
     }
 }
