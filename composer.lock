@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "fbab2bfa173e1bf3667051b99bf544cccad1ad9d"
+                "reference": "b6bac0c2d31e4f84d607638277322d8d256e61af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/fbab2bfa173e1bf3667051b99bf544cccad1ad9d",
-                "reference": "fbab2bfa173e1bf3667051b99bf544cccad1ad9d",
+                "url": "https://api.github.com/repos/composer/composer/zipball/b6bac0c2d31e4f84d607638277322d8d256e61af",
+                "reference": "b6bac0c2d31e4f84d607638277322d8d256e61af",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +79,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2015-11-23 15:12:33"
+            "time": "2015-11-29 17:21:38"
         },
         {
             "name": "composer/satis",
@@ -87,12 +87,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "ad1f0a1f30a0c60f7db8bede7783f3bf18cd2df8"
+                "reference": "da803eac8687a098ad4027911917300e241edd81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/ad1f0a1f30a0c60f7db8bede7783f3bf18cd2df8",
-                "reference": "ad1f0a1f30a0c60f7db8bede7783f3bf18cd2df8",
+                "url": "https://api.github.com/repos/composer/satis/zipball/da803eac8687a098ad4027911917300e241edd81",
+                "reference": "da803eac8687a098ad4027911917300e241edd81",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2015-11-24 09:04:58"
+            "time": "2015-11-27 12:49:17"
         },
         {
             "name": "composer/semver",
