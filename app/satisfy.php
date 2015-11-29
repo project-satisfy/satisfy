@@ -5,11 +5,12 @@ $app = require_once __DIR__ . '/bootstrap.php';
 /**
  * Homepage, shows satis index.html file if available
  * and adds a link to satisfy backend.
+ * @var \Silex\Application $app
  */
 $app->get('/', function () use ($app) {
     $indexPath = __DIR__ . '/../web/index.html';
     if (file_exists($indexPath)) {
-        return file_get_contents($indexPath);
+        return $app->sendFile($indexPath);
     }
 
     return <<<HTML404

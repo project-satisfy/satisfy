@@ -29,6 +29,11 @@ $app['composer.repository.type_default'] = 'git';
 $app['composer.repository.url_default'] = 'git@github.com:YourAccount/';
 
 /**
+ * Composer repository options for ssl or auth
+ */
+$app['composer.repository.options'] = [];
+
+/**
  * Default repository url pattern
  */
 $app['repository.pattern'] = 'https://github.com/[a-zA-Z0-9-_]+/[a-zA-Z0-9-_\.]+(.git)?|git@github.com:[a-zA-Z0-9-_]+/[a-zA-Z0-9-_\.]+.git';

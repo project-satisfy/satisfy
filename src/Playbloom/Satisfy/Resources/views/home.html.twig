@@ -3,14 +3,7 @@
 {% block content %}
 <pre>
     <span class="badge badge-info pull-right" rel="tooltip" data-original-title="Add this to your 'composer.json' to require packages from this server.">?</span>
-<code>{
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "{{ app.request.host }}"
-        }
-    ]
-}</code>
+<code>{{ config|json_encode(constant('JSON_PRETTY_PRINT')) }}</code>
 </pre>
 
     <a href="{{ path('repository_new') }}" class="btn btn-large btn-block btn-primary">

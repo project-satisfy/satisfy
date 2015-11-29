@@ -43,8 +43,20 @@ class RepositoryController implements ControllerProviderInterface
                 '/',
                 function () use ($app) {
                     $repositories = $app['satis']->findAllRepositories();
-
-                    return $app['twig']->render('home.html.twig', array('repositories' => $repositories));
+                    /** @var \Symfony\Component\Routing\RequestContext $context */
+                    $context = $app['request_context'];
+                    $config = array(
+                        'repositories' => array(
+                            array(
+                                'type' => 'composer',
+                                'url' => $context->getScheme() . '://' . $context->getHost(),
+                            ),
+                        ),
+                    );
+                    if (!empty($app['composer.repository.options'])) {
+                        $config['repositories'][0]['options'] = $app['composer.repository.options'];
+                    }
+                    return $app['twig']->render('home.html.twig', compact('config', 'repositories'));
                 }
             )
             ->bind('repository');
