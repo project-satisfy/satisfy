@@ -84,6 +84,25 @@ class Configuration implements ConfigurationInterface
     private $twigTemplate;
 
     /**
+     * @var object
+     * @Type("object")
+     */
+    private $abandoned;
+
+    /**
+     * @var object
+     * @Type("object")
+     */
+    private $config;
+
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("notify-batch")
+     */
+    private $notifyBatch;
+
+    /**
      * Get name
      *
      * @return string $name
