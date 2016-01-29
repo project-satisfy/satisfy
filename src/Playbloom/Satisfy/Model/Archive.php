@@ -18,35 +18,52 @@ class Archive
      * @var string
      * @Type("string")
      */
-    private $directory;
+    private $directory = '';
 
     /**
      * @var string
      * @Type("string")
      */
-    private $format;
+    private $format = 'tar';
 
     /**
      * @var string
      * @Type("string")
-     * @SerializedName("prefix-url")
+     * @SerializedName("absolute-directory")
      */
-    private $prefix_url;
+    private $absoluteDirectory = '';
 
     /**
      * @var boolean
      * @Type("boolean")
      * @SerializedName("skip-dev")
      */
-    private $skip_dev= true;
+    private $skipDev = true;
 
     /**
-     * @param string $directory
+     * @var array
+     * @Type("array")
      */
-    public function setDirectory($directory)
-    {
-        $this->directory = $directory;
-    }
+    private $whitelist = array();
+
+    /**
+     * @var array
+     * @Type("array")
+     */
+    private $blacklist = array();
+
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("prefix-url")
+     */
+    private $prefixUrl = '';
+
+    /**
+     * @var boolean
+     * @Type("boolean")
+     */
+    private $checksum = true;
 
     /**
      * @return string
@@ -57,11 +74,14 @@ class Archive
     }
 
     /**
-     * @param string $format
+     * @param string $directory
+     * @return $this
      */
-    public function setFormat($format)
+    public function setDirectory($directory)
     {
-        $this->format = $format;
+        $this->directory = $directory;
+
+        return $this;
     }
 
     /**
@@ -73,11 +93,90 @@ class Archive
     }
 
     /**
-     * @param string $prefix_url
+     * @param string $format
+     * @return $this
      */
-    public function setPrefixUrl($prefix_url)
+    public function setFormat($format)
     {
-        $this->prefix_url = $prefix_url;
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbsoluteDirectory()
+    {
+        return $this->absoluteDirectory;
+    }
+
+    /**
+     * @param string $absoluteDirectory
+     * @return $this
+     */
+    public function setAbsoluteDirectory($absoluteDirectory)
+    {
+        $this->absoluteDirectory = $absoluteDirectory;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSkipDev()
+    {
+        return $this->skipDev;
+    }
+
+    /**
+     * @param boolean $skipDev
+     * @return $this
+     */
+    public function setSkipDev($skipDev)
+    {
+        $this->skipDev = (bool)$skipDev;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWhitelist()
+    {
+        return $this->whitelist;
+    }
+
+    /**
+     * @param array $whitelist
+     * @return $this
+     */
+    public function setWhitelist($whitelist)
+    {
+        $this->whitelist = $whitelist;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlacklist()
+    {
+        return $this->blacklist;
+    }
+
+    /**
+     * @param array $blacklist
+     * @return $this
+     */
+    public function setBlacklist($blacklist)
+    {
+        $this->blacklist = $blacklist;
+
+        return $this;
     }
 
     /**
@@ -85,22 +184,36 @@ class Archive
      */
     public function getPrefixUrl()
     {
-        return $this->prefix_url;
+        return $this->prefixUrl;
     }
 
     /**
-     * @param boolean $skip_dev
+     * @param string $prefixUrl
+     * @return $this
      */
-    public function setSkipDev($skip_dev)
+    public function setPrefixUrl($prefixUrl)
     {
-        $this->skip_dev = $skip_dev;
+        $this->prefixUrl = $prefixUrl;
+
+        return $this;
     }
 
     /**
      * @return boolean
      */
-    public function getSkipDev()
+    public function isChecksum()
     {
-        return $this->skip_dev;
+        return $this->checksum;
+    }
+
+    /**
+     * @param boolean $checksum
+     * @return $this
+     */
+    public function setChecksum($checksum)
+    {
+        $this->checksum = (bool)$checksum;
+
+        return $this;
     }
 }
