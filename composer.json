@@ -40,10 +40,10 @@
         "phpunit/phpunit": "4.8.x"
     },
     "autoload": {
-        "psr-0": { "Playbloom\\Satisfy": "src/" }
+        "psr-4": { "Playbloom\\Satisfy\\": "src/" }
     },
     "autoload-dev": {
-        "psr-0": { "Tests\\Playbloom\\Satisfy": "tests/" }
+        "psr-4": { "Tests\\Playbloom\\Satisfy\\": "tests/" }
     },
     "extra": {
         "branch-alias": {
