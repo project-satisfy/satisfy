@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ee997465724c071ad3c273bc663b292e",
+    "hash": "340f86c7f6ac3fcefaf4def9683452d4",
     "content-hash": "8385f892897cbc498c0e9a7eb26502ef",
     "packages": [
         {
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "cd21505c8d58499a9b4d38573881cfec49c51ffd"
+                "reference": "cff35071b68e286f68ac64908c990c15b3ac4a0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/cd21505c8d58499a9b4d38573881cfec49c51ffd",
-                "reference": "cd21505c8d58499a9b4d38573881cfec49c51ffd",
+                "url": "https://api.github.com/repos/composer/composer/zipball/cff35071b68e286f68ac64908c990c15b3ac4a0d",
+                "reference": "cff35071b68e286f68ac64908c990c15b3ac4a0d",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +79,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2016-01-27 13:04:22"
+            "time": "2016-01-31 15:50:19"
         },
         {
             "name": "composer/satis",
@@ -87,12 +87,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "48191ff39b401061521cdca8a086f2b56e4c9f96"
+                "reference": "9e8ef8e906f204d01ce468dcc123306919488ddc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/48191ff39b401061521cdca8a086f2b56e4c9f96",
-                "reference": "48191ff39b401061521cdca8a086f2b56e4c9f96",
+                "url": "https://api.github.com/repos/composer/satis/zipball/9e8ef8e906f204d01ce468dcc123306919488ddc",
+                "reference": "9e8ef8e906f204d01ce468dcc123306919488ddc",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2016-01-06 07:33:13"
+            "time": "2016-02-01 09:22:56"
         },
         {
             "name": "composer/semver",
@@ -987,16 +987,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7"
+                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
-                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/e6f80ab77885151908d0ec743689ca700886e8b0",
+                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0",
                 "shasum": ""
             },
             "require": {
@@ -1031,7 +1031,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-01-06 13:31:20"
+            "time": "2016-01-29 16:19:52"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -3388,16 +3388,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.21",
+            "version": "4.8.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ea76b17bced0500a28098626b84eda12dbcf119c"
+                "reference": "dfb11aa5236376b4fc63853cf746af39fe780e72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ea76b17bced0500a28098626b84eda12dbcf119c",
-                "reference": "ea76b17bced0500a28098626b84eda12dbcf119c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dfb11aa5236376b4fc63853cf746af39fe780e72",
+                "reference": "dfb11aa5236376b4fc63853cf746af39fe780e72",
                 "shasum": ""
             },
             "require": {
@@ -3456,7 +3456,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-12-12 07:45:58"
+            "time": "2016-02-02 09:01:21"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
