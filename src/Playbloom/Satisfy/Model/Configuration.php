@@ -20,6 +20,12 @@ class Configuration implements ConfigurationInterface
     private $name;
 
     /**
+     * @var string
+     * @Type("string")
+     */
+    private $description;
+
+    /**
      * @Type("string")
      */
     private $homepage;
@@ -29,39 +35,39 @@ class Configuration implements ConfigurationInterface
      * @Type("string")
      * @SerializedName("output-dir")
      */
-    private $outputDir = '';
+    private $outputDir;
 
     /**
      * @Type("RepositoryCollection<Playbloom\Satisfy\Model\Repository>")
      */
-    private $repositories = array();
+    private $repositories;
 
     /**
      * @Type("array")
      * @SerializedName("require")
      */
-    private $require = array();
+    private $require;
 
     /**
      * @var boolean
      * @Type("boolean")
      * @SerializedName("require-all")
      */
-    private $requireAll = true;
+    private $requireAll;
 
     /**
      * @var boolean
      * @Type("boolean")
      * @SerializedName("require-dependencies")
      */
-    private $requireDependencies = true;
+    private $requireDependencies;
 
     /**
      * @var boolean
      * @Type("boolean")
      * @SerializedName("require-dev-dependencies")
      */
-    private $requireDevDependencies = true;
+    private $requireDevDependencies;
 
     /**
      * @var Archive
@@ -74,7 +80,7 @@ class Configuration implements ConfigurationInterface
      * @Type("string")
      * @SerializedName("minimum-stability")
      */
-    private $minimumStability = '';
+    private $minimumStability;
 
     /**
      * @var string
@@ -85,13 +91,13 @@ class Configuration implements ConfigurationInterface
 
     /**
      * @var object
-     * @Type("object")
+     * @Type("stdClass")
      */
     private $abandoned;
 
     /**
      * @var object
-     * @Type("object")
+     * @Type("stdClass")
      */
     private $config;
 
@@ -168,5 +174,17 @@ class Configuration implements ConfigurationInterface
     public function getTwigTemplate()
     {
         return $this->twigTemplate;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getRequire()
+    {
+        if (empty($this->require)) {
+            return null;
+        }
+
+        return $this->require;
     }
 }

@@ -31,7 +31,7 @@ class Archive
      * @Type("string")
      * @SerializedName("absolute-directory")
      */
-    private $absoluteDirectory = '';
+    private $absoluteDirectory;
 
     /**
      * @var boolean
@@ -57,7 +57,7 @@ class Archive
      * @Type("string")
      * @SerializedName("prefix-url")
      */
-    private $prefixUrl = '';
+    private $prefixUrl;
 
     /**
      * @var boolean
