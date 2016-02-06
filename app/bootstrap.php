@@ -50,6 +50,11 @@ $app->register(new SerializerServiceProvider());
 $app->register(new TranslationServiceProvider(), array(
     'translator.messages' => array(),
 ));
+
+if (! file_exists($app['satis.filename'])) {
+    throw new RuntimeException('The "satis.json" file could not be found. See "app/config.php" for the configured file location.');
+}
+
 $app->register(new SatisServiceProvider(), array(
     'satis.filename' => $app['satis.filename'],
     'satis.auditlog' => $app['satis.auditlog'],

@@ -18,6 +18,13 @@ install:
 
 before_script:
   - 'cp -f app/config.php.dist app/config.php'
+  - 'echo "{
+    \"name\": \"Travis CI\",
+    \"homepage\": \"http://packages.example.org\",
+    \"repositories\": [],
+    \"require-all\": true
+}" \
+> satis.json'
 
 script:
   - vendor/bin/phpunit
