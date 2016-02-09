@@ -1,0 +1,6 @@
+{
+    "name": "Satisfy",
+    "homepage": "http:\/\/packages.example.org",
+    "repositories": [],
+    "require-all": true
+}

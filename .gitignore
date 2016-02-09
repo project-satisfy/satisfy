@@ -1,4 +1,4 @@
-app/config.php
+#app/config.php
 /vendor/
 /composer.phar
 

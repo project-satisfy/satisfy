@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Delete repository{% endblock %}
+
+{% block content %}
+    <form method="POST" action="{{ path('admin_repositories_destroy', { 'repositoryId': repository.id }) }}" {{ form_enctype(form) }} class="form-horizontal">
+        <h2 class="form-signin-heading">
+            Delete repository ?
+        </h2>
+
+        <input type="hidden" id="_method" name="_method" value="DELETE" />
+
+        <div class="control-group error">
+            <input type="text" disabled="disabled" value="{{ repository.url }}" class="input-block-level"/>
+        </div>
+
+        {{ form_errors(form._token) }}
+        {{ form_widget(form._token) }}
+
+        <button class="btn btn-large btn-block btn-danger" type="submit">
+            Confirm deletion
+        </button>
+        <a href="{{ path('admin_index') }}" class="btn btn-large btn-block btn-inverse" >Cancel</a>
+    </form>
+{% endblock %}

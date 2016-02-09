@@ -1,0 +1,20 @@
+debug: false
+
+satis:
+    filename: 'satis.json'
+    class: 'Playbloom\Satisfy\Models\Configuration'
+    file_formatting: JSON_PRETTY_PRINT
+
+composer:
+    repository:
+        default_type: 'git'
+        default_url: 'git@github.com:vendor/package.git'
+        options: {}
+        patterns:
+            - 'https://github.com/[a-zA-Z0-9-_]+/[a-zA-Z0-9-_\.]+(.git)?'
+            - 'git@github.com:[a-zA-Z0-9-_]+/[a-zA-Z0-9-_\.]+.git'
+
+auth:
+    use_login_form: false
+    users:
+        'admin': '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
