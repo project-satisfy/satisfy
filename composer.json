@@ -27,20 +27,26 @@
         "composer/composer": "1.0.*@dev",
         "doctrine/common": "~2.4",
         "silex/silex": "~1.1",
-        "symfony/twig-bridge": "~2.1",
         "symfony/config": "~2.3",
         "symfony/form": "~2.3",
-        "symfony/validator": "~2.3",
-        "symfony/translation": "~2.3",
-        "symfony/security": "~2.3",
         "symfony/security-csrf": "~2.4",
+        "symfony/security": "~2.3",
+        "symfony/translation": "~2.3",
+        "symfony/twig-bridge": "~2.1",
+        "symfony/validator": "~2.3",
+        "symfony/yaml":"~2.2",
         "jms/serializer": "~1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.x"
     },
     "autoload": {
-        "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" }
+        "psr-4": {
+            "Playbloom\\Satisfy\\": "app/"
+        },
+        "files": [
+            "bootstrap/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": { "Tests\\Playbloom\\Satisfy\\": "tests/Playbloom/Satisfy" }

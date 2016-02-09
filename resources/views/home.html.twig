@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <div>
+        <span class="label label-info pull-right" rel="tooltip" data-placement="left" data-original-title="Add this to your 'composer.json' to require packages from this server.">?</span>
+        <pre>{{ config | json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+    </div>
+
+    <a href="{{ path('admin_repositories_create') }}" class="btn btn-large btn-block btn-primary">
+        <i class="fui-plus">&nbsp;&nbsp;</i>
+        Add a new repository
+    </a>
+
+    <a href="{{ path('admin_upload_create') }}" class="btn btn-large btn-block btn-primary">
+        <i class="fui-arrow-right">&nbsp;&nbsp;</i>
+        Add all repositories from a composer.lock
+    </a>
+
+    <ul class="nav nav-pills nav-stacked">
+    {% for repository in repositories %}
+        <li>
+            <a href="{{ path('admin_repositories_edit', {'repositoryId': repository.id }) }}">
+                {{ repository.url }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

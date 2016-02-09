@@ -1,0 +1,56 @@
+index:
+  path: /
+  methods: GET
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\IndexController::index' }
+
+admin_login:
+  path: admin/login
+  methods: GET
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\AuthController::login' }
+
+admin_index:
+  path: admin
+  methods: GET
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\AdminController::index' }
+
+# Repository management
+admin_repositories_create:
+  path: admin/repositories/create
+  methods: GET
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\RepositoriesController::create' }
+
+admin_repositories_store:
+  path: admin/repositories
+  methods: POST
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\RepositoriesController::store' }
+
+admin_repositories_edit:
+  path: admin/repositories/{repositoryId}/edit
+  methods: GET
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\RepositoriesController::edit' }
+
+admin_repositories_update:
+  path: admin/repositories/{repositoryId}
+  methods: POST
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\RepositoriesController::update' }
+
+admin_repositories_remove:
+  path: admin/repositories/{repositoryId}/remove
+  methods: GET
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\RepositoriesController::remove' }
+
+admin_repositories_destroy:
+  path: admin/repositories/{repositoryId}/remove
+  methods: POST
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\RepositoriesController::destroy' }
+
+# Upload management
+admin_upload_create:
+  path: admin/upload
+  methods: GET
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\UploadController::create' }
+
+admin_upload_store:
+  path: admin/upload
+  methods: POST
+  defaults: { _controller: 'Playbloom\Satisfy\Controllers\Admin\UploadController::store' }
