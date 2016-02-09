@@ -25,7 +25,10 @@ class RepositoryType extends AbstractType
                 'type',
                 'choice',
                 array(
-                    'choices' => array('git', 'vcs'),
+                    'choices' => array(
+                        'git' => 'git',
+                        'vcs' => 'vcs',
+                    ),
                     'constraints' => array(
                         new Assert\NotBlank(),
                         new Assert\Choice(array('choices' => array('git', 'vcs')))
