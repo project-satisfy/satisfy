@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+$app = require_once __DIR__ . '/../app/bootstrap.php';
+
+use Composer\Satis\Console\Application;
+use Playbloom\Satisfy\Console\Command;
+
+$application = new Application();
+$application->add(new Command\RebuildCommand);
+$application->run();
