@@ -20,18 +20,31 @@ class RepositoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $types = array(
+            'artifact',
+            'composer',
+            'git',
+            'github',
+            'gitlab',
+            'git-bitbucket',
+            'hg',
+            'hg-bitbucket',
+            'package',
+            'path',
+            'pear',
+            'perforce',
+            'svn',
+            'vcs',
+        );
         $builder
             ->add(
                 'type',
                 'choice',
                 array(
-                    'choices' => array(
-                        'git' => 'git',
-                        'vcs' => 'vcs',
-                    ),
+                    'choices' => array_combine($types, $types),
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\Choice(array('choices' => array('git', 'vcs')))
+                        new Assert\Choice(array('choices' => $types))
                     ),
                     'attr' => array(
                         'class' => 'input-block-level'
@@ -47,7 +60,7 @@ class RepositoryType extends AbstractType
                         new Assert\Regex(sprintf('#^%s$#', $options['pattern']))
                     ),
                     'attr' => array_merge(array(
-                        'placeholder' => 'Github repository url',
+                        'placeholder' => 'Repository url',
                         'class' => 'input-block-level'
                     ), $options['pattern']?array('pattern' => $options['pattern']):array())
                 )
