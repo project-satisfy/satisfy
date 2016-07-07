@@ -24,7 +24,7 @@
     "minimum-stability": "stable",
     "require": {
         "composer/satis": "dev-master",
-        "composer/composer": "1.0.*@dev",
+        "composer/composer": "~1.0",
         "doctrine/common": "~2.5",
         "silex/silex": "~1.3",
         "symfony/twig-bridge": "~2.7",
