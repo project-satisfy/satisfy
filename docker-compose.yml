@@ -1,0 +1,10 @@
+version: '2'
+services:
+  satisfy:
+    container_name: satisfy
+    build: ./docker
+    volumes:
+      - .:/var/www/satisfy
+      - /var/www/html
+    environment:
+      APP_PATH: /var/www/satisfy
