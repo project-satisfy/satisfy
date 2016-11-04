@@ -26,4 +26,4 @@ before_script:
 > satis.json'
 
 script:
-  - vendor/bin/phpunit
+  - bin/phpunit
