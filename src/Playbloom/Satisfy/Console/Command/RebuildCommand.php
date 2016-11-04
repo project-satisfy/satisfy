@@ -3,7 +3,7 @@
 namespace Playbloom\Satisfy\Console\Command;
 
 use Composer\Json\JsonFile;
-use Composer\Satis\Command\BuildCommand;
+use Composer\Satis\Console\Command\BuildCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
