@@ -45,11 +45,12 @@ class RepositoryController implements ControllerProviderInterface
                     $repositories = $app['satis']->findAllRepositories();
                     /** @var \Symfony\Component\Routing\RequestContext $context */
                     $context = $app['request_context'];
+                    $port = $context->getHttpPort() == 80 || !$context->getHttpPort() ? '' : (':' . $context->getHttpPort());
                     $config = array(
                         'repositories' => array(
                             array(
                                 'type' => 'composer',
-                                'url' => $context->getScheme() . '://' . $context->getHost(),
+                                'url' => $context->getScheme() . '://' . $context->getHost() . $port,
                             ),
                         ),
                     );
