@@ -39,6 +39,8 @@ Define your [default/existing satis configuration](http://getcomposer.org/doc/ar
 
 By default, the `satis.json` file is expected at the project root.
 
+Run `echo '{"name":"My Repository","homepage":"http://packages.example.org","repositories":[]}' > satis.json` to create an empty Satis configuration file.
+
 ### Application configuration
 
 * Define your configuration `cp app/config.php.dist app/config.php`
@@ -54,10 +56,19 @@ Use the following command to encode the password you want to use:
 php -r "echo hash('sha1', 'mypassword');"
 ```
 
-## Satis packages definition generation
+## Run Satisfy
 
-You still need to generate your packages definitions as mentioned in Satis documentation.
-Satsify just provide a bin shortcut in bin/satis.
+Create a webserver pointing to the `web` directory. Browse to »/admin/« to manage the `satis.json`. To serve the `package.json` it is required to run Satis first.
+
+### Satis packages definition generation
+
+Since Satisfy does only manage the Satis configuration file, it is necessary to build the package definitions using Satis.
+
+A bin shortcut to Satis is already included in Satisfy, so run the following command to generate the files in the web folder.
+
+ ```
+./bin/satis build ./satis.json web/
+```
 
 ## Known limitation
 
