@@ -5,14 +5,14 @@
 {% block title %}Edit repository{% endblock %}
 
 {% block content %}
-    <form method="POST" action="{{ path('repository_update', { 'repository': repository.id }) }}" {{ form_enctype(form) }} class="form-horizontal">
+    {{ form_start(form, { attr: { class: 'form-horizontal' }}) }}
         <h2 class="form-signin-heading">
             Edit repository
         </h2>
-        <input type="hidden" id="_method" name="_method" value="PUT" />
-        {% include '_form.html.twig' %}
+
+        {% include 'PlaybloomSatisfyBundle::_form.html.twig' %}
 
         <button class="btn btn-large btn-block btn-primary" type="submit">Update</button>
-        <a href="{{ path('repository_erase', { 'repository': repository.id }) }}" class="btn btn-large btn-block btn-danger" >Delete</a>
-    </form>
+        <a href="{{ path('repository_delete', { 'repository': repository.id }) }}" class="btn btn-large btn-block btn-danger" >Delete</a>
+    {{ form_end(form) }}
 {% endblock %}

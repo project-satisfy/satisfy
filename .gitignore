@@ -1,7 +1,8 @@
-app/config.php
+app/config/parameters.yml
 /bin
 /vendor/
 /composer.phar
+/var/*
 
 # Satis default configuration
 satis.json
@@ -16,26 +17,6 @@ behat.yml
 
 # Continuous integration
 /build/
-
-# Packed / Packaged format
-# unpack these files & commit the raw source. git has its own built in compression.
-*.7z
-*.jar
-*.rar
-*.zip
-*.gz
-*.bzip
-*.bz2
-*.xz
-*.lzma
-*.iso
-*.tar
-*.dmg
-*.xpi
-*.gem
-*.egg
-*.deb
-*.rpm
 
 # OSX
 .DS_Store

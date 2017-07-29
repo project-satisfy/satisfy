@@ -1,6 +1,6 @@
 <?php
 
-namespace Playbloom\Satisfy\Model;
+namespace Playbloom\Satisfy\Persister;
 
 use JMS\Serializer\SerializerInterface;
 
@@ -34,19 +34,19 @@ class JsonPersister implements PersisterInterface
     }
 
     /**
-     * @return object
+     * @return \stdClass
      */
     public function load()
     {
         $jsonString = $this->persister->load();
-        if ('' == trim($jsonString)) {
-            throw new \InvalidArgumentException("The used satis file is empty. Create using this site 'http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md'.");
+        if ('' === trim($jsonString)) {
+            throw new \RuntimeException('Satis file is empty.');
         }
         return $this->serializer->deserialize($jsonString, $this->satisClass, 'json');
     }
 
     /**
-     * @param object $object
+     * @param \stdClass $object
      */
     public function flush($object)
     {

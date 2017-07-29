@@ -4,6 +4,7 @@ namespace Playbloom\Satisfy\Model;
 
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\SerializedName;
+use PhpCollection\Map;
 
 /**
  * Configuration class
@@ -12,23 +13,23 @@ use JMS\Serializer\Annotation\SerializedName;
  *
  * @author Ludovic Fleury <ludo.fleury@gmail.com>
  */
-class Configuration implements ConfigurationInterface
+class Configuration
 {
     /**
      * @Type("string")
      */
-    private $name;
+    private $name = 'Composer repository';
 
     /**
      * @var string
      * @Type("string")
      */
-    private $description;
+    private $description = '';
 
     /**
      * @Type("string")
      */
-    private $homepage;
+    private $homepage = 'http://localhost';
 
     /**
      * @var string
@@ -38,6 +39,7 @@ class Configuration implements ConfigurationInterface
     private $outputDir;
 
     /**
+     * @var Map
      * @Type("RepositoryCollection<Playbloom\Satisfy\Model\Repository>")
      */
     private $repositories;
@@ -53,21 +55,21 @@ class Configuration implements ConfigurationInterface
      * @Type("boolean")
      * @SerializedName("require-all")
      */
-    private $requireAll;
+    private $requireAll = false;
 
     /**
      * @var boolean
      * @Type("boolean")
      * @SerializedName("require-dependencies")
      */
-    private $requireDependencies;
+    private $requireDependencies = false;
 
     /**
      * @var boolean
      * @Type("boolean")
      * @SerializedName("require-dev-dependencies")
      */
-    private $requireDevDependencies;
+    private $requireDevDependencies = false;
 
     /**
      * @var Archive
@@ -90,13 +92,13 @@ class Configuration implements ConfigurationInterface
     private $twigTemplate;
 
     /**
-     * @var object
+     * @var \stdClass
      * @Type("stdClass")
      */
     private $abandoned;
 
     /**
-     * @var object
+     * @var \stdClass
      * @Type("stdClass")
      */
     private $config;
@@ -107,6 +109,14 @@ class Configuration implements ConfigurationInterface
      * @SerializedName("notify-batch")
      */
     private $notifyBatch;
+
+    /**
+     * Configuration constructor.
+     */
+    public function __construct()
+    {
+        $this->repositories = new Map();
+    }
 
     /**
      * Get name
@@ -131,7 +141,7 @@ class Configuration implements ConfigurationInterface
     /**
      * Get repositories
      *
-     * @return array $repositories
+     * @return Map $repositories
      */
     public function getRepositories()
     {
@@ -141,11 +151,11 @@ class Configuration implements ConfigurationInterface
     /**
      * Set repositories
      *
-     * @param array $repositories
+     * @param Map $repositories
      *
-     * @return static
+     * @return $this
      */
-    public function setRepositories(array $repositories)
+    public function setRepositories(Map $repositories)
     {
         $this->repositories = $repositories;
 

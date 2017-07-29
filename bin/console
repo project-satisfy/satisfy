@@ -1,11 +1,19 @@
 #!/usr/bin/env php
 <?php
 
-$app = require_once __DIR__ . '/../app/bootstrap.php';
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Debug\Debug;
 
-use Composer\Satis\Console\Application;
-use Playbloom\Satisfy\Console\Command;
+require __DIR__ . '/../app/autoload.php';
 
-$application = new Application();
-$application->add(new Command\RebuildCommand);
-$application->run();
+$input = new ArgvInput();
+$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
+$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
+
+if ($debug) {
+    Debug::enable();
+}
+
+$application = new Application(new MicroKernel('prod', false));
+$application->run($input);

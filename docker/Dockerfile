@@ -1,6 +1,4 @@
-FROM php:5.6-apache
-
-MAINTAINER Ramunas Dronga <ieskok@ramuno.lt>
+FROM php:7.0-apache
 
 RUN apt-get update -q \
     && apt-get install -qy git cron supervisor \

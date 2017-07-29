@@ -1,15 +1,19 @@
 <?php
 
-namespace Playbloom\Satisfy\Console\Command;
+namespace Playbloom\Satisfy\Command;
 
 use Composer\Json\JsonFile;
 use Composer\Satis\Console\Command\BuildCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class RebuildCommand extends BuildCommand
+class RebuildCommand extends BuildCommand implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -33,10 +37,11 @@ class RebuildCommand extends BuildCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $configFile = $input->getArgument('file');
+        $configFile = $this->container->getParameter('satis_filename');
+        $input->setArgument('file', $configFile);
         $lifetime = (int)$input->getOption('lifetime');
 
-        if (is_file($configFile) && !empty($lifetime)) {
+        if (!empty($lifetime) && is_file($configFile)) {
             if (!$outputDir = $input->getArgument('output-dir')) {
                 $file = new JsonFile($configFile);
                 $config = $file->read();

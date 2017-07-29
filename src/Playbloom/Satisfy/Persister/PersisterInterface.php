@@ -1,16 +1,16 @@
 <?php
 
-namespace Playbloom\Satisfy\Model;
+namespace Playbloom\Satisfy\Persister;
 
 interface PersisterInterface
 {
     /**
-     * @return mixed
+     * @return string
      */
     public function load();
 
     /**
-     * @param mixed $content
+     * @param string $content
      */
     public function flush($content);
 }

@@ -1,10 +1,13 @@
 language: php
 
 php:
-  - 5.6
   - 7.0
   - 7.1
   - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
 
 sudo: false
 
@@ -13,17 +16,8 @@ cache:
     - $HOME/.composer/cache/files
 
 install:
+  - 'cp -f app/config/parameters.yml.dist app/config/parameters.yml'
   - composer install -n --dev --no-progress
-
-before_script:
-  - 'cp -f app/config.php.dist app/config.php'
-  - 'echo "{
-    \"name\": \"Travis CI\",
-    \"homepage\": \"http://packages.example.org\",
-    \"repositories\": [],
-    \"require-all\": true
-}" \
-> satis.json'
 
 script:
   - bin/phpunit

@@ -4,6 +4,7 @@ namespace Playbloom\Satisfy\Form\Type;
 
 use Playbloom\Satisfy\Validator\Constraints\ComposerLock;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -22,7 +23,7 @@ class ComposerLockType extends AbstractType
         $builder
             ->add(
                 'file',
-                'file',
+                FileType::class,
                 array(
                     'constraints' => array(
                         new ComposerLock(),
@@ -32,13 +33,5 @@ class ComposerLockType extends AbstractType
                     )
                 )
             );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'upload';
     }
 }

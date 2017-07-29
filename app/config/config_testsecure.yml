@@ -1,0 +1,9 @@
+imports:
+  - { resource: config_test.yml }
+
+parameters:
+  admin.auth: true
+  admin.users:
+    test:
+      password: test
+      roles: 'ROLE_ADMIN'

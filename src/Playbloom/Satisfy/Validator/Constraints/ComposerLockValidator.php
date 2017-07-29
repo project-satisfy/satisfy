@@ -36,7 +36,7 @@ class ComposerLockValidator extends ConstraintValidator
         $validator->check($composerData, $schema);
 
         if (!$validator->isValid()) {
-            $this->context->addViolation("Invalid composer.lock file given:");
+            $this->context->addViolation('Invalid composer.lock file given:');
         }
 
         foreach ($validator->getErrors() as $error) {
@@ -53,6 +53,7 @@ class ComposerLockValidator extends ConstraintValidator
     private function getSchema($path)
     {
         $schema_json = file_get_contents($path);
+
         return json_decode($schema_json);
     }
 }

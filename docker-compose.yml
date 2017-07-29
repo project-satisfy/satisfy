@@ -8,3 +8,5 @@ services:
       - /var/www/html
     environment:
       APP_PATH: /var/www/satisfy
+    ports:
+      - "80:80"

@@ -1,0 +1,21 @@
+security:
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      pattern: ^/
+      anonymous: true
+      provider: in_memory
+      form_login:
+        login_path: login
+        check_path: login
+        default_target_path: repository
+        remember_me: true
+  providers:
+    in_memory:
+      memory:
+        users: %admin.users%
+  encoders:
+    Symfony\Component\Security\Core\User\User: plaintext
+  access_control: ~

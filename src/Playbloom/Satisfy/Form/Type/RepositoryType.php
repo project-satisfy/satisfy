@@ -2,9 +2,12 @@
 
 namespace Playbloom\Satisfy\Form\Type;
 
+use Playbloom\Satisfy\Model\Repository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -39,50 +42,47 @@ class RepositoryType extends AbstractType
         $builder
             ->add(
                 'type',
-                'choice',
+                ChoiceType::class,
                 array(
                     'choices' => array_combine($types, $types),
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\Choice(array('choices' => $types))
+                        new Assert\Choice(array('choices' => $types)),
                     ),
                     'attr' => array(
-                        'class' => 'input-block-level'
-                    )
+                        'class' => 'input-block-level',
+                    ),
                 )
             )
             ->add(
                 'url',
-                'text',
+                TextType::class,
                 array(
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\Regex(sprintf('#^%s$#', $options['pattern']))
+                        new Assert\Regex(sprintf('#^%s$#', $options['pattern'])),
                     ),
-                    'attr' => array_merge(array(
-                        'placeholder' => 'Repository url',
-                        'class' => 'input-block-level'
-                    ), $options['pattern']?array('pattern' => $options['pattern']):array())
+                    'attr' => array_merge(
+                        array(
+                            'placeholder' => 'Repository url',
+                            'class' => 'input-block-level',
+                        ),
+                        $options['pattern'] ? array('pattern' => $options['pattern']) : array()
+                    ),
                 )
             );
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Playbloom\\Satisfy\\Model\\Repository',
-            'pattern' => null
-        ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'repository';
+        $resolver->setDefaults(
+            [
+                'data_class' => Repository::class,
+                'pattern' => null,
+            ]
+        );
     }
 }

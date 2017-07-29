@@ -1,0 +1,35 @@
+services:
+  satisfy.manager:
+    class: Playbloom\Satisfy\Service\Manager
+    arguments:
+      - "@satisfy.persister.json"
+
+  satisfy.persister.file:
+    class: Playbloom\Satisfy\Persister\FilePersister
+    public: false
+    arguments:
+      - "@filesystem"
+      - "%satis_filename%"
+      - "%satis_log_path%"
+
+  satisfy.persister.json:
+    class: Playbloom\Satisfy\Persister\JsonPersister
+    public: false
+    arguments:
+      - "@satisfy.persister.file"
+      - "@satisfy.serializer.json"
+      - "Playbloom\\Satisfy\\Model\\Configuration"
+
+  satisfy.serializer.json:
+    parent: jms_serializer
+
+  satisfy.serializer.repository_collection_handler:
+    class: Playbloom\Satisfy\Serializer\RepositoryCollectionHandler
+    tags:
+      - { name: jms_serializer.handler, type: RepositoryCollection, direction: serialization, format: json, method: serializeCollection }
+      - { name: jms_serializer.handler, type: RepositoryCollection, direction: deserialization, format: json, method: deserializeCollection }
+
+  satisfy.processor.lock_processor:
+    class: Playbloom\Satisfy\Service\LockProcessor
+    arguments:
+      - "@satisfy.manager"

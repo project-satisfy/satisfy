@@ -2,40 +2,27 @@
 
 namespace Playbloom\Satisfy\Controller;
 
-use Silex\Application;
-use Silex\ControllerProviderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Controller to handle user login
- *
- * @author Damien Pitard <damien.pitard@gmail.com>
  */
-class SecurityController implements ControllerProviderInterface
+class SecurityController extends Controller
 {
     /**
-     * @param Application $app
-     * @return mixed
+     * @param Request $request
+     * @return Response
      */
-    public function connect(Application $app)
+    public function loginAction(Request $request)
     {
-        $controllers = $app['controllers_factory'];
+        $authUtils = $this->get('security.authentication_utils');
+        // last username entered by the user
+        $username = $authUtils->getLastUsername();
+        // get the login error if there is one
+        $error = $authUtils->getLastAuthenticationError();
 
-        $controllers
-            ->get(
-                '/login',
-                function (Request $request) use ($app) {
-                    return $app['twig']->render(
-                        'login.html.twig',
-                        array(
-                            'error' => $app['security.last_error']($request),
-                            'last_username' => $app['session']->get('_security.last_username'),
-                        )
-                    );
-                }
-            )
-            ->bind('login');
-
-        return $controllers;
+        return $this->render('@PlaybloomSatisfy/login.html.twig', compact('username', 'error'));
     }
 }

@@ -36,12 +36,4 @@ class ComposerLock extends Constraint
     {
         return null;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRequiredOptions()
-    {
-        return array();
-    }
 }

@@ -3,13 +3,13 @@
 {% block title %}New repository{% endblock %}
 
 {% block content %}
-    <form method="POST" action="{{ path('repository_upload') }}" {{ form_enctype(form) }} class="form-horizontal">
+    {{ form_start(form, { attr: { class: 'form-horizontal' }}) }}
         <h2 class="form-signin-heading">
             Upload composer.lock
         </h2>
 
-        {{ form_errors(form._token) }}
-        {{ form_widget(form._token) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
 
         {{ form_errors(form) }}
 

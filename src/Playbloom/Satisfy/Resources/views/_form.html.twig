@@ -1,7 +1,5 @@
 {{ form_errors(form) }}
-
-{{ form_errors(form._token) }}
-{{ form_widget(form._token) }}
+{{ form_widget(form) }}
 
 {{ form_row(form.type, {'label': 'Type'}) }}
 {{ form_row(form.url, {'label': 'URL'}) }}

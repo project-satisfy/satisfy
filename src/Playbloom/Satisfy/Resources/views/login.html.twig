@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ "Sign in"|trans }}{% endblock %}
+{% block title %}Sign in{% endblock %}
 
 {% block content %}
-<form action="{{ path('admin_login_check') }}" method="post" class="form-horizontal">
-    <h2 class="form-signin-heading">{{ "Sign in" }}</h2>
+<form action="{{ path('login') }}" method="post" class="form-horizontal">
+    <h2 class="form-signin-heading">Sign in</h2>
     {% if error %}
     <div class="alert alert-error">
-    {{ error }}
+    {{ error.messageKey }}
     </div>
     {% endif %}
-    <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="{{ "Username"|trans }}" class="input-block-level" required />
-    <input type="password" id="password" name="_password" placeholder="{{ "Password"|trans }}" class="input-block-level" required />
-    <button class="btn btn-large btn-block btn-primary" name="login" type="submit">{{ "Sign In"|trans }}</button>
+    <input type="text" id="username" name="_username" value="{{ username }}" placeholder="Username" class="input-block-level" required />
+    <input type="password" id="password" name="_password" placeholder="Password" class="input-block-level" required />
+    <button class="btn btn-large btn-block btn-primary" type="submit">Sign In</button>
 </form>
 {% endblock %}

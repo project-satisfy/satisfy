@@ -3,22 +3,20 @@
 {% block title %}Delete repository{% endblock %}
 
 {% block content %}
-    <form method="POST" action="{{ path('repository_delete', { 'repository': repository.id }) }}" {{ form_enctype(form) }} class="form-horizontal">
+    {{ form_start(form, { attr: { class: 'form-horizontal' }}) }}
         <h2 class="form-signin-heading">
             Delete repository ?
         </h2>
-
-        <input type="hidden" id="_method" name="_method" value="DELETE" />
 
         <div class="control-group error">
             <input type="text" disabled="disabled" value="{{ repository.url }}" class="input-block-level"/>
         </div>
 
-        {{ form_errors(form._token) }}
-        {{ form_widget(form._token) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
 
-        <button class="btn btn-large btn-block btn-danger" type="submit">
+        <button class="btn btn-large btn-block btn-danger" type="submit" name="delete_form[submit]">
             Confirm deletion</button>
         <a href="{{ path('repository') }}" class="btn btn-large btn-block btn-inverse" >Cancel</a>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

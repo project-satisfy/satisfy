@@ -53,9 +53,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Get type
-     *
-     * @return string $type
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -63,11 +61,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return static
+     * {@inheritdoc}
      */
     public function setType($type)
     {
@@ -77,9 +71,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Get url
-     *
-     * @return string $url
+     * {@inheritdoc}
      */
     public function getUrl()
     {
@@ -87,11 +79,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return static
+     * {@inheritdoc}
      */
     public function setUrl($url)
     {

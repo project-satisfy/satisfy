@@ -1,0 +1,12 @@
+imports:
+  - { resource: parameters.yml }
+  - { resource: security.yml }
+
+framework:
+  secret: "%secret%"
+  session: ~
+  templating:
+    engines: ['twig']
+  assets: ~
+  profiler:
+    collect: false

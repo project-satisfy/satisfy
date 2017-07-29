@@ -2,277 +2,178 @@
 
 namespace Playbloom\Satisfy\Controller;
 
-use Playbloom\Satisfy\Form\Type\RepositoryType;
 use Playbloom\Satisfy\Form\Type\ComposerLockType;
+use Playbloom\Satisfy\Form\Type\DeleteFormType;
+use Playbloom\Satisfy\Form\Type\RepositoryType;
 use Playbloom\Satisfy\Model\Repository;
-use Silex\Application;
-use Silex\ControllerCollection;
-use Silex\ControllerProviderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Repository controller provider.
- *
- * @author Ludovic Fleury <ludo.fleury@gmail.com>
- */
-class RepositoryController implements ControllerProviderInterface
+class RepositoryController extends Controller
 {
     /**
-     * Connect
+     * @param Request $request
      *
-     * @param  Application $app
-     *
-     * @return ControllerCollection
+     * @return Response
      */
-    public function connect(Application $app)
+    public function indexAction(Request $request)
     {
-        $controllers = $app['controllers_factory'];
+        $this->checkAccess();
 
-        $repositoryProvider = function ($repository) use ($app) {
-            return $app['satis']->findOneRepository($repository);
-        };
+        $repositories = $this->get('satisfy.manager')->getRepositories();
+        $repositoryOptions = $this->getParameter('repository');
+        $satisRepository = array(
+            'type' => 'composer',
+            'url'  => $request->getSchemeAndHttpHost(),
+        );
+        if (!empty($repositoryOptions['options'])) {
+            $satisRepository['options'] = $repositoryOptions['options'];
+        }
 
-        /**
-         * repository
-         *
-         * GET /
-         * List all repositories definitions
-         */
-        $controllers
-            ->get(
-                '/',
-                function () use ($app) {
-                    $repositories = $app['satis']->findAllRepositories();
-                    /** @var \Symfony\Component\Routing\RequestContext $context */
-                    $context = $app['request_context'];
-                    $port = $context->getHttpPort() == 80 || !$context->getHttpPort() ? '' : (':' . $context->getHttpPort());
-                    $config = array(
-                        'repositories' => array(
-                            array(
-                                'type' => 'composer',
-                                'url' => $context->getScheme() . '://' . $context->getHost() . $port,
-                            ),
-                        ),
-                    );
-                    if (!empty($app['composer.repository.options'])) {
-                        $config['repositories'][0]['options'] = $app['composer.repository.options'];
-                    }
-                    return $app['twig']->render('home.html.twig', compact('config', 'repositories'));
-                }
-            )
-            ->bind('repository');
+        $config = array(
+            'repositories' => array($satisRepository),
+        );
 
-        /**
-         * repository_new
-         *
-         * GET /new
-         * Get the form to add a new repository definition
-         */
-        $controllers
-            ->get(
-                '/new',
-                function () use ($app) {
-                    $repository = (new Repository())
-                        ->setType($app['composer.repository.type_default'])
-                        ->setUrl($app['composer.repository.url_default']);
+        return $this->render('@PlaybloomSatisfy/home.html.twig', compact('config', 'repositories'));
+    }
 
-                    $form = $app['form.factory']->create(
-                        new RepositoryType(),
-                        $repository,
-                        array(
-                            'pattern' => $app['repository.pattern'],
-                        )
-                    );
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function newAction(Request $request)
+    {
+        $this->checkAccess();
 
-                    return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
-                }
-            )
-            ->bind('repository_new');
+        $repositoryOptions = $this->getParameter('repository');
+        $repository = new Repository();
+        $repository
+            ->setType($repositoryOptions['type'])
+            ->setUrl($repositoryOptions['url']);
 
-        /**
-         * repository_upload_form
-         *
-         * GET /upload
-         * Get the form to upload a composer.lock file
-         */
-        $controllers
-            ->get(
-                '/upload',
-                function () use ($app) {
-                    $form = $app['form.factory']->create(new ComposerLockType());
+        $form = $this->createForm(
+            RepositoryType::class,
+            $repository,
+            array('pattern' => $repositoryOptions['pattern'])
+        );
 
-                    return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
-                }
-            )
-            ->bind('repository_upload_form');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->get('satisfy.manager')->add($form->getData());
 
-        /**
-         * repository_upload
-         *
-         * POST /
-         * Add repository definitions from a composer.lock file
-         */
-        $controllers
-            ->post(
-                '/upload',
-                function (Request $request) use ($app) {
-                    $form = $app['form.factory']->create(new ComposerLockType());
+                return $this->redirectToRoute('repository');
+            } catch (\Exception $e) {
+                $form->addError(new FormError($e->getMessage()));
+            }
+        }
 
-                    $form->bind($request);
+        return $this->render('@PlaybloomSatisfy/new.html.twig', array('form' => $form->createView()));
+    }
 
-                    if ($form->isValid()) {
-                        $lockFile = $form['file']->getData()->openFile();
-                        $app['satis.lock']->processFile($lockFile);
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
+    public function uploadAction(Request $request)
+    {
+        $this->checkAccess();
 
-                        return $app->redirect($app['url_generator']->generate('repository'));
-                    }
+        $form = $this->createForm(ComposerLockType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $lock = $form->get('file')->getData()->openFile();
+                $this->get('satisfy.processor.lock_processor')->processFile($lock);
 
-                    return $app['twig']->render('upload.html.twig', array('form' => $form->createView()));
-                }
-            )
-            ->bind('repository_upload');
+                return $this->redirectToRoute('repository');
+            } catch (\Exception $e) {
+                $form->addError(new FormError($e->getMessage()));
+            }
+        }
 
-        /**
-         * repository_create
-         *
-         * POST /
-         * Add a new repository definition
-         */
-        $controllers
-            ->post(
-                '/',
-                function (Request $request) use ($app) {
-                    $form = $app['form.factory']->create(
-                        new RepositoryType(),
-                        new Repository(),
-                        array(
-                            'pattern' => $app['repository.pattern'],
-                        )
-                    );
+        return $this->render('@PlaybloomSatisfy/upload.html.twig', array('form' => $form->createView()));
+    }
 
-                    $form->bind($request);
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function editAction(Request $request)
+    {
+        $this->checkAccess();
 
-                    if ($form->isValid()) {
-                        $app['satis']->add($form->getData());
+        $repository = $this->get('satisfy.manager')->findOneRepository($request->attributes->get('repository'));
+        if (!$repository) {
+            return $this->redirectToRoute('repository');
+        }
 
-                        return $app->redirect($app['url_generator']->generate('repository'));
-                    }
+        $repositoryOptions = $this->getParameter('repository');
+        $form = $this->createForm(
+            RepositoryType::class,
+            clone $repository,
+            array('pattern' => $repositoryOptions['pattern'])
+        );
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->get('satisfy.manager')->update($repository, $form->getData()->getUrl());
 
-                    return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
-                }
-            )
-            ->bind('repository_create');
+                return $this->redirectToRoute('repository');
+            } catch (\Exception $e) {
+                $form->addError(new FormError($e->getMessage()));
+            }
+        }
 
-        /**
-         * repository_edit
-         *
-         * GET /edit
-         * Get the form to edit an existing repository definition
-         */
-        $controllers
-            ->get(
-                '/edit/{repository}',
-                function (Repository $repository) use ($app) {
-                    $form = $app['form.factory']->create(
-                        new RepositoryType(),
-                        $repository,
-                        array(
-                            'pattern' => $app['repository.pattern'],
-                        )
-                    );
+        return $this->render('@PlaybloomSatisfy/edit.html.twig', array('form' => $form->createView()));
+    }
 
-                    return $app['twig']->render('edit.html.twig', array('form' => $form->createView()));
-                }
-            )
-            ->bind('repository_edit')
-            ->assert('repository', '[a-zA-Z0-9_-]+')
-            ->convert('repository', $repositoryProvider);
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function deleteAction(Request $request)
+    {
+        $this->checkAccess();
 
-        /**
-         * repository_update
-         *
-         * PUT /
-         * Update an existing repository definition
-         */
-        $controllers
-            ->put(
-                '/{repository}',
-                function (Repository $repository, Request $request) use ($app) {
-                    $form = $app['form.factory']->create(
-                        new RepositoryType(),
-                        new Repository(),
-                        array(
-                            'pattern' => $app['repository.pattern'],
-                        )
-                    );
+        $repository = $this->get('satisfy.manager')->findOneRepository($request->attributes->get('repository'));
+        if (!$repository) {
+            return $this->redirectToRoute('repository');
+        }
 
-                    $form->bind($request);
+        $form = $this->createForm(DeleteFormType::class);
+        if ($request->getMethod() === Request::METHOD_DELETE) {
+            try {
+                $this->get('satisfy.manager')->delete($repository);
 
-                    if ($form->isValid()) {
-                        $app['satis']->update($repository, $form->getData()->getUrl());
+                return $this->redirectToRoute('repository');
+            } catch (\Exception $e) {
+                $form->addError(new FormError($e->getMessage()));
+            }
+        }
 
-                        return $app->redirect($app['url_generator']->generate('repository'));
-                    }
+        return $this->render(
+            '@PlaybloomSatisfy/delete.html.twig',
+            array('form' => $form->createView(), 'repository' => $repository)
+        );
+    }
 
-                    return $app['twig']->render('edit.html.twig', array('form' => $form->createView()));
-                }
-            )
-            ->bind('repository_update')
-            ->assert('repository', '[a-zA-Z0-9_-]+')
-            ->convert('repository', $repositoryProvider);
+    /**
+     * Check admin access.
+     */
+    protected function checkAccess()
+    {
+        if (!$this->getParameter('admin.auth')) {
+            return;
+        }
 
-        /**
-         * repository_erase
-         *
-         * GET /delete/{repository}
-         * Get the form to delete a repository definition
-         */
-        $controllers
-            ->get(
-                '/delete/{repository}',
-                function (Repository $repository) use ($app) {
-                    $form = $app['form.factory']->create();
-
-                    return $app['twig']->render(
-                        'delete.html.twig',
-                        array('form' => $form->createView(), 'repository' => $repository)
-                    );
-                }
-            )
-            ->bind('repository_erase')
-            ->assert('repository', '[a-zA-Z0-9_-]+')
-            ->convert('repository', $repositoryProvider);
-
-        /**
-         * repository_delete
-         *
-         * DELETE /{repository}
-         * Delete a repository definition
-         */
-        $controllers
-            ->delete(
-                '/{repository}',
-                function (Repository $repository, Request $request) use ($app) {
-                    $form = $app['form.factory']->create();
-
-                    $form->bind($request);
-
-                    if ($form->isValid()) {
-                        $app['satis']->delete($repository);
-
-                        return $app->redirect($app['url_generator']->generate('repository'));
-                    }
-
-                    return $app['twig']->render(
-                        'delete.html.twig',
-                        array('form' => $form->createView(), 'repository' => $repository)
-                    );
-                }
-            )
-            ->bind('repository_delete')
-            ->assert('repository', '[a-zA-Z0-9_-]+')
-            ->convert('repository', $repositoryProvider);
-
-        return $controllers;
+        parent::denyAccessUnlessGranted('ROLE_ADMIN');
     }
 }
