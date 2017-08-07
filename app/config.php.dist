@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Satis filesystem root path
+ */
+$app['satis.rootPath'] = '/app';
+
+/**
  * Satis configuration file
  */
 $app['satis.filename'] = 'satis.json';
