@@ -2,49 +2,45 @@
 
 namespace Tests\Playbloom\Satisfy\Model;
 
+use League\Flysystem\Adapter\NullAdapter;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Memory\MemoryAdapter;
 use Playbloom\Satisfy\Model\FilePersister;
-use Symfony\Component\Filesystem\Filesystem;
 
 class FilePersisterTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var string */
-    protected $fixture;
-
     /** @var FilePersister */
     protected $persister;
 
     protected function setUp()
     {
-        $this->fixture = tempnam(sys_get_temp_dir(), 'fixture');
-        $this->persister = new FilePersister(new Filesystem, $this->fixture, sys_get_temp_dir());
+        $persistenceAdapter = new MemoryAdapter;
+        $filesystem = new Filesystem($persistenceAdapter);
+        $filesystem->write('mock-config', '');
+        $this->persister = new FilePersister($filesystem, 'mock-config', 'mock-auditlog');
     }
 
     protected function tearDown()
     {
-        @unlink($this->fixture);
-        $this->fixture = null;
         $this->persister = null;
     }
 
-    public function testDumpMustTruncateFile()
+    public function testLoadFlush()
     {
-        $config = array(
+        $content = $this->content();
+        $this->persister->flush($content);
+        $load = $this->persister->load();
+        $this->assertEquals($content, $load);
+    }
+
+    private function content()
+    {
+        return json_encode(array(
             'name' => 'test',
             'repositories' => array(
                 'https://github.com/ludofleury/satisfy.git',
             ),
             'require-all' => true,
-        );
-        $content = json_encode($config);
-        $this->persister->flush($content);
-        $this->assertStringEqualsFile($this->fixture, $content);
-        $this->assertEquals($content, $this->persister->load());
-
-        $config['repositories'] = array();
-        $content = json_encode($config);
-        $this->persister->flush($content);
-        $this->assertStringEqualsFile($this->fixture, $content);
-        $this->assertEquals($content, $this->persister->load());
+        ));
     }
-
 }
