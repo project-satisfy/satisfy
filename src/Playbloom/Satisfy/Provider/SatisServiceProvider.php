@@ -2,10 +2,11 @@
 
 namespace Playbloom\Satisfy\Provider;
 
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use Silex\ServiceProviderInterface;
 use Silex\Application;
 use PhpCollection\Map;
-use Symfony\Component\Filesystem\Filesystem;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Handler\HandlerRegistry;
 use JMS\Serializer\Context;
@@ -28,7 +29,8 @@ class SatisServiceProvider implements ServiceProviderInterface
     {
         $app['satis'] = $app->share(function () use ($app) {
 
-            $filesystem = new Filesystem();
+            $filesystemAdapter = new Local($app['satis.rootPath']);
+            $filesystem = new Filesystem($filesystemAdapter);
 
             $serializer = SerializerBuilder::create()
                 ->configureHandlers(function (HandlerRegistry $registry) use ($app) {
