@@ -2,7 +2,8 @@
 
 namespace Playbloom\Satisfy\Provider;
 
-use League\Flysystem\Adapter\Local;
+use Aws\S3\S3Client;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
 use Silex\ServiceProviderInterface;
 use Silex\Application;
@@ -27,10 +28,21 @@ class SatisServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app['satis'] = $app->share(function () use ($app) {
+        $app['filesystem'] = $app->share(function () use ($app) {
+            $client = S3Client::factory([
+                'credentials' => [
+                    'key'    => getenv('AWS_KEY'),
+                    'secret' => getenv('AWS_SECRET'),
+                ],
+                'region' => getenv('AWS_REGION'),
+                'version' => 'latest',
+            ]);
 
-            $filesystemAdapter = new Local($app['satis.rootPath']);
-            $filesystem = new Filesystem($filesystemAdapter);
+            $adapter = new AwsS3Adapter($client, getenv('AWS_S3_BUCKET'));
+            return new Filesystem($adapter);
+        });
+
+        $app['satis'] = $app->share(function () use ($app) {
 
             $serializer = SerializerBuilder::create()
                 ->configureHandlers(function (HandlerRegistry $registry) use ($app) {
@@ -69,7 +81,7 @@ class SatisServiceProvider implements ServiceProviderInterface
                 ->build()
             ;
 
-            $filePersister = new FilePersister($filesystem, $app['satis.filename'], $app['satis.auditlog']);
+            $filePersister = new FilePersister($app['filesystem'], $app['satis.filename'], $app['satis.auditlog']);
             $jsonPersister = new JsonPersister($filePersister, $serializer, $app['satis.class']);
 
             return new Manager($jsonPersister) ;
