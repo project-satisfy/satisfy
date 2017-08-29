@@ -3,7 +3,13 @@ services:
   satisfy:
     container_name: satisfy
     privileged: true
-    build: ./docker
+
+    # Build context
+    build: 
+      context: .
+      dockerfile: Dockerfile
+
+    # Mount volumes only do development
     volumes:
       - ./app:/var/www/app
       - ./bin:/var/www/bin
@@ -11,7 +17,7 @@ services:
       - ./vendor:/var/www/vendor
       - ./public:/var/www/html
       - ./satis.json:/var/www/satis.json
+
+    # Expose port 8000
     ports:
       - 8000:80
-    environment:
-      APP_PATH: /var/www/satisfy
