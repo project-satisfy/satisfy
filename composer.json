@@ -1,5 +1,5 @@
 {
-    "name": "playbloom/satisfy",
+    "name": "folhasp/satisfy",
     "license": "MIT",
     "type": "project",
     "keywords": ["satis", "composer", "backend", "ui"],
@@ -16,10 +16,14 @@
         {
             "name": "Ramūnas Dronga",
             "email": "ieskok@ramuno.lt"
+        },
+        {
+            "name": "Hedcler Morais",
+            "email": "hedclermorais@gmail.com"
         }
     ],
     "support": {
-        "email": "ludo.fleury@gmail.com"
+        "email": "hedclermorais@gmail.com"
     },
     "minimum-stability": "stable",
     "require": {
