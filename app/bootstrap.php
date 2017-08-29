@@ -52,7 +52,7 @@ $app->register(new TranslationServiceProvider(), array(
 ));
 
 if (! file_exists($app['satis.filename'])) {
-    throw new RuntimeException('The "packages.conf" file could not be found. See "app/config.php" for the configured file location.');
+    throw new RuntimeException('The "satis.json" file could not be found. See "app/config.php" for the configured file location.');
 }
 
 $app->register(new SatisServiceProvider(), array(
