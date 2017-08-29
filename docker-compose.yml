@@ -10,7 +10,7 @@ services:
       - ./src:/var/www/src
       - ./vendor:/var/www/vendor
       - ./public:/var/www/html
-      - ./packages.conf:/var/www/packages.conf
+      - ./satis.json:/var/www/satis.json
     ports:
       - 8000:80
     environment:

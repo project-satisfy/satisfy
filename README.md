@@ -33,6 +33,11 @@ Basically, it just reads/writes the satis.json file and provides a web CRUD.
 * Download composer `wget http://getcomposer.org/composer.phar`
 * Install `php composer.phar create-project playbloom/satisfy --stability=dev`
 
+### Docker & Docker-Compose
+
+* Install Docker `https://docs.docker.com/engine/installation/`
+* Install Docker-Compose `https://docs.docker.com/compose/install/`
+
 ### Satis configuration
 
 Define your [default/existing satis configuration](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md).
@@ -58,7 +63,7 @@ php -r "echo hash('sha1', 'mypassword');"
 
 ## Run Satisfy
 
-Create a webserver pointing to the `web` directory. Browse to »/admin/« to manage the `satis.json`. To serve the `package.json` it is required to run Satis first.
+Create a webserver pointing to the `public` directory. Browse to »/admin/« to manage the `satis.json`. To serve the `public/package.json` it is required to run Satis first.
 
 ### Satis packages definition generation
 
@@ -67,7 +72,7 @@ Since Satisfy does only manage the Satis configuration file, it is necessary to 
 A bin shortcut to Satis is already included in Satisfy, so run the following command to generate the files in the web folder.
 
  ```
-./bin/satis build ./satis.json web/
+./bin/satis build ./satis.json public/
 ```
 
 ## Known limitation
@@ -79,6 +84,10 @@ This could be avoided by extending the project with a simple SQLite layer for ex
 
 Ludovic Fleury - <ludo.fleury@gmail.com> - <http://twitter.com/ludofleury>
 Julius Beckmann - <satisfy@h4cc.de> - <https://twitter.com/h4cc>
+
+### Contributors
+
+Hedcler Morais - <hedclermorais@gmail.com> - <https://twitter.com/hedcler>
 
 ## Credits
 
