@@ -71,9 +71,20 @@ Since Satisfy does only manage the Satis configuration file, it is necessary to 
 
 A bin shortcut to Satis is already included in Satisfy, so run the following command to generate the files in the web folder.
 
- ```
+```
 ./bin/satis build ./satis.json public/
 ```
+
+### Run with Docker
+
+Use the following command to run containerized Satisfy using Docker and Docker-Compose:
+
+```
+docker-compose up -d
+```
+
+Then open your browser and access: `http://127.0.0.1:8000` and `http://127.0.0.1:8000/admin` to administrative area.
+
 
 ## Known limitation
 
