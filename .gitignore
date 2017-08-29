@@ -5,9 +5,9 @@ app/config.php
 
 # Satis default configuration
 satis.json
-web/packages.json
-web/index.html
-web/include/*
+public/packages.json
+public/index.html
+public/include/*
 
 # Test
 .atoum.php
@@ -65,6 +65,7 @@ nb-configuration.xml
 
 # SublimeText
 *.sublime-workspace
+*.sublime-project
 
 # TextMate
 *.tmproj

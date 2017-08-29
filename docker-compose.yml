@@ -2,9 +2,16 @@ version: '2'
 services:
   satisfy:
     container_name: satisfy
+    privileged: true
     build: ./docker
     volumes:
-      - .:/var/www/satisfy
-      - /var/www/html
+      - ./app:/var/www/app
+      - ./bin:/var/www/bin
+      - ./src:/var/www/src
+      - ./vendor:/var/www/vendor
+      - ./public:/var/www/html
+      - ./packages.conf:/var/www/packages.conf
+    ports:
+      - 8000:80
     environment:
       APP_PATH: /var/www/satisfy
