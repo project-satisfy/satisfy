@@ -2,9 +2,22 @@ version: '2'
 services:
   satisfy:
     container_name: satisfy
-    build: ./docker
+    privileged: true
+
+    # Build context
+    build: 
+      context: .
+      dockerfile: Dockerfile
+
+    # Mount volumes only do development
     volumes:
-      - .:/var/www/satisfy
-      - /var/www/html
-    environment:
-      APP_PATH: /var/www/satisfy
+      - ./app:/var/www/app
+      - ./bin:/var/www/bin
+      - ./src:/var/www/src
+      - ./vendor:/var/www/vendor
+      - ./public:/var/www/html
+      - ./satis.json:/var/www/satis.json
+
+    # Expose port 8000
+    ports:
+      - 8000:80

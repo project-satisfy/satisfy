@@ -25,7 +25,7 @@ $app['satis.class'] = 'Playbloom\\Satisfy\\Model\\Configuration';
 /**
  * Default values for a new repository
  */
-$app['composer.repository.type_default'] = 'git';
+$app['composer.repository.type_default'] = 'vcs';
 $app['composer.repository.url_default'] = 'git@github.com:YourAccount/';
 
 /**

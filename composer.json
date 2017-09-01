@@ -1,5 +1,5 @@
 {
-    "name": "playbloom/satisfy",
+    "name": "folhasp/satisfy",
     "license": "MIT",
     "type": "project",
     "keywords": ["satis", "composer", "backend", "ui"],
@@ -16,16 +16,20 @@
         {
             "name": "Ramūnas Dronga",
             "email": "ieskok@ramuno.lt"
+        },
+        {
+            "name": "Hedcler Morais",
+            "email": "hedclermorais@gmail.com"
         }
     ],
     "support": {
-        "email": "ludo.fleury@gmail.com"
+        "email": "hedclermorais@gmail.com"
     },
     "minimum-stability": "stable",
     "require": {
         "composer/satis": "dev-master",
         "composer/composer": "~1.0",
-        "doctrine/common": "~2.5",
+        "doctrine/common": "2.5.2",
         "silex/silex": "~1.3",
         "symfony/twig-bridge": "~2.7",
         "symfony/config": "~2.7",

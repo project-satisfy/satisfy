@@ -10,7 +10,7 @@ $app = require_once __DIR__ . '/bootstrap.php';
  * @return Symfony\Component\HttpFoundation\BinaryFileResponse|Symfony\Component\HttpFoundation\Response
  */
 $app->get('/', function () use ($app) {
-    $indexPath = __DIR__ . '/../web/index.html';
+    $indexPath = __DIR__ . '/../public/index.html';
 
     if (! file_exists($indexPath)) {
         return $app['twig']->render('unavailable.html.twig');
