@@ -1,0 +1,1570 @@
+{
+    "packages": {
+        "folha/composer-meta-qa": {
+            "1.0.0": {
+                "name": "folha/composer-meta-qa",
+                "version": "1.0.0",
+                "version_normalized": "1.0.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-meta-qa.git",
+                    "reference": "9dc794d54d0c60216cb58a889d341b5c1a9b6d13"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-meta-qa/zipball/9dc794d54d0c60216cb58a889d341b5c1a9b6d13",
+                    "reference": "9dc794d54d0c60216cb58a889d341b5c1a9b6d13",
+                    "shasum": ""
+                },
+                "require-dev": {
+                    "behat/behat": "@stable",
+                    "brianium/paratest": "@stable",
+                    "friendsofphp/php-cs-fixer": "@stable",
+                    "phploc/phploc": "@stable",
+                    "phpmd/phpmd": "@stable",
+                    "phpmetrics/phpmetrics": "@stable",
+                    "phpunit/dbunit": "@stable",
+                    "phpunit/phpcov": "@stable",
+                    "sebastian/phpcpd": "@stable",
+                    "sensiolabs/security-checker": "@stable",
+                    "squizlabs/php_codesniffer": "@stable"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2016-07-30 02:12:21",
+                "type": "metapackage",
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "Metapackage for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "quality",
+                    "security",
+                    "test",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-meta-qa/tree/1.0.0"
+                }
+            },
+            "1.0.1": {
+                "name": "folha/composer-meta-qa",
+                "version": "1.0.1",
+                "version_normalized": "1.0.1.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-meta-qa.git",
+                    "reference": "e54fb93bc1b24bdace970a140ef5ade11f1d3186"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-meta-qa/zipball/e54fb93bc1b24bdace970a140ef5ade11f1d3186",
+                    "reference": "e54fb93bc1b24bdace970a140ef5ade11f1d3186",
+                    "shasum": ""
+                },
+                "require": {
+                    "behat/behat": "@stable",
+                    "brianium/paratest": "@stable",
+                    "friendsofphp/php-cs-fixer": "@stable",
+                    "phploc/phploc": "@stable",
+                    "phpmd/phpmd": "@stable",
+                    "phpmetrics/phpmetrics": "@stable",
+                    "phpunit/dbunit": "@stable",
+                    "phpunit/phpcov": "@stable",
+                    "sebastian/phpcpd": "@stable",
+                    "sensiolabs/security-checker": "@stable",
+                    "squizlabs/php_codesniffer": "@stable"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2016-07-30 02:32:10",
+                "type": "metapackage",
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "Metapackage for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "quality",
+                    "security",
+                    "test",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-meta-qa/tree/1.0.1"
+                }
+            },
+            "1.0.2": {
+                "name": "folha/composer-meta-qa",
+                "version": "1.0.2",
+                "version_normalized": "1.0.2.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-meta-qa.git",
+                    "reference": "d9d83187afb2d7277bd0c449fa57ca33a0dee36a"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-meta-qa/zipball/d9d83187afb2d7277bd0c449fa57ca33a0dee36a",
+                    "reference": "d9d83187afb2d7277bd0c449fa57ca33a0dee36a",
+                    "shasum": ""
+                },
+                "require": {
+                    "behat/behat": "@stable",
+                    "brianium/paratest": "@stable",
+                    "friendsofphp/php-cs-fixer": "@stable",
+                    "phploc/phploc": "@stable",
+                    "phpmd/phpmd": "@stable",
+                    "phpmetrics/phpmetrics": "@stable",
+                    "phpunit/dbunit": "@stable",
+                    "phpunit/phpcov": "@stable",
+                    "sebastian/phpcpd": "@stable",
+                    "sensiolabs/security-checker": "@stable",
+                    "squizlabs/php_codesniffer": "@stable",
+                    "twig/twig": ">1.20.0"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2016-07-30 02:58:21",
+                "type": "metapackage",
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "Metapackage for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "quality",
+                    "security",
+                    "test",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-meta-qa/tree/1.0.2"
+                }
+            },
+            "1.0.3": {
+                "name": "folha/composer-meta-qa",
+                "version": "1.0.3",
+                "version_normalized": "1.0.3.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-meta-qa.git",
+                    "reference": "f343a904c0e9a8962615269322602c72a67befe8"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-meta-qa/zipball/f343a904c0e9a8962615269322602c72a67befe8",
+                    "reference": "f343a904c0e9a8962615269322602c72a67befe8",
+                    "shasum": ""
+                },
+                "require": {
+                    "behat/behat": "@stable",
+                    "brianium/paratest": "@stable",
+                    "friendsofphp/php-cs-fixer": "@stable",
+                    "fzaninotto/faker": "@stable",
+                    "mockery/mockery": "@stable",
+                    "phploc/phploc": "@stable",
+                    "phpmd/phpmd": "@stable",
+                    "phpmetrics/phpmetrics": "@stable",
+                    "phpunit/dbunit": "@stable",
+                    "phpunit/phpcov": "@stable",
+                    "sebastian/phpcpd": "@stable",
+                    "sensiolabs/security-checker": "@stable",
+                    "squizlabs/php_codesniffer": "@stable",
+                    "twig/twig": ">1.20.0"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2016-08-02 22:05:28",
+                "type": "metapackage",
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "Metapackage for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "quality",
+                    "security",
+                    "test",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-meta-qa/tree/1.0.3"
+                }
+            },
+            "1.0.4": {
+                "name": "folha/composer-meta-qa",
+                "version": "1.0.4",
+                "version_normalized": "1.0.4.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-meta-qa.git",
+                    "reference": "ca058d203892195a7172c7b9cdaa0f03ae6e157e"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-meta-qa/zipball/ca058d203892195a7172c7b9cdaa0f03ae6e157e",
+                    "reference": "ca058d203892195a7172c7b9cdaa0f03ae6e157e",
+                    "shasum": ""
+                },
+                "require": {
+                    "behat/behat": "@stable",
+                    "brianium/paratest": "@stable",
+                    "friendsofphp/php-cs-fixer": "<2.0",
+                    "fzaninotto/faker": "@stable",
+                    "mockery/mockery": "@stable",
+                    "phploc/phploc": "@stable",
+                    "phpmd/phpmd": "@stable",
+                    "phpmetrics/phpmetrics": "@stable",
+                    "phpunit/dbunit": "@stable",
+                    "phpunit/phpcov": "@stable",
+                    "sebastian/phpcpd": "@stable",
+                    "sensiolabs/security-checker": "@stable",
+                    "squizlabs/php_codesniffer": "@stable",
+                    "twig/twig": ">1.20.0"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2016-12-05 22:29:29",
+                "type": "metapackage",
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "Metapackage for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "quality",
+                    "security",
+                    "test",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-meta-qa/tree/1.0.4"
+                }
+            },
+            "dev-master": {
+                "name": "folha/composer-meta-qa",
+                "version": "dev-master",
+                "version_normalized": "9999999-dev",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-meta-qa.git",
+                    "reference": "e13f3c23b1bbac4b9a13c33904f22ff374992d08"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-meta-qa/zipball/e13f3c23b1bbac4b9a13c33904f22ff374992d08",
+                    "reference": "e13f3c23b1bbac4b9a13c33904f22ff374992d08",
+                    "shasum": ""
+                },
+                "require": {
+                    "behat/behat": "@stable",
+                    "brianium/paratest": "@stable",
+                    "friendsofphp/php-cs-fixer": "<2.0",
+                    "fzaninotto/faker": "@stable",
+                    "mockery/mockery": "@stable",
+                    "phploc/phploc": "@stable",
+                    "phpmd/phpmd": "@stable",
+                    "phpmetrics/phpmetrics": "@stable",
+                    "phpunit/dbunit": "@stable",
+                    "phpunit/phpcov": "@stable",
+                    "sebastian/phpcpd": "@stable",
+                    "sensiolabs/security-checker": "@stable",
+                    "squizlabs/php_codesniffer": "@stable",
+                    "twig/twig": ">1.20.0"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2017-08-28 21:01:17",
+                "type": "metapackage",
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "Metapackage for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "quality",
+                    "security",
+                    "test",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-meta-qa/tree/master"
+                }
+            },
+            "dev-develop": {
+                "name": "folha/composer-meta-qa",
+                "version": "dev-develop",
+                "version_normalized": "dev-develop",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-meta-qa.git",
+                    "reference": "18030f9b5014317734474859829be8870a63f6fd"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-meta-qa/zipball/18030f9b5014317734474859829be8870a63f6fd",
+                    "reference": "18030f9b5014317734474859829be8870a63f6fd",
+                    "shasum": ""
+                },
+                "require": {
+                    "behat/behat": "@stable",
+                    "brianium/paratest": "@stable",
+                    "friendsofphp/php-cs-fixer": "<2.0",
+                    "fzaninotto/faker": "@stable",
+                    "mockery/mockery": "@stable",
+                    "phploc/phploc": "@stable",
+                    "phpmd/phpmd": "@stable",
+                    "phpmetrics/phpmetrics": "@stable",
+                    "phpunit/dbunit": "@stable",
+                    "phpunit/phpcov": "@stable",
+                    "sebastian/phpcpd": "@stable",
+                    "sensiolabs/security-checker": "@stable",
+                    "squizlabs/php_codesniffer": "@stable",
+                    "twig/twig": ">1.20.0"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2017-08-24 20:05:13",
+                "type": "metapackage",
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "Metapackage for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "quality",
+                    "security",
+                    "test",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-meta-qa/tree/develop"
+                }
+            }
+        },
+        "folha/composer-plugin-qa": {
+            "1.0.0-rc": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.0-rc",
+                "version_normalized": "1.0.0.0-RC",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "5dc10f87bd9c96af787e71fed751561f6945a77d"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/5dc10f87bd9c96af787e71fed751561f6945a77d",
+                    "reference": "5dc10f87bd9c96af787e71fed751561f6945a77d",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2016-09-20 20:15:30",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.0-rc"
+                }
+            },
+            "1.0.1-rc": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.1-rc",
+                "version_normalized": "1.0.1.0-RC",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "21f0a896e7d4c91be18edf7db3a3a89a7080613f"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/21f0a896e7d4c91be18edf7db3a3a89a7080613f",
+                    "reference": "21f0a896e7d4c91be18edf7db3a3a89a7080613f",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2016-09-20 21:57:29",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.1-rc"
+                }
+            },
+            "1.0.2-rc": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.2-rc",
+                "version_normalized": "1.0.2.0-RC",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "e8ac862a2a447aea8f0c821e402a44273d081236"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/e8ac862a2a447aea8f0c821e402a44273d081236",
+                    "reference": "e8ac862a2a447aea8f0c821e402a44273d081236",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2016-09-20 23:25:06",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.2-rc"
+                }
+            },
+            "1.0.3": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.3",
+                "version_normalized": "1.0.3.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "7aeeea63a40bcd383ba8773586150300fc6f2cda"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/7aeeea63a40bcd383ba8773586150300fc6f2cda",
+                    "reference": "7aeeea63a40bcd383ba8773586150300fc6f2cda",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2016-09-21 00:12:55",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.3"
+                }
+            },
+            "1.0.3-rc": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.3-rc",
+                "version_normalized": "1.0.3.0-RC",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "7aeeea63a40bcd383ba8773586150300fc6f2cda"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/7aeeea63a40bcd383ba8773586150300fc6f2cda",
+                    "reference": "7aeeea63a40bcd383ba8773586150300fc6f2cda",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2016-09-21 00:12:55",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.3"
+                }
+            },
+            "1.0.4": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.4",
+                "version_normalized": "1.0.4.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "e6a424e27d1cced2bf2f943317183420dd43ddb8"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/e6a424e27d1cced2bf2f943317183420dd43ddb8",
+                    "reference": "e6a424e27d1cced2bf2f943317183420dd43ddb8",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2016-09-22 07:20:27",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.4"
+                }
+            },
+            "1.0.5": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.5",
+                "version_normalized": "1.0.5.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "e530e33bee0e6495b052db6275fc87a5d6caa45b"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/e530e33bee0e6495b052db6275fc87a5d6caa45b",
+                    "reference": "e530e33bee0e6495b052db6275fc87a5d6caa45b",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2016-09-23 19:04:44",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.5"
+                }
+            },
+            "1.0.6": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.6",
+                "version_normalized": "1.0.6.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "4be56a066b7a0de1dd354d6f2d55272bbdf23b31"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/4be56a066b7a0de1dd354d6f2d55272bbdf23b31",
+                    "reference": "4be56a066b7a0de1dd354d6f2d55272bbdf23b31",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2016-09-27 05:38:02",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.6"
+                }
+            },
+            "1.0.7": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.7",
+                "version_normalized": "1.0.7.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "bff9eb110d0f85e69773c3145f5307babdb06fc9"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/bff9eb110d0f85e69773c3145f5307babdb06fc9",
+                    "reference": "bff9eb110d0f85e69773c3145f5307babdb06fc9",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2017-01-23 02:33:20",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.7"
+                }
+            },
+            "1.0.8": {
+                "name": "folha/composer-plugin-qa",
+                "version": "1.0.8",
+                "version_normalized": "1.0.8.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "08d7a5a09eb22b55964c86fdbdd7d543ecec9318"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/08d7a5a09eb22b55964c86fdbdd7d543ecec9318",
+                    "reference": "08d7a5a09eb22b55964c86fdbdd7d543ecec9318",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "webysther/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "hirak/prestissimo": "Composer parallel install plugin",
+                    "webysther/composer-meta-qa": "Automatic install all QA tools"
+                },
+                "time": "2017-01-23 02:44:59",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/1.0.8"
+                }
+            },
+            "dev-master": {
+                "name": "folha/composer-plugin-qa",
+                "version": "dev-master",
+                "version_normalized": "9999999-dev",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "1f43cbc31351848a0ca0ed41803cb144ce4f0531"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/1f43cbc31351848a0ca0ed41803cb144ce4f0531",
+                    "reference": "1f43cbc31351848a0ca0ed41803cb144ce4f0531",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "folhasp/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "folhasp/composer-meta-qa": "Automatic install all QA tools",
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2017-08-28 21:01:41",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/master"
+                }
+            },
+            "dev-develop": {
+                "name": "folha/composer-plugin-qa",
+                "version": "dev-develop",
+                "version_normalized": "dev-develop",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "2e09816a694c62dd125d9a6fc9f978b4364fbded"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/2e09816a694c62dd125d9a6fc9f978b4364fbded",
+                    "reference": "2e09816a694c62dd125d9a6fc9f978b4364fbded",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "folha/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "folha/composer-meta-qa": "Automatic install all QA tools",
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2017-08-24 20:05:57",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/develop"
+                }
+            },
+            "dev-hotfix/change-composer-name": {
+                "name": "folha/composer-plugin-qa",
+                "version": "dev-hotfix/change-composer-name",
+                "version_normalized": "dev-hotfix/change-composer-name",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/composer-plugin-qa.git",
+                    "reference": "8e898532a56a8f9016292ddd1cb9e2e9504a37f3"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/composer-plugin-qa/zipball/8e898532a56a8f9016292ddd1cb9e2e9504a37f3",
+                    "reference": "8e898532a56a8f9016292ddd1cb9e2e9504a37f3",
+                    "shasum": ""
+                },
+                "require": {
+                    "composer-plugin-api": "^1.0",
+                    "php": ">=5.3"
+                },
+                "require-dev": {
+                    "folhasp/composer-meta-qa": "~1.0.2"
+                },
+                "suggest": {
+                    "folhasp/composer-meta-qa": "Automatic install all QA tools",
+                    "hirak/prestissimo": "Composer parallel install plugin"
+                },
+                "time": "2017-08-24 20:36:03",
+                "type": "composer-plugin",
+                "extra": {
+                    "class": "Webs\\QA\\Plugin"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Webs\\QA\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "authors": [
+                    {
+                        "name": "Webysther Nunes",
+                        "email": "webysther@gmail.com"
+                    }
+                ],
+                "description": "A full featured composer plugin for PHP QA Tools.",
+                "keywords": [
+                    "php",
+                    "qa",
+                    "tools"
+                ],
+                "support": {
+                    "source": "https://github.com/FolhaSP/composer-plugin-qa/tree/hotfix/change-composer-name"
+                }
+            }
+        },
+        "phpunit/phpcov": {
+            "2.0.0": {
+                "name": "phpunit/phpcov",
+                "version": "2.0.0",
+                "version_normalized": "2.0.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "5e32a1355826e5e2e0e99b4e2d0762867f4a8181"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/5e32a1355826e5e2e0e99b4e2d0762867f4a8181",
+                    "reference": "5e32a1355826e5e2e0e99b4e2d0762867f4a8181",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.3.3",
+                    "phpunit/php-code-coverage": "~2.0",
+                    "phpunit/phpunit": "~4.0",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0",
+                    "symfony/console": "~2.2"
+                },
+                "time": "2014-03-07 07:35:11",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "2.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/2.0.0"
+                }
+            },
+            "2.0.1": {
+                "name": "phpunit/phpcov",
+                "version": "2.0.1",
+                "version_normalized": "2.0.1.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "85d3c38f0b455aa7097512b8f3256f796e9b4db6"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/85d3c38f0b455aa7097512b8f3256f796e9b4db6",
+                    "reference": "85d3c38f0b455aa7097512b8f3256f796e9b4db6",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.3.3",
+                    "phpunit/php-code-coverage": "~2.0",
+                    "phpunit/phpunit": "~4.1",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0.3",
+                    "symfony/console": "~2.2"
+                },
+                "time": "2014-06-25 14:46:28",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "2.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/2.0.1"
+                }
+            },
+            "2.0.2": {
+                "name": "phpunit/phpcov",
+                "version": "2.0.2",
+                "version_normalized": "2.0.2.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "9ef291483ff65eefd8639584d61bbfb044d747f3"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/9ef291483ff65eefd8639584d61bbfb044d747f3",
+                    "reference": "9ef291483ff65eefd8639584d61bbfb044d747f3",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.3.3",
+                    "phpunit/php-code-coverage": "~2.0",
+                    "phpunit/phpunit": ">=4.1",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0",
+                    "symfony/console": "~2.2"
+                },
+                "time": "2015-10-05 09:24:23",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "2.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/2.0.2"
+                }
+            },
+            "3.0.0": {
+                "name": "phpunit/phpcov",
+                "version": "3.0.0",
+                "version_normalized": "3.0.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "78cb486efff5c297d8b6a6f9091eb9211173785f"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/78cb486efff5c297d8b6a6f9091eb9211173785f",
+                    "reference": "78cb486efff5c297d8b6a6f9091eb9211173785f",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.6",
+                    "phpunit/php-code-coverage": "~3.0",
+                    "phpunit/phpunit": "~5.0",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0",
+                    "symfony/console": "~2|~3"
+                },
+                "time": "2016-01-09 05:29:58",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "3.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/3.0.0"
+                }
+            },
+            "dev-master": {
+                "name": "phpunit/phpcov",
+                "version": "dev-master",
+                "version_normalized": "9999999-dev",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "78cb486efff5c297d8b6a6f9091eb9211173785f"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/78cb486efff5c297d8b6a6f9091eb9211173785f",
+                    "reference": "78cb486efff5c297d8b6a6f9091eb9211173785f",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.6",
+                    "phpunit/php-code-coverage": "~3.0",
+                    "phpunit/phpunit": "~5.0",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0",
+                    "symfony/console": "~2|~3"
+                },
+                "time": "2016-01-09 05:29:58",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "3.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/3.0.0"
+                }
+            },
+            "dev-fix/constructor_parameters": {
+                "name": "phpunit/phpcov",
+                "version": "dev-fix/constructor_parameters",
+                "version_normalized": "dev-fix/constructor_parameters",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "1f0b2802704e77de0fd0e4cc000e3b3559823315"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/1f0b2802704e77de0fd0e4cc000e3b3559823315",
+                    "reference": "1f0b2802704e77de0fd0e4cc000e3b3559823315",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.6",
+                    "phpunit/php-code-coverage": "~3.0",
+                    "phpunit/phpunit": "~5.0",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0",
+                    "symfony/console": "~2|~3"
+                },
+                "time": "2016-03-20 23:47:21",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "3.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/fix/constructor_parameters"
+                }
+            },
+            "dev-fix/text-output": {
+                "name": "phpunit/phpcov",
+                "version": "dev-fix/text-output",
+                "version_normalized": "dev-fix/text-output",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "ee3f696889e474903cff54a9ae346620929a3321"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/ee3f696889e474903cff54a9ae346620929a3321",
+                    "reference": "ee3f696889e474903cff54a9ae346620929a3321",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.6",
+                    "phpunit/php-code-coverage": "~3.0",
+                    "phpunit/phpunit": "~5.0",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0",
+                    "symfony/console": "~2|~3"
+                },
+                "time": "2016-05-24 16:32:28",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "3.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/fix/text-output"
+                }
+            },
+            "dev-fix/text-report": {
+                "name": "phpunit/phpcov",
+                "version": "dev-fix/text-report",
+                "version_normalized": "dev-fix/text-report",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/FolhaSP/phpcov.git",
+                    "reference": "735023fb2d88f8604dce2149cfd2cd58f368a77a"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/FolhaSP/phpcov/zipball/735023fb2d88f8604dce2149cfd2cd58f368a77a",
+                    "reference": "735023fb2d88f8604dce2149cfd2cd58f368a77a",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=5.6",
+                    "phpunit/php-code-coverage": "~3.0",
+                    "phpunit/phpunit": "~5.0",
+                    "sebastian/diff": "~1.1",
+                    "sebastian/finder-facade": "~1.1",
+                    "sebastian/version": "~1.0",
+                    "symfony/console": "~2|~3"
+                },
+                "time": "2016-05-24 16:25:34",
+                "bin": [
+                    "phpcov"
+                ],
+                "type": "library",
+                "extra": {
+                    "branch-alias": {
+                        "dev-master": "3.0.x-dev"
+                    }
+                },
+                "autoload": {
+                    "classmap": [
+                        "src/"
+                    ]
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "authors": [
+                    {
+                        "name": "Sebastian Bergmann",
+                        "email": "sebastian@phpunit.de",
+                        "role": "lead"
+                    }
+                ],
+                "description": "CLI frontend for PHP_CodeCoverage",
+                "homepage": "https://github.com/sebastianbergmann/phpcov",
+                "support": {
+                    "issues": "https://github.com/sebastianbergmann/phpcov/issues",
+                    "source": "https://github.com/FolhaSP/phpcov/tree/fix/text-report"
+                }
+            }
+        }
+    }
+}
