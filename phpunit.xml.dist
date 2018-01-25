@@ -13,9 +13,11 @@
         stopOnFailure="false"
         syntaxCheck="false"
         bootstrap="app/autoload.php"
-        >
+>
     <php>
-        <server name="KERNEL_CLASS" value="MicroKernel"/>
+        <env name="KERNEL_CLASS" value="MicroKernel"/>
+        <env name="APP_ENV" value="test"/>
+        <env name="SHELL_VERBOSITY" value="-1"/>
     </php>
     <testsuites>
         <testsuite name="Satisfy Test Suite">
