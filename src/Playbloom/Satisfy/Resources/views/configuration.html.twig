@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Edit configuration{% endblock %}
+
+{% block content %}
+    {{ form_start(form, { attr: { class: 'form-horizontal' }}) }}
+    <h2 class="form-signin-heading">Edit configuration</h2>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-large btn-block btn-primary" type="submit">Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

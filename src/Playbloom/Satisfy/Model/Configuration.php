@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Model;
 
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\SerializedName;
 use PhpCollection\Map;
@@ -36,7 +37,7 @@ class Configuration
      * @Type("string")
      * @SerializedName("output-dir")
      */
-    private $outputDir;
+    private $outputDir = 'web';
 
     /**
      * @var Map
@@ -82,7 +83,7 @@ class Configuration
      * @Type("string")
      * @SerializedName("minimum-stability")
      */
-    private $minimumStability;
+    private $minimumStability = 'dev';
 
     /**
      * @var string
@@ -123,9 +124,33 @@ class Configuration
      *
      * @return string $name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(string $description = null)
+    {
+        $this->description = $description;
     }
 
     /**
@@ -133,9 +158,81 @@ class Configuration
      *
      * @return string $homepage
      */
-    public function getHomepage()
+    public function getHomepage(): string
     {
         return $this->homepage;
+    }
+
+    /**
+     * @param string $homepage
+     */
+    public function setHomepage(string $homepage)
+    {
+        $this->homepage = $homepage;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOutputDir()
+    {
+        return $this->outputDir;
+    }
+
+    /**
+     * @param string $outputDir
+     */
+    public function setOutputDir(string $outputDir = null)
+    {
+        $this->outputDir = $outputDir;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequireAll(): bool
+    {
+        return $this->requireAll;
+    }
+
+    /**
+     * @param bool $requireAll
+     */
+    public function setRequireAll(bool $requireAll)
+    {
+        $this->requireAll = $requireAll;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequireDependencies(): bool
+    {
+        return $this->requireDependencies;
+    }
+
+    /**
+     * @param bool $requireDependencies
+     */
+    public function setRequireDependencies(bool $requireDependencies)
+    {
+        $this->requireDependencies = $requireDependencies;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequireDevDependencies(): bool
+    {
+        return $this->requireDevDependencies;
+    }
+
+    /**
+     * @param bool $requireDevDependencies
+     */
+    public function setRequireDevDependencies(bool $requireDevDependencies)
+    {
+        $this->requireDevDependencies = $requireDevDependencies;
     }
 
     /**
@@ -179,11 +276,35 @@ class Configuration
     }
 
     /**
-     * @return string
+     * @return string|null
+     */
+    public function getMinimumStability()
+    {
+        return $this->minimumStability;
+    }
+
+    /**
+     * @param string $minimumStability
+     */
+    public function setMinimumStability(string $minimumStability = null)
+    {
+        $this->minimumStability = $minimumStability;
+    }
+
+    /**
+     * @return string|null
      */
     public function getTwigTemplate()
     {
         return $this->twigTemplate;
+    }
+
+    /**
+     * @param string $twigTemplate
+     */
+    public function setTwigTemplate(string $twigTemplate = null)
+    {
+        $this->twigTemplate = $twigTemplate;
     }
 
     /**
@@ -196,5 +317,21 @@ class Configuration
         }
 
         return $this->require;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNotifyBatch()
+    {
+        return $this->notifyBatch;
+    }
+
+    /**
+     * @param string $notifyBatch
+     */
+    public function setNotifyBatch(string $notifyBatch = null)
+    {
+        $this->notifyBatch = $notifyBatch;
     }
 }

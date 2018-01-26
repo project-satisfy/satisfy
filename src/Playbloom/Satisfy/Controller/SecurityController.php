@@ -3,7 +3,6 @@
 namespace Playbloom\Satisfy\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -12,10 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 class SecurityController extends Controller
 {
     /**
-     * @param Request $request
      * @return Response
      */
-    public function loginAction(Request $request)
+    public function loginAction()
     {
         $authUtils = $this->get('security.authentication_utils');
         // last username entered by the user

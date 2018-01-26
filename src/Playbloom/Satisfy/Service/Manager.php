@@ -125,7 +125,7 @@ class Manager
     /**
      * Persist current configuration
      */
-    private function flush()
+    public function flush()
     {
         $this->persister->flush($this->getConfig());
     }
@@ -149,7 +149,7 @@ class Manager
     /**
      * @return Configuration
      */
-    protected function getConfig()
+    public function getConfig()
     {
         if ($this->configuration) {
             return $this->configuration;

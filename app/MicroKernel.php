@@ -49,11 +49,12 @@ class MicroKernel extends Kernel
      */
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
+        $controllerBase = 'Playbloom\Satisfy\Controller\\';
         $routes->add('/', 'kernel:indexAction', 'index');
         // security
         $routes->add('/login', 'Playbloom\Satisfy\Controller\SecurityController::loginAction', 'login');
         // repository
-        $controller = 'Playbloom\Satisfy\Controller\RepositoryController';
+        $controller = $controllerBase . 'RepositoryController';
         $routes->add('/admin', $controller . '::indexAction', 'repository')->setMethods(['GET']);
         $routes->add('/admin/new', $controller . '::newAction', 'repository_new')->setMethods(['GET', 'POST']);
         $routes->add('/admin/upload', $controller . '::uploadAction', 'repository_upload')->setMethods(['GET', 'POST']);
@@ -65,7 +66,9 @@ class MicroKernel extends Kernel
             ->add('/admin/delete/{repository}', $controller . '::deleteAction', 'repository_delete')
             ->setMethods(['GET', 'DELETE'])
             ->setRequirement('repository', '[a-zA-Z0-9_-]+');
-
+        $routes
+            ->add('/admin/configuration', $controllerBase . 'ConfigurationController::indexAction', 'configuration')
+            ->setMethods(['GET', 'POST']);
     }
 
     // optional, to use the standard Symfony cache directory
