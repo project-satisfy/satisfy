@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__ . '/../app/autoload.php';
 
-$kernel = new MicroKernel('prod', false);
+$kernel = new MicroKernel('dev', true);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

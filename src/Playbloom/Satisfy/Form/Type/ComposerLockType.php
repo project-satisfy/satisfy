@@ -25,12 +25,10 @@ class ComposerLockType extends AbstractType
                 'file',
                 FileType::class,
                 array(
+                    'label' => false,
                     'constraints' => array(
                         new ComposerLock(),
                     ),
-                    'attr' => array(
-                        'class' => 'input-block-level',
-                    )
                 )
             );
     }

@@ -3,15 +3,19 @@
 {% block title %}Sign in{% endblock %}
 
 {% block content %}
-<form action="{{ path('login') }}" method="post" class="form-horizontal">
+<form action="{{ path('login') }}" method="post">
     <h2 class="form-signin-heading">Sign in</h2>
     {% if error %}
     <div class="alert alert-error">
     {{ error.messageKey }}
     </div>
     {% endif %}
-    <input type="text" id="username" name="_username" value="{{ username }}" placeholder="Username" class="input-block-level" required />
-    <input type="password" id="password" name="_password" placeholder="Password" class="input-block-level" required />
+    <div class="form-group">
+    <input type="text" id="username" name="_username" value="{{ username }}" placeholder="Username" class="form-control" required />
+    </div>
+    <div class="form-group">
+    <input type="password" id="password" name="_password" placeholder="Password" class="form-control" required />
+    </div>
     <button class="btn btn-large btn-block btn-primary" type="submit">Sign In</button>
 </form>
 {% endblock %}

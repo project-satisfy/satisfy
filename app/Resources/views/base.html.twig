@@ -6,15 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/css/flat-ui.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-    <![endif]-->
     <style type="text/css">
       h1 {
         text-align: center;
@@ -24,12 +18,13 @@
         text-decoration: none;
       }
 
-      h2 {
-        margin-bottom: 19px;
-      }
+        h2 {
+          margin-bottom: 19px;
+          text-align: center;
+        }
 
-      .form-horizontal {
-        max-width: 360px;
+      form {
+        max-width: 480px;
         padding: 19px 29px 29px;
         margin: 10px auto 20px;
         background-color: #edeff1;
@@ -41,18 +36,6 @@
         -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
                 box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      }
-
-      .form-horizontal input,.form-horizontal  select {
-        border-color: transparent;
-        font-size: 17px;
-        padding-bottom: 11px;
-        padding-top: 11px;
-        text-indent: 3px;
-        /*width: 299px;*/
-        margin-bottom: 10px !important;
-        margin-bottom: 10px;
-        height: 44px;
       }
     </style>
   </head>
@@ -72,8 +55,8 @@
             {% endblock %}
         </div>
 
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+        <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script>
             $('[rel=tooltip]').tooltip();
         </script>

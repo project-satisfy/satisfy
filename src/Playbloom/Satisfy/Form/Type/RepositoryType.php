@@ -49,9 +49,6 @@ class RepositoryType extends AbstractType
                         new Assert\NotBlank(),
                         new Assert\Choice(array('choices' => $types)),
                     ),
-                    'attr' => array(
-                        'class' => 'input-block-level',
-                    ),
                 )
             )
             ->add(
@@ -65,7 +62,6 @@ class RepositoryType extends AbstractType
                     'attr' => array_merge(
                         array(
                             'placeholder' => 'Repository url',
-                            'class' => 'input-block-level',
                         ),
                         $options['pattern'] ? array('pattern' => $options['pattern']) : array()
                     ),
