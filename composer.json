@@ -26,7 +26,6 @@
         "php": "^7.0",
         "composer/satis": "dev-master",
         "composer/composer": "^1.6",
-        "doctrine/common": "~2.7",
         "jms/serializer-bundle": "^2.3",
         "symfony/asset": "^3.4",
         "symfony/form": "^3.4",
