@@ -26,9 +26,19 @@ class ConfigurationType extends AbstractType
             ->add('homepage', UrlType::class)
             ->add('requireAll', CheckboxType::class, [
                 'required' => false,
+                'attr' => [
+                   'rel' => 'tooltip',
+                   'data-title' => 'selects all versions of all packages in the repositories you defined',
+                ],
             ])
             ->add('requireDependencies', CheckboxType::class, [
                 'required' => false,
+                'attr' => [
+                   'rel' => 'tooltip',
+                   'data-title' => <<<END
+satis will attempt to resolve all the required packages from the listed repositories
+END
+                ],
             ])
             ->add('requireDevDependencies', CheckboxType::class, [
                 'required' => false,
@@ -45,18 +55,26 @@ class ConfigurationType extends AbstractType
             ])
             ->add('outputDir', TextType::class, [
                 'required' => false,
+                'attr' => [
+                    'rel' => 'tooltip',
+                    'data-title' => <<<END
+defines where to output the repository files if not provided as an argument when calling the build command
+END
+                ],
             ])
             ->add('twigTemplate', TextType::class, [
                 'required' => false,
                 'attr' => [
-                    'help' => 'optional, a path to a personalized Twig template for the output-dir/index.html page',
+                    'rel' => 'tooltip',
+                    'data-title' => 'a path to a personalized Twig template for the output-dir/index.html page',
                 ],
             ])
             ->add('notifyBatch', UrlType::class, [
                 'label' => 'Notify batch URL',
                 'required' => false,
                 'attr' => [
-                    'help' => 'optional, specify a URL that will be called every time a user installs a package',
+                    'rel' => 'tooltip',
+                    'data-title' => 'specify a URL that will be called every time a user installs a package',
                 ],
             ])
         ;
