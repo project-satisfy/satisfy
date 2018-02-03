@@ -15,19 +15,17 @@ use Symfony\Component\HttpFoundation\Response;
 class RepositoryController extends Controller
 {
     /**
-     * @param Request $request
-     *
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $this->checkAccess();
-
+        $config = $this->get('satisfy.manager')->getConfig();
         $repositories = $this->get('satisfy.manager')->getRepositories();
         $repositoryOptions = $this->getParameter('repository');
         $satisRepository = array(
             'type' => 'composer',
-            'url'  => $request->getSchemeAndHttpHost(),
+            'url'  => $config->getHomepage(),
         );
         if (!empty($repositoryOptions['options'])) {
             $satisRepository['options'] = $repositoryOptions['options'];
