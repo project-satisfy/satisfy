@@ -57,14 +57,10 @@ class RepositoryType extends AbstractType
                 array(
                     'constraints' => array(
                         new Assert\NotBlank(),
-                        new Assert\Regex(sprintf('#^%s$#', $options['pattern'])),
                     ),
-                    'attr' => array_merge(
-                        array(
-                            'placeholder' => 'Repository url',
-                        ),
-                        $options['pattern'] ? array('pattern' => $options['pattern']) : array()
-                    ),
+                    'attr' => [
+                        'placeholder' => 'Repository url',
+                    ],
                 )
             );
     }
@@ -77,7 +73,6 @@ class RepositoryType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Repository::class,
-                'pattern' => null,
             ]
         );
     }

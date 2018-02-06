@@ -4,8 +4,3 @@ parameters:
     satis_log_path: "%kernel.root_dir%/../var/satis"
     admin.auth: false
     admin.users: ~
-    repository:
-        type: "git"
-        url: "git@github.com:YourAccount/"
-        options: []
-        pattern: 'https://github.com/[a-zA-Z0-9-_]+/[a-zA-Z0-9-_\.]+(.git)?|git@github.com:[a-zA-Z0-9-_]+/[a-zA-Z0-9-_\.]+.git'

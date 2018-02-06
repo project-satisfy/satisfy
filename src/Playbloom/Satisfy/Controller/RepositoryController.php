@@ -22,14 +22,10 @@ class RepositoryController extends Controller
         $this->checkAccess();
         $config = $this->get('satisfy.manager')->getConfig();
         $repositories = $this->get('satisfy.manager')->getRepositories();
-        $repositoryOptions = $this->getParameter('repository');
         $satisRepository = array(
             'type' => 'composer',
             'url'  => $config->getHomepage(),
         );
-        if (!empty($repositoryOptions['options'])) {
-            $satisRepository['options'] = $repositoryOptions['options'];
-        }
 
         $config = array(
             'repositories' => array($satisRepository),
@@ -47,16 +43,10 @@ class RepositoryController extends Controller
     {
         $this->checkAccess();
 
-        $repositoryOptions = $this->getParameter('repository');
         $repository = new Repository();
-        $repository
-            ->setType($repositoryOptions['type'])
-            ->setUrl($repositoryOptions['url']);
-
         $form = $this->createForm(
             RepositoryType::class,
-            $repository,
-            array('pattern' => $repositoryOptions['pattern'])
+            $repository
         );
 
         $form->handleRequest($request);
@@ -112,11 +102,9 @@ class RepositoryController extends Controller
             return $this->redirectToRoute('repository');
         }
 
-        $repositoryOptions = $this->getParameter('repository');
         $form = $this->createForm(
             RepositoryType::class,
-            clone $repository,
-            array('pattern' => $repositoryOptions['pattern'])
+            clone $repository
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
