@@ -16,6 +16,7 @@ cache:
     - $HOME/.composer/cache/files
 
 install:
+  - 'cp -f app/config/parameters.yml.dist app/config/parameters.yml'
   - composer install -n --dev --no-progress
 
 script:
