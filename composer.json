@@ -34,7 +34,8 @@
         "symfony/security-bundle": "^3.4",
         "symfony/templating": "^3.4",
         "symfony/twig-bundle": "^3.4",
-        "symfony/yaml": "^3.4"
+        "symfony/yaml": "^3.4",
+        "doctrine/annotations": "~1.4.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^3.4",

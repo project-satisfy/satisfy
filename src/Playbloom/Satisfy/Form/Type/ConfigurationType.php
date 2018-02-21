@@ -53,6 +53,15 @@ END
                     'stable' => 'stable',
                 ],
             ])
+            ->add('includeFilename', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'rel' => 'tooltip',
+                    'data-title' => <<<END
+Specify filename instead of default include/all\${SHA1_HASH}.json
+END
+                ],
+            ])
             ->add('outputDir', TextType::class, [
                 'required' => false,
                 'attr' => [
@@ -60,6 +69,21 @@ END
                     'data-title' => <<<END
 defines where to output the repository files if not provided as an argument when calling the build command
 END
+                ],
+            ])
+            ->add('outputHtml', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Output HTML',
+                'attr' => [
+                    'rel' => 'tooltip',
+                    'data-title' => 'If enabled, build a static web page'
+                ],
+            ])
+            ->add('providers', CheckboxType::class, [
+                'required' => false,
+                'attr' => [
+                    'rel' => 'tooltip',
+                    'data-title' => 'If enabled, dump package providers'
                 ],
             ])
             ->add('twigTemplate', TextType::class, [

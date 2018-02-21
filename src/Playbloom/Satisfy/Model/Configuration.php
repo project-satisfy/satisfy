@@ -40,6 +40,13 @@ class Configuration
     private $outputDir = 'web';
 
     /**
+     * @var bool
+     * @Type("boolean")
+     * @SerializedName("output-html")
+     */
+    private $outputHtml = true;
+
+    /**
      * @var Map
      * @Type("RepositoryCollection<Playbloom\Satisfy\Model\Repository>")
      */
@@ -73,6 +80,13 @@ class Configuration
     private $requireDevDependencies = false;
 
     /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("include-filename")
+     */
+    private $includeFilename = '';
+
+    /**
      * @var Archive
      * @Type("Playbloom\Satisfy\Model\Archive")
      */
@@ -84,6 +98,12 @@ class Configuration
      * @SerializedName("minimum-stability")
      */
     private $minimumStability = 'dev';
+
+    /**
+     * @var bool
+     * @Type("boolean")
+     */
+    private $providers = false;
 
     /**
      * @var string
@@ -190,6 +210,25 @@ class Configuration
     /**
      * @return bool
      */
+    public function isOutputHtml(): bool
+    {
+        return $this->outputHtml;
+    }
+
+    /**
+     * @param bool $outputHtml
+     * @return $this
+     */
+    public function setOutputHtml(bool $outputHtml)
+    {
+        $this->outputHtml = $outputHtml;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
     public function isRequireAll(): bool
     {
         return $this->requireAll;
@@ -233,6 +272,28 @@ class Configuration
     public function setRequireDevDependencies(bool $requireDevDependencies)
     {
         $this->requireDevDependencies = $requireDevDependencies;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIncludeFilename()
+    {
+        return $this->includeFilename;
+    }
+
+    /**
+     * @param string|null $includeFilename
+     * @return $this
+     */
+    public function setIncludeFilename(string $includeFilename = null)
+    {
+        if (empty($includeFilename)) {
+            $includeFilename = null;
+        }
+        $this->includeFilename = $includeFilename;
+
+        return $this;
     }
 
     /**
@@ -289,6 +350,25 @@ class Configuration
     public function setMinimumStability(string $minimumStability = null)
     {
         $this->minimumStability = $minimumStability;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProviders()
+    {
+        return $this->providers;
+    }
+
+    /**
+     * @param bool $providers
+     * @return $this
+     */
+    public function setProviders(bool $providers)
+    {
+        $this->providers = $providers;
+
+        return $this;
     }
 
     /**
