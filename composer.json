@@ -29,6 +29,7 @@
         "jms/serializer-bundle": "^2.3",
         "symfony/asset": "^3.4",
         "symfony/form": "^3.4",
+        "symfony/lock": "^3.4",
         "symfony/validator": "^3.4",
         "symfony/framework-bundle": "^3.4",
         "symfony/security-bundle": "^3.4",

@@ -6,7 +6,9 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use Playbloom\Satisfy\Persister\FilePersister;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Lock\Lock;
 use Tests\Playbloom\Satisfy\Traits\SchemaValidatorTrait;
 
 class FilePersisterTest extends TestCase
@@ -65,4 +67,29 @@ class FilePersisterTest extends TestCase
         $this->assertEquals($content, $this->persister->load());
     }
 
+    public function testFileLocking()
+    {
+        // try to acquireLock twice
+        $reflection = new \ReflectionClass($this->persister);
+        $method = $reflection->getMethod('acquireLock');
+        $method->setAccessible(true);
+        /** @var Lock $lock */
+        $lock = $method->invoke($this->persister);
+        $this->assertInstanceOf(Lock::class, $lock);
+        $this->assertTrue($lock->isAcquired());
+
+        try {
+            $this->persister->flush('');
+            $this->fail('Persister must fail if resource is already locked');
+        } catch (\Throwable $e) {
+            $this->assertInstanceOf(\RuntimeException::class, $e);
+        }
+
+        // lock must still present
+        $this->assertTrue($lock->isAcquired());
+
+        // try again without lock
+        unset($lock);
+        $this->persister->flush('');
+    }
 }
