@@ -84,7 +84,7 @@ class Configuration
      * @Type("string")
      * @SerializedName("include-filename")
      */
-    private $includeFilename = 'include/all$%hash%.json';
+    private $includeFilename;
 
     /**
      * @var Archive
