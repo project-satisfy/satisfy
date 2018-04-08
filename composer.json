@@ -37,7 +37,8 @@
         "symfony/twig-bundle": "^3.4",
         "symfony/yaml": "^3.4",
         "doctrine/annotations": "~1.4.0",
-        "doctrine/instantiator": "1.0.5"
+        "doctrine/instantiator": "1.0.5",
+        "incenteev/composer-parameter-handler": "^2.1"
     },
     "require-dev": {
         "symfony/browser-kit": "^3.4",
@@ -50,9 +51,20 @@
     "autoload-dev": {
         "psr-4": { "Tests\\Playbloom\\Satisfy\\": "tests/Playbloom/Satisfy" }
     },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ]
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
+        },
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
         }
     },
     "config": {
