@@ -2,9 +2,9 @@
 
 namespace Playbloom\Satisfy\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Process\Process;
-use Symfony\Component\HttpFoundation\Response;
 
 class SatisController extends AbstractProtectedController
 {
@@ -30,7 +30,7 @@ class SatisController extends AbstractProtectedController
 
         $path = $this->container->getParameter('kernel.project_dir');
         $env = $this->getDefaultEnv();
-        $env['HOME'] = '/var/www';
+        $env['HOME'] = $this->container->getParameter('composer.home');
 
         $arguments = $this->container->getParameter('satis_filename');
         $arguments .= ' --skip-errors --no-ansi --no-interaction --verbose';
