@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Satis build{% endblock %}
+
+{% block content %}
+    <pre id="satisOutput"></pre>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+    $(function(){
+        var output = $("#satisOutput");
+        var outputSource = new EventSource("{{ path('satis_build_run') }}");
+        outputSource.onmessage = function(event){
+            if (event.data == '__done__') {
+                outputSource.close();
+                return;
+            }
+            output
+                .append(event.data)
+                .append("\n");
+        };
+    });
+    </script>
+{% endblock %}

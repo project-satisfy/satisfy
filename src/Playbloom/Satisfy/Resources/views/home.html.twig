@@ -22,6 +22,10 @@
         <i class="glyphicon glyphicon-check" aria-hidden="true"></i>
         Edit configuration
     </a>
+    <a href="{{ path('satis_build') }}" class="btn btn-large btn-block btn-primary">
+        <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i>
+        Build packages
+    </a>
 
     <ul class="nav nav-pills nav-stacked">
     {% for repository in repositories %}

@@ -6,13 +6,12 @@ use Playbloom\Satisfy\Form\Type\ComposerLockType;
 use Playbloom\Satisfy\Form\Type\DeleteFormType;
 use Playbloom\Satisfy\Form\Type\RepositoryType;
 use Playbloom\Satisfy\Model\Repository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RepositoryController extends Controller
+class RepositoryController extends AbstractProtectedController
 {
     /**
      * @return Response
@@ -149,17 +148,5 @@ class RepositoryController extends Controller
             '@PlaybloomSatisfy/delete.html.twig',
             array('form' => $form->createView(), 'repository' => $repository)
         );
-    }
-
-    /**
-     * Check admin access.
-     */
-    protected function checkAccess()
-    {
-        if (!$this->getParameter('admin.auth')) {
-            return;
-        }
-
-        parent::denyAccessUnlessGranted('ROLE_ADMIN');
     }
 }

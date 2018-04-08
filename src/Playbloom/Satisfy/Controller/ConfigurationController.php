@@ -3,10 +3,9 @@
 namespace Playbloom\Satisfy\Controller;
 
 use Playbloom\Satisfy\Form\Type\ConfigurationType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class ConfigurationController extends Controller
+class ConfigurationController extends AbstractProtectedController
 {
     public function indexAction(Request $request)
     {

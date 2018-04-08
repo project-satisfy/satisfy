@@ -69,6 +69,13 @@ class MicroKernel extends Kernel
         $routes
             ->add('/admin/configuration', $controllerBase . 'ConfigurationController::indexAction', 'configuration')
             ->setMethods(['GET', 'POST']);
+        // satis interaction
+        $routes
+            ->add('/admin/satis/build', $controllerBase . 'SatisController::buildAction', 'satis_build')
+            ->setMethods(['GET']);
+        $routes
+            ->add('/admin/satis/buildRun', $controllerBase . 'SatisController::buildRunAction', 'satis_build_run')
+            ->setMethods(['GET']);
     }
 
     // optional, to use the standard Symfony cache directory

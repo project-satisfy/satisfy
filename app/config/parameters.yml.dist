@@ -1,6 +1,6 @@
 parameters:
     secret: "ThisTokenIsNotSoSecretChangeIt"
-    satis_filename: "%kernel.root_dir%/../satis.json"
-    satis_log_path: "%kernel.root_dir%/../var/satis"
+    satis_filename: "%kernel.project_dir%/satis.json"
+    satis_log_path: "%kernel.project_dir%/var/satis"
     admin.auth: false
     admin.users: ~
