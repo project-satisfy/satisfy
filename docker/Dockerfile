@@ -16,10 +16,7 @@ VOLUME /var/www/.ssh
 
 # symbolic links to index.php and static files
 ARG APP_PATH=/var/www/satisfy
-RUN cd /var/www/html \
-    && ln -s $APP_PATH/web/index.php \
-    && ln -s $APP_PATH/web/js \
-    && ln -s $APP_PATH/web/css \
-    && ln -s $APP_PATH/web/fonts
+
+WORKDIR /var/www/satisfy
 
 ENTRYPOINT ["supervisord", "-n"]
