@@ -47,10 +47,10 @@ class ComposerLockValidator extends ConstraintValidator
     /**
      * Returns schema data for validation.
      *
-     * @param $path
+     * @param string $path
      * @return mixed
      */
-    private function getSchema($path)
+    private function getSchema(string $path)
     {
         $schema_json = file_get_contents($path);
 

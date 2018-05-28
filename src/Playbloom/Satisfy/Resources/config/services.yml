@@ -2,6 +2,7 @@ services:
   satisfy.manager:
     class: Playbloom\Satisfy\Service\Manager
     arguments:
+      - "@lock.satis"
       - "@satisfy.persister.json"
 
   satisfy.persister.file:

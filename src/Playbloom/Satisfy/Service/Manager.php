@@ -8,6 +8,8 @@ use Playbloom\Satisfy\Exception\MissingConfigException;
 use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Persister\PersisterInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Lock\Lock;
 
 /**
  * Satis configuration definition manager
@@ -16,6 +18,9 @@ use Playbloom\Satisfy\Persister\PersisterInterface;
  */
 class Manager
 {
+    /** @var Lock */
+    private $lock;
+
     /** @var PersisterInterface */
     private $persister;
 
@@ -25,10 +30,12 @@ class Manager
     /**
      * Constructor
      *
+     * @param Lock               $lock
      * @param PersisterInterface $persister
      */
-    public function __construct(PersisterInterface $persister)
+    public function __construct(Lock $lock, PersisterInterface $persister)
     {
+        $this->lock = $lock;
         $this->persister = $persister;
     }
 
@@ -66,9 +73,14 @@ class Manager
      */
     public function add(RepositoryInterface $repository)
     {
-        $this
-            ->doAdd($repository)
-            ->flush();
+        $lock = $this->acquireLock();
+        try {
+            $this
+                ->doAdd($repository)
+                ->flush();
+        } finally {
+            $lock->release();
+        }
     }
 
     /**
@@ -78,10 +90,15 @@ class Manager
      */
     public function addAll(array $repositories)
     {
-        foreach ($repositories as $repository) {
-            $this->doAdd($repository);
+        $lock = $this->acquireLock();
+        try {
+            foreach ($repositories as $repository) {
+                $this->doAdd($repository);
+            }
+            $this->flush();
+        } finally {
+            $lock->release();
         }
-        $this->flush();
     }
 
     /**
@@ -100,11 +117,15 @@ class Manager
             throw new \RuntimeException('Unknown repository');
         }
 
-        $repos->remove($repository->getId());
-        $repository->setUrl($url);
-        $repos->set($repository->getId(), $repository);
-
-        $this->flush();
+        $lock = $this->acquireLock();
+        try {
+            $repos->remove($repository->getId());
+            $repository->setUrl($url);
+            $repos->set($repository->getId(), $repository);
+            $this->flush();
+        } finally {
+            $lock->release();
+        }
     }
 
     /**
@@ -114,12 +135,16 @@ class Manager
      */
     public function delete(RepositoryInterface $repository)
     {
-        $this
-            ->getConfig()
-            ->getRepositories()
-            ->remove($repository->getId());
-
-        $this->flush();
+        $lock = $this->acquireLock();
+        try {
+            $this
+                ->getConfig()
+                ->getRepositories()
+                ->remove($repository->getId());
+            $this->flush();
+        } finally {
+            $lock->release();
+        }
     }
 
     /**
@@ -163,5 +188,17 @@ class Manager
         }
 
         return $this->configuration;
+    }
+
+    /**
+     * @return Lock
+     */
+    public function acquireLock(): Lock
+    {
+        if (!$this->lock->acquire()) {
+            throw new IOException('Cannot acquire lock for satis configuration file');
+        }
+
+        return $this->lock;
     }
 }

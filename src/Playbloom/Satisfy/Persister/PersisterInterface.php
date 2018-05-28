@@ -5,12 +5,12 @@ namespace Playbloom\Satisfy\Persister;
 interface PersisterInterface
 {
     /**
-     * @return string
+     * @return mixed
      */
     public function load();
 
     /**
-     * @param string $content
+     * @param mixed $content
      */
     public function flush($content);
 }

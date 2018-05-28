@@ -10,6 +10,9 @@ framework:
   assets: ~
   profiler:
     collect: false
+  lock:
+    resources:
+      satis: "flock"
 
 twig:
   form_themes: ['bootstrap_3_layout.html.twig']
