@@ -28,7 +28,10 @@ class ComposerLockValidator extends ConstraintValidator
         }
 
         $composerData = json_decode(file_get_contents($data->openFile()->getRealPath()));
-        $schema = $this->getSchema($constraint->getSchemaPath());
+        $schema = null;
+        if ($constraint instanceof ComposerLock) {
+            $schema = $this->getSchema($constraint->getSchemaPath());
+        }
 
         // In version 1.1.0 of the validator, "required" attributes are not used.
         // So data structure might be partially unset.

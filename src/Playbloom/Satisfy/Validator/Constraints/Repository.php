@@ -24,6 +24,6 @@ class Repository extends Constraint
      */
     public function getDefaultOption()
     {
-        return null;
+        return '';
     }
 }

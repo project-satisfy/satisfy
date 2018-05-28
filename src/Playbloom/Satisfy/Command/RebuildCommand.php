@@ -51,10 +51,10 @@ class RebuildCommand extends BuildCommand implements ContainerAwareInterface
             $modifiedAt = filemtime($configFile);
             $lastUpdate = @filemtime($outputDir . '/packages.json');
             if ($modifiedAt < $lastUpdate && time() - $lastUpdate < $lifetime) {
-                return;
+                return 0;
             }
         }
 
-        parent::execute($input, $output);
+        return parent::execute($input, $output);
     }
 }

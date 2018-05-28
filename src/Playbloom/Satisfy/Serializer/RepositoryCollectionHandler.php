@@ -3,6 +3,7 @@
 namespace Playbloom\Satisfy\Serializer;
 
 use JMS\Serializer\Context;
+use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\VisitorInterface;
 use PhpCollection\Map;
 use Playbloom\Satisfy\Model\Repository;
@@ -21,7 +22,9 @@ class RepositoryCollectionHandler
         // We change the base type, and pass through possible parameters.
         $type['name'] = 'array';
         $data = $collection->values();
-        $visitor->setOptions(JSON_PRETTY_PRINT);
+        if ($visitor instanceof JsonSerializationVisitor) {
+            $visitor->setOptions(JSON_PRETTY_PRINT);
+        }
 
         return $visitor->visitArray($data, $type, $context);
     }

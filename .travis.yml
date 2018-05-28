@@ -19,6 +19,8 @@ cache:
 install:
   - 'cp -f app/config/parameters.yml.dist app/config/parameters.yml'
   - composer install -n --dev --no-progress
+  - composer require phpstan/phpstan
 
 script:
+  - bin/phpstan analyse --level 5 src
   - bin/phpunit
