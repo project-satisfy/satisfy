@@ -28,3 +28,12 @@
     RewriteRule .? %{ENV:BASE}/index.php [QSA,L]
 </IfModule>
 
+#Compress JSON files
+<IfModule mod_headers.c>
+    <IfModule mod_deflate.c>
+        <IfModule mod_filter.c>
+            SetOutputFilter DEFLATE
+            AddOutputFilterByType DEFLATE application/json
+        </IfModule>
+    </IfModule>
+</IfModule>
