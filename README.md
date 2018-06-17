@@ -24,7 +24,7 @@ Satisfy ease your satis configuration management. It provides simple web UI over
 Basically, it just reads/writes the satis.json file and provides a web CRUD.
 
 * On each HTTP request, the satis.json is loaded.
-* If a write occurs in this file, a backup is made in app/data/
+* If a write occurs in this file, a backup is made in var/satis/
 
 ## Installation
 
@@ -35,9 +35,11 @@ Basically, it just reads/writes the satis.json file and provides a web CRUD.
 
 ### Satis configuration
 
-Define your [default/existing satis configuration](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md).
+* Either define your [default/existing satis configuration](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md)
+* or use interactice satis CLI tool `./bin/satis init`
+* or submit form at /admin/configuration
 
-By default, the `satis.json` file is expected at the project root. You can either create file via command line or use web interface.
+By default, the `satis.json` file is expected at the project root, but You can set another path under parameter `satis_filename`.
 
 ### Application configuration
 
@@ -65,7 +67,7 @@ A bin shortcut to Satis is already included in Satisfy, so run the following com
 
 * Ludovic Fleury - <ludo.fleury@gmail.com> - <http://twitter.com/ludofleury>
 * Julius Beckmann - <satisfy@h4cc.de> - <https://twitter.com/h4cc>
-* Ramunas Dronga - <satisfy@ramuno.lt>
+* Ramūnas Dronga - <satisfy@ramuno.lt>
 
 ## License
 
