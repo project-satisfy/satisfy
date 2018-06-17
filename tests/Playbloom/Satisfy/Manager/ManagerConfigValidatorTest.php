@@ -7,6 +7,9 @@ use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\TestCase;
 use Playbloom\Satisfy\Persister\PersisterInterface;
 use Playbloom\Satisfy\Service\Manager;
+use Symfony\Component\Lock\Factory;
+use Symfony\Component\Lock\Store\FlockStore;
+use Symfony\Component\Lock\Store\SemaphoreStore;
 use Tests\Playbloom\Satisfy\Traits\SchemaValidatorTrait;
 
 class ManagerConfigValidatorTest extends TestCase
@@ -32,8 +35,10 @@ class ManagerConfigValidatorTest extends TestCase
     {
         $this->assertTrue(copy($configFilename, $this->config->url()));
         $persister = $this->prophesize(PersisterInterface::class);
+        $lockFactory = new Factory(new FlockStore());
+        $lock = $lockFactory->createLock('satis');
         /** @var Manager $manager */
-        $manager = new Manager($persister->reveal());
+        $manager = new Manager($lock, $persister->reveal());
         $manager->addAll(array());
 
         $this->validateSchema(json_decode($this->config->getContent()), $this->getSatisSchema());

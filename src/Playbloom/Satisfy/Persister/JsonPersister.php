@@ -3,6 +3,7 @@
 namespace Playbloom\Satisfy\Persister;
 
 use JMS\Serializer\SerializerInterface;
+use Playbloom\Satisfy\Model\Configuration;
 
 /**
  * Json definition file persister
@@ -34,7 +35,7 @@ class JsonPersister implements PersisterInterface
     }
 
     /**
-     * @return \stdClass
+     * @return object
      */
     public function load()
     {
@@ -42,7 +43,11 @@ class JsonPersister implements PersisterInterface
         if ('' === trim($jsonString)) {
             throw new \RuntimeException('Satis file is empty.');
         }
-        return $this->serializer->deserialize($jsonString, $this->satisClass, 'json');
+
+        /** @var Configuration $configuration */
+        $configuration = $this->serializer->deserialize($jsonString, $this->satisClass, 'json');
+
+        return $configuration;
     }
 
     /**

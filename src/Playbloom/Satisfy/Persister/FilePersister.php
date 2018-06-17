@@ -7,9 +7,6 @@ use Playbloom\Satisfy\Exception\MissingConfigException;
 use RuntimeException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Lock\Factory;
-use Symfony\Component\Lock\Lock;
-use Symfony\Component\Lock\Store\FlockStore;
 
 class FilePersister implements PersisterInterface
 {
@@ -73,7 +70,6 @@ class FilePersister implements PersisterInterface
     {
         try {
             $this->checkPermissions();
-            $lock = $this->acquireLock();
             $this->createBackup();
             $this->filesystem->dumpFile($this->filename, $content);
         } catch (Exception $exception) {
@@ -82,9 +78,6 @@ class FilePersister implements PersisterInterface
                 null,
                 $exception
             );
-        } finally {
-            // release & destroy lock
-            unset($lock);
         }
     }
 
@@ -121,19 +114,5 @@ class FilePersister implements PersisterInterface
                 throw new IOException(sprintf('Path "%s" is not writable.', dirname($this->filename)));
             }
         }
-    }
-
-    /**
-     * @return Lock
-     */
-    protected function acquireLock(): Lock
-    {
-        $factory = new Factory(new FlockStore());
-        $lock = $factory->createLock($this->filename);
-        if (!$lock->acquire()) {
-            throw new IOException(sprintf('Cannot acquire lock for file "%s"', $this->filename));
-        }
-
-        return $lock;
     }
 }

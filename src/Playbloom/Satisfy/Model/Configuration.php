@@ -80,14 +80,14 @@ class Configuration
     private $requireDevDependencies = false;
 
     /**
-     * @var string
+     * @var string|null
      * @Type("string")
      * @SerializedName("include-filename")
      */
     private $includeFilename;
 
     /**
-     * @var Archive
+     * @var Archive|null
      * @Type("Playbloom\Satisfy\Model\Archive")
      */
     private $archive;
@@ -106,7 +106,7 @@ class Configuration
     private $providers = false;
 
     /**
-     * @var string
+     * @var string|null
      * @Type("string")
      * @SerializedName("twig-template")
      */
@@ -125,7 +125,7 @@ class Configuration
     private $config;
 
     /**
-     * @var string
+     * @var string|null
      * @Type("string")
      * @SerializedName("notify-batch")
      */
@@ -166,9 +166,9 @@ class Configuration
     }
 
     /**
-     * @param string|null $description
+     * @param string $description
      */
-    public function setDescription(string $description = null)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
@@ -202,7 +202,7 @@ class Configuration
     /**
      * @param string $outputDir
      */
-    public function setOutputDir(string $outputDir = null)
+    public function setOutputDir(string $outputDir)
     {
         $this->outputDir = $outputDir;
     }
@@ -275,7 +275,7 @@ class Configuration
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIncludeFilename()
     {
@@ -329,7 +329,7 @@ class Configuration
     }
 
     /**
-     * @return Archive
+     * @return Archive|null
      */
     public function getArchive()
     {
@@ -347,7 +347,7 @@ class Configuration
     /**
      * @param string $minimumStability
      */
-    public function setMinimumStability(string $minimumStability = null)
+    public function setMinimumStability(string $minimumStability)
     {
         $this->minimumStability = $minimumStability;
     }

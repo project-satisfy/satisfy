@@ -34,6 +34,6 @@ class ComposerLock extends Constraint
      */
     public function getDefaultOption()
     {
-        return null;
+        return '';
     }
 }

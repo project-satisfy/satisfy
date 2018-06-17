@@ -134,9 +134,9 @@ class Archive
      * @param boolean $skipDev
      * @return $this
      */
-    public function setSkipDev($skipDev)
+    public function setSkipDev(bool $skipDev)
     {
-        $this->skipDev = (bool)$skipDev;
+        $this->skipDev = $skipDev;
 
         return $this;
     }
@@ -210,9 +210,9 @@ class Archive
      * @param boolean $checksum
      * @return $this
      */
-    public function setChecksum($checksum)
+    public function setChecksum(bool $checksum)
     {
-        $this->checksum = (bool)$checksum;
+        $this->checksum = $checksum;
 
         return $this;
     }
