@@ -35,7 +35,7 @@ class SatisController extends AbstractProtectedController
         $arguments = $this->container->getParameter('satis_filename');
         $arguments .= ' --skip-errors --no-ansi --no-interaction --verbose';
 
-        $process = new Process($path . '/bin/satis build', $path, $env, $arguments, 600);
+        $process = new Process($path.'/bin/satis build '.$arguments, $path, $env, null, 600);
         $process->start();
 
         $processRead = function () use ($process) {
@@ -46,7 +46,7 @@ class SatisController extends AbstractProtectedController
                 }
                 echo 'data: ', $data, PHP_EOL, PHP_EOL;
             };
-            $print('$ ' . $process->getCommandLine() . ' ' . $process->getInput());
+            $print('$ ' . $process->getCommandLine());
             foreach ($process as $content) {
                 $print($content);
             }
