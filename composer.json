@@ -43,7 +43,8 @@
     "require-dev": {
         "symfony/browser-kit": "^3.4",
         "mikey179/vfsStream": "^1.6",
-        "phpunit/phpunit": "^6.3"
+        "phpunit/phpunit": "^6.3",
+        "phpstan/phpstan": "^0.9"
     },
     "autoload": {
         "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" }
