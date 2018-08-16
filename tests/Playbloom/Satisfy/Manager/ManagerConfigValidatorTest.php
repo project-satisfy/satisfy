@@ -2,30 +2,32 @@
 
 namespace Tests\Playbloom\Satisfy\Manager;
 
-use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\TestCase;
 use Playbloom\Satisfy\Persister\PersisterInterface;
 use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Store\FlockStore;
-use Symfony\Component\Lock\Store\SemaphoreStore;
 use Tests\Playbloom\Satisfy\Traits\SchemaValidatorTrait;
+use Tests\Playbloom\Satisfy\Traits\VfsTrait;
 
 class ManagerConfigValidatorTest extends TestCase
 {
     use SchemaValidatorTrait;
+    use VfsTrait;
 
     /** @var vfsStreamFile */
     protected $config;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setUp()
+    protected function setUp()
     {
-        $root = vfsStream::setup();
-        $root->addChild($this->config = new vfsStreamFile('satis.json'));
+        $this->vfsSetup();
+        $this->vfsRoot->addChild($this->config = new vfsStreamFile('satis.json'));
+    }
+
+    protected function tearDown()
+    {
+        $this->vfsTearDown();
     }
 
     /**
@@ -51,8 +53,8 @@ class ManagerConfigValidatorTest extends TestCase
     public function configFileProvider()
     {
         return [
-            [__DIR__.'/../../../fixtures/satis-minimal.json'],
-            [__DIR__.'/../../../fixtures/satis-full.json'],
+            [__DIR__ . '/../../../fixtures/satis-minimal.json'],
+            [__DIR__ . '/../../../fixtures/satis-full.json'],
         ];
     }
 }

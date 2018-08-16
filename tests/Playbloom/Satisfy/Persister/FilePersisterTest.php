@@ -2,40 +2,33 @@
 
 namespace Tests\Playbloom\Satisfy\Persister;
 
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use Playbloom\Satisfy\Persister\FilePersister;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Lock\Lock;
 use Tests\Playbloom\Satisfy\Traits\SchemaValidatorTrait;
+use Tests\Playbloom\Satisfy\Traits\VfsTrait;
 
 class FilePersisterTest extends TestCase
 {
     use SchemaValidatorTrait;
-
-    /** @var vfsStreamDirectory */
-    protected $root;
+    use VfsTrait;
 
     /** @var FilePersister */
     protected $persister;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp()
     {
-        $this->root = vfsStream::setup();
-        $this->persister = new FilePersister(new Filesystem, $this->root->url().'/satis.json', $this->root->url());
+        $this->vfsSetup();
+        $this->persister = new FilePersister(
+            new Filesystem,
+            $this->vfsRoot->url() . '/satis.json',
+            $this->vfsRoot->url()
+        );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown()
     {
-        $this->root = null;
+        $this->vfsTearDown();
         $this->persister = null;
     }
 
@@ -54,7 +47,7 @@ class FilePersisterTest extends TestCase
         ];
         $content = json_encode($config);
         $this->persister->flush($content);
-        $configFile = $this->root->getChild('satis.json');
+        $configFile = $this->vfsRoot->getChild('satis.json');
         $this->assertStringEqualsFile($configFile->url(), $content);
         $this->assertEquals($content, $this->persister->load());
 

@@ -7,20 +7,20 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Playbloom\Satisfy\Traits\VfsTrait;
 
 class RepositoryControllerTest extends WebTestCase
 {
-    /**
-     * @var vfsStreamDirectory
-     */
-    protected $root;
+    use VfsTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp()
     {
-        $this->root = vfsStream::setup();
+        $this->vfsSetup();
+    }
+
+    protected function tearDown()
+    {
+        $this->vfsTearDown();
     }
 
     public function testRepositoryIndex()
@@ -65,8 +65,8 @@ class RepositoryControllerTest extends WebTestCase
 
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
 
-        $this->assertTrue($this->root->hasChild('satis.json'));
-        $config = $this->root->getChild('satis.json')->getContent();
+        $this->assertTrue($this->vfsRoot->hasChild('satis.json'));
+        $config = $this->vfsRoot->getChild('satis.json')->getContent();
 
         $this->assertJson($config);
         $config = json_decode($config);
@@ -84,7 +84,7 @@ class RepositoryControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(302, $response->getStatusCode());
 
-        $config = json_decode($this->root->getChild('satis.json')->getContent());
+        $config = json_decode($this->vfsRoot->getChild('satis.json')->getContent());
         $this->assertEquals($url2, $config->repositories[0]->url);
 
         // remove repository

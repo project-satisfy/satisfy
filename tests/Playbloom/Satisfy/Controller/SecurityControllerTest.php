@@ -2,21 +2,12 @@
 
 namespace tests\Playbloom\Satisfy\Controller;
 
-use org\bovigo\vfs\vfsStream;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        vfsStream::setup();
-    }
-
     public function testAdminLogin()
     {
         $client = self::createClient(['environment' => 'testsecure']);
