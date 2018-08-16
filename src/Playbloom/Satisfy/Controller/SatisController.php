@@ -28,54 +28,21 @@ class SatisController extends AbstractProtectedController
         ini_set('implicit_flush', 1);
         ob_implicit_flush(true);
 
-        $path = $this->container->getParameter('kernel.project_dir');
-        $env = $this->getDefaultEnv();
-        $env['HOME'] = $this->container->getParameter('composer.home');
+        $runner = $this->container->get('satisfy.runner.satis_build');
+        $output = $runner->run();
 
-        $arguments = $this->container->getParameter('satis_filename');
-        $arguments .= ' --skip-errors --no-ansi --no-interaction --verbose';
-
-        $process = new Process($path.'/bin/satis build '.$arguments, $path, $env, null, 600);
-        $process->start();
-
-        $processRead = function () use ($process) {
-            $print = function ($data) {
-                $data = trim($data);
-                if (empty($data)) {
-                    return;
-                }
-                echo 'data: ', $data, PHP_EOL, PHP_EOL;
-            };
-            $print('$ ' . $process->getCommandLine());
-            foreach ($process as $content) {
-                $print($content);
+        $processRead = function () use ($output) {
+            foreach ($output as $line) {
+                $this->outputStream($line);
             }
-            $print($process->getExitCodeText());
-            $print('__done__');
+            $this->outputStream('__done__');
         };
 
         return new StreamedResponse($processRead, Response::HTTP_OK, ['Content-Type' => 'text/event-stream']);
     }
 
-    /**
-     * @return array
-     */
-    private function getDefaultEnv(): array
+    protected function outputStream(string $line)
     {
-        $env = [];
-
-        foreach ($_SERVER as $k => $v) {
-            if (is_string($v) && false !== $v = getenv($k)) {
-                $env[$k] = $v;
-            }
-        }
-
-        foreach ($_ENV as $k => $v) {
-            if (is_string($v)) {
-                $env[$k] = $v;
-            }
-        }
-
-        return $env;
+        echo 'data: ', $line, PHP_EOL, PHP_EOL;
     }
 }

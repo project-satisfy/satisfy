@@ -34,3 +34,10 @@ services:
     class: Playbloom\Satisfy\Service\LockProcessor
     arguments:
       - "@satisfy.manager"
+
+  satisfy.runner.satis_build:
+    class: Playbloom\Satisfy\Runner\SatisBuildRunner
+    arguments:
+      - '%kernel.project_dir%'
+      - '%satis_filename%'
+      - '%composer.home%'
