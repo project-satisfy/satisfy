@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8908235f3a8c38d405b795371aba6ebe",
+    "content-hash": "9723618037ccd25677265ecd74788ade",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -5322,6 +5322,53 @@
                 "xunit"
             ],
             "time": "2018-08-09T05:50:03+00:00"
+        },
+        {
+            "name": "ramunasd/symfony-container-mocks",
+            "version": "0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramunasd/symfony-container-mocks.git",
+                "reference": "d2557e6ab7f3da8ddd41ab4f24a2ad6113f8770b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramunasd/symfony-container-mocks/zipball/d2557e6ab7f3da8ddd41ab4f24a2ad6113f8770b",
+                "reference": "d2557e6ab7f3da8ddd41ab4f24a2ad6113f8770b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "phpspec/prophecy": "~1.6",
+                "symfony/dependency-injection": ">=2.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7",
+                "symfony/config": ">=2.3",
+                "symfony/framework-bundle": ">=2.3",
+                "symfony/http-kernel": ">=2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RDV\\SymfonyContainerMocks\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Provides extended Symfony dependency injection container enabling service mocking.",
+            "homepage": "https://github.com/ramunasd/symfony-container-mocks",
+            "keywords": [
+                "TDD",
+                "container",
+                "phpunit",
+                "prophecy",
+                "symfony",
+                "test"
+            ],
+            "time": "2018-06-13T19:13:51+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
