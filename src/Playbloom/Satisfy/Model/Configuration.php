@@ -25,7 +25,7 @@ class Configuration
      * @var string
      * @Type("string")
      */
-    private $description = '';
+    private $description;
 
     /**
      * @Type("string")
@@ -158,17 +158,17 @@ class Configuration
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description = null)
     {
         $this->description = $description;
     }
@@ -386,7 +386,7 @@ class Configuration
     {
         $this->twigTemplate = $twigTemplate;
     }
-    
+
     /**
      * @return string
      */
@@ -394,7 +394,7 @@ class Configuration
     {
         return json_encode($this->config);
     }
-    
+
     /**
      * @param string $config
      */
