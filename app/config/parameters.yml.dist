@@ -4,4 +4,4 @@ parameters:
     satis_log_path: "%kernel.project_dir%/var/satis"
     admin.auth: false
     admin.users: ~
-    composer.home: /var/www
+    composer.home: "%kernel.project_dir%/.composer"
