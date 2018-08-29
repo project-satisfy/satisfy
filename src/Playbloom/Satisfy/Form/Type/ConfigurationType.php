@@ -86,6 +86,13 @@ END
                     'data-title' => 'If enabled, dump package providers'
                 ],
             ])
+            ->add('config', TextareaType::class, [
+                'required' => false,
+                'attr' => [
+                    'rel' => 'tooltip',
+                    'data-title' => 'a configuration options in json format',
+                ],
+            ])
             ->add('twigTemplate', TextType::class, [
                 'required' => false,
                 'attr' => [

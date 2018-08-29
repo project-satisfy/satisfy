@@ -119,8 +119,8 @@ class Configuration
     private $abandoned;
 
     /**
-     * @var \stdClass
-     * @Type("stdClass")
+     * @var array
+     * @Type("array")
      */
     private $config;
 
@@ -385,6 +385,22 @@ class Configuration
     public function setTwigTemplate(string $twigTemplate = null)
     {
         $this->twigTemplate = $twigTemplate;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getConfig()
+    {
+        return json_encode($this->config);
+    }
+    
+    /**
+     * @param string $config
+     */
+    public function setConfig(string $config)
+    {
+        $this->config = json_decode($config, true);
     }
 
     /**
