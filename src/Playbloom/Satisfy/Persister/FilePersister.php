@@ -71,7 +71,9 @@ class FilePersister implements PersisterInterface
         try {
             $this->checkPermissions();
             $this->createBackup();
-            $this->filesystem->dumpFile($this->filename, $content);
+            if (false === @file_put_contents($this->filename, $content)) {
+                throw new IOException(sprintf('Failed to write file "%s".', $this->filename), 0, null, $this->filename);
+            }
         } catch (Exception $exception) {
             throw new RuntimeException(
                 sprintf('Unable to persist the data to "%s"', $this->filename),
