@@ -6,6 +6,7 @@ use PhpCollection\Map;
 use PhpOption\None;
 use Playbloom\Satisfy\Exception\MissingConfigException;
 use Playbloom\Satisfy\Model\Configuration;
+use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Persister\PersisterInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -64,6 +65,21 @@ class Manager
         }
 
         return $repository->get();
+    }
+
+    /**
+     * @param string $pattern
+     * @return RepositoryInterface|null
+     */
+    public function findByUrl(string $pattern)
+    {
+        foreach ($this->getRepositories() as $repository) {
+            if (preg_match($pattern, $repository->getUrl())) {
+                return $repository;
+            }
+        }
+
+        return null;
     }
 
     /**

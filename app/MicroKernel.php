@@ -1,17 +1,19 @@
 <?php
 
+use RDV\SymfonyContainerMocks\DependencyInjection\TestKernelTrait;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
-use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
 
 class MicroKernel extends Kernel
 {
     use MicroKernelTrait;
+    use TestKernelTrait;
 
     /**
      * {@inheritdoc}
@@ -76,6 +78,10 @@ class MicroKernel extends Kernel
         $routes
             ->add('/admin/satis/buildRun', $controllerBase . 'SatisController::buildRunAction', 'satis_build_run')
             ->setMethods(['GET']);
+        // webhooks
+        $routes
+            ->add('/webhook/bitbucket', $controllerBase . 'WebhookController::bitbucketAction', 'webhook_bitbucket')
+            ->setMethods(['GET', 'POST']);
     }
 
     // optional, to use the standard Symfony cache directory

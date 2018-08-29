@@ -2,27 +2,31 @@
 
 namespace Playbloom\Satisfy\Runner;
 
-use Symfony\Component\Process\Process;
+use Playbloom\Satisfy\Event\BuildEvent;
+use Playbloom\Satisfy\Process\ProcessFactory;
+use Symfony\Component\Process\Exception\RuntimeException;
 
 class SatisBuildRunner
 {
     /** @var string */
-    protected $rootPath;
-
-    /** @var string */
     protected $satisFilename;
 
-    /** @var string */
-    protected $homePath;
+    /** @var ProcessFactory */
+    protected $processFactory;
 
     /** @var int */
     protected $timeout = 600;
 
-    public function __construct(string $rootPath, string $satisFilename, string $homePath)
+    public function __construct(string $satisFilename)
     {
-        $this->rootPath = $rootPath;
         $this->satisFilename = $satisFilename;
-        $this->homePath = $homePath;
+    }
+
+    public function setProcessFactory(ProcessFactory $processFactory)
+    {
+        $this->processFactory = $processFactory;
+
+        return $this;
     }
 
     /**
@@ -30,7 +34,7 @@ class SatisBuildRunner
      */
     public function run(): \Generator
     {
-        $process = new Process($this->getCommandLine(), $this->rootPath, $this->getEnv(), null, $this->timeout);
+        $process = $this->processFactory->create($this->getCommandLine());
         $process->start();
 
         yield $process->getCommandLine();
@@ -46,34 +50,30 @@ class SatisBuildRunner
         yield $process->getExitCodeText();
     }
 
-    protected function getCommandLine(): string
+    public function onBuild(BuildEvent $event)
     {
-        $line = $this->rootPath . '/bin/satis build';
-        $line .= ' --skip-errors --no-ansi --no-interaction --verbose';
+        $repository = $event->getRepository();
+        $command = $this->getCommandLine($repository ? $repository->getUrl() : null);
+        $process = $this->processFactory->create($command, $this->timeout);
+        $process->disableOutput();
 
-        return $line;
+        try {
+            $status = $process->run();
+        } catch (RuntimeException $exception) {
+            $status = 1;
+        }
+
+        $event->setStatus($status);
     }
 
-    protected function getEnv(): array
+    protected function getCommandLine(string $repositoryUrl = null): string
     {
-        $env = [];
-
-        foreach ($_SERVER as $k => $v) {
-            if (is_string($v) && false !== $v = getenv($k)) {
-                $env[$k] = $v;
-            }
+        $line = $this->processFactory->getRootPath() . '/bin/satis build';
+        $line .= ' --skip-errors --no-ansi --no-interaction --verbose';
+        if (!empty($repositoryUrl)) {
+            $line .= sprintf(' --repository-url="%s"', $repositoryUrl);
         }
 
-        foreach ($_ENV as $k => $v) {
-            if (is_string($v)) {
-                $env[$k] = $v;
-            }
-        }
-
-        if (empty($env['HOME'])) {
-            $env['HOME'] = $this->homePath;
-        }
-
-        return $env;
+        return $line;
     }
 }

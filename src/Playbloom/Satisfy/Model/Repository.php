@@ -24,12 +24,13 @@ class Repository implements RepositoryInterface
     private $url;
 
     /**
-     * Initialize with default opinionated values
+     * @param string $url
+     * @param string $type
      */
-    public function __construct()
+    public function __construct(string $url = '', string $type = 'git')
     {
-        $this->type = 'git';
-        $this->url = '';
+        $this->url = $url;
+        $this->type = $type;
     }
 
     /**

@@ -35,9 +35,24 @@ services:
     arguments:
       - "@satisfy.manager"
 
+  satisfy.process.factory:
+    class: Playbloom\Satisfy\Process\ProcessFactory
+    arguments:
+      - "%kernel.project_dir%"
+      - "%composer.home%"
+
   satisfy.runner.satis_build:
     class: Playbloom\Satisfy\Runner\SatisBuildRunner
     arguments:
-      - '%kernel.project_dir%'
-      - '%satis_filename%'
-      - '%composer.home%'
+      - "%satis_filename%"
+    calls:
+      - [setProcessFactory, ["@satisfy.process.factory"]]
+    tags:
+      - { name: kernel.event_listener, event: "satis_build", method: onBuild }
+
+  ### Webhook handlers
+  satisfy.webhook.bitbucket:
+    class: Playbloom\Satisfy\Webhook\BitbucketWebhook
+    arguments:
+      - "@satisfy.manager"
+      - "@event_dispatcher"
