@@ -3,6 +3,7 @@ app/config/parameters.yml
 /vendor/
 /composer.phar
 /var/*
+/.composer
 
 # Satis default configuration
 satis.json
