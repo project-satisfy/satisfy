@@ -40,7 +40,7 @@ class SatisBuildRunner
         yield $process->getCommandLine();
 
         foreach ($process as $line) {
-            $line = trim($line);
+            $line = $this->trimLine($line);
             if (empty($line)) {
                 continue;
             }
@@ -75,5 +75,10 @@ class SatisBuildRunner
         }
 
         return $line;
+    }
+
+    protected function trimLine(string $line): string
+    {
+        return trim($line, " \t\n\r\0\x0B\x08");
     }
 }
