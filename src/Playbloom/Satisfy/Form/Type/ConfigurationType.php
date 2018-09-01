@@ -88,6 +88,7 @@ END
             ])
             ->add('config', TextareaType::class, [
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'rel' => 'tooltip',
                     'data-title' => 'a configuration options in json format',
