@@ -119,7 +119,7 @@ class Configuration
     private $abandoned;
 
     /**
-     * @var array
+     * @var array|null
      * @Type("array")
      */
     private $config;
