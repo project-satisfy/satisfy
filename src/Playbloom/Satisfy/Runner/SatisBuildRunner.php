@@ -69,7 +69,7 @@ class SatisBuildRunner
     protected function getCommandLine(string $repositoryUrl = null): string
     {
         $line = $this->processFactory->getRootPath() . '/bin/satis build';
-        $line .= ' --skip-errors --no-ansi --no-interaction --verbose';
+        $line .= ' --skip-errors --no-ansi --verbose';
         if (!empty($repositoryUrl)) {
             $line .= sprintf(' --repository-url="%s"', $repositoryUrl);
         }

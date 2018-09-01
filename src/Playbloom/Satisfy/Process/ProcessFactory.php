@@ -10,12 +10,12 @@ class ProcessFactory
     protected $rootPath;
 
     /** @var string */
-    protected $homePath;
+    protected $composerHome;
 
-    public function __construct(string $rootPath, string $homePath)
+    public function __construct(string $rootPath, string $composerHome)
     {
         $this->rootPath = $rootPath;
-        $this->homePath = $homePath;
+        $this->composerHome = $composerHome;
     }
 
     public function getRootPath(): string
@@ -44,9 +44,10 @@ class ProcessFactory
             }
         }
 
-        if (empty($env['HOME'])) {
-            $env['HOME'] = $this->homePath;
+        if (empty($env['COMPOSER_HOME'])) {
+            $env['COMPOSER_HOME'] = $this->composerHome;
         }
+        $env['COMPOSER_NO_INTERACTION'] = 1;
 
         return $env;
     }
