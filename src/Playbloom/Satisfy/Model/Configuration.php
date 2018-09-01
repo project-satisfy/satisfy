@@ -390,8 +390,12 @@ class Configuration
     /**
      * @return string
      */
-    public function getConfig()
+    public function getConfig(): string
     {
+        if (empty ($this->config)) {
+            return '';
+        }
+
         return json_encode($this->config);
     }
 
@@ -400,7 +404,11 @@ class Configuration
      */
     public function setConfig(string $config)
     {
-        $this->config = json_decode($config, true);
+        if (empty($config)) {
+            $this->config = null;
+        } else {
+            $this->config = json_decode($config, true);
+        }
     }
 
     /**
