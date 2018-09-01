@@ -23,7 +23,7 @@ class RepositoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $types = array(
+        $types = [
             'artifact',
             'composer',
             'git',
@@ -38,30 +38,34 @@ class RepositoryType extends AbstractType
             'perforce',
             'svn',
             'vcs',
-        );
+        ];
         $builder
             ->add(
                 'type',
                 ChoiceType::class,
-                array(
+                [
+                    'required' => true,
+                    'empty_data' => '',
                     'choices' => array_combine($types, $types),
-                    'constraints' => array(
+                    'constraints' => [
                         new Assert\NotBlank(),
-                        new Assert\Choice(array('choices' => $types)),
-                    ),
-                )
+                        new Assert\Choice(['choices' => $types]),
+                    ],
+                ]
             )
             ->add(
                 'url',
                 TextType::class,
-                array(
-                    'constraints' => array(
+                [
+                    'required' => true,
+                    'empty_data' => '',
+                    'constraints' => [
                         new Assert\NotBlank(),
-                    ),
+                    ],
                     'attr' => [
                         'placeholder' => 'Repository url',
                     ],
-                )
+                ]
             );
     }
 

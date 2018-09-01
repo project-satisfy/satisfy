@@ -4,13 +4,6 @@ namespace Playbloom\Satisfy\Model;
 
 use JMS\Serializer\Annotation\Type;
 
-/**
- * Repository class
- *
- * Represent a composer repository definition
- *
- * @author Ludovic Fleury <ludo.fleury@gmail.com>
- */
 class Repository implements RepositoryInterface
 {
     /**
@@ -48,7 +41,7 @@ class Repository implements RepositoryInterface
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return md5($this->getUrl());
     }
@@ -56,7 +49,7 @@ class Repository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -64,7 +57,7 @@ class Repository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function setType($type)
+    public function setType(string $type): RepositoryInterface
     {
         $this->type = $type;
 
@@ -74,7 +67,7 @@ class Repository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -82,7 +75,7 @@ class Repository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function setUrl($url)
+    public function setUrl(string $url): RepositoryInterface
     {
         $this->url = $url;
 

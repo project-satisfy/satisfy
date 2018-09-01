@@ -2,13 +2,6 @@
 
 namespace Playbloom\Satisfy\Model;
 
-/**
- * Repository interface
- *
- * Represent a composer repository definition
- *
- * @author Ludovic Fleury <ludo.fleury@gmail.com>
- */
 interface RepositoryInterface
 {
     /**
@@ -16,14 +9,14 @@ interface RepositoryInterface
      *
      * @return string
      */
-    public function getId();
+    public function getId(): string;
 
     /**
      * Get the repository type
      *
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * Set repository type.
@@ -31,14 +24,14 @@ interface RepositoryInterface
      * @param string $type
      * @return $this
      */
-    public function setType($type);
+    public function setType(string $type): self;
 
     /**
      * Get the repository host/url
      *
      * @return string
      */
-    public function getUrl();
+    public function getUrl(): string;
 
     /**
      * Set repository host/url.
@@ -46,5 +39,5 @@ interface RepositoryInterface
      * @param string $url
      * @return $this
      */
-    public function setUrl($url);
+    public function setUrl(string $url): self;
 }
