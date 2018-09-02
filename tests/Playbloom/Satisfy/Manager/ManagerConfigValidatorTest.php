@@ -41,7 +41,7 @@ class ManagerConfigValidatorTest extends TestCase
         $lock = $lockFactory->createLock('satis');
         /** @var Manager $manager */
         $manager = new Manager($lock, $persister->reveal());
-        $manager->addAll(array());
+        $manager->addAll([]);
 
         $this->validateSchema(json_decode($this->config->getContent()), $this->getSatisSchema());
         $this->assertJsonFileEqualsJsonFile($configFilename, $this->config->url());

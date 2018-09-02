@@ -30,9 +30,6 @@ class Manager
 
     /**
      * Constructor
-     *
-     * @param Lock               $lock
-     * @param PersisterInterface $persister
      */
     public function __construct(Lock $lock, PersisterInterface $persister)
     {
@@ -68,7 +65,6 @@ class Manager
     }
 
     /**
-     * @param string $pattern
      * @return RepositoryInterface|null
      */
     public function findByUrl(string $pattern)
@@ -84,8 +80,6 @@ class Manager
 
     /**
      * Add a new repository
-     *
-     * @param RepositoryInterface $repository
      */
     public function add(RepositoryInterface $repository)
     {
@@ -101,8 +95,6 @@ class Manager
 
     /**
      * Adds a array of repositories.
-     *
-     * @param array $repositories
      */
     public function addAll(array $repositories)
     {
@@ -120,8 +112,8 @@ class Manager
     /**
      * Update an existing repository
      *
-     * @param RepositoryInterface $repository
      * @param string              $url
+     *
      * @throws \RuntimeException
      */
     public function update(RepositoryInterface $repository, $url)
@@ -146,8 +138,6 @@ class Manager
 
     /**
      * Delete a repository
-     *
-     * @param RepositoryInterface $repository
      */
     public function delete(RepositoryInterface $repository)
     {
@@ -174,7 +164,6 @@ class Manager
     /**
      * Adds a single Repository without flush
      *
-     * @param RepositoryInterface $repository
      * @return $this
      */
     private function doAdd(RepositoryInterface $repository)
@@ -206,9 +195,6 @@ class Manager
         return $this->configuration;
     }
 
-    /**
-     * @return Lock
-     */
     public function acquireLock(): Lock
     {
         if (!$this->lock->acquire()) {

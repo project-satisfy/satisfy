@@ -3,8 +3,8 @@
 namespace Playbloom\Satisfy\Model;
 
 use JMS\Serializer\Annotation as Serializer;
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
 use PhpCollection\Map;
 
 /**
@@ -59,21 +59,21 @@ class Configuration
     private $require;
 
     /**
-     * @var boolean
+     * @var bool
      * @Type("boolean")
      * @SerializedName("require-all")
      */
     private $requireAll = false;
 
     /**
-     * @var boolean
+     * @var bool
      * @Type("boolean")
      * @SerializedName("require-dependencies")
      */
     private $requireDependencies = false;
 
     /**
-     * @var boolean
+     * @var bool
      * @Type("boolean")
      * @SerializedName("require-dev-dependencies")
      */
@@ -149,9 +149,6 @@ class Configuration
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name)
     {
         $this->name = $name;
@@ -165,9 +162,6 @@ class Configuration
         return $this->description;
     }
 
-    /**
-     * @param string|null $description
-     */
     public function setDescription(string $description = null)
     {
         $this->description = $description;
@@ -183,9 +177,6 @@ class Configuration
         return $this->homepage;
     }
 
-    /**
-     * @param string $homepage
-     */
     public function setHomepage(string $homepage)
     {
         $this->homepage = $homepage;
@@ -199,24 +190,17 @@ class Configuration
         return $this->outputDir;
     }
 
-    /**
-     * @param string $outputDir
-     */
     public function setOutputDir(string $outputDir)
     {
         $this->outputDir = $outputDir;
     }
 
-    /**
-     * @return bool
-     */
     public function isOutputHtml(): bool
     {
         return $this->outputHtml;
     }
 
     /**
-     * @param bool $outputHtml
      * @return $this
      */
     public function setOutputHtml(bool $outputHtml)
@@ -226,49 +210,31 @@ class Configuration
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isRequireAll(): bool
     {
         return $this->requireAll;
     }
 
-    /**
-     * @param bool $requireAll
-     */
     public function setRequireAll(bool $requireAll)
     {
         $this->requireAll = $requireAll;
     }
 
-    /**
-     * @return bool
-     */
     public function isRequireDependencies(): bool
     {
         return $this->requireDependencies;
     }
 
-    /**
-     * @param bool $requireDependencies
-     */
     public function setRequireDependencies(bool $requireDependencies)
     {
         $this->requireDependencies = $requireDependencies;
     }
 
-    /**
-     * @return bool
-     */
     public function isRequireDevDependencies(): bool
     {
         return $this->requireDevDependencies;
     }
 
-    /**
-     * @param bool $requireDevDependencies
-     */
     public function setRequireDevDependencies(bool $requireDevDependencies)
     {
         $this->requireDevDependencies = $requireDevDependencies;
@@ -283,7 +249,6 @@ class Configuration
     }
 
     /**
-     * @param string|null $includeFilename
      * @return $this
      */
     public function setIncludeFilename(string $includeFilename = null)
@@ -309,7 +274,6 @@ class Configuration
     /**
      * Set repositories
      *
-     * @param Map $repositories
      *
      * @return $this
      */
@@ -344,9 +308,6 @@ class Configuration
         return $this->minimumStability;
     }
 
-    /**
-     * @param string $minimumStability
-     */
     public function setMinimumStability(string $minimumStability)
     {
         $this->minimumStability = $minimumStability;
@@ -361,7 +322,6 @@ class Configuration
     }
 
     /**
-     * @param bool $providers
      * @return $this
      */
     public function setProviders(bool $providers)
@@ -387,21 +347,15 @@ class Configuration
         $this->twigTemplate = $twigTemplate;
     }
 
-    /**
-     * @return string
-     */
     public function getConfig(): string
     {
-        if (empty ($this->config)) {
+        if (empty($this->config)) {
             return '';
         }
 
         return json_encode($this->config);
     }
 
-    /**
-     * @param string $config
-     */
     public function setConfig(string $config)
     {
         if (empty($config)) {

@@ -11,8 +11,6 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 class WebhookController extends Controller
 {
     /**
-     * @param Request $request
-     * @return Response
      * @throws BadRequestHttpException
      * @throws ServiceUnavailableHttpException
      */

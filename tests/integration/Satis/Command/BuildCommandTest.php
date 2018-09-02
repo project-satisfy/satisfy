@@ -19,7 +19,7 @@ class BuildCommandTest extends KernelTestCase
     protected $vfsRoot;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setUp()
     {
@@ -27,7 +27,7 @@ class BuildCommandTest extends KernelTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function tearDown()
     {
@@ -116,6 +116,7 @@ class BuildCommandTest extends KernelTestCase
     /**
      * @param string $file
      * @param string $outputDir
+     *
      * @return ArrayInput
      */
     protected function createInput($file, $outputDir = '')
@@ -124,7 +125,7 @@ class BuildCommandTest extends KernelTestCase
             'command' => 'build',
             'file' => $file,
             'output-dir' => $outputDir,
-            '-vvv'
+            '-vvv',
         ]);
 
         return $input;

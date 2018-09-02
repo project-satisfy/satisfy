@@ -11,10 +11,6 @@ use Playbloom\Satisfy\Model\Repository;
 class RepositoryCollectionHandler
 {
     /**
-     * @param VisitorInterface $visitor
-     * @param Map              $collection
-     * @param array            $type
-     * @param Context          $context
      * @return string
      */
     public function serializeCollection(VisitorInterface $visitor, Map $collection, array $type, Context $context)
@@ -30,10 +26,6 @@ class RepositoryCollectionHandler
     }
 
     /**
-     * @param VisitorInterface $visitor
-     * @param mixed            $data
-     * @param array            $type
-     * @param Context          $context
      * @return Map
      */
     public function deserializeCollection(VisitorInterface $visitor, $data, array $type, Context $context)

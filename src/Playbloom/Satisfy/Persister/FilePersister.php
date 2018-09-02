@@ -20,7 +20,6 @@ class FilePersister implements PersisterInterface
     private $logPath;
 
     /**
-     * @param Filesystem $filesystem
      * @param string     $filename
      * @param string     $logPath
      */
@@ -34,8 +33,9 @@ class FilePersister implements PersisterInterface
     /**
      * Load content from file
      *
-     * @return string
      * @throws MissingConfigException When config file is missing or empty
+     *
+     * @return string
      */
     public function load()
     {
@@ -64,6 +64,7 @@ class FilePersister implements PersisterInterface
      * Flush content to file
      *
      * @param string $content
+     *
      * @throws RuntimeException
      */
     public function flush($content)

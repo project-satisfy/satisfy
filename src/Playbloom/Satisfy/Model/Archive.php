@@ -2,8 +2,8 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Archive Configuration class
@@ -34,7 +34,7 @@ class Archive
     private $absoluteDirectory;
 
     /**
-     * @var boolean
+     * @var bool
      * @Type("boolean")
      * @SerializedName("skip-dev")
      */
@@ -44,13 +44,13 @@ class Archive
      * @var array
      * @Type("array")
      */
-    private $whitelist = array();
+    private $whitelist = [];
 
     /**
      * @var array
      * @Type("array")
      */
-    private $blacklist = array();
+    private $blacklist = [];
 
     /**
      * @var string
@@ -60,7 +60,7 @@ class Archive
     private $prefixUrl;
 
     /**
-     * @var boolean
+     * @var bool
      * @Type("boolean")
      */
     private $checksum = true;
@@ -75,6 +75,7 @@ class Archive
 
     /**
      * @param string $directory
+     *
      * @return $this
      */
     public function setDirectory($directory)
@@ -94,6 +95,7 @@ class Archive
 
     /**
      * @param string $format
+     *
      * @return $this
      */
     public function setFormat($format)
@@ -113,6 +115,7 @@ class Archive
 
     /**
      * @param string $absoluteDirectory
+     *
      * @return $this
      */
     public function setAbsoluteDirectory($absoluteDirectory)
@@ -123,7 +126,7 @@ class Archive
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSkipDev()
     {
@@ -131,7 +134,6 @@ class Archive
     }
 
     /**
-     * @param boolean $skipDev
      * @return $this
      */
     public function setSkipDev(bool $skipDev)
@@ -151,6 +153,7 @@ class Archive
 
     /**
      * @param array $whitelist
+     *
      * @return $this
      */
     public function setWhitelist($whitelist)
@@ -170,6 +173,7 @@ class Archive
 
     /**
      * @param array $blacklist
+     *
      * @return $this
      */
     public function setBlacklist($blacklist)
@@ -189,6 +193,7 @@ class Archive
 
     /**
      * @param string $prefixUrl
+     *
      * @return $this
      */
     public function setPrefixUrl($prefixUrl)
@@ -199,7 +204,7 @@ class Archive
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isChecksum()
     {
@@ -207,7 +212,6 @@ class Archive
     }
 
     /**
-     * @param boolean $checksum
      * @return $this
      */
     public function setChecksum(bool $checksum)

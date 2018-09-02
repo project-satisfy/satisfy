@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Exception\InvalidArgumentException;
 class ComposerLockValidator extends ConstraintValidator
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function validate($data, Constraint $constraint)
     {
@@ -49,9 +49,6 @@ class ComposerLockValidator extends ConstraintValidator
 
     /**
      * Returns schema data for validation.
-     *
-     * @param string $path
-     * @return mixed
      */
     private function getSchema(string $path)
     {

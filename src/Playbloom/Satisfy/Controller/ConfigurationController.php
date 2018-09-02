@@ -17,6 +17,6 @@ class ConfigurationController extends AbstractProtectedController
             $manager->flush();
         }
 
-        return $this->render('@PlaybloomSatisfy/configuration.html.twig', array('form' => $form->createView()));
+        return $this->render('@PlaybloomSatisfy/configuration.html.twig', ['form' => $form->createView()]);
     }
 }

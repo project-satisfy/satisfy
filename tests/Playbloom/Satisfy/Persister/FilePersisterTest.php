@@ -20,7 +20,7 @@ class FilePersisterTest extends TestCase
     {
         $this->vfsSetup();
         $this->persister = new FilePersister(
-            new Filesystem,
+            new Filesystem(),
             $this->vfsRoot->url() . '/satis.json',
             $this->vfsRoot->url()
         );
@@ -35,15 +35,15 @@ class FilePersisterTest extends TestCase
     public function testDumpMustTruncateFile()
     {
         $config = [
-            'name'         => 'test',
-            'homepage'     => 'http://localhost',
+            'name' => 'test',
+            'homepage' => 'http://localhost',
             'repositories' => [
                 [
                     'type' => 'git',
-                    'url'  => 'https://github.com/ludofleury/satisfy.git',
+                    'url' => 'https://github.com/ludofleury/satisfy.git',
                 ],
             ],
-            'require-all'  => true,
+            'require-all' => true,
         ];
         $content = json_encode($config);
         $this->persister->flush($content);
@@ -53,7 +53,7 @@ class FilePersisterTest extends TestCase
 
         $this->validateSchema(json_decode($configFile->getContent()), $this->getSatisSchema());
 
-        $config['repositories'] = array();
+        $config['repositories'] = [];
         $content = json_encode($config);
         $this->persister->flush($content);
         $this->assertStringEqualsFile($configFile->url(), $content);

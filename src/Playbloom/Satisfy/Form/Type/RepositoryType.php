@@ -17,10 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RepositoryType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $types = [

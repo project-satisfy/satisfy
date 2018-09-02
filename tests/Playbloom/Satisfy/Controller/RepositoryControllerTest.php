@@ -56,10 +56,10 @@ class RepositoryControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
 
         $url = 'git@github.com:YourAccount/YourRepo.git';
-        $request = array('type' => 'git', 'url' => $url);
+        $request = ['type' => 'git', 'url' => $url];
         $client->submit(
             $form->form(),
-            array('repository' => $request)
+            ['repository' => $request]
         );
         $response = $client->getResponse();
 
@@ -79,7 +79,7 @@ class RepositoryControllerTest extends WebTestCase
         $params = ['type' => 'git', 'url' => $url2 = 'git@github.com:account/repository.git'];
         $crawler = $client->request('GET', '/admin/edit/' . md5($url));
         $form = $crawler->filterXPath('//form');
-        $client->submit($form->form(), array('repository' => $params));
+        $client->submit($form->form(), ['repository' => $params]);
 
         $response = $client->getResponse();
         $this->assertEquals(302, $response->getStatusCode());

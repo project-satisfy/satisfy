@@ -21,21 +21,19 @@ class RepositoryController extends AbstractProtectedController
         $this->checkAccess();
         $config = $this->get('satisfy.manager')->getConfig();
         $repositories = $this->get('satisfy.manager')->getRepositories();
-        $satisRepository = array(
+        $satisRepository = [
             'type' => 'composer',
-            'url'  => $config->getHomepage(),
-        );
+            'url' => $config->getHomepage(),
+        ];
 
-        $config = array(
-            'repositories' => array($satisRepository),
-        );
+        $config = [
+            'repositories' => [$satisRepository],
+        ];
 
         return $this->render('@PlaybloomSatisfy/home.html.twig', compact('config', 'repositories'));
     }
 
     /**
-     * @param Request $request
-     *
      * @return Response
      */
     public function newAction(Request $request)
@@ -59,12 +57,10 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/new.html.twig', array('form' => $form->createView()));
+        return $this->render('@PlaybloomSatisfy/new.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse|Response
      */
     public function uploadAction(Request $request)
@@ -84,12 +80,10 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/upload.html.twig', array('form' => $form->createView()));
+        return $this->render('@PlaybloomSatisfy/upload.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @param Request $request
-     *
      * @return Response
      */
     public function editAction(Request $request)
@@ -116,12 +110,10 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/edit.html.twig', array('form' => $form->createView()));
+        return $this->render('@PlaybloomSatisfy/edit.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @param Request $request
-     *
      * @return Response
      */
     public function deleteAction(Request $request)
@@ -134,7 +126,7 @@ class RepositoryController extends AbstractProtectedController
         }
 
         $form = $this->createForm(DeleteFormType::class);
-        if ($request->getMethod() === Request::METHOD_DELETE) {
+        if (Request::METHOD_DELETE === $request->getMethod()) {
             try {
                 $this->get('satisfy.manager')->delete($repository);
 
@@ -146,7 +138,7 @@ class RepositoryController extends AbstractProtectedController
 
         return $this->render(
             '@PlaybloomSatisfy/delete.html.twig',
-            array('form' => $form->createView(), 'repository' => $repository)
+            ['form' => $form->createView(), 'repository' => $repository]
         );
     }
 }

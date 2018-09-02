@@ -14,22 +14,18 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ComposerLockType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
                 'file',
                 FileType::class,
-                array(
+                [
                     'label' => false,
-                    'constraints' => array(
+                    'constraints' => [
                         new ComposerLock(),
-                    ),
-                )
+                    ],
+                ]
             );
     }
 }

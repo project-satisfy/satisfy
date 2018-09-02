@@ -16,8 +16,6 @@ class LockProcessor
 
     /**
      * Constructor
-     *
-     * @param Manager $manager
      */
     public function __construct(Manager $manager)
     {
@@ -26,8 +24,6 @@ class LockProcessor
 
     /**
      * Adds repositories from composer.lock JSON file.
-     *
-     * @param \SplFileObject $file
      */
     public function processFile(\SplFileObject $file)
     {
@@ -37,9 +33,6 @@ class LockProcessor
 
     /**
      * Reads and decodes json from given file.
-     *
-     * @param \SplFileObject $file
-     * @return mixed
      */
     private function getComposerLockData(\SplFileObject $file)
     {
@@ -50,13 +43,10 @@ class LockProcessor
 
     /**
      * Adds all repos from composer.lock data, even require-dev ones.
-     *
-     * @param \stdClass $content
-     * @return void
      */
     private function addReposFromContent(\stdClass $content)
     {
-        $repositories = array();
+        $repositories = [];
         if (!empty($content->packages)) {
             $repositories = $this->getRepositories($content->packages);
         }
@@ -69,12 +59,11 @@ class LockProcessor
     }
 
     /**
-     * @param array $packages
      * @return Repository[]
      */
     protected function getRepositories(array $packages)
     {
-        $repos = array();
+        $repos = [];
 
         foreach ($packages as $package) {
             if (empty($package->source)) {

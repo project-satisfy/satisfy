@@ -45,7 +45,8 @@
         "mikey179/vfsStream": "^1.6",
         "phpunit/phpunit": "^6.3",
         "phpstan/phpstan": "^0.9",
-        "ramunasd/symfony-container-mocks": "^0.6.0"
+        "ramunasd/symfony-container-mocks": "^0.6.0",
+        "friendsofphp/php-cs-fixer": "^2.13"
     },
     "autoload": {
         "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" }
@@ -62,10 +63,12 @@
         ],
         "test": [
             "@phpstan",
-            "@phpunit"
+            "@phpunit",
+            "@php-cs-fixer"
         ],
         "phpunit": "phpunit",
-        "phpstan": "phpstan analyse --level 4 src"
+        "phpstan": "phpstan analyse --level 4 src",
+        "php-cs-fixer": "php-cs-fixer fix --diff --show-progress=dots"
     },
     "extra": {
         "branch-alias": {

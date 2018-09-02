@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ConfigurationType extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -76,14 +76,14 @@ END
                 'label' => 'Output HTML',
                 'attr' => [
                     'rel' => 'tooltip',
-                    'data-title' => 'If enabled, build a static web page'
+                    'data-title' => 'If enabled, build a static web page',
                 ],
             ])
             ->add('providers', CheckboxType::class, [
                 'required' => false,
                 'attr' => [
                     'rel' => 'tooltip',
-                    'data-title' => 'If enabled, dump package providers'
+                    'data-title' => 'If enabled, dump package providers',
                 ],
             ])
             ->add('config', TextareaType::class, [

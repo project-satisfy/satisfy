@@ -16,10 +16,6 @@ class Repository implements RepositoryInterface
      */
     private $url;
 
-    /**
-     * @param string $url
-     * @param string $type
-     */
     public function __construct(string $url = '', string $type = 'git')
     {
         $this->url = $url;
@@ -38,8 +34,6 @@ class Repository implements RepositoryInterface
 
     /**
      * Get identifier
-     *
-     * @return string
      */
     public function getId(): string
     {

@@ -45,7 +45,7 @@ class RebuildCommand extends BuildCommand implements ContainerAwareInterface
             if (!$outputDir = $input->getArgument('output-dir')) {
                 $file = new JsonFile($configFile);
                 $config = $file->read();
-                $outputDir = isset($config['output-dir']) ? $config['output-dir'] : null;
+                $outputDir = $config['output-dir'] ?? null;
             }
 
             $modifiedAt = filemtime($configFile);

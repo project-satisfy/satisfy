@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint;
 class Repository extends Constraint
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTargets()
     {
@@ -20,7 +20,7 @@ class Repository extends Constraint
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDefaultOption()
     {

@@ -7,8 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class DeleteFormType
- *
- * @package Playbloom\Satisfy\Form\Type
  */
 class DeleteFormType extends AbstractType
 {
