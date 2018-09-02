@@ -72,6 +72,9 @@ class SatisBuildRunner
         $line .= ' --skip-errors --no-ansi --verbose';
         if (!empty($repositoryUrl)) {
             $line .= sprintf(' --repository-url="%s"', $repositoryUrl);
+            // keep it while satis fails to build with one repo dependencies
+            // https://github.com/composer/satis/issues/493
+            $line .= ' --repository-strict';
         }
 
         return $line;
