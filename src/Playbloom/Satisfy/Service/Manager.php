@@ -112,11 +112,9 @@ class Manager
     /**
      * Update an existing repository
      *
-     * @param string              $url
-     *
      * @throws \RuntimeException
      */
-    public function update(RepositoryInterface $repository, $url)
+    public function update(RepositoryInterface $repository, RepositoryInterface $updated)
     {
         $repos = $this->getRepositories();
 
@@ -128,8 +126,7 @@ class Manager
         $lock = $this->acquireLock();
         try {
             $repos->remove($repository->getId());
-            $repository->setUrl($url);
-            $repos->set($repository->getId(), $repository);
+            $repos->set($updated->getId(), $updated);
             $this->flush();
         } finally {
             $lock->release();

@@ -102,7 +102,7 @@ class RepositoryController extends AbstractProtectedController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get('satisfy.manager')->update($repository, $form->getData()->getUrl());
+                $this->get('satisfy.manager')->update($repository, $form->getData());
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {

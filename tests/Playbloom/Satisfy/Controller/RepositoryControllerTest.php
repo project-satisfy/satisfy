@@ -76,7 +76,7 @@ class RepositoryControllerTest extends WebTestCase
         $this->assertEquals([(object)$request], $config->repositories);
 
         // update repository
-        $params = ['type' => 'git', 'url' => $url2 = 'git@github.com:account/repository.git'];
+        $params = ['type' => 'github', 'url' => $url2 = 'git@github.com:account/repository.git'];
         $crawler = $client->request('GET', '/admin/edit/' . md5($url));
         $form = $crawler->filterXPath('//form');
         $client->submit($form->form(), ['repository' => $params]);
@@ -86,6 +86,7 @@ class RepositoryControllerTest extends WebTestCase
 
         $config = json_decode($this->vfsRoot->getChild('satis.json')->getContent());
         $this->assertEquals($url2, $config->repositories[0]->url);
+        $this->assertEquals('github', $config->repositories[0]->type);
 
         // remove repository
         $crawler = $client->request('GET', '/admin/delete/' . md5($url2));
