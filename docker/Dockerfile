@@ -10,8 +10,7 @@ ADD conf/apache.conf /etc/apache2/sites-available/000-default.conf
 ADD conf/php.ini /usr/local/etc/php/conf.d/php.ini
 RUN a2enmod rewrite
 
-RUN mkdir /var/www/.composer && mkdir /var/www/.ssh && chown -R www-data:www-data /var/www
-VOLUME /var/www/.composer
+RUN mkdir /var/www/.ssh && chown -R www-data:www-data /var/www
 VOLUME /var/www/.ssh
 
 # symbolic links to index.php and static files

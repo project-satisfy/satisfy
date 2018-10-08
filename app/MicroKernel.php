@@ -58,6 +58,7 @@ class MicroKernel extends Kernel
         // repository
         $controller = $controllerBase . 'RepositoryController';
         $routes->add('/admin', $controller . '::indexAction', 'repository')->setMethods(['GET']);
+        $routes->add('/admin/', $controller . '::indexAction', 'repository_')->setMethods(['GET']);
         $routes->add('/admin/new', $controller . '::newAction', 'repository_new')->setMethods(['GET', 'POST']);
         $routes->add('/admin/upload', $controller . '::uploadAction', 'repository_upload')->setMethods(['GET', 'POST']);
         $routes
