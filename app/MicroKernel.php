@@ -83,6 +83,9 @@ class MicroKernel extends Kernel
         $routes
             ->add('/webhook/bitbucket', $controllerBase . 'WebhookController::bitbucketAction', 'webhook_bitbucket')
             ->setMethods(['GET', 'POST']);
+        $routes
+            ->add('/webhook/github', $controllerBase . 'WebhookController::githubAction', 'webhook_github')
+            ->setMethods(['GET', 'POST']);
     }
 
     // optional, to use the standard Symfony cache directory

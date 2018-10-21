@@ -3,25 +3,11 @@
 namespace Playbloom\Satisfy\Webhook;
 
 use Playbloom\Satisfy\Event\BuildEvent;
-use Playbloom\Satisfy\Service\Manager;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\IpUtils;
 use Symfony\Component\HttpFoundation\Request;
 
-class BitbucketWebhook
+class BitbucketWebhook extends AbstractWebhook
 {
-    /** @var EventDispatcherInterface */
-    protected $dispatcher;
-
-    /** @var Manager */
-    protected $manager;
-
-    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher)
-    {
-        $this->manager = $manager;
-        $this->dispatcher = $dispatcher;
-    }
-
     public function handle(Request $request)
     {
         $this->validate($request);
@@ -66,17 +52,5 @@ class BitbucketWebhook
         if (!IpUtils::checkIp($ip, $trusted)) {
             throw new \InvalidArgumentException('Client IP address is not trusted');
         }
-    }
-
-    protected function findRepository(array $urls)
-    {
-        foreach ($urls as $url) {
-            $repository = $this->manager->findByUrl($url);
-            if ($repository) {
-                return $repository;
-            }
-        }
-
-        return null;
     }
 }

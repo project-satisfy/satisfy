@@ -5,3 +5,4 @@ parameters:
     admin.auth: false
     admin.users: ~
     composer.home: "%kernel.project_dir%/var/composer"
+    github.secret: ~

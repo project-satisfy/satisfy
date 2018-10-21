@@ -36,9 +36,12 @@
         "symfony/templating": "^3.4",
         "symfony/twig-bundle": "^3.4",
         "symfony/yaml": "^3.4",
+        "symfony/psr-http-message-bridge": "^1.1",
         "doctrine/annotations": "~1.4.0",
         "doctrine/instantiator": "1.0.5",
-        "incenteev/composer-parameter-handler": "^2.1"
+        "incenteev/composer-parameter-handler": "^2.1",
+        "swop/github-webhook": "^2.0",
+        "zendframework/zend-diactoros": "^1.8"
     },
     "require-dev": {
         "symfony/browser-kit": "^3.4",

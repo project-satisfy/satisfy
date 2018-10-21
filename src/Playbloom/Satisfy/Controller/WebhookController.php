@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Controller;
 
+use Playbloom\Satisfy\Webhook\AbstractWebhook;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,19 @@ class WebhookController extends Controller
     public function bitbucketAction(Request $request): Response
     {
         $webhook = $this->container->get('satisfy.webhook.bitbucket');
+
+        return $this->handleRequest($request, $webhook);
+    }
+
+    public function githubAction(Request $request): Response
+    {
+        $webhook = $this->container->get('satisfy.webhook.github');
+
+        return $this->handleRequest($request, $webhook);
+    }
+
+    private function handleRequest(Request $request, AbstractWebhook $webhook): Response
+    {
         try {
             $status = $webhook->handle($request);
         } catch (\InvalidArgumentException $exception) {

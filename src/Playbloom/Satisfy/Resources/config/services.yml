@@ -51,8 +51,18 @@ services:
       - { name: kernel.event_listener, event: "satis_build", method: onBuild }
 
   ### Webhook handlers
-  satisfy.webhook.bitbucket:
-    class: Playbloom\Satisfy\Webhook\BitbucketWebhook
+  satisfy.webhook:
+    abstract: true
     arguments:
       - "@satisfy.manager"
       - "@event_dispatcher"
+
+  satisfy.webhook.bitbucket:
+    parent: satisfy.webhook
+    class: Playbloom\Satisfy\Webhook\BitbucketWebhook
+
+  satisfy.webhook.github:
+    parent: satisfy.webhook
+    class: Playbloom\Satisfy\Webhook\GithubWebhook
+    calls:
+      - [setSecret, ["%github.secret%"]]
