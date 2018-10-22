@@ -45,6 +45,7 @@ services:
     class: Playbloom\Satisfy\Runner\SatisBuildRunner
     arguments:
       - "%satis_filename%"
+      - "@lock.build"
     calls:
       - [setProcessFactory, ["@satisfy.process.factory"]]
     tags:

@@ -13,6 +13,7 @@ framework:
   lock:
     resources:
       satis: "flock"
+      build: "flock"
 
 twig:
   form_themes: ['bootstrap_3_layout.html.twig']

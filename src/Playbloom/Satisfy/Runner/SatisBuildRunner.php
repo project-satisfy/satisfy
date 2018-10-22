@@ -4,6 +4,7 @@ namespace Playbloom\Satisfy\Runner;
 
 use Playbloom\Satisfy\Event\BuildEvent;
 use Playbloom\Satisfy\Process\ProcessFactory;
+use Symfony\Component\Lock\Lock;
 use Symfony\Component\Process\Exception\RuntimeException;
 
 class SatisBuildRunner
@@ -17,9 +18,13 @@ class SatisBuildRunner
     /** @var int */
     protected $timeout = 600;
 
-    public function __construct(string $satisFilename)
+    /** @var Lock */
+    protected $lock;
+
+    public function __construct(string $satisFilename, Lock $lock)
     {
         $this->satisFilename = $satisFilename;
+        $this->lock = $lock;
     }
 
     public function setProcessFactory(ProcessFactory $processFactory)
@@ -34,20 +39,25 @@ class SatisBuildRunner
      */
     public function run(): \Generator
     {
-        $process = $this->processFactory->create($this->getCommandLine());
-        $process->start();
+        $this->lock->acquire(true);
+        try {
+            $process = $this->processFactory->create($this->getCommandLine(), $this->timeout);
+            $process->start();
 
-        yield $process->getCommandLine();
+            yield $process->getCommandLine();
 
-        foreach ($process as $line) {
-            $line = $this->trimLine($line);
-            if (empty($line)) {
-                continue;
+            foreach ($process as $line) {
+                $line = $this->trimLine($line);
+                if (empty($line)) {
+                    continue;
+                }
+                yield $line;
             }
-            yield $line;
-        }
 
-        yield $process->getExitCodeText();
+            yield $process->getExitCodeText();
+        } finally {
+            $this->lock->release();
+        }
     }
 
     public function onBuild(BuildEvent $event)
@@ -58,9 +68,12 @@ class SatisBuildRunner
         $process->disableOutput();
 
         try {
+            $this->lock->acquire(true);
             $status = $process->run();
         } catch (RuntimeException $exception) {
             $status = 1;
+        } finally {
+            $this->lock->release();
         }
 
         $event->setStatus($status);
