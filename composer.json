@@ -68,8 +68,8 @@
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
         ],
         "test": [
-            "@phpstan",
             "@phpunit",
+            "@phpstan",
             "@php-cs-fixer"
         ],
         "phpunit": "phpunit",

@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 7.0
   - 7.1
   - 7.2
   - nightly
@@ -18,8 +17,8 @@ cache:
 
 install:
   - 'cp -f app/config/parameters.yml.dist app/config/parameters.yml'
-  - composer install -n --dev --no-progress
+  - composer install -n --dev --no-progress --prefer-dist
 
 script:
-  - bin/phpstan analyse --level 4 --no-progress src
   - bin/phpunit
+  - bin/phpstan analyse

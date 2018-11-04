@@ -6,7 +6,7 @@ parameters:
 	fileExtensions:
 		- php
 	symfony:
-		container_xml_path: var/cache/dev/appDevDebugProjectContainer.xml
+		container_xml_path: var/cache/test/appTestDebugProjectContainer.xml
 
 includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
