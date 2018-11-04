@@ -25,7 +25,7 @@ class Manager
     /** @var PersisterInterface */
     private $persister;
 
-    /** @var Configuration */
+    /** @var Configuration|null */
     private $configuration;
 
     /**

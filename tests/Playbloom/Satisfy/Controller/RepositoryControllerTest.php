@@ -2,6 +2,8 @@
 
 namespace Tests\Playbloom\Satisfy\Controller;
 
+use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\vfsStreamFile;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +66,9 @@ class RepositoryControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
 
         $this->assertTrue($this->vfsRoot->hasChild('satis.json'));
-        $config = $this->vfsRoot->getChild('satis.json')->getContent();
+        /** @var vfsStreamFile $configHandle */
+        $configHandle = $this->vfsRoot->getChild('satis.json');
+        $config = $configHandle->getContent();
 
         $this->assertJson($config);
         $config = json_decode($config);
@@ -82,7 +86,9 @@ class RepositoryControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(302, $response->getStatusCode());
 
-        $config = json_decode($this->vfsRoot->getChild('satis.json')->getContent());
+        /** @var vfsStreamFile $configHandle */
+        $configHandle = $this->vfsRoot->getChild('satis.json');
+        $config = json_decode($configHandle->getContent());
         $this->assertEquals($url2, $config->repositories[0]->url);
         $this->assertEquals('github', $config->repositories[0]->type);
 

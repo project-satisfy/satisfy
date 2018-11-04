@@ -8,7 +8,7 @@ use JsonSchema\Validator;
 trait SchemaValidatorTrait
 {
     /**
-     * @return \stdClass
+     * @return object
      */
     protected function getSatisSchema()
     {

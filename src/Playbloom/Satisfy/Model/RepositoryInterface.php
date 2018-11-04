@@ -16,8 +16,6 @@ interface RepositoryInterface
 
     /**
      * Set repository type.
-     *
-     * @return $this
      */
     public function setType(string $type): self;
 
@@ -28,8 +26,6 @@ interface RepositoryInterface
 
     /**
      * Set repository host/url.
-     *
-     * @return $this
      */
     public function setUrl(string $url): self;
 }

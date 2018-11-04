@@ -5,8 +5,11 @@ parameters:
 		- tests
 	fileExtensions:
 		- php
+	symfony:
+		container_xml_path: var/cache/dev/appDevDebugProjectContainer.xml
 
 includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 	- vendor/phpstan/phpstan-phpunit/rules.neon
 	- vendor/jangregor/phpstan-prophecy/src/extension.neon
+	- vendor/phpstan/phpstan-symfony/extension.neon

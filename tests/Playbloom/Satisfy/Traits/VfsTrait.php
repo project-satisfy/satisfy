@@ -7,7 +7,7 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 trait VfsTrait
 {
-    /** @var vfsStreamDirectory */
+    /** @var vfsStreamDirectory|null */
     protected $vfsRoot;
 
     protected function vfsSetup()
