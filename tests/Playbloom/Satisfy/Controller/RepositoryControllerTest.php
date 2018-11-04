@@ -1,9 +1,7 @@
 <?php
 
-namespace tests\Playbloom\Satisfy\Controller;
+namespace Tests\Playbloom\Satisfy\Controller;
 
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

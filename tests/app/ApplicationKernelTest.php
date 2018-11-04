@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\app;
+namespace Tests\app;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;

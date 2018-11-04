@@ -3,6 +3,9 @@
 namespace Tests\Playbloom\Satisfy\Webhook;
 
 use Playbloom\Satisfy\Model\Repository;
+use Playbloom\Satisfy\Runner\SatisBuildRunner;
+use Playbloom\Satisfy\Service\Manager;
+use Playbloom\Satisfy\Webhook\BitbucketWebhook;
 use Prophecy\Argument;
 use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -26,7 +29,7 @@ class BitbucketWebhookTest extends KernelTestCase
     public function testInvalidRequestMustThrowException($request)
     {
         $this->expectException(\InvalidArgumentException::class);
-
+        /** @var BitbucketWebhook $handler */
         $handler = self::$kernel->getContainer()->get('satisfy.webhook.bitbucket');
         $handler->handle($request);
     }
@@ -55,14 +58,18 @@ class BitbucketWebhookTest extends KernelTestCase
         $rootPath = $container->getParameter('kernel.project_dir');
 
         $processFactory = $container->prophesize('satisfy.process.factory');
+        /** @var SatisBuildRunner $builder */
         $builder = $container->get('satisfy.runner.satis_build');
         $builder->setProcessFactory($processFactory->reveal());
 
+        /** @var Manager $manager */
         $manager = $container->get('satisfy.manager');
         $manager->add(new Repository('git@bitbucket.org:test/test.git'));
 
         $process = $this->prophesize(Process::class);
-        $process->disableOutput()->shouldBeCalled();
+        $process
+            ->disableOutput()
+            ->shouldBeCalled();
         $process
             ->run()
             ->shouldBeCalled()
@@ -78,6 +85,7 @@ class BitbucketWebhookTest extends KernelTestCase
             ->willReturn($rootPath);
 
         $request = $this->createRequest(['repository' => ['full_name' => 'test/test']]);
+        /** @var BitbucketWebhook $webhook */
         $webhook = $container->get('satisfy.webhook.bitbucket');
         $status = $webhook->handle($request);
 

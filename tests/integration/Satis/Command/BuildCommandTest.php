@@ -3,19 +3,18 @@
 namespace Tests\integration\Satis\Command;
 
 use Composer\Satis\Console\Application;
+use JMS\Serializer\Serializer;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use Playbloom\Satisfy\Model\Configuration;
-use Playbloom\Satisfy\Persister\FilePersister;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\Filesystem\Filesystem;
 
 class BuildCommandTest extends KernelTestCase
 {
-    /** @var vfsStreamDirectory */
+    /** @var vfsStreamDirectory|null */
     protected $vfsRoot;
 
     /**
@@ -66,12 +65,15 @@ class BuildCommandTest extends KernelTestCase
         $this->assertTrue($outputDir->hasChild('index.html'));
         $this->assertTrue($outputDir->hasChild('packages.json'));
         $this->assertTrue($outputDir->hasChild('include'));
-        $this->assertTrue($outputDir->getChild('include')->hasChildren());
+        /** @var vfsStreamDirectory $include */
+        $include = $outputDir->getChild('include');
+        $this->assertTrue($include->hasChildren());
     }
 
     public function testDefaultFormConfigBuild()
     {
         $container = self::bootKernel()->getContainer();
+        /** @var Serializer $serializer */
         $serializer = $container->get('jms_serializer');
         $content = $serializer->serialize(new Configuration(), 'json');
 
@@ -91,7 +93,9 @@ class BuildCommandTest extends KernelTestCase
         $this->assertTrue($outputDir->hasChild('index.html'));
         $this->assertTrue($outputDir->hasChild('packages.json'));
         $this->assertTrue($outputDir->hasChild('include'));
-        $this->assertTrue($outputDir->getChild('include')->hasChildren());
+        /** @var vfsStreamDirectory $include */
+        $include = $outputDir->getChild('include');
+        $this->assertTrue($include->hasChildren());
     }
 
     /**
@@ -121,12 +125,14 @@ class BuildCommandTest extends KernelTestCase
      */
     protected function createInput($file, $outputDir = '')
     {
-        $input = new ArrayInput([
-            'command' => 'build',
-            'file' => $file,
-            'output-dir' => $outputDir,
-            '-vvv',
-        ]);
+        $input = new ArrayInput(
+            [
+                'command' => 'build',
+                'file' => $file,
+                'output-dir' => $outputDir,
+                '-vvv',
+            ]
+        );
 
         return $input;
     }

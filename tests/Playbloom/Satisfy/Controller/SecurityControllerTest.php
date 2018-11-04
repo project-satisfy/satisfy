@@ -1,8 +1,9 @@
 <?php
 
-namespace tests\Playbloom\Satisfy\Controller;
+namespace Tests\Playbloom\Satisfy\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,12 +32,16 @@ class SecurityControllerTest extends WebTestCase
                 '_password' => '',
             ]
         );
+        /** @var RedirectResponse $response */
         $response = $client->getResponse();
+        $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->isRedirection());
         $this->assertStringEndsWith('/login', $response->getTargetUrl());
 
         $client->submit($form, ['_username' => 'test', '_password' => 'test']);
+        /** @var RedirectResponse $response */
         $response = $client->getResponse();
+        $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertTrue($response->isRedirection());
         $this->assertStringEndsWith('/admin', $response->getTargetUrl());
 

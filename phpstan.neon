@@ -1,0 +1,12 @@
+parameters:
+	level: 4
+	paths:
+		- src
+		- tests
+	fileExtensions:
+		- php
+
+includes:
+	- vendor/phpstan/phpstan-phpunit/extension.neon
+	- vendor/phpstan/phpstan-phpunit/rules.neon
+	- vendor/jangregor/phpstan-prophecy/src/extension.neon

@@ -13,7 +13,7 @@ class FilePersisterTest extends TestCase
     use SchemaValidatorTrait;
     use VfsTrait;
 
-    /** @var FilePersister */
+    /** @var FilePersister|null */
     protected $persister;
 
     protected function setUp()
