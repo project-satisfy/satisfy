@@ -148,12 +148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "73d0aa4d2ed920d3090ad4d6fa39920061367ac7"
+                "reference": "3acf69205b5ec64c536ea376a75c169fe4f16be5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/73d0aa4d2ed920d3090ad4d6fa39920061367ac7",
-                "reference": "73d0aa4d2ed920d3090ad4d6fa39920061367ac7",
+                "url": "https://api.github.com/repos/composer/satis/zipball/3acf69205b5ec64c536ea376a75c169fe4f16be5",
+                "reference": "3acf69205b5ec64c536ea376a75c169fe4f16be5",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2018-10-17T08:19:19+00:00"
+            "time": "2018-11-01T09:41:43+00:00"
         },
         {
             "name": "composer/semver",
@@ -5716,16 +5716,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.4.3",
+            "version": "7.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c151651fb6ed264038d486ea262e243af72e5e64"
+                "reference": "b1be2c8530c4c29c3519a052c9fb6cee55053bbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c151651fb6ed264038d486ea262e243af72e5e64",
-                "reference": "c151651fb6ed264038d486ea262e243af72e5e64",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b1be2c8530c4c29c3519a052c9fb6cee55053bbd",
+                "reference": "b1be2c8530c4c29c3519a052c9fb6cee55053bbd",
                 "shasum": ""
             },
             "require": {
@@ -5796,7 +5796,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-23T05:57:41+00:00"
+            "time": "2018-11-14T16:52:02+00:00"
         },
         {
             "name": "ramunasd/symfony-container-mocks",

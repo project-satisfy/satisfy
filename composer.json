@@ -2,7 +2,7 @@
     "name": "playbloom/satisfy",
     "license": "MIT",
     "type": "project",
-    "keywords": ["satis", "composer", "backend", "ui"],
+    "keywords": ["satis", "composer", "backend", "ui", "packagist", "static-packagist"],
     "description": "Satis composer repository manager with a Web UI",
     "authors": [
         {
