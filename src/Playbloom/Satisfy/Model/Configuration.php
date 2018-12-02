@@ -6,6 +6,7 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 use PhpCollection\Map;
+use Webmozart\Assert\Assert;
 
 /**
  * Configuration class
@@ -53,7 +54,8 @@ class Configuration
     private $repositories;
 
     /**
-     * @Type("array")
+     * @var PackageConstraint[]
+     * @Type("RequireCollection<Playbloom\Satisfy\Model\PackageConstraint>")
      * @SerializedName("require")
      */
     private $require;
@@ -200,9 +202,6 @@ class Configuration
         return $this->outputHtml;
     }
 
-    /**
-     * @return $this
-     */
     public function setOutputHtml(bool $outputHtml)
     {
         $this->outputHtml = $outputHtml;
@@ -280,6 +279,27 @@ class Configuration
     public function setRepositories(Map $repositories)
     {
         $this->repositories = $repositories;
+
+        return $this;
+    }
+
+    /**
+     * @return PackageConstraint[]
+     */
+    public function getRequire(): array
+    {
+        return $this->require ?: [];
+    }
+
+    /**
+     * @param PackageConstraint[] $require
+     *
+     * @return $this
+     */
+    public function setRequire(array $require)
+    {
+        Assert::allIsInstanceOf($require, PackageConstraint::class);
+        $this->require = $require;
 
         return $this;
     }
@@ -363,18 +383,6 @@ class Configuration
         } else {
             $this->config = json_decode($config, true);
         }
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getRequire()
-    {
-        if (empty($this->require)) {
-            return null;
-        }
-
-        return $this->require;
     }
 
     /**

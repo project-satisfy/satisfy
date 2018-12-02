@@ -30,6 +30,12 @@ services:
       - { name: jms_serializer.handler, type: RepositoryCollection, direction: serialization, format: json, method: serializeCollection }
       - { name: jms_serializer.handler, type: RepositoryCollection, direction: deserialization, format: json, method: deserializeCollection }
 
+  satisfy.serializer.require_collection_handler:
+    class: Playbloom\Satisfy\Serializer\RequireConstraintHandler
+    tags:
+      - { name: jms_serializer.handler, type: RequireCollection, direction: serialization, format: json, method: serializeCollection }
+      - { name: jms_serializer.handler, type: RequireCollection, direction: deserialization, format: json, method: deserializeCollection }
+
   satisfy.processor.lock_processor:
     class: Playbloom\Satisfy\Service\LockProcessor
     arguments:

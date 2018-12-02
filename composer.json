@@ -41,7 +41,8 @@
         "doctrine/instantiator": "~1.1",
         "incenteev/composer-parameter-handler": "^2.1",
         "swop/github-webhook": "^2.0",
-        "zendframework/zend-diactoros": "^1.8"
+        "zendframework/zend-diactoros": "^1.8",
+        "ninsuo/symfony-collection": "^2.1"
     },
     "require-dev": {
         "symfony/browser-kit": "^3.4",

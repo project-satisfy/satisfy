@@ -5,11 +5,12 @@ namespace Playbloom\Satisfy\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ConfigurationType extends AbstractType
 {
@@ -24,6 +25,20 @@ class ConfigurationType extends AbstractType
                 'required' => false,
             ])
             ->add('homepage', UrlType::class)
+            ->add('require', CollectionType::class, [
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'delete_empty' => true,
+                'entry_type' => PackageConstraintType::class,
+                'prototype' => true,
+                'attr' => [
+                    'class' => 'collection_require',
+                ],
+                'constraints' => [
+                    new Assert\Valid(),
+                ],
+            ])
             ->add('requireAll', CheckboxType::class, [
                 'required' => false,
                 'attr' => [

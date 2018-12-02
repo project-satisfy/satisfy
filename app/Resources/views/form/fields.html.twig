@@ -1,0 +1,12 @@
+{% block PackageConstraintType_row %}
+    <div class="clearfix">
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block PackageConstraintType_widget %}
+    <div class="col-sm-6">{{ form_widget(form.package) }} {{ form_errors(form.package) }}</div>
+    <div class="col-sm-4">{{ form_widget(form.constraint) }} {{ form_errors(form.constraint) }}</div>
+    <div class="col-sm-2 {{ form.parent.vars.id }}-collection-actions"></div>
+{% endblock %}
