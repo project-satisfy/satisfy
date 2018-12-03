@@ -14,6 +14,7 @@ Satisfy provides:
 
 * a Web UI: A CRUD to manage your satis configuration file
 * a simple security layer with a login form
+* a webhook endpoints for most popular version control systems
 * Satis itself
 
 Satisfy ease your satis configuration management. It provides simple web UI over Satis to avoid a hand-editing of the satis.json configuration file. All repositories from a composer.lock file can also be imported via upload.
