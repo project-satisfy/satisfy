@@ -6,3 +6,4 @@ parameters:
     admin.users: ~
     composer.home: "%kernel.project_dir%/var/composer"
     github.secret: ~
+    gitlab.secret: ~

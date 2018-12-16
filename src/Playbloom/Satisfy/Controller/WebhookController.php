@@ -29,6 +29,13 @@ class WebhookController extends Controller
         return $this->handleRequest($request, $webhook);
     }
 
+    public function gitlabAction(Request $request): Response
+    {
+        $webhook = $this->container->get('satisfy.webhook.gitlab');
+
+        return $this->handleRequest($request, $webhook);
+    }
+
     private function handleRequest(Request $request, AbstractWebhook $webhook): Response
     {
         try {
