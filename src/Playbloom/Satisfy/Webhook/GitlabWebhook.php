@@ -1,9 +1,4 @@
 <?php
-/**
- * Created by Marcin.
- * Date: 16.12.2018
- * Time: 14:40
- */
 
 namespace Playbloom\Satisfy\Webhook;
 
