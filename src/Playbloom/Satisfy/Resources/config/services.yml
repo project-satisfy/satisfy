@@ -73,3 +73,9 @@ services:
     class: Playbloom\Satisfy\Webhook\GithubWebhook
     calls:
       - [setSecret, ["%github.secret%"]]
+
+  satisfy.webhook.gitlab:
+    parent: satisfy.webhook
+    class: Playbloom\Satisfy\Webhook\GitlabWebhook
+    calls:
+      - [setSecret, ["%gitlab.secret%"]]
