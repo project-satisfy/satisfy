@@ -126,7 +126,7 @@ class Manager
         $lock = $this->acquireLock();
         try {
             $repos->remove($repository->getId());
-            $repos->set($updated->getId(), $updated);
+            $repos->set($updated->getId(), $this->cleanUpRepository($updated));
             $this->flush();
         } finally {
             $lock->release();
@@ -168,7 +168,7 @@ class Manager
         $this
             ->getConfig()
             ->getRepositories()
-            ->set($repository->getId(), $repository);
+            ->set($repository->getId(), $this->cleanUpRepository($repository));
 
         return $this;
     }
@@ -199,5 +199,22 @@ class Manager
         }
 
         return $this->lock;
+    }
+
+    /**
+     * Removes package details form repository for other types.
+     *
+     *
+     * @return \Playbloom\Satisfy\Model\RepositoryInterface
+     */
+    private function cleanUpRepository(RepositoryInterface $repository)
+    {
+        if ('package' !== $repository->getType()) {
+            $repository->setPackage(null);
+        } else {
+            $repository->setUrl(null);
+        }
+
+        return $repository;
     }
 }

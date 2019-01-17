@@ -1,0 +1,16 @@
+<script>
+  (function($){
+    $(document).ready(function () {
+      $('select[name="repository[type]"]').bind('change', function(){
+        if ($(this).val() == 'package') {
+          $('fieldset.package').show();
+          $('fieldset.url').hide();
+        }
+        else {
+          $('fieldset.url').show();
+          $('fieldset.package').hide();
+        }
+      }).trigger('change');
+    });
+  })(jQuery);
+</script>

@@ -55,8 +55,18 @@ class RepositoryControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
 
+        $client->submit(
+          $form->form(),
+          [
+            'repository' => ['type' => 'package'],
+          ]
+        );
+        $response = $client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+
         $url = 'git@github.com:YourAccount/YourRepo.git';
-        $request = ['type' => 'git', 'url' => $url];
+        $type = 'git';
+        $request = ['type' => $type, 'url' => $url];
         $client->submit(
             $form->form(),
             ['repository' => $request]
@@ -78,8 +88,8 @@ class RepositoryControllerTest extends WebTestCase
         $this->assertEquals([(object)$request], $config->repositories);
 
         // update repository
-        $params = ['type' => 'github', 'url' => $url2 = 'git@github.com:account/repository.git'];
-        $crawler = $client->request('GET', '/admin/edit/' . md5($url));
+        $params = ['type' => $type2 = 'github', 'url' => $url2 = 'git@github.com:account/repository.git'];
+        $crawler = $client->request('GET', '/admin/edit/' . md5("$type: $url"));
         $form = $crawler->filterXPath('//form');
         $client->submit($form->form(), ['repository' => $params]);
 
@@ -93,7 +103,7 @@ class RepositoryControllerTest extends WebTestCase
         $this->assertEquals('github', $config->repositories[0]->type);
 
         // remove repository
-        $crawler = $client->request('GET', '/admin/delete/' . md5($url2));
+        $crawler = $client->request('GET', '/admin/delete/' . md5("$type2: $url2"));
         $form = $crawler->filterXPath('//form');
         $client->submit($form->form());
         $response = $client->getResponse();

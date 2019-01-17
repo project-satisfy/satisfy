@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Controller;
 
+use mysql_xdevapi\Exception;
 use Playbloom\Satisfy\Form\Type\ComposerLockType;
 use Playbloom\Satisfy\Form\Type\DeleteFormType;
 use Playbloom\Satisfy\Form\Type\RepositoryType;
@@ -110,7 +111,9 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/edit.html.twig', ['form' => $form->createView()]);
+        $a = $form->createView();
+
+        return $this->render('@PlaybloomSatisfy/edit.html.twig', ['form' => $a]);
     }
 
     /**

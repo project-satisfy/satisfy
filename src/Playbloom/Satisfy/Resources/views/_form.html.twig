@@ -1,5 +1,19 @@
 {{ form_errors(form) }}
-{{ form_widget(form) }}
 
 {{ form_row(form.type, {'label': 'Type'}) }}
-{{ form_row(form.url, {'label': 'URL'}) }}
+
+<fieldset class="url">
+  {{ form_row(form.url, {'label': 'URL'}) }}
+</fieldset>
+
+<fieldset class="package">
+  {{ form_row(form.packageName, {'label': 'Package Name'}) }}
+  {{ form_row(form.packageType, {'label': 'Package Type'}) }}
+  {{ form_row(form.packageLicense, {'label': 'Package License'}) }}
+  {{ form_row(form.packageVersion, {'label': 'Version'}) }}
+  {{ form_row(form.packageDistUrl, {'label': 'Dist URL'}) }}
+  {{ form_row(form.packageDistType, {'label': 'Dist Type'}) }}
+  {{ form_row(form.packageDistSha1Checksum, {'label': 'Dist SHA1 Checksum'}) }}
+</fieldset>
+
+{{ form_widget(form) }}
