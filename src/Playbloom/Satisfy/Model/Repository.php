@@ -53,7 +53,7 @@ class Repository implements RepositoryInterface
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        if ('package' == $this->type) {
+        if ($this->type == 'package') {
             if (empty($this->package['name'])) {
                 $context->buildViolation('This value should not be blank.')
                   ->atPath('packageName')
