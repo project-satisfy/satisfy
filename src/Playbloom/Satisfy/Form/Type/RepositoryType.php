@@ -62,7 +62,18 @@ class RepositoryType extends AbstractType
                         'placeholder' => 'Repository url',
                     ],
                 ]
-            );
+            )
+			->add(
+					'installationSource',
+					TextType::class,
+					[
+							'required' => false,
+							'empty_data' => 'dist',
+							'attr' => [
+									'placeholder' => 'Installation source',
+							],
+					]
+			);
     }
 
     /**
