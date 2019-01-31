@@ -63,17 +63,18 @@ class RepositoryType extends AbstractType
                     ],
                 ]
             )
-			->add(
-					'installationSource',
-					TextType::class,
-					[
-							'required' => false,
-							'empty_data' => 'dist',
-							'attr' => [
-									'placeholder' => 'Installation source',
-							],
-					]
-			);
+            ->add(
+                'installationSource',
+                ChoiceType::class,
+                [
+                    'required' => false,
+                    'placeholder' => false,
+                    'choices' => [
+                        'dist' => 'dist',
+                        'source' => 'source',
+                    ],
+                ]
+            );
     }
 
     /**
