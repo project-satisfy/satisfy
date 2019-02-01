@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Model;
 
+use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
 class Repository implements RepositoryInterface
@@ -15,6 +16,13 @@ class Repository implements RepositoryInterface
      * @Type("string")
      */
     private $url;
+
+	/**
+	 * @var string
+	 * @Type("string")
+	 * @SerializedName("installation-source")
+	 */
+	private $installationSource = 'dist';
 
     public function __construct(string $url = '', string $type = 'git')
     {
@@ -75,4 +83,22 @@ class Repository implements RepositoryInterface
 
         return $this;
     }
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getInstallationSource(): string
+	{
+		return $this->installationSource;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setInstallationSource(string $installationSource): RepositoryInterface
+	{
+		$this->installationSource = $installationSource;
+
+		return $this;
+	}
 }

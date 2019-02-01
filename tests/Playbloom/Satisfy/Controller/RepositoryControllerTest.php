@@ -75,10 +75,12 @@ class RepositoryControllerTest extends WebTestCase
         $this->assertNotEmpty($config);
 
         $this->assertObjectHasAttribute('repositories', $config);
-        $this->assertEquals([(object)$request], $config->repositories);
+        $this->assertEquals($url, $config->repositories[0]->url);
+        $this->assertEquals('git', $config->repositories[0]->type);
+        $this->assertEquals('dist', $config->repositories[0]->{'installation-source'});
 
         // update repository
-        $params = ['type' => 'github', 'url' => $url2 = 'git@github.com:account/repository.git'];
+        $params = ['type' => 'github', 'url' => $url2 = 'git@github.com:account/repository.git', 'installationSource' => 'source'];
         $crawler = $client->request('GET', '/admin/edit/' . md5($url));
         $form = $crawler->filterXPath('//form');
         $client->submit($form->form(), ['repository' => $params]);
@@ -91,6 +93,7 @@ class RepositoryControllerTest extends WebTestCase
         $config = json_decode($configHandle->getContent());
         $this->assertEquals($url2, $config->repositories[0]->url);
         $this->assertEquals('github', $config->repositories[0]->type);
+        $this->assertEquals('source', $config->repositories[0]->{'installation-source'});
 
         // remove repository
         $crawler = $client->request('GET', '/admin/delete/' . md5($url2));
