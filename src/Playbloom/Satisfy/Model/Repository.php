@@ -17,12 +17,12 @@ class Repository implements RepositoryInterface
      */
     private $url;
 
-	/**
-	 * @var string
-	 * @Type("string")
-	 * @SerializedName("installation-source")
-	 */
-	private $installationSource = 'dist';
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("installation-source")
+     */
+    private $installationSource = 'dist';
 
     public function __construct(string $url = '', string $type = 'git')
     {
@@ -84,21 +84,21 @@ class Repository implements RepositoryInterface
         return $this;
     }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getInstallationSource(): string
-	{
-		return $this->installationSource;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getInstallationSource(): string
+    {
+        return $this->installationSource;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setInstallationSource(string $installationSource): RepositoryInterface
-	{
-		$this->installationSource = $installationSource;
+    /**
+     * {@inheritdoc}
+     */
+    public function setInstallationSource(string $installationSource): RepositoryInterface
+    {
+        $this->installationSource = $installationSource;
 
-		return $this;
-	}
+        return $this;
+    }
 }
