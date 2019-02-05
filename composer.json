@@ -24,6 +24,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7.1",
+        "ext-json": "*",
         "composer/satis": "dev-master",
         "composer/composer": "^1.7",
         "jms/serializer-bundle": "^2.3",
