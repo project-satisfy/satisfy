@@ -18,9 +18,6 @@ class RepositoryCollectionHandler
         // We change the base type, and pass through possible parameters.
         $type['name'] = 'array';
         $data = $collection->values();
-        if ($visitor instanceof JsonSerializationVisitor) {
-            $visitor->setOptions(JSON_PRETTY_PRINT);
-        }
 
         return $visitor->visitArray($data, $type, $context);
     }
