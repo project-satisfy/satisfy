@@ -58,10 +58,10 @@ Create a webserver pointing to the `web` directory. Browse to »/admin/« to man
 
 Since Satisfy does only manage the Satis configuration file, it is necessary to build the package definitions using Satis.
 
-A bin shortcut to Satis is already included in Satisfy, so run the following command to generate the files in the web folder.
+A bin shortcut to Satis is already included in Satisfy, but we need our own command for the parameter `satis_filename`. Run the following command to generate the files in the web folder.
 
  ```
-./bin/satis build
+./bin/console satisfy:rebuild
 ```
 
 ## Authors
