@@ -75,7 +75,7 @@ class BitbucketWebhookTest extends KernelTestCase
             ->shouldBeCalled()
             ->willReturn(0);
 
-        $command = '/bin/satis build --skip-errors --no-ansi --verbose';
+        $command = '/bin/console satisfy:rebuild --skip-errors --no-ansi --verbose';
         $command .= ' --repository-url="git@bitbucket.org:test/test.git"';
         $processFactory
             ->create(Argument::containingString($command), Argument::type('integer'))
