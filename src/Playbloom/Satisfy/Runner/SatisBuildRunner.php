@@ -81,7 +81,7 @@ class SatisBuildRunner
 
     protected function getCommandLine(string $repositoryUrl = null): string
     {
-        $line = $this->processFactory->getRootPath() . '/bin/satis build';
+        $line = $this->processFactory->getRootPath() . '/bin/console satisfy:rebuild';
         $line .= ' --skip-errors --no-ansi --verbose';
         if (!empty($repositoryUrl)) {
             $line .= sprintf(' --repository-url="%s"', $repositoryUrl);
