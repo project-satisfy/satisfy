@@ -47,7 +47,7 @@
     },
     "require-dev": {
         "symfony/browser-kit": "^3.4",
-        "mikey179/vfsStream": "^1.6",
+        "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^7.4",
         "ramunasd/symfony-container-mocks": "^0.6.0",
         "friendsofphp/php-cs-fixer": "^2.13",
