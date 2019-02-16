@@ -6,6 +6,8 @@ use Playbloom\Satisfy\Form\Type\ComposerLockType;
 use Playbloom\Satisfy\Form\Type\DeleteFormType;
 use Playbloom\Satisfy\Form\Type\RepositoryType;
 use Playbloom\Satisfy\Model\Repository;
+use Playbloom\Satisfy\Service\LockProcessor;
+use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,14 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RepositoryController extends AbstractProtectedController
 {
-    /**
-     * @return Response
-     */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $this->checkAccess();
-        $config = $this->get('satisfy.manager')->getConfig();
-        $repositories = $this->get('satisfy.manager')->getRepositories();
+        $manager = $this->get(Manager::class);
+        $config = $manager->getConfig();
+        $repositories = $manager->getRepositories();
         $satisRepository = [
             'type' => 'composer',
             'url' => $config->getHomepage(),
@@ -33,10 +33,7 @@ class RepositoryController extends AbstractProtectedController
         return $this->render('@PlaybloomSatisfy/home.html.twig', compact('config', 'repositories'));
     }
 
-    /**
-     * @return Response
-     */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $this->checkAccess();
 
@@ -49,7 +46,7 @@ class RepositoryController extends AbstractProtectedController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get('satisfy.manager')->add($form->getData());
+                $this->get(Manager::class)->add($form->getData());
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {
@@ -63,7 +60,7 @@ class RepositoryController extends AbstractProtectedController
     /**
      * @return RedirectResponse|Response
      */
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request): Response
     {
         $this->checkAccess();
 
@@ -72,7 +69,7 @@ class RepositoryController extends AbstractProtectedController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $lock = $form->get('file')->getData()->openFile();
-                $this->get('satisfy.processor.lock_processor')->processFile($lock);
+                $this->get(LockProcessor::class)->processFile($lock);
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {
@@ -83,14 +80,11 @@ class RepositoryController extends AbstractProtectedController
         return $this->render('@PlaybloomSatisfy/upload.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @return Response
-     */
-    public function editAction(Request $request)
+    public function editAction(Request $request): Response
     {
         $this->checkAccess();
-
-        $repository = $this->get('satisfy.manager')->findOneRepository($request->attributes->get('repository'));
+        $manager = $this->get(Manager::class);
+        $repository = $manager->findOneRepository($request->attributes->get('repository'));
         if (!$repository) {
             return $this->redirectToRoute('repository');
         }
@@ -102,7 +96,7 @@ class RepositoryController extends AbstractProtectedController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->get('satisfy.manager')->update($repository, $form->getData());
+                $manager->update($repository, $form->getData());
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {
@@ -113,14 +107,11 @@ class RepositoryController extends AbstractProtectedController
         return $this->render('@PlaybloomSatisfy/edit.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @return Response
-     */
-    public function deleteAction(Request $request)
+    public function deleteAction(Request $request): Response
     {
         $this->checkAccess();
-
-        $repository = $this->get('satisfy.manager')->findOneRepository($request->attributes->get('repository'));
+        $manager = $this->get(Manager::class);
+        $repository = $manager->findOneRepository($request->attributes->get('repository'));
         if (!$repository) {
             return $this->redirectToRoute('repository');
         }
@@ -128,7 +119,7 @@ class RepositoryController extends AbstractProtectedController
         $form = $this->createForm(DeleteFormType::class);
         if (Request::METHOD_DELETE === $request->getMethod()) {
             try {
-                $this->get('satisfy.manager')->delete($repository);
+                $manager->delete($repository);
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {

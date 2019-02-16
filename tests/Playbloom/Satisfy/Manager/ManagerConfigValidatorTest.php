@@ -4,7 +4,7 @@ namespace Tests\Playbloom\Satisfy\Manager;
 
 use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\TestCase;
-use Playbloom\Satisfy\Persister\PersisterInterface;
+use Playbloom\Satisfy\Persister\JsonPersister;
 use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Store\FlockStore;
@@ -36,7 +36,7 @@ class ManagerConfigValidatorTest extends TestCase
     public function testConfigIsMatchingSatisSchema($configFilename)
     {
         $this->assertTrue(copy($configFilename, $this->config->url()));
-        $persister = $this->prophesize(PersisterInterface::class);
+        $persister = $this->prophesize(JsonPersister::class);
         $lockFactory = new Factory(new FlockStore());
         $lock = $lockFactory->createLock('satis');
         /** @var Manager $manager */

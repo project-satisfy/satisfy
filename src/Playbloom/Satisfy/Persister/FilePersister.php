@@ -19,11 +19,7 @@ class FilePersister implements PersisterInterface
     /** @var string */
     private $logPath;
 
-    /**
-     * @param string     $filename
-     * @param string     $logPath
-     */
-    public function __construct(Filesystem $filesystem, $filename, $logPath)
+    public function __construct(Filesystem $filesystem, string $filename, string $logPath)
     {
         $this->filesystem = $filesystem;
         $this->filename = $filename;

@@ -23,10 +23,8 @@ class JsonPersister implements PersisterInterface
 
     /**
      * JsonPersister constructor.
-     *
-     * @param string $satisClass
      */
-    public function __construct(PersisterInterface $persister, SerializerInterface $serializer, $satisClass)
+    public function __construct(PersisterInterface $persister, SerializerInterface $serializer, string $satisClass)
     {
         $this->serializer = $serializer;
         $this->persister = $persister;

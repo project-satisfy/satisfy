@@ -14,6 +14,9 @@ abstract class AbstractWebhook
     /** @var Manager */
     protected $manager;
 
+    /** @var string|null */
+    protected $secret;
+
     public function __construct(Manager $manager, EventDispatcherInterface $dispatcher)
     {
         $this->manager = $manager;

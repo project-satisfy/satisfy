@@ -3,6 +3,7 @@
 namespace Tests\Playbloom\Satisfy\Webhook;
 
 use Playbloom\Satisfy\Model\Repository;
+use Playbloom\Satisfy\Process\ProcessFactory;
 use Playbloom\Satisfy\Runner\SatisBuildRunner;
 use Playbloom\Satisfy\Service\Manager;
 use Playbloom\Satisfy\Webhook\BitbucketWebhook;
@@ -30,7 +31,7 @@ class BitbucketWebhookTest extends KernelTestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         /** @var BitbucketWebhook $handler */
-        $handler = self::$kernel->getContainer()->get('satisfy.webhook.bitbucket');
+        $handler = self::$kernel->getContainer()->get(BitbucketWebhook::class);
         $handler->handle($request);
     }
 
@@ -57,13 +58,13 @@ class BitbucketWebhookTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         $rootPath = $container->getParameter('kernel.project_dir');
 
-        $processFactory = $container->prophesize('satisfy.process.factory');
+        $processFactory = $container->prophesize(ProcessFactory::class);
         /** @var SatisBuildRunner $builder */
-        $builder = $container->get('satisfy.runner.satis_build');
+        $builder = $container->get(SatisBuildRunner::class);
         $builder->setProcessFactory($processFactory->reveal());
 
         /** @var Manager $manager */
-        $manager = $container->get('satisfy.manager');
+        $manager = $container->get(Manager::class);
         $manager->add(new Repository('git@bitbucket.org:test/test.git'));
 
         $process = $this->prophesize(Process::class);
@@ -86,7 +87,7 @@ class BitbucketWebhookTest extends KernelTestCase
 
         $request = $this->createRequest(['repository' => ['full_name' => 'test/test']]);
         /** @var BitbucketWebhook $webhook */
-        $webhook = $container->get('satisfy.webhook.bitbucket');
+        $webhook = $container->get(BitbucketWebhook::class);
         $status = $webhook->handle($request);
 
         $this->assertEquals(0, $status);

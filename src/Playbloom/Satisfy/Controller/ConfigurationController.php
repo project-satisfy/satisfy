@@ -3,13 +3,15 @@
 namespace Playbloom\Satisfy\Controller;
 
 use Playbloom\Satisfy\Form\Type\ConfigurationType;
+use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ConfigurationController extends AbstractProtectedController
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
-        $manager = $this->get('satisfy.manager');
+        $manager = $this->get(Manager::class);
         $config = $manager->getConfig();
         $form = $this->createForm(ConfigurationType::class, $config);
         $form->handleRequest($request);

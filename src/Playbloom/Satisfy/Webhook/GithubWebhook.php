@@ -3,18 +3,23 @@
 namespace Playbloom\Satisfy\Webhook;
 
 use Playbloom\Satisfy\Event\BuildEvent;
+use Playbloom\Satisfy\Service\Manager;
 use Psr\Http\Message\ServerRequestInterface;
 use Swop\GitHubWebHook\Event\GitHubEventFactory;
 use Swop\GitHubWebHook\Exception\GitHubWebHookException;
 use Swop\GitHubWebHook\Exception\InvalidGitHubRequestSignatureException;
 use Swop\GitHubWebHook\Security\SignatureValidator;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class GithubWebhook extends AbstractWebhook
 {
-    /** @var string|null */
-    protected $secret;
+    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null)
+    {
+        parent::__construct($manager, $dispatcher);
+        $this->secret = $secret;
+    }
 
     public function setSecret(string $secret = null): self
     {

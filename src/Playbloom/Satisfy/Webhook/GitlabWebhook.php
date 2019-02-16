@@ -3,14 +3,19 @@
 namespace Playbloom\Satisfy\Webhook;
 
 use Playbloom\Satisfy\Event\BuildEvent;
+use Playbloom\Satisfy\Service\Manager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class GitlabWebhook extends AbstractWebhook
 {
     private const HTTP_TOKEN = 'X-GITLAB-TOKEN';
 
-    /** @var string|null */
-    protected $secret;
+    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null)
+    {
+        parent::__construct($manager, $dispatcher);
+        $this->secret = $secret;
+    }
 
     public function setSecret(string $secret = null): self
     {

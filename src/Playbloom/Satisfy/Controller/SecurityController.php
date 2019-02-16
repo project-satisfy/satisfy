@@ -10,10 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SecurityController extends Controller
 {
-    /**
-     * @return Response
-     */
-    public function loginAction()
+    public function loginAction(): Response
     {
         $authUtils = $this->get('security.authentication_utils');
         // last username entered by the user

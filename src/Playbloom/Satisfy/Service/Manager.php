@@ -6,8 +6,8 @@ use PhpCollection\Map;
 use PhpOption\None;
 use Playbloom\Satisfy\Exception\MissingConfigException;
 use Playbloom\Satisfy\Model\Configuration;
-use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Model\RepositoryInterface;
+use Playbloom\Satisfy\Persister\JsonPersister;
 use Playbloom\Satisfy\Persister\PersisterInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Lock\Lock;
@@ -31,7 +31,7 @@ class Manager
     /**
      * Constructor
      */
-    public function __construct(Lock $lock, PersisterInterface $persister)
+    public function __construct(Lock $lock, JsonPersister $persister)
     {
         $this->lock = $lock;
         $this->persister = $persister;

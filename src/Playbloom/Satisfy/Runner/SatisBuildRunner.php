@@ -21,10 +21,11 @@ class SatisBuildRunner
     /** @var Lock */
     protected $lock;
 
-    public function __construct(string $satisFilename, Lock $lock)
+    public function __construct(string $satisFilename, Lock $lock, ProcessFactory $processFactory)
     {
         $this->satisFilename = $satisFilename;
         $this->lock = $lock;
+        $this->processFactory = $processFactory;
     }
 
     public function setProcessFactory(ProcessFactory $processFactory)
