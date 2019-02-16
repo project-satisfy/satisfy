@@ -25,7 +25,7 @@ class ProcessFactory
 
     public function create(string $command, int $timeout = null): Process
     {
-        return new Process($command, $this->rootPath, $this->getEnv(), null, $timeout);
+        return new Process([$command], $this->rootPath, $this->getEnv(), null, $timeout);
     }
 
     protected function getEnv(): array

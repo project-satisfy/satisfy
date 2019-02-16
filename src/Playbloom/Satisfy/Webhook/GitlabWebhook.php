@@ -24,7 +24,7 @@ class GitlabWebhook extends AbstractWebhook
         return $this;
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): ?int
     {
         $this->validate($request);
         $content = json_decode($request->getContent(), true);

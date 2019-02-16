@@ -2,7 +2,6 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 use PhpCollection\Map;

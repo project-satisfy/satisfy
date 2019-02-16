@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BitbucketWebhook extends AbstractWebhook
 {
-    public function handle(Request $request)
+    public function handle(Request $request): ?int
     {
         $this->validate($request);
 

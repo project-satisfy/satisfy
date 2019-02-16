@@ -7,7 +7,7 @@ use Symfony\Component\EventDispatcher\Event;
 
 class BuildEvent extends Event
 {
-    const EVENT_NAME = 'satis_build';
+    public const EVENT_NAME = 'satis_build';
 
     /** @var RepositoryInterface|null */
     private $repository;

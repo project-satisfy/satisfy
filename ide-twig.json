@@ -1,0 +1,6 @@
+{
+  "namespaces": [
+    { "path": "app/Resources/views" },
+    { "path":  "src/Playbloom/Satisfy/Resources/views" }
+  ]
+}

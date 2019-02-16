@@ -28,7 +28,7 @@ class GithubWebhook extends AbstractWebhook
         return $this;
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): ?int
     {
         $psr7Factory = new DiactorosFactory();
         $psrRequest = $psr7Factory->createRequest($request);

@@ -3,7 +3,6 @@
 namespace Playbloom\Satisfy\Serializer;
 
 use JMS\Serializer\Context;
-use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\VisitorInterface;
 use PhpCollection\Map;
 use Playbloom\Satisfy\Model\Repository;

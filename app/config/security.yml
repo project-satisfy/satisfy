@@ -12,6 +12,9 @@ security:
         check_path: login
         default_target_path: repository
         remember_me: true
+      logout:
+        path: /admin/logout
+        target: /
   providers:
     in_memory:
       memory:

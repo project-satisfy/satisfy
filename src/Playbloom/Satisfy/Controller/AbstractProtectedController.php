@@ -9,12 +9,12 @@ abstract class AbstractProtectedController extends Controller
     /**
      * Check admin access.
      */
-    protected function checkAccess()
+    protected function checkAccess(): void
     {
         if (!$this->getParameter('admin.auth')) {
             return;
         }
 
-        parent::denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Webhook;
 
+use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,12 +24,9 @@ abstract class AbstractWebhook
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * @return int|null
-     */
-    abstract public function handle(Request $request);
+    abstract public function handle(Request $request): ?int;
 
-    protected function findRepository(array $urls)
+    protected function findRepository(array $urls): ?RepositoryInterface
     {
         foreach ($urls as $url) {
             $repository = $this->manager->findByUrl($url);
