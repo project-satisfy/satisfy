@@ -25,6 +25,7 @@
     "require": {
         "php": "^7.1",
         "ext-json": "*",
+        "ext-xml": "*",
         "composer/satis": "dev-master",
         "composer/composer": "^1.7",
         "jms/serializer-bundle": "^2.3",
