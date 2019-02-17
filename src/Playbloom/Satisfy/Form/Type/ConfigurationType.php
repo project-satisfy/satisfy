@@ -4,7 +4,7 @@ namespace Playbloom\Satisfy\Form\Type;
 
 use Playbloom\Satisfy\Model\Configuration;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -21,11 +21,22 @@ class ConfigurationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Regex('#[a-z0-9]([_.-]?[a-z0-9]+)*/[a-z0-9]([_.-]?[a-z0-9]+)*#'),
+                ],
+            ])
             ->add('description', TextareaType::class, [
                 'required' => false,
             ])
-            ->add('homepage', UrlType::class)
+            ->add('homepage', UrlType::class, [
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
+            ])
             ->add('require', CollectionType::class, [
                 'required' => false,
                 'allow_add' => true,
@@ -40,14 +51,14 @@ class ConfigurationType extends AbstractType
                     new Assert\Valid(),
                 ],
             ])
-            ->add('requireAll', CheckboxType::class, [
+            ->add('requireAll', Type\CheckboxType::class, [
                 'required' => false,
                 'attr' => [
                    'rel' => 'tooltip',
                    'data-title' => 'selects all versions of all packages in the repositories you defined',
                 ],
             ])
-            ->add('requireDependencies', CheckboxType::class, [
+            ->add('requireDependencies', Type\CheckboxType::class, [
                 'required' => false,
                 'attr' => [
                    'rel' => 'tooltip',
@@ -56,7 +67,10 @@ satis will attempt to resolve all the required packages from the listed reposito
 END
                 ],
             ])
-            ->add('requireDevDependencies', CheckboxType::class, [
+            ->add('requireDevDependencies', Type\CheckboxType::class, [
+                'required' => false,
+            ])
+            ->add('requireDependencyFilter', Type\CheckboxType::class, [
                 'required' => false,
             ])
             ->add('minimumStability', ChoiceType::class, [
@@ -91,7 +105,7 @@ defines where to output the repository files if not provided as an argument when
 END
                 ],
             ])
-            ->add('outputHtml', CheckboxType::class, [
+            ->add('outputHtml', Type\CheckboxType::class, [
                 'required' => false,
                 'label' => 'Output HTML',
                 'attr' => [
@@ -99,7 +113,7 @@ END
                     'data-title' => 'If enabled, build a static web page',
                 ],
             ])
-            ->add('providers', CheckboxType::class, [
+            ->add('providers', Type\CheckboxType::class, [
                 'required' => false,
                 'attr' => [
                     'rel' => 'tooltip',
@@ -127,6 +141,14 @@ END
                 'attr' => [
                     'rel' => 'tooltip',
                     'data-title' => 'specify a URL that will be called every time a user installs a package',
+                ],
+            ])
+            ->add('prettyPrint', Type\CheckboxType::class, [
+                'label' => 'Pretty print',
+                'required' => false,
+                'attr' => [
+                    'rel' => 'tooltip',
+                    'data-title' => 'when not checked, the JSON_PRETTY_PRINT option will not be used on encoding.',
                 ],
             ])
         ;

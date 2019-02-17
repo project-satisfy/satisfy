@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Model;
 
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 use PhpCollection\Map;
@@ -83,6 +84,20 @@ class Configuration
     private $requireDevDependencies = false;
 
     /**
+     * @var bool
+     * @Type("boolean")
+     * @SerializedName("require-dependency-filter")
+     */
+    private $requireDependencyFilter = true;
+
+    /**
+     * @var string[]
+     * @Type("array")
+     * @SerializedName("strip-hosts")
+     */
+    private $stripHosts;
+
+    /**
      * @var string|null
      * @Type("string")
      * @SerializedName("include-filename")
@@ -109,6 +124,13 @@ class Configuration
     private $providers = false;
 
     /**
+     * @var int|null
+     * @Type("integer")
+     * @SerializedName("providers-history-size")
+     */
+    private $providersHistorySize;
+
+    /**
      * @var string|null
      * @Type("string")
      * @SerializedName("twig-template")
@@ -133,6 +155,20 @@ class Configuration
      * @SerializedName("notify-batch")
      */
     private $notifyBatch;
+
+    /**
+     * @var string|null
+     * @Type("string")
+     * @SerializedName("_comment")
+     */
+    private $comment;
+
+    /**
+     * @var bool
+     * @Type("boolean")
+     * @SerializedName("pretty-print")
+     */
+    private $prettyPrint = true;
 
     /**
      * Configuration constructor.
@@ -238,6 +274,21 @@ class Configuration
     public function setRequireDevDependencies(bool $requireDevDependencies)
     {
         $this->requireDevDependencies = $requireDevDependencies;
+    }
+
+    public function isRequireDependencyFilter(): bool
+    {
+        return $this->requireDependencyFilter;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setRequireDependencyFilter(bool $requireDependencyFilter)
+    {
+        $this->requireDependencyFilter = $requireDependencyFilter;
+
+        return $this;
     }
 
     /**
@@ -400,5 +451,20 @@ class Configuration
     public function setNotifyBatch(string $notifyBatch = null)
     {
         $this->notifyBatch = $notifyBatch;
+    }
+
+    public function isPrettyPrint(): bool
+    {
+        return $this->prettyPrint;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setPrettyPrint(bool $prettyPrint)
+    {
+        $this->prettyPrint = $prettyPrint;
+
+        return $this;
     }
 }

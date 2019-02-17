@@ -24,5 +24,9 @@
     "blacklist": [],
     "prefix-url": "http://test.com"
   },
-  "minimum-stability": "dev"
+  "providers": true,
+  "providers-history-size": 1,
+  "minimum-stability": "dev",
+  "_comment": "",
+  "pretty-print": true
 }
