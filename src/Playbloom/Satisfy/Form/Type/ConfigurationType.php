@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Form\Type;
 
+use Playbloom\Satisfy\Model\Configuration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -78,7 +79,11 @@ END
                 ],
             ])
             ->add('outputDir', TextType::class, [
-                'required' => false,
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
+                'empty_data' => Configuration::DEFAULT_OUTPUT_DIR,
                 'attr' => [
                     'rel' => 'tooltip',
                     'data-title' => <<<END

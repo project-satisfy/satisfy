@@ -61,9 +61,6 @@ services:
       $rootPath: "%kernel.project_dir%"
       $composerHome: "%composer.home%"
 
-  satisfy.runner.satis_build:
-    alias: Playbloom\Satisfy\Runner\SatisBuildRunner
-
   Playbloom\Satisfy\Runner\SatisBuildRunner:
     autowire: true
     public: true

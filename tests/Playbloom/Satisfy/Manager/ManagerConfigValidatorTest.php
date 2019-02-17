@@ -4,8 +4,10 @@ namespace Tests\Playbloom\Satisfy\Manager;
 
 use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\TestCase;
+use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Persister\JsonPersister;
 use Playbloom\Satisfy\Service\Manager;
+use Prophecy\Argument;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Store\FlockStore;
 use Tests\Playbloom\Satisfy\Traits\SchemaValidatorTrait;
@@ -37,6 +39,13 @@ class ManagerConfigValidatorTest extends TestCase
     {
         $this->assertTrue(copy($configFilename, $this->config->url()));
         $persister = $this->prophesize(JsonPersister::class);
+        $persister
+            ->load()
+            ->willReturn(new Configuration());
+        $persister
+            ->flush(Argument::type(Configuration::class))
+            ->shouldBeCalled();
+
         $lockFactory = new Factory(new FlockStore());
         $lock = $lockFactory->createLock('satis');
         /** @var Manager $manager */

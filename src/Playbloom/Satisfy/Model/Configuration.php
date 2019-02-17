@@ -16,6 +16,8 @@ use Webmozart\Assert\Assert;
  */
 class Configuration
 {
+    public const DEFAULT_OUTPUT_DIR = 'web';
+
     /**
      * @Type("string")
      */
@@ -37,7 +39,7 @@ class Configuration
      * @Type("string")
      * @SerializedName("output-dir")
      */
-    private $outputDir = 'web';
+    private $outputDir = self::DEFAULT_OUTPUT_DIR;
 
     /**
      * @var bool

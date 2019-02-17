@@ -173,10 +173,7 @@ class Manager
         return $this;
     }
 
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
+    public function getConfig(): Configuration
     {
         if ($this->configuration) {
             return $this->configuration;

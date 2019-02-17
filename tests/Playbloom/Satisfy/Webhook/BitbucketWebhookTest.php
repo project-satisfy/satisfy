@@ -76,10 +76,11 @@ class BitbucketWebhookTest extends KernelTestCase
             ->shouldBeCalled()
             ->willReturn(0);
 
-        $command = '/bin/satis build --skip-errors --no-ansi --verbose';
-        $command .= ' --repository-url="git@bitbucket.org:test/test.git"';
+        $command = ['bin/satis', 'build', 'vfs://root/satis.json', 'web', '--skip-errors', '--no-ansi', '--verbose'];
+        $command[] = '--repository-url="git@bitbucket.org:test/test.git"';
+        $command[] = '--repository-strict';
         $processFactory
-            ->create(Argument::containingString($command), Argument::type('integer'))
+            ->create(Argument::exact($command), Argument::type('integer'))
             ->willReturn($process->reveal());
         $processFactory
             ->getRootPath()

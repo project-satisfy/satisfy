@@ -4,6 +4,7 @@ namespace Playbloom\Satisfy\Runner;
 
 use Playbloom\Satisfy\Event\BuildEvent;
 use Playbloom\Satisfy\Process\ProcessFactory;
+use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\Lock\Lock;
 use Symfony\Component\Process\Exception\RuntimeException;
 
@@ -21,11 +22,15 @@ class SatisBuildRunner
     /** @var Lock */
     protected $lock;
 
-    public function __construct(string $satisFilename, Lock $lock, ProcessFactory $processFactory)
+    /** @var Manager */
+    protected $manager;
+
+    public function __construct(string $satisFilename, Lock $lock, ProcessFactory $processFactory, Manager $manager)
     {
         $this->satisFilename = $satisFilename;
         $this->lock = $lock;
         $this->processFactory = $processFactory;
+        $this->manager = $manager;
     }
 
     public function setProcessFactory(ProcessFactory $processFactory)
@@ -80,18 +85,23 @@ class SatisBuildRunner
         $event->setStatus($status);
     }
 
-    protected function getCommandLine(string $repositoryUrl = null): string
+    /**
+     * @return string[]
+     */
+    protected function getCommandLine(?string $repositoryUrl = null): array
     {
-        $line = $this->processFactory->getRootPath() . '/bin/satis build';
-        $line .= ' --skip-errors --no-ansi --verbose';
+        $command = ['bin/satis', 'build'];
+        $configuration = $this->manager->getConfig();
+        $outputDir = $configuration->getOutputDir();
+        array_push($command, $this->satisFilename, $outputDir, '--skip-errors', '--no-ansi', '--verbose');
         if (!empty($repositoryUrl)) {
-            $line .= sprintf(' --repository-url="%s"', $repositoryUrl);
+            $command[] = sprintf('--repository-url="%s"', $repositoryUrl);
             // keep it while satis fails to build with one repo dependencies
             // https://github.com/composer/satis/issues/493
-            $line .= ' --repository-strict';
+            $command[] = '--repository-strict';
         }
 
-        return $line;
+        return $command;
     }
 
     protected function trimLine(string $line): string
