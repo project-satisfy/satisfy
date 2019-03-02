@@ -11,6 +11,8 @@ class ConfigurationController extends AbstractProtectedController
 {
     public function indexAction(Request $request): Response
     {
+        $this->checkAccess();
+
         $manager = $this->get(Manager::class);
         $config = $manager->getConfig();
         $form = $this->createForm(ConfigurationType::class, $config);
