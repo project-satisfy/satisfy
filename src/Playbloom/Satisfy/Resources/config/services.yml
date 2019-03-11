@@ -85,7 +85,8 @@ services:
   Playbloom\Satisfy\Webhook\GithubWebhook:
     autowire: true
     public: true
-    $secret: "%github.secret%"
+    arguments:
+      $secret: "%github.secret%"
 
   satisfy.webhook.gitlab:
     alias: Playbloom\Satisfy\Webhook\GitlabWebhook
@@ -93,4 +94,5 @@ services:
   Playbloom\Satisfy\Webhook\GitlabWebhook:
     autowire: true
     public: true
-    $secret: "%gitlab.secret%"
+    arguments:
+      $secret: "%gitlab.secret%"
