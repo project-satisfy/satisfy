@@ -4,8 +4,8 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4
-  - nightly
+#  - 7.4
+#  - nightly
 
 matrix:
   allow_failures:
@@ -24,7 +24,7 @@ git:
 
 install:
   - 'cp -f app/config/parameters.yml.dist app/config/parameters.yml'
-  - composer install -n --dev --no-progress --prefer-dist
+  - composer install -n --no-progress --prefer-dist
 
 script:
   - bin/phpunit
