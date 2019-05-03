@@ -2,16 +2,14 @@
 
 namespace Playbloom\Satisfy\Webhook;
 
-use Playbloom\Satisfy\Event\BuildEvent;
+use Playbloom\Satisfy\Model\RepositoryInterface;
 use Symfony\Component\HttpFoundation\IpUtils;
 use Symfony\Component\HttpFoundation\Request;
 
 class BitbucketWebhook extends AbstractWebhook
 {
-    public function handle(Request $request): ?int
+    protected function getRepository(Request $request): RepositoryInterface
     {
-        $this->validate($request);
-
         $content = json_decode($request->getContent(), true);
         if (isset($content['data'])) {
             $content = $content['data'];
@@ -32,13 +30,10 @@ class BitbucketWebhook extends AbstractWebhook
             throw new \InvalidArgumentException('Cannot find specified repository');
         }
 
-        $event = new BuildEvent($repository);
-        $this->dispatcher->dispatch(BuildEvent::EVENT_NAME, $event);
-
-        return $event->getStatus();
+        return $repository;
     }
 
-    protected function validate(Request $request)
+    protected function validate(Request $request): void
     {
         $ip = $request->getClientIp();
         $trusted = [

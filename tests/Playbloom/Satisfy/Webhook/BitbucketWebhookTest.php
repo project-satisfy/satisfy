@@ -11,6 +11,7 @@ use Prophecy\Argument;
 use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Process\Process;
 use Tests\Playbloom\Satisfy\Traits\VfsTrait;
 
@@ -29,10 +30,10 @@ class BitbucketWebhookTest extends KernelTestCase
      */
     public function testInvalidRequestMustThrowException($request)
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(BadRequestHttpException::class);
         /** @var BitbucketWebhook $handler */
         $handler = self::$kernel->getContainer()->get(BitbucketWebhook::class);
-        $handler->handle($request);
+        $handler->getResponse($request);
     }
 
     public function invalidRequestProvider()
@@ -89,9 +90,9 @@ class BitbucketWebhookTest extends KernelTestCase
         $request = $this->createRequest(['repository' => ['full_name' => 'test/test']]);
         /** @var BitbucketWebhook $webhook */
         $webhook = $container->get(BitbucketWebhook::class);
-        $status = $webhook->handle($request);
+        $response = $webhook->getResponse($request);
 
-        $this->assertEquals(0, $status);
+        $this->assertEquals(0, $response->getContent());
     }
 
     protected function createRequest($content, string $ipAddress = '127.0.0.1'): Request

@@ -2,7 +2,7 @@
 
 namespace Playbloom\Satisfy\Webhook;
 
-use Playbloom\Satisfy\Event\BuildEvent;
+use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +24,8 @@ class GitlabWebhook extends AbstractWebhook
         return $this;
     }
 
-    public function handle(Request $request): ?int
+    protected function getRepository(Request $request): RepositoryInterface
     {
-        $this->validate($request);
         $content = json_decode($request->getContent(), true);
 
         $repositoryData = $content['repository'] ?? [];
@@ -43,11 +42,7 @@ class GitlabWebhook extends AbstractWebhook
             throw new \InvalidArgumentException('Cannot find specified repository');
         }
 
-        $event = new BuildEvent($repository);
-
-        $this->dispatcher->dispatch(BuildEvent::EVENT_NAME, $event);
-
-        return $event->getStatus();
+        return $repository;
     }
 
     protected function getUrlPattern(string $url): string
@@ -58,7 +53,7 @@ class GitlabWebhook extends AbstractWebhook
         return $pattern;
     }
 
-    protected function validate(Request $request)
+    protected function validate(Request $request): void
     {
         if ($request->headers->get(self::HTTP_TOKEN) !== $this->secret) {
             throw new \InvalidArgumentException('Invalid Token');

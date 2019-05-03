@@ -2,10 +2,14 @@
 
 namespace Playbloom\Satisfy\Webhook;
 
+use Playbloom\Satisfy\Event\BuildEvent;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 abstract class AbstractWebhook
 {
@@ -24,7 +28,42 @@ abstract class AbstractWebhook
         $this->dispatcher = $dispatcher;
     }
 
-    abstract public function handle(Request $request): ?int;
+    /**
+     * @throws BadRequestHttpException
+     * @throws ServiceUnavailableHttpException
+     */
+    public function getResponse(Request $request): Response
+    {
+        try {
+            $this->validate($request);
+            $repository = $this->getRepository($request);
+            $status = $this->handle($repository);
+        } catch (\InvalidArgumentException $exception) {
+            throw new BadRequestHttpException($exception->getMessage(), $exception);
+        } catch (\Throwable $exception) {
+            throw new ServiceUnavailableHttpException();
+        }
+
+        return new Response($status);
+    }
+
+    public function handle(RepositoryInterface $repository): ?int
+    {
+        $event = new BuildEvent($repository);
+        $this->dispatcher->dispatch(BuildEvent::EVENT_NAME, $event);
+
+        return $event->getStatus();
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     */
+    abstract protected function validate(Request $request): void;
+
+    /**
+     * @throws \InvalidArgumentException
+     */
+    abstract protected function getRepository(Request $request): RepositoryInterface;
 
     protected function findRepository(array $urls): ?RepositoryInterface
     {

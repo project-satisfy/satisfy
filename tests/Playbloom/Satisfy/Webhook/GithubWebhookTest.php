@@ -10,6 +10,8 @@ use Playbloom\Satisfy\Webhook\GithubWebhook;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class GithubWebhookTest extends TestCase
 {
@@ -18,10 +20,10 @@ class GithubWebhookTest extends TestCase
      */
     public function testInvalidRequest($request)
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(BadRequestHttpException::class);
 
         $handler = new GithubWebhook($this->getManagerMock()->reveal(), $this->getDispatcherMock()->reveal());
-        $handler->handle($request);
+        $handler->getResponse($request);
     }
 
     public function invalidRequestProvider()
@@ -53,9 +55,14 @@ class GithubWebhookTest extends TestCase
 
         $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/github-push.json'));
         $handler = new GithubWebhook($manager->reveal(), $dispatcher->reveal());
-        $result = $handler->handle($request);
+        $response = $handler->getResponse($request);
 
-        $this->assertEquals(0, $result);
+        $this->assertInstanceOf(StreamedResponse::class, $response);
+        ob_start();
+        $response->sendContent();
+        $result = ob_get_clean();
+
+        $this->assertEquals('OK', $result);
     }
 
     protected function createRequest($content, string $event = 'push'): Request

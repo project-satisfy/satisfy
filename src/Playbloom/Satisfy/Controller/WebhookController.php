@@ -41,14 +41,6 @@ class WebhookController extends Controller
 
     private function handleRequest(Request $request, AbstractWebhook $webhook): Response
     {
-        try {
-            $status = $webhook->handle($request);
-        } catch (\InvalidArgumentException $exception) {
-            throw new BadRequestHttpException();
-        } catch (\Throwable $exception) {
-            throw new ServiceUnavailableHttpException();
-        }
-
-        return new Response($status);
+        return $webhook->getResponse($request);
     }
 }
