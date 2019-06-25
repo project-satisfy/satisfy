@@ -54,8 +54,8 @@
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
-        "jangregor/phpstan-prophecy": "^0.3",
-        "phpstan/phpstan-symfony": "^0.11"
+        "phpstan/phpstan-symfony": "^0.11",
+        "jangregor/phpstan-prophecy": "^0.4"
     },
     "autoload": {
         "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" }
