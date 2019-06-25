@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 class GitlabWebhook extends AbstractWebhook
 {
     private const HTTP_TOKEN = 'X-GITLAB-TOKEN';
+    private const BODY_HTTP_URL_KEY  = 'git_http_url';
+    private const BODY_SSH_URL_KEY  = 'git_ssh_url';
 
     public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null)
     {
@@ -28,18 +30,30 @@ class GitlabWebhook extends AbstractWebhook
     {
         $content = json_decode($request->getContent(), true);
 
+        // Starting from GitLab 8.5:
+        // - the repository key is deprecated in favor of the project key
+        // - the project.ssh_url key is deprecated in favor of the project.git_ssh_url key
+        // - the project.http_url key is deprecated in favor of the project.git_http_url key
         $repositoryData = $content['repository'] ?? [];
+        if (empty($repositoryData)) {
+            $repositoryData = $content['project'] ?? [];
+        }
+
         $urls = [];
-        foreach (['git_http_url', 'git_ssh_url'] as $key) {
+        $originalUrls = [];
+        foreach ([self::BODY_HTTP_URL_KEY, self::BODY_SSH_URL_KEY] as $key) {
             $url = $repositoryData[$key] ?? null;
             if (!empty($url)) {
+                $originalUrls[] = $url;
                 $urls[] = $this->getUrlPattern($url);
             }
         }
 
         $repository = $this->findRepository($urls);
         if (!$repository) {
-            throw new \InvalidArgumentException('Cannot find specified repository');
+            throw new \InvalidArgumentException(
+                sprintf('Cannot find specified repository "%s"', join(' OR ', $originalUrls))
+            );
         }
 
         return $repository;
