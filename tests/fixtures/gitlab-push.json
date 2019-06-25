@@ -1,0 +1,6 @@
+{
+  "project": {
+    "git_ssh_url": "git@gitlab.com:doctrine/orm.git",
+    "git_http_url": "https://gitlab.com/doctrine/orm.git"
+  }
+}
