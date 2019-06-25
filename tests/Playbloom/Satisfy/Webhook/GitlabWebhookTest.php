@@ -100,7 +100,7 @@ class GitlabWebhookTest extends TestCase
             ->shouldBeCalledTimes(0);
 
         $this->expectException(BadRequestHttpException::class);
-        $this->expectExceptionMessage("Invalid Token");
+        $this->expectExceptionMessage('Invalid Token');
         $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push.json'), 'push', 'invalid-token');
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal());
         $response = $handler->getResponse($request);

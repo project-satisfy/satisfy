@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 class GitlabWebhook extends AbstractWebhook
 {
     private const HTTP_TOKEN = 'X-GITLAB-TOKEN';
-    private const BODY_HTTP_URL_KEY  = 'git_http_url';
-    private const BODY_SSH_URL_KEY  = 'git_ssh_url';
+    private const BODY_HTTP_URL_KEY = 'git_http_url';
+    private const BODY_SSH_URL_KEY = 'git_ssh_url';
 
     public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null)
     {
