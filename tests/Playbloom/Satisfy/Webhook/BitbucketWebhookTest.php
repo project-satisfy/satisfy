@@ -70,9 +70,6 @@ class BitbucketWebhookTest extends KernelTestCase
 
         $process = $this->prophesize(Process::class);
         $process
-            ->disableOutput()
-            ->shouldBeCalled();
-        $process
             ->run()
             ->shouldBeCalled()
             ->willReturn(0);

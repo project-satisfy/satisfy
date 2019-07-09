@@ -71,7 +71,6 @@ class SatisBuildRunner
         $repository = $event->getRepository();
         $command = $this->getCommandLine($repository ? $repository->getUrl() : null);
         $process = $this->processFactory->create($command, $this->timeout);
-        $process->disableOutput();
 
         try {
             $this->lock->acquire(true);
