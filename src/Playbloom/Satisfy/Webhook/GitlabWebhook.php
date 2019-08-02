@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Webhook;
 
+use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -13,10 +14,18 @@ class GitlabWebhook extends AbstractWebhook
     private const BODY_HTTP_URL_KEY = 'git_http_url';
     private const BODY_SSH_URL_KEY = 'git_ssh_url';
 
-    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null)
+    /** @var bool */
+    protected $auto_add_repo;
+
+    /** @var string */
+    protected $auto_add_repo_type;
+
+    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null, ?bool $auto_add_repo = false, ?string $auto_add_repo_type = 'gitlab')
     {
         parent::__construct($manager, $dispatcher);
         $this->secret = $secret;
+        $this->auto_add_repo = $auto_add_repo;
+        $this->auto_add_repo_type = $auto_add_repo_type;
     }
 
     public function setSecret(string $secret = null): self
@@ -51,9 +60,14 @@ class GitlabWebhook extends AbstractWebhook
 
         $repository = $this->findRepository($urls);
         if (!$repository) {
-            throw new \InvalidArgumentException(
-                sprintf('Cannot find specified repository "%s"', join(' OR ', $originalUrls))
-            );
+            if ($this->auto_add_repo) {
+                $repository = new Repository($url, $this->auto_add_repo_type);
+                $this->manager->add($repository);
+            } else {
+                throw new \InvalidArgumentException(
+                    sprintf('Cannot find specified repository "%s"', join(' OR ', $originalUrls))
+                );
+            }
         }
 
         return $repository;
