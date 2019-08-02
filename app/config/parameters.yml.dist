@@ -7,3 +7,5 @@ parameters:
     composer.home: "%kernel.project_dir%/var/composer"
     github.secret: ~
     gitlab.secret: ~
+    gitlab.auto_add_repo: false
+    gitlab.auto_add_repo_type: ~
