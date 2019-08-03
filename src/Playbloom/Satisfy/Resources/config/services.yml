@@ -69,7 +69,7 @@ services:
     bind:
       Symfony\Component\Lock\Lock: "@lock.build"
     tags:
-      - { name: kernel.event_listener, event: "satis_build", method: onBuild }
+      - { name: kernel.event_listener, event: Playbloom\Satisfy\Event\BuildEvent, method: onBuild }
 
   ### Webhook handlers
   satisfy.webhook.bitbucket:

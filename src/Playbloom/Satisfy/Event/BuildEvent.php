@@ -3,7 +3,7 @@
 namespace Playbloom\Satisfy\Event;
 
 use Playbloom\Satisfy\Model\RepositoryInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class BuildEvent extends Event
 {

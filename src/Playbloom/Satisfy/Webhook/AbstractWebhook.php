@@ -50,7 +50,7 @@ abstract class AbstractWebhook
     public function handle(RepositoryInterface $repository): ?int
     {
         $event = new BuildEvent($repository);
-        $this->dispatcher->dispatch(BuildEvent::EVENT_NAME, $event);
+        $this->dispatcher->dispatch($event);
 
         return $event->getStatus();
     }
