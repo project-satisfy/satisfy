@@ -45,10 +45,10 @@ class GitlabWebhookTest extends TestCase
 
         $dispatcher = $this->getDispatcherMock();
         $dispatcher
-            ->dispatch(Argument::exact(BuildEvent::EVENT_NAME), Argument::type(BuildEvent::class))
+            ->dispatch(Argument::type(BuildEvent::class))
             ->will(
                 function ($args) {
-                    $args[1]->setStatus(0);
+                    $args[0]->setStatus(0);
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -75,10 +75,10 @@ class GitlabWebhookTest extends TestCase
 
         $dispatcher = $this->getDispatcherMock();
         $dispatcher
-            ->dispatch(Argument::exact(BuildEvent::EVENT_NAME), Argument::type(BuildEvent::class))
+            ->dispatch(Argument::type(BuildEvent::class))
             ->will(
                 function ($args) {
-                    $args[1]->setStatus(0);
+                    $args[0]->setStatus(0);
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -101,10 +101,10 @@ class GitlabWebhookTest extends TestCase
 
         $dispatcher = $this->getDispatcherMock();
         $dispatcher
-            ->dispatch(Argument::exact(BuildEvent::EVENT_NAME), Argument::type(BuildEvent::class))
+            ->dispatch(Argument::type(BuildEvent::class))
             ->will(
                 function ($args) {
-                    $args[1]->setStatus(0);
+                    $args[0]->setStatus(0);
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -126,7 +126,7 @@ class GitlabWebhookTest extends TestCase
 
         $dispatcher = $this->getDispatcherMock();
         $dispatcher
-            ->dispatch(Argument::exact(BuildEvent::EVENT_NAME), Argument::type(BuildEvent::class))
+            ->dispatch(Argument::type(BuildEvent::class))
             ->shouldBeCalledTimes(0);
 
         $this->expectException(BadRequestHttpException::class);
