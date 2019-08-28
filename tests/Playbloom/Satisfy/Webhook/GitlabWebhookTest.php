@@ -61,6 +61,36 @@ class GitlabWebhookTest extends TestCase
         $this->assertEquals(0, $response->getContent());
     }
 
+    public function testValidRequestWithRepoAutoAdd()
+    {
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::type('string'))
+            ->willReturn(null)
+            ->shouldBeCalledTimes(2);
+
+        $manager
+            ->add(Argument::type(Repository::class))
+            ->shouldBeCalledTimes(1);
+
+        $dispatcher = $this->getDispatcherMock();
+        $dispatcher
+            ->dispatch(Argument::type(BuildEvent::class))
+            ->will(
+                function ($args) {
+                    $args[0]->setStatus(0);
+                }
+            )
+            ->shouldBeCalledTimes(1);
+
+        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push-nonexistant.json'));
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true);
+        $response = $handler->getResponse($request);
+
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals(0, $response->getContent());
+    }
+
     public function testDeprecatedRequestBodyValidRequest()
     {
         $manager = $this->getManagerMock();
