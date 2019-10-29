@@ -44,13 +44,13 @@
         "incenteev/composer-parameter-handler": "^2.1",
         "swop/github-webhook": "^2.0",
         "zendframework/zend-diactoros": "^1.8",
-        "ninsuo/symfony-collection": "^2.1"
+        "ninsuo/symfony-collection": "^2.1",
+        "ramunasd/symfony-container-mocks": "^0.6.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^3.4",
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^7.4",
-        "ramunasd/symfony-container-mocks": "^0.6.0",
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
