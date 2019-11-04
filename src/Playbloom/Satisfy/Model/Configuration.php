@@ -325,7 +325,6 @@ class Configuration
     /**
      * Set repositories
      *
-     *
      * @return $this
      */
     public function setRepositories(Map $repositories)

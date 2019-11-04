@@ -42,11 +42,7 @@ class FilePersister implements PersisterInterface
         try {
             $content = trim(file_get_contents($this->filename));
         } catch (Exception $exception) {
-            throw new RuntimeException(
-                sprintf('Unable to load the data from "%s"', $this->filename),
-                null,
-                $exception
-            );
+            throw new RuntimeException(sprintf('Unable to load the data from "%s"', $this->filename), null, $exception);
         }
 
         if (empty($content)) {
@@ -72,11 +68,7 @@ class FilePersister implements PersisterInterface
                 throw new IOException(sprintf('Failed to write file "%s".', $this->filename), 0, null, $this->filename);
             }
         } catch (Exception $exception) {
-            throw new RuntimeException(
-                sprintf('Unable to persist the data to "%s"', $this->filename),
-                null,
-                $exception
-            );
+            throw new RuntimeException(sprintf('Unable to persist the data to "%s"', $this->filename), null, $exception);
         }
     }
 

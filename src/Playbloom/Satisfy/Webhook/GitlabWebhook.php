@@ -20,8 +20,13 @@ class GitlabWebhook extends AbstractWebhook
     /** @var string */
     protected $auto_add_repo_type;
 
-    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null, ?bool $auto_add_repo = false, ?string $auto_add_repo_type = 'gitlab')
-    {
+    public function __construct(
+        Manager $manager,
+        EventDispatcherInterface $dispatcher,
+        ?string $secret = null,
+        ?bool $auto_add_repo = false,
+        ?string $auto_add_repo_type = 'gitlab'
+    ) {
         parent::__construct($manager, $dispatcher);
         $this->secret = $secret;
         $this->auto_add_repo = $auto_add_repo;
@@ -64,9 +69,8 @@ class GitlabWebhook extends AbstractWebhook
                 $repository = new Repository($url, $this->auto_add_repo_type);
                 $this->manager->add($repository);
             } else {
-                throw new \InvalidArgumentException(
-                    sprintf('Cannot find specified repository "%s"', join(' OR ', $originalUrls))
-                );
+                $error = sprintf('Cannot find specified repository "%s"', implode(' OR ', $originalUrls));
+                throw new \InvalidArgumentException($error);
             }
         }
 
