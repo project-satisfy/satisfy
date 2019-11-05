@@ -23,7 +23,7 @@ class RebuildCommand extends BuildCommand implements ContainerAwareInterface
         $this
             ->setName('satisfy:rebuild')
             ->setDescription('Rebuild composer packages when config is changed or definitions is outdated')
-            ->setHelp(null)
+            ->setHelp('')
             ->addOption(
                 'lifetime',
                 'l',
