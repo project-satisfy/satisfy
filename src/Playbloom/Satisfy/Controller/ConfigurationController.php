@@ -12,6 +12,7 @@ class ConfigurationController extends AbstractProtectedController
     public function indexAction(Request $request): Response
     {
         $this->checkAccess();
+        $this->checkEnvironment();
 
         $manager = $this->get(Manager::class);
         $config = $manager->getConfig();

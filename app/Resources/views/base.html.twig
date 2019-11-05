@@ -45,6 +45,15 @@
             {% endif %}
             <a class="btn" href="{{ path('index') }}">Home page</a> |
             <a class="btn" href="{{ path('repository') }}">Admin home page</a>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissible alert-{{ label }}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <i class="glyphicon glyphicon-{{ label }}-sign">&nbsp;</i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
             <h1>
                 {% block header %}
                     <a href="{{ path('repository') }}">

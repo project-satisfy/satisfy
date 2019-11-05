@@ -98,3 +98,11 @@ services:
       $secret: "%gitlab.secret%"
       $auto_add_repo: "%gitlab.auto_add_repo%"
       $auto_add_repo_type: "%gitlab.auto_add_repo_type%"
+
+  Playbloom\Satisfy\Validator\EnvValidator:
+    autowire: true
+    public: true
+    arguments:
+      $root: "%kernel.project_dir%"
+      $satisFilename: "%satis_filename%"
+      $composerHome: "%composer.home%"

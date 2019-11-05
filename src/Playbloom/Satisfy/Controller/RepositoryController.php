@@ -18,6 +18,8 @@ class RepositoryController extends AbstractProtectedController
     public function indexAction(): Response
     {
         $this->checkAccess();
+        $this->checkEnvironment();
+
         $manager = $this->get(Manager::class);
         $config = $manager->getConfig();
         $repositories = $manager->getRepositories();
