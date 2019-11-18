@@ -1,7 +1,7 @@
-FROM php:7.1-apache
+FROM php:7.2-apache
 
 RUN apt-get update -q \
-    && apt-get install -qy git cron supervisor \
+    && apt-get install -qy git cron supervisor zip unzip \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD conf/supervisor/* /etc/supervisor/conf.d/
