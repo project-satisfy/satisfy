@@ -35,7 +35,7 @@ class RebuildCommand extends BuildCommand implements ContainerAwareInterface
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $configFile = $this->container->getParameter('satis_filename');
         $input->setArgument('file', $configFile);
