@@ -27,7 +27,7 @@
         "ext-json": "*",
         "ext-xml": "*",
         "composer/satis": "dev-master",
-        "composer/composer": "^1.7",
+        "composer/composer": "^1.9",
         "jms/serializer-bundle": "^2.3",
         "symfony/asset": "^3.4",
         "symfony/form": "^3.4",
