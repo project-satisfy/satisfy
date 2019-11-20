@@ -2,7 +2,7 @@
 
 namespace Playbloom\Satisfy\Validator;
 
-use Playbloom\Satisfy\Model\Configuration;
+use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\Filesystem\Filesystem;
 
 class EnvValidator
@@ -19,12 +19,12 @@ class EnvValidator
     /** @var string */
     private $outputDir;
 
-    public function __construct(string $root, string $satisFilename, string $composerHome, Configuration $configuration)
+    public function __construct(string $root, string $satisFilename, string $composerHome, Manager $manager)
     {
         $this->basePath = $root;
         $this->satisFilename = $satisFilename;
         $this->composerHome = $composerHome;
-        $this->outputDir = $configuration->getOutputDir();
+        $this->outputDir = $manager->getConfig()->getOutputDir();
     }
 
     public function validate()
