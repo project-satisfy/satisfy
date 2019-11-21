@@ -7348,8 +7348,5 @@
         "ext-json": "*",
         "ext-xml": "*"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "ext-gmagick": "0"
-    }
+    "platform-dev": []
 }
