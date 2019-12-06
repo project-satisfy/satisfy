@@ -3,13 +3,11 @@ language: php
 php:
   - 7.2
   - 7.3
-  - 7.4snapshot
-#  - nightly
+  - 7.4
 
 matrix:
   allow_failures:
-    - php: nightly
-    - php: 7.4snapshot
+    - php: 7.4
 
 sudo: false
 
@@ -22,7 +20,7 @@ git:
   depth: 1
 
 install:
-  - 'cp -f app/config/parameters.yml.dist app/config/parameters.yml'
+  - 'cp -f config/parameters.yml.dist config/parameters.yml'
   - composer install -n --no-progress --prefer-dist
 
 script:
