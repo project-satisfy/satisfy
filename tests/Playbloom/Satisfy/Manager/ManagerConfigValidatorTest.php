@@ -21,13 +21,13 @@ class ManagerConfigValidatorTest extends TestCase
     /** @var vfsStreamFile */
     protected $config;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->vfsSetup();
         $this->vfsRoot->addChild($this->config = new vfsStreamFile('satis.json'));
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->vfsTearDown();
     }

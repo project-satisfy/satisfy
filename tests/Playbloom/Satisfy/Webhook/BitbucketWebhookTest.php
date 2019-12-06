@@ -19,7 +19,7 @@ class BitbucketWebhookTest extends KernelTestCase
 {
     use VfsTrait;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->vfsSetup();
         self::bootKernel();

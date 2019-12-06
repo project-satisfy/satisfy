@@ -13,12 +13,12 @@ class RepositoryControllerTest extends WebTestCase
 {
     use VfsTrait;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->vfsSetup();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->vfsTearDown();
     }

@@ -15,7 +15,7 @@ trait VfsTrait
         $this->vfsRoot = vfsStream::setup();
     }
 
-    protected function vfsTearDown()
+    protected function vfsTearDown(): void
     {
         $this->vfsRoot = null;
     }

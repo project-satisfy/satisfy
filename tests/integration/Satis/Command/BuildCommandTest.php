@@ -20,7 +20,7 @@ class BuildCommandTest extends KernelTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->vfsRoot = vfsStream::setup();
     }
@@ -28,7 +28,7 @@ class BuildCommandTest extends KernelTestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->vfsRoot = null;
     }

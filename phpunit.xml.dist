@@ -12,6 +12,7 @@
         processIsolation="false"
         stopOnFailure="false"
         bootstrap="config/bootstrap.php"
+        cacheResultFile="var/.phpunit.result.cache"
 >
     <php>
         <env name="KERNEL_CLASS" value="TestKernel"/>

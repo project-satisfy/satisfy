@@ -17,7 +17,7 @@ class FilePersisterTest extends TestCase
     /** @var FilePersister|null */
     protected $persister;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->vfsSetup();
         $this->persister = new FilePersister(
@@ -27,7 +27,7 @@ class FilePersisterTest extends TestCase
         );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->vfsTearDown();
         $this->persister = null;
