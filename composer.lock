@@ -148,19 +148,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "73f4624a4212d9a4d4fba977d71d666d33a59b49"
+                "reference": "f37faa13e5302c453410ed5fd166befe6acb7f58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/73f4624a4212d9a4d4fba977d71d666d33a59b49",
-                "reference": "73f4624a4212d9a4d4fba977d71d666d33a59b49",
+                "url": "https://api.github.com/repos/composer/satis/zipball/f37faa13e5302c453410ed5fd166befe6acb7f58",
+                "reference": "f37faa13e5302c453410ed5fd166befe6acb7f58",
                 "shasum": ""
             },
             "require": {
                 "composer/composer": "^1.9.0",
                 "php": "^7.2",
-                "symfony/console": "^4.3.5",
-                "twig/twig": "^2.12.0"
+                "symfony/console": "^4.3.5||^5.0.0",
+                "twig/twig": "^2.12.0||^3.0.0"
             },
             "require-dev": {
                 "ext-json": "*",
@@ -212,7 +212,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2019-11-12T08:16:00+00:00"
+            "time": "2019-11-25T07:59:36+00:00"
         },
         {
             "name": "composer/semver",
@@ -6134,53 +6134,6 @@
                 "diff"
             ],
             "time": "2018-02-15T16:58:55+00:00"
-        },
-        {
-            "name": "phpstan/phpdoc-parser",
-            "version": "0.3.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "8c4ef2aefd9788238897b678a985e1d5c8df6db4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/8c4ef2aefd9788238897b678a985e1d5c8df6db4",
-                "reference": "8c4ef2aefd9788238897b678a985e1d5c8df6db4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~7.1"
-            },
-            "require-dev": {
-                "consistence/coding-standard": "^3.5",
-                "jakub-onderka/php-parallel-lint": "^0.9.2",
-                "phing/phing": "^2.16.0",
-                "phpstan/phpstan": "^0.10",
-                "phpunit/phpunit": "^6.3",
-                "slevomat/coding-standard": "^4.7.2",
-                "squizlabs/php_codesniffer": "^3.3.2",
-                "symfony/process": "^3.4 || ^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PHPStan\\PhpDocParser\\": [
-                        "src/"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "PHPDoc parser with support for nullable, intersection and generic types",
-            "time": "2019-06-07T19:13:52+00:00"
         },
         {
             "name": "phpstan/phpstan",
