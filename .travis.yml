@@ -6,10 +6,10 @@ php:
   - 7.4
 
 matrix:
+  fast_finish: true
   allow_failures:
     - php: 7.4
 
-sudo: false
 
 cache:
   directories:
@@ -18,6 +18,9 @@ cache:
 
 git:
   depth: 1
+
+before_install:
+  - phpenv config-rm xdebug.ini
 
 install:
   - 'cp -f config/parameters.yml.dist config/parameters.yml'
