@@ -11,11 +11,12 @@
         convertWarningsToExceptions="true"
         processIsolation="false"
         stopOnFailure="false"
-        bootstrap="app/autoload.php"
+        bootstrap="config/bootstrap.php"
 >
     <php>
-        <env name="KERNEL_CLASS" value="MicroKernel"/>
+        <env name="KERNEL_CLASS" value="TestKernel"/>
         <env name="APP_ENV" value="test" force="true"/>
+        <env name="APP_DEBUG" value="1" force="true"/>
         <env name="SHELL_VERBOSITY" value="-1"/>
     </php>
     <filter>

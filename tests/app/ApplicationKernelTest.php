@@ -11,7 +11,7 @@ class ApplicationKernelTest extends WebTestCase
     public function testUnavailablePageWhenIndexMissing()
     {
         $client = self::createClient();
-        $webDir = $client->getContainer()->getParameter('kernel.project_dir').'/web';
+        $webDir = $client->getContainer()->getParameter('kernel.project_dir').'/public';
         $filesystem = new Filesystem();
         if ($filesystem->exists($webDir.'/index.html')) {
             $filesystem->rename($webDir.'/index.html', $renamed = $webDir.'/_index.html');

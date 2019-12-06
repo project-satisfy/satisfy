@@ -1,4 +1,4 @@
-app/config/parameters.yml
+config/parameters.yml
 /bin
 /vendor/
 /composer.phar
@@ -7,9 +7,10 @@ app/config/parameters.yml
 
 # Satis default configuration
 satis.json
-web/packages.json
-web/index.html
-web/include/*
+public/packages.json
+public/index.html
+public/include/*
+public/p
 
 # Test
 .atoum.php

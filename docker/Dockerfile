@@ -13,6 +13,8 @@ RUN a2enmod rewrite
 RUN mkdir /var/www/.ssh && chown -R www-data:www-data /var/www
 VOLUME /var/www/.ssh
 
+ARG APP_DEBUG=0
+ARG APP_ENV=dev
 # symbolic links to index.php and static files
 ARG APP_PATH=/var/www/satisfy
 

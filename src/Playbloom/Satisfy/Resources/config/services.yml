@@ -2,6 +2,9 @@ services:
   _defaults:
     public: false
 
+  Playbloom\Satisfy\Command\RebuildCommand:
+    autowire: true
+
   Playbloom\Satisfy\Service\Manager:
     autowire: true
     public: true

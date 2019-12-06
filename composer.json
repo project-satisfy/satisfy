@@ -29,15 +29,15 @@
         "composer/satis": "dev-master",
         "composer/composer": "^1.9",
         "jms/serializer-bundle": "^2.3",
-        "symfony/asset": "^3.4",
-        "symfony/form": "^3.4",
-        "symfony/lock": "^3.4",
-        "symfony/validator": "^3.4",
-        "symfony/framework-bundle": "^3.4",
-        "symfony/security-bundle": "^3.4",
-        "symfony/templating": "^3.4",
-        "symfony/twig-bundle": "^3.4",
-        "symfony/yaml": "^3.4",
+        "symfony/asset": "^4.4",
+        "symfony/form": "^4.4",
+        "symfony/lock": "^4.4",
+        "symfony/validator": "^4.4",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/security-bundle": "^4.4",
+        "symfony/templating": "^4.4",
+        "symfony/twig-bundle": "^4.4",
+        "symfony/yaml": "^4.4",
         "symfony/psr-http-message-bridge": "^1.1",
         "doctrine/annotations": "~1.6",
         "doctrine/instantiator": "~1.1",
@@ -48,7 +48,7 @@
         "ramunasd/symfony-container-mocks": "^0.6.0"
     },
     "require-dev": {
-        "symfony/browser-kit": "^3.4",
+        "symfony/browser-kit": "^4.4",
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^7.4",
         "friendsofphp/php-cs-fixer": "^2.13",
@@ -57,10 +57,12 @@
         "phpstan/phpstan-symfony": "^0.12"
     },
     "autoload": {
-        "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" }
+        "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" },
+        "files": ["src/Kernel.php"]
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\": "tests" }
+        "psr-4": { "Tests\\": "tests" },
+        "files": ["src/TestKernel.php"]
     },
     "scripts": {
         "post-install-cmd": [
@@ -83,7 +85,7 @@
             "dev-master": "1.0.x-dev"
         },
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "config/parameters.yml"
         }
     },
     "config": {

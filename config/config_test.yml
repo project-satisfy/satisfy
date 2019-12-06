@@ -8,3 +8,7 @@ framework:
     storage_id: session.storage.mock_file
   profiler:
     collect: false
+
+services:
+  logger:
+    class: Psr\Log\Test\TestLogger

@@ -20,7 +20,6 @@
 #}
 
 {% block collection_widget %}
-    {% spaceless %}
         {% if prototype is defined %}
             {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
             {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
@@ -29,5 +28,4 @@
         {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
         {% set attr = attr|merge({'data-name-prefix': full_name}) %}
         {{ block('form_widget') }}
-    {% endspaceless %}
 {% endblock collection_widget %}

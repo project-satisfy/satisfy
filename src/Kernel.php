@@ -1,34 +1,29 @@
 <?php
 
-use RDV\SymfonyContainerMocks\DependencyInjection\TestKernelTrait;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
-class MicroKernel extends Kernel
+class Kernel extends \Symfony\Component\HttpKernel\Kernel
 {
     use MicroKernelTrait;
-    use TestKernelTrait;
 
     /**
      * {@inheritdoc}
      */
     public function registerBundles()
     {
-        $bundles = [
+        return [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \Playbloom\Satisfy\PlaybloomSatisfyBundle(),
         ];
-
-        return $bundles;
     }
 
     /**
@@ -37,13 +32,13 @@ class MicroKernel extends Kernel
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
         try {
-            $loader->load(__DIR__ . '/config/config_' . $this->environment . '.yml');
+            $loader->load(__DIR__ . '/../config/config_' . $this->environment . '.yml');
 
             return;
         } catch (FileLocatorFileNotFoundException $e) {
         }
 
-        $loader->load(__DIR__ . '/config/config.yml');
+        $loader->load(__DIR__ . '/../config/config.yml');
     }
 
     /**
@@ -100,7 +95,7 @@ class MicroKernel extends Kernel
     // optional, to use the standard Symfony logs directory
     public function getLogDir()
     {
-        return __DIR__ . '/../var/logs';
+        return __DIR__ . '/../var/log';
     }
 
     /**
@@ -108,7 +103,7 @@ class MicroKernel extends Kernel
      */
     public function indexAction()
     {
-        $indexFile = __DIR__ . '/../web/index.html';
+        $indexFile = __DIR__ . '/../public/index.html';
         if (!file_exists($indexFile)) {
             return $this->getContainer()->get('templating')->renderResponse('unavailable.html.twig');
         }

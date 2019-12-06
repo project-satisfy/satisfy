@@ -2,6 +2,9 @@ imports:
   - { resource: parameters.yml }
   - { resource: security.yml }
 
+parameters:
+  container.autowiring.strict_mode: true
+
 framework:
   secret: "%secret%"
   session: ~
