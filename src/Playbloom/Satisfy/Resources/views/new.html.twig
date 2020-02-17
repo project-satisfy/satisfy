@@ -13,3 +13,7 @@
         <button class="btn btn-large btn-block btn-primary" type="submit">Register</button>
     {{ form_end(form) }}
 {% endblock %}
+
+{% block javascript %}
+  {% include 'PlaybloomSatisfyBundle::_form_script.html.twig' %}
+{% endblock %}

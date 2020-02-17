@@ -16,3 +16,7 @@
         <a href="{{ path('repository_delete', { 'repository': repository.id }) }}" class="btn btn-large btn-block btn-danger" >Delete</a>
     {{ form_end(form) }}
 {% endblock %}
+
+{% block javascript %}
+  {% include 'PlaybloomSatisfyBundle::_form_script.html.twig' %}
+{% endblock %}

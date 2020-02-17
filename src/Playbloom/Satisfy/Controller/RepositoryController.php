@@ -106,7 +106,9 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/edit.html.twig', ['form' => $form->createView()]);
+        $a = $form->createView();
+
+        return $this->render('@PlaybloomSatisfy/edit.html.twig', ['form' => $a]);
     }
 
     public function deleteAction(Request $request): Response

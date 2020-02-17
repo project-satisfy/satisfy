@@ -29,7 +29,7 @@
     {% for repository in repositories %}
         <li>
             <a href="{{ path('repository_edit', {'repository': repository.id }) }}">
-                {{ repository.url }}
+                {{ repository.label }}
             </a>
         </li>
     {% endfor %}

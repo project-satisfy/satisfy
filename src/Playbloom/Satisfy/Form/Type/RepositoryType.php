@@ -35,6 +35,13 @@ class RepositoryType extends AbstractType
             'svn',
             'vcs',
         ];
+
+        $package_types = [
+            'zip',
+            'svn',
+            'vcs',
+        ];
+
         $builder
             ->add(
                 'type',
@@ -45,7 +52,6 @@ class RepositoryType extends AbstractType
                     'choices' => array_combine($types, $types),
                     'constraints' => [
                         new Assert\NotBlank(),
-                        new Assert\Choice(['choices' => $types]),
                     ],
                 ]
             )
@@ -53,13 +59,86 @@ class RepositoryType extends AbstractType
                 'url',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'empty_data' => '',
-                    'constraints' => [
-                        new Assert\NotBlank(),
-                    ],
                     'attr' => [
                         'placeholder' => 'Repository url',
+                    ],
+                ]
+            )
+            ->add(
+                'packageName',
+                TextType::class,
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'attr' => [
+                        'placeholder' => '',
+                    ],
+                ]
+            )
+            ->add(
+                'packageVersion',
+                TextType::class,
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'attr' => [
+                        'placeholder' => '',
+                    ],
+                ]
+            )
+            ->add(
+                'packageType',
+                TextType::class,
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'attr' => [
+                        'placeholder' => 'Package type, e.g. library',
+                    ],
+                ]
+            )
+            ->add(
+                'packageLicense',
+                TextType::class,
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'attr' => [
+                        'placeholder' => 'Package license, e.g. MIT, LGPL-2.1-only or GPL-3.0-or-later',
+                    ],
+                ]
+            )
+            ->add(
+                'packageDistType',
+                ChoiceType::class,
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'placeholder' => '',
+                    'choices' => array_combine($package_types, $package_types),
+                ]
+            )
+            ->add(
+                'packageDistUrl',
+                TextType::class,
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'attr' => [
+                        'placeholder' => '',
+                    ],
+                ]
+            )
+            ->add(
+                'packageDistSha1Checksum',
+                TextType::class,
+                [
+                    'required' => false,
+                    'empty_data' => '',
+                    'attr' => [
+                        'placeholder' => '',
                     ],
                 ]
             )
