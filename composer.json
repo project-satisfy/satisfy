@@ -15,7 +15,7 @@
         },
         {
             "name": "Ramūnas Dronga",
-            "email": "ieskok@ramuno.lt"
+            "email": "github@ramuno.lt"
         }
     ],
     "support": {
@@ -26,26 +26,27 @@
         "php": "^7.2",
         "ext-json": "*",
         "ext-xml": "*",
-        "composer/satis": "dev-master",
         "composer/composer": "^1.9",
-        "jms/serializer-bundle": "^2.3",
-        "symfony/asset": "^4.4",
-        "symfony/form": "^4.4",
-        "symfony/lock": "^4.4",
-        "symfony/validator": "^4.4",
-        "symfony/framework-bundle": "^4.4",
-        "symfony/security-bundle": "^4.4",
-        "symfony/templating": "^4.4",
-        "symfony/twig-bundle": "^4.4",
-        "symfony/yaml": "^4.4",
-        "symfony/psr-http-message-bridge": "^1.1",
+        "composer/satis": "dev-master",
         "doctrine/annotations": "~1.6",
         "doctrine/instantiator": "~1.1",
         "incenteev/composer-parameter-handler": "^2.1",
-        "swop/github-webhook": "^2.0",
-        "zendframework/zend-diactoros": "^1.8",
         "ninsuo/symfony-collection": "^2.1",
-        "ramunasd/symfony-container-mocks": "^0.6.0"
+        "ramunasd/symfony-container-mocks": "^0.6.0",
+        "swop/github-webhook": "^2.0",
+        "symfony/asset": "^4.4",
+        "symfony/form": "^4.4",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/lock": "^4.4",
+        "symfony/property-info": "^5.0",
+        "symfony/psr-http-message-bridge": "^1.1",
+        "symfony/security-bundle": "^4.4",
+        "symfony/serializer": "^5.0",
+        "symfony/templating": "^4.4",
+        "symfony/twig-bundle": "^4.4",
+        "symfony/validator": "^4.4",
+        "symfony/yaml": "^4.4",
+        "zendframework/zend-diactoros": "^1.8"
     },
     "require-dev": {
         "symfony/browser-kit": "^4.4",

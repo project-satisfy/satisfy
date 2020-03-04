@@ -2,7 +2,6 @@
 
 namespace Tests\Playbloom\Satisfy\Controller;
 
-use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,10 +70,11 @@ class RepositoryControllerTest extends WebTestCase
         $config = $configHandle->getContent();
 
         $this->assertJson($config);
-        $config = json_decode($config);
+        $config = json_decode($config, false);
         $this->assertNotEmpty($config);
 
         $this->assertObjectHasAttribute('repositories', $config);
+        $this->assertIsArray($config->repositories);
         $this->assertEquals($url, $config->repositories[0]->url);
         $this->assertEquals('git', $config->repositories[0]->type);
         $this->assertEquals('dist', $config->repositories[0]->{'installation-source'});

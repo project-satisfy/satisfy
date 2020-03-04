@@ -2,222 +2,135 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use JMS\Serializer\Annotation\SerializedName;
-use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Archive Configuration class
  *
  * Represent the archive part, in a satis configuration file
- *
- * @author Julius Beckmann <php@h4cc.de>
  */
 class Archive
 {
     /**
      * @var string
-     * @Type("string")
      */
     private $directory = '';
 
     /**
      * @var string
-     * @Type("string")
      */
     private $format = 'tar';
 
     /**
      * @var string
-     * @Type("string")
      * @SerializedName("absolute-directory")
      */
     private $absoluteDirectory;
 
     /**
      * @var bool
-     * @Type("boolean")
      * @SerializedName("skip-dev")
      */
     private $skipDev = true;
 
     /**
      * @var array
-     * @Type("array")
      */
     private $whitelist = [];
 
     /**
      * @var array
-     * @Type("array")
      */
     private $blacklist = [];
 
     /**
      * @var string
-     * @Type("string")
      * @SerializedName("prefix-url")
      */
     private $prefixUrl;
 
     /**
      * @var bool
-     * @Type("boolean")
      */
     private $checksum = true;
 
-    /**
-     * @return string
-     */
-    public function getDirectory()
+    public function getDirectory(): string
     {
         return $this->directory;
     }
 
-    /**
-     * @param string $directory
-     *
-     * @return $this
-     */
-    public function setDirectory($directory)
+    public function setDirectory(string $directory): void
     {
         $this->directory = $directory;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }
 
-    /**
-     * @param string $format
-     *
-     * @return $this
-     */
-    public function setFormat($format)
+    public function setFormat(string $format): void
     {
         $this->format = $format;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAbsoluteDirectory()
+    public function getAbsoluteDirectory(): string
     {
         return $this->absoluteDirectory;
     }
 
-    /**
-     * @param string $absoluteDirectory
-     *
-     * @return $this
-     */
-    public function setAbsoluteDirectory($absoluteDirectory)
+    public function setAbsoluteDirectory(string $absoluteDirectory): void
     {
         $this->absoluteDirectory = $absoluteDirectory;
-
-        return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSkipDev()
+    public function isSkipDev(): bool
     {
         return $this->skipDev;
     }
 
-    /**
-     * @return $this
-     */
-    public function setSkipDev(bool $skipDev)
+    public function setSkipDev(bool $skipDev): void
     {
         $this->skipDev = $skipDev;
-
-        return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getWhitelist()
+    public function getWhitelist(): array
     {
         return $this->whitelist;
     }
 
-    /**
-     * @param array $whitelist
-     *
-     * @return $this
-     */
-    public function setWhitelist($whitelist)
+    public function setWhitelist(array $whitelist): void
     {
         $this->whitelist = $whitelist;
-
-        return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getBlacklist()
+    public function getBlacklist(): array
     {
         return $this->blacklist;
     }
 
-    /**
-     * @param array $blacklist
-     *
-     * @return $this
-     */
-    public function setBlacklist($blacklist)
+    public function setBlacklist(array $blacklist): void
     {
         $this->blacklist = $blacklist;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrefixUrl()
+    public function getPrefixUrl(): string
     {
         return $this->prefixUrl;
     }
 
-    /**
-     * @param string $prefixUrl
-     *
-     * @return $this
-     */
-    public function setPrefixUrl($prefixUrl)
+    public function setPrefixUrl(string $prefixUrl): void
     {
         $this->prefixUrl = $prefixUrl;
-
-        return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isChecksum()
+    public function isChecksum(): bool
     {
         return $this->checksum;
     }
 
-    /**
-     * @return $this
-     */
-    public function setChecksum(bool $checksum)
+    public function setChecksum(bool $checksum): void
     {
         $this->checksum = $checksum;
-
-        return $this;
     }
 }

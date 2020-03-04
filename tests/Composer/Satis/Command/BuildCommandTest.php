@@ -1,16 +1,19 @@
 <?php
 
-namespace Tests\integration\Satis\Command;
+namespace Tests\Composer\Satis\Command;
 
 use Composer\Satis\Console\Application;
-use JMS\Serializer\Serializer;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
+use PHPUnit\Framework\AssertionFailedError;
 use Playbloom\Satisfy\Model\Configuration;
+use Playbloom\Satisfy\Persister\FilePersister;
+use Playbloom\Satisfy\Persister\JsonPersister;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\StreamOutput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Filesystem\Filesystem;
 
 class BuildCommandTest extends KernelTestCase
 {
@@ -43,7 +46,7 @@ class BuildCommandTest extends KernelTestCase
 
         $this->assertEquals(1, $exitCode);
 
-        $outputContent = stream_get_contents($output->getStream(), -1, 0);
+        $outputContent = $output->fetch();
         $this->assertStringStartsWith('File not found', $outputContent);
     }
 
@@ -72,14 +75,15 @@ class BuildCommandTest extends KernelTestCase
 
     public function testDefaultFormConfigBuild()
     {
-        $container = self::bootKernel()->getContainer();
-        /** @var Serializer $serializer */
-        $serializer = $container->get('jms_serializer');
-        $content = $serializer->serialize(new Configuration(), 'json');
-
         $file = new vfsStreamFile('satis.json');
-        $file->setContent($content);
         $this->vfsRoot->addChild($file);
+
+        $container = self::bootKernel()->getContainer();
+        $serializer = $container->get('serializer');
+
+        $filePersister = new FilePersister(new Filesystem(), $file->url(), $this->vfsRoot->url());
+        $persister = new JsonPersister($filePersister, $serializer, Configuration::class);
+        $persister->flush(new Configuration());
 
         $outputDir = new vfsStreamDirectory('output');
         $this->vfsRoot->addChild($outputDir);
@@ -89,7 +93,14 @@ class BuildCommandTest extends KernelTestCase
         $application = $this->createSatisApplication();
         $exitCode = $application->run($input, $output);
 
-        $this->assertEquals(0, $exitCode);
+        try {
+            $this->assertEquals(0, $exitCode, 'Exit code non null');
+        } catch (AssertionFailedError $error) {
+            echo $file->getContent();
+            echo $output->fetch();
+            throw $error;
+        }
+
         $this->assertTrue($outputDir->hasChild('index.html'));
         $this->assertTrue($outputDir->hasChild('packages.json'));
         $this->assertTrue($outputDir->hasChild('include'));
@@ -109,12 +120,9 @@ class BuildCommandTest extends KernelTestCase
         return $application;
     }
 
-    /**
-     * @return StreamOutput
-     */
-    protected function createOutput()
+    protected function createOutput(): BufferedOutput
     {
-        return new StreamOutput(fopen('php://memory', 'w', false));
+        return new BufferedOutput();
     }
 
     /**

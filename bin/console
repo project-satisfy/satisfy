@@ -28,7 +28,7 @@ if ($input->hasParameterOption('--no-debug', true)) {
 
 require dirname(__DIR__).'/config/bootstrap.php';
 
-if ($_SERVER['APP_DEBUG']) {
+if (!empty($_SERVER['APP_DEBUG'])) {
     umask(0000);
 
     if (class_exists(Debug::class)) {
@@ -36,6 +36,6 @@ if ($_SERVER['APP_DEBUG']) {
     }
 }
 
-$kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', (bool) $_SERVER['APP_DEBUG']);
+$kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', (bool) !empty($_SERVER['APP_DEBUG']));
 $application = new Application($kernel);
 $application->run($input);

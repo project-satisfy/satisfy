@@ -2,8 +2,11 @@
 
 namespace Playbloom\Satisfy\Persister;
 
-use JMS\Serializer\SerializerInterface;
 use Playbloom\Satisfy\Model\Configuration;
+use Playbloom\Satisfy\Model\PackageConstraint;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+use Symfony\Component\Serializer\SerializerAwareTrait;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Json definition file persister
@@ -12,18 +15,14 @@ use Playbloom\Satisfy\Model\Configuration;
  */
 class JsonPersister implements PersisterInterface
 {
+    use SerializerAwareTrait;
+
     /** @var PersisterInterface */
     private $persister;
 
     /** @var string */
     private $satisClass;
 
-    /** @var SerializerInterface */
-    private $serializer;
-
-    /**
-     * JsonPersister constructor.
-     */
     public function __construct(PersisterInterface $persister, SerializerInterface $serializer, string $satisClass)
     {
         $this->serializer = $serializer;
@@ -31,28 +30,49 @@ class JsonPersister implements PersisterInterface
         $this->satisClass = $satisClass;
     }
 
-    /**
-     * @return object
-     */
-    public function load()
+    public function load(): Configuration
     {
         $jsonString = $this->persister->load();
         if ('' === trim($jsonString)) {
             throw new \RuntimeException('Satis file is empty.');
         }
 
-        /** @var Configuration $configuration */
-        $configuration = $this->serializer->deserialize($jsonString, $this->satisClass, 'json');
+        return $this->serializer->deserialize($jsonString, $this->satisClass, 'json');
+    }
 
-        return $configuration;
+    public function flush($object): void
+    {
+        $jsonString = $this->serializer->serialize($object, 'json', [
+            AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
+            AbstractObjectNormalizer::CALLBACKS => [
+                'repositories' => [$this, 'normalizeRepositories'],
+                'require' => [$this, 'normalizeRequire'],
+            ],
+        ]);
+        $this->persister->flush($jsonString);
+    }
+
+    public function normalizeRepositories($repositories)
+    {
+        if ($repositories instanceof \ArrayIterator) {
+            return array_values($repositories->getArrayCopy());
+        }
     }
 
     /**
-     * @param \stdClass $object
+     * @param PackageConstraint[]
+     * @return string[]
      */
-    public function flush($object)
+    public function normalizeRequire($constraints)
     {
-        $jsonString = $this->serializer->serialize($object, 'json');
-        $this->persister->flush($jsonString);
+        if (empty($constraints)) {
+            return null;
+        }
+        $require = [];
+        foreach ($constraints as $constraint) {
+            $require[$constraint->getPackage()] = $constraint->getConstraint();
+        }
+
+        return $require;
     }
 }

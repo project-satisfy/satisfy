@@ -59,7 +59,7 @@ class FilePersister implements PersisterInterface
      *
      * @throws RuntimeException
      */
-    public function flush($content)
+    public function flush($content): void
     {
         try {
             $this->checkPermissions();

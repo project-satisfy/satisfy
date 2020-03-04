@@ -2,24 +2,18 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use JMS\Serializer\Annotation\SerializedName;
-use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class Repository implements RepositoryInterface
 {
-    /**
-     * @Type("string")
-     */
+    /** @var string */
     private $type;
 
-    /**
-     * @Type("string")
-     */
+    /** @var string */
     private $url;
 
     /**
      * @var string
-     * @Type("string")
      * @SerializedName("installation-source")
      */
     private $installationSource = 'dist';

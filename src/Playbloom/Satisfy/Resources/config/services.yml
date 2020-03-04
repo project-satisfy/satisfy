@@ -4,6 +4,8 @@ services:
 
   Playbloom\Satisfy\Command\RebuildCommand:
     autowire: true
+    tags:
+      - { name: console.command }
 
   Playbloom\Satisfy\Service\Manager:
     autowire: true
@@ -28,25 +30,16 @@ services:
     public: false
     arguments:
       - "@satisfy.persister.file"
-      - "@satisfy.serializer.json"
+      - "@serializer"
       - "Playbloom\\Satisfy\\Model\\Configuration"
+
+  Playbloom\Satisfy\Persister\ConfigurationNormalizer:
+    autowire: true
+    tags:
+      - { name: serializer.normalizer, priority: 1000 }
 
   satisfy.persister.json:
     alias: Playbloom\Satisfy\Persister\JsonPersister
-
-  satisfy.serializer.json: "@jms_serializer"
-
-  satisfy.serializer.repository_collection_handler:
-    class: Playbloom\Satisfy\Serializer\RepositoryCollectionHandler
-    tags:
-      - { name: jms_serializer.handler, type: RepositoryCollection, direction: serialization, format: json, method: serializeCollection }
-      - { name: jms_serializer.handler, type: RepositoryCollection, direction: deserialization, format: json, method: deserializeCollection }
-
-  satisfy.serializer.require_collection_handler:
-    class: Playbloom\Satisfy\Serializer\RequireConstraintHandler
-    tags:
-      - { name: jms_serializer.handler, type: RequireCollection, direction: serialization, format: json, method: serializeCollection }
-      - { name: jms_serializer.handler, type: RequireCollection, direction: deserialization, format: json, method: deserializeCollection }
 
   satisfy.processor.lock_processor:
     alias: Playbloom\Satisfy\Service\LockProcessor

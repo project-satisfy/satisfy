@@ -2,8 +2,6 @@
 
 namespace Playbloom\Satisfy\Service;
 
-use PhpCollection\Map;
-use PhpOption\None;
 use Playbloom\Satisfy\Exception\MissingConfigException;
 use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\RepositoryInterface;
@@ -40,9 +38,9 @@ class Manager
     /**
      * Find repositories
      *
-     * @return Map A RepositoryInterface map
+     * @return RepositoryInterface[]|\ArrayIterator
      */
-    public function getRepositories()
+    public function getRepositories(): \ArrayIterator
     {
         return $this->getConfig()->getRepositories();
     }
@@ -50,18 +48,11 @@ class Manager
     /**
      * Find one repository
      *
-     * @param  string $id
-     *
      * @return RepositoryInterface|null
      */
-    public function findOneRepository($id)
+    public function findOneRepository(string $id)
     {
-        $repository = $this->getRepositories()->get($id);
-        if ($repository instanceof None) {
-            return null;
-        }
-
-        return $repository->get();
+        return $this->getRepositories()[$id] ?? null;
     }
 
     /**
@@ -95,6 +86,8 @@ class Manager
 
     /**
      * Adds a array of repositories.
+     *
+     * @param RepositoryInterface[] $repositories
      */
     public function addAll(array $repositories)
     {
@@ -117,16 +110,14 @@ class Manager
     public function update(RepositoryInterface $repository, RepositoryInterface $updated)
     {
         $repos = $this->getRepositories();
-
-        $option = $repos->get($repository->getId());
-        if ($option instanceof None) {
+        if (!$repos->offsetExists($repository->getId())) {
             throw new \RuntimeException('Unknown repository');
         }
 
         $lock = $this->acquireLock();
         try {
-            $repos->remove($repository->getId());
-            $repos->set($updated->getId(), $updated);
+            $repos->offsetUnset($repository->getId());
+            $repos->offsetSet($updated->getId(), $updated);
             $this->flush();
         } finally {
             $lock->release();
@@ -143,7 +134,7 @@ class Manager
             $this
                 ->getConfig()
                 ->getRepositories()
-                ->remove($repository->getId());
+                ->offsetUnset($repository->getId());
             $this->flush();
         } finally {
             $lock->release();
@@ -168,7 +159,7 @@ class Manager
         $this
             ->getConfig()
             ->getRepositories()
-            ->set($repository->getId(), $repository);
+            ->offsetSet($repository->getId(), $repository);
 
         return $this;
     }

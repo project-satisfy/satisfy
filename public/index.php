@@ -17,7 +17,7 @@ if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? $_ENV['TRUSTED_PROXIES'] ??
 if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts([$trustedHosts]);
 }
-$kernel = new Kernel($_SERVER['APP_ENV'] ?? 'prod', (bool)$_SERVER['APP_DEBUG']);
+$kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', (bool)($_SERVER['APP_DEBUG'] ?? true));
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

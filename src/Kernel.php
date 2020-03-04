@@ -21,7 +21,6 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \Playbloom\Satisfy\PlaybloomSatisfyBundle(),
         ];
     }
