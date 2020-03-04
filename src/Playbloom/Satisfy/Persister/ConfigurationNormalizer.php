@@ -16,6 +16,7 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
 
     public function normalize($object, string $format = null, array $context = [])
     {
+        return $object;
     }
 
     public function supportsNormalization($data, string $format = null)

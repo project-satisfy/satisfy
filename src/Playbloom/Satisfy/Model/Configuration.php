@@ -44,7 +44,7 @@ class Configuration
     private $outputHtml = true;
 
     /**
-     * @var Repository[]
+     * @var \ArrayIterator|RepositoryInterface[]
      */
     private $repositories;
 
@@ -270,7 +270,7 @@ class Configuration
     }
 
     /**
-     * @return RepositoryInterface[]|\ArrayIterator
+     * @return \ArrayIterator&iterable<RepositoryInterface>
      */
     public function getRepositories(): \ArrayIterator
     {

@@ -60,8 +60,9 @@ class JsonPersister implements PersisterInterface
     }
 
     /**
-     * @param PackageConstraint[]
-     * @return string[]
+     * @param PackageConstraint[]|null $constraints
+     *
+     * @return string[]|null
      */
     public function normalizeRequire($constraints)
     {
