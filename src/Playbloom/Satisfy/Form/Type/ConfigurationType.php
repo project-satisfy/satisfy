@@ -25,7 +25,6 @@ class ConfigurationType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Regex('#[a-z0-9]([_.-]?[a-z0-9]+)*/[a-z0-9]([_.-]?[a-z0-9]+)*#'),
                 ],
             ])
             ->add('description', TextareaType::class, [
@@ -54,15 +53,15 @@ class ConfigurationType extends AbstractType
             ->add('requireAll', Type\CheckboxType::class, [
                 'required' => false,
                 'attr' => [
-                   'rel' => 'tooltip',
-                   'data-title' => 'selects all versions of all packages in the repositories you defined',
+                    'rel' => 'tooltip',
+                    'data-title' => 'selects all versions of all packages in the repositories you defined',
                 ],
             ])
             ->add('requireDependencies', Type\CheckboxType::class, [
                 'required' => false,
                 'attr' => [
-                   'rel' => 'tooltip',
-                   'data-title' => <<<END
+                    'rel' => 'tooltip',
+                    'data-title' => <<<END
 satis will attempt to resolve all the required packages from the listed repositories
 END
                 ],
@@ -150,7 +149,6 @@ END
                     'rel' => 'tooltip',
                     'data-title' => 'when not checked, the JSON_PRETTY_PRINT option will not be used on encoding.',
                 ],
-            ])
-        ;
+            ]);
     }
 }
