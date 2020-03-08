@@ -15,22 +15,22 @@ class GitlabWebhook extends AbstractWebhook
     private const BODY_SSH_URL_KEY = 'git_ssh_url';
 
     /** @var bool */
-    protected $auto_add_repo;
+    protected $autoAdd = false;
 
     /** @var string */
-    protected $auto_add_repo_type;
+    protected $autoAddType = '';
 
     public function __construct(
         Manager $manager,
         EventDispatcherInterface $dispatcher,
         ?string $secret = null,
-        ?bool $auto_add_repo = false,
-        ?string $auto_add_repo_type = 'gitlab'
+        ?bool $autoAdd = false,
+        ?string $autoAddType = 'gitlab'
     ) {
         parent::__construct($manager, $dispatcher);
         $this->secret = $secret;
-        $this->auto_add_repo = $auto_add_repo;
-        $this->auto_add_repo_type = $auto_add_repo_type;
+        $this->autoAdd = $autoAdd;
+        $this->autoAddType = $autoAddType;
     }
 
     public function setSecret(string $secret = null): self
@@ -56,17 +56,18 @@ class GitlabWebhook extends AbstractWebhook
         $urls = [];
         $originalUrls = [];
         foreach ([self::BODY_HTTP_URL_KEY, self::BODY_SSH_URL_KEY] as $key) {
-            $url = $repositoryData[$key] ?? null;
-            if (!empty($url)) {
-                $originalUrls[] = $url;
-                $urls[] = $this->getUrlPattern($url);
+            if (empty($repositoryData[$key])) {
+                continue;
             }
+            $url = $repositoryData[$key];
+            $originalUrls[] = $url;
+            $urls[] = $this->getUrlPattern($url);
         }
 
         $repository = $this->findRepository($urls);
         if (!$repository) {
-            if ($this->auto_add_repo) {
-                $repository = new Repository($url, $this->auto_add_repo_type);
+            if ($this->autoAdd && !empty($originalUrls)) {
+                $repository = new Repository($originalUrls[0], $this->autoAddType);
                 $this->manager->add($repository);
             } else {
                 $error = sprintf('Cannot find specified repository "%s"', implode(' OR ', $originalUrls));

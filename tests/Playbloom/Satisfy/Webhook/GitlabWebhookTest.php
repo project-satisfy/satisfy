@@ -138,6 +138,27 @@ class GitlabWebhookTest extends TestCase
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 
+    public function testAutoAddOnlyHttp()
+    {
+        $url = 'https://gitlab.com/example/nonexistant.git';
+        $request = $this->createRequest([
+            'project' => [
+                'git_http_url' => $url,
+            ],
+        ]);
+
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::exact('#^https\://gitlab\.com/example/nonexistant\.git$#'))
+            ->shouldBeCalledTimes(1);
+        $manager
+            ->add(Argument::type(Repository::class))
+            ->shouldBeCalledTimes(1);
+        $dispatcher = $this->getDispatcherMock();
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true);
+        $response = $handler->getResponse($request);
+    }
+
     protected function createRequest($content, string $event = 'push', string $token = null): Request
     {
         if (!is_string($content)) {

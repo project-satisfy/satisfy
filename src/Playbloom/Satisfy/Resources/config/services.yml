@@ -68,15 +68,9 @@ services:
       - { name: kernel.event_listener, event: Playbloom\Satisfy\Event\BuildEvent, method: onBuild }
 
   ### Webhook handlers
-  satisfy.webhook.bitbucket:
-    alias: Playbloom\Satisfy\Webhook\BitbucketWebhook
-
   Playbloom\Satisfy\Webhook\BitbucketWebhook:
     autowire: true
     public: true
-
-  satisfy.webhook.github:
-    alias: Playbloom\Satisfy\Webhook\GithubWebhook
 
   Playbloom\Satisfy\Webhook\GithubWebhook:
     autowire: true
@@ -84,16 +78,13 @@ services:
     arguments:
       $secret: "%github.secret%"
 
-  satisfy.webhook.gitlab:
-    alias: Playbloom\Satisfy\Webhook\GitlabWebhook
-
   Playbloom\Satisfy\Webhook\GitlabWebhook:
     autowire: true
     public: true
     arguments:
       $secret: "%gitlab.secret%"
-      $auto_add_repo: "%gitlab.auto_add_repo%"
-      $auto_add_repo_type: "%gitlab.auto_add_repo_type%"
+      $autoAdd: "%gitlab.auto_add_repo%"
+      $autoAddType: "%gitlab.auto_add_repo_type%"
 
   Playbloom\Satisfy\Validator\EnvValidator:
     autowire: true
