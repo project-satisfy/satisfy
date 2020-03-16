@@ -55,6 +55,7 @@
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-symfony": "^0.12",
         "phpunit/phpunit": "^8.5",
+        "roave/security-advisories": "dev-master",
         "symfony/browser-kit": "^4.4"
     },
     "autoload": {
