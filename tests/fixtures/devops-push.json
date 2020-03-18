@@ -1,0 +1,7 @@
+{
+  "resource": {
+    "repository": {
+      "url": "https://dev.azure.com/path/to/repo/_git/satisfy"
+    }
+  }
+}

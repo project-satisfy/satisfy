@@ -82,6 +82,9 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
         $routes
             ->add('/webhook/gitlab', $controllerBase . 'WebhookController::gitlabAction', 'webhook_gitlab')
             ->setMethods(['GET', 'POST']);
+        $routes
+            ->add('/webhook/devops', $controllerBase . 'WebhookController::devopsAction', 'webhook_devops')
+            ->setMethods(['GET', 'POST']);
     }
 
     // optional, to use the standard Symfony cache directory
