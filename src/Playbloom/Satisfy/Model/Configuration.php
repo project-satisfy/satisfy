@@ -44,7 +44,7 @@ class Configuration
     private $outputHtml = true;
 
     /**
-     * @var \ArrayIterator|RepositoryInterface[]
+     * @var RepositoryInterface[]|\ArrayIterator
      */
     private $repositories;
 

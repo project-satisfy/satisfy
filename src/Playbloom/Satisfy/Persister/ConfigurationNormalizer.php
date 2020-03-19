@@ -4,6 +4,8 @@ namespace Playbloom\Satisfy\Persister;
 
 use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\PackageConstraint;
+use Playbloom\Satisfy\Model\Repository;
+use Playbloom\Satisfy\Model\RepositoryInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
@@ -30,6 +32,10 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
             return $this->denormalizeRequire($data);
         }
 
+        if ($type === RepositoryInterface::class . '[]') {
+            return $this->denormalizeRepositories($data);
+        }
+
         if ($this->serializer instanceof DenormalizerInterface) {
             return $this->serializer->denormalize($data, $type, $format, $context);
         }
@@ -41,6 +47,7 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
     {
         switch ($type) {
             case PackageConstraint::class . '[]':
+            case RepositoryInterface::class . '[]':
                 return true;
             default:
         }
@@ -71,5 +78,15 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
         }
 
         return $require;
+    }
+
+    private function denormalizeRepositories($data)
+    {
+        $repos = [];
+        foreach ($data as $repo) {
+            $repos[] = new Repository($repo['url'], $repo['type']);
+        }
+
+        return $repos;
     }
 }
