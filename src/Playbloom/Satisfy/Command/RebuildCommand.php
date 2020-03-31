@@ -5,6 +5,7 @@ namespace Playbloom\Satisfy\Command;
 use Composer\Json\JsonFile;
 use Composer\Satis\Console\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -46,13 +47,12 @@ class RebuildCommand extends Command implements ContainerAwareInterface
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $input->setArgument('command', 'build');
         $configFile = $this->container->getParameter('satis_filename');
-        $input->setArgument('file', $configFile);
         $lifetime = (int)$input->getOption('lifetime');
+        $outputDir = $input->getArgument('output-dir');
 
         if (!empty($lifetime) && is_file($configFile)) {
-            if (!$outputDir = $input->getArgument('output-dir')) {
+            if (!$outputDir) {
                 $file = new JsonFile($configFile);
                 $config = $file->read();
                 $outputDir = $config['output-dir'] ?? null;
@@ -64,9 +64,15 @@ class RebuildCommand extends Command implements ContainerAwareInterface
                 return 0;
             }
         }
-
+        $satisInput = new ArrayInput([
+            'command' => 'build',
+            'file' => $configFile,
+            'output-dir' => $outputDir,
+            'packages' => $input->getArgument('packages'),
+            '--skip-errors' => true,
+        ]);
         $application = new Application();
 
-        return $application->doRun($input, $output);
+        return $application->doRun($satisInput, $output);
     }
 }
