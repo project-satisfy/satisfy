@@ -284,10 +284,13 @@ class Configuration
      */
     public function setRepositories($repositories): self
     {
-        if (is_array($repositories)) {
-            $repositories = new \ArrayIterator($repositories);
+        // index repositories
+        $indexed = [];
+        foreach ($repositories as $repository){
+            $indexed[$repository->getId()] = $repository;
         }
-        $this->repositories = $repositories;
+
+        $this->repositories = new \ArrayIterator($indexed);;
 
         return $this;
     }

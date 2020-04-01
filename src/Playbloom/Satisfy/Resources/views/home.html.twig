@@ -28,7 +28,8 @@
     <ul class="nav nav-pills nav-stacked">
     {% for repository in repositories %}
         <li>
-            <a href="{{ path('repository_edit', {'repository': repository.id }) }}">
+            <a href="{{ path('repository_edit', {'repository': repository.id }) }}" title="edit">
+                <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
                 {{ repository.url }}
             </a>
         </li>
