@@ -25,6 +25,7 @@ class ConfigurationType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),
+                    new Assert\Regex('#[a-z0-9]([_.-]?[a-z0-9]+)*/[a-z0-9]([_.-]?[a-z0-9]+)*#'),
                 ],
             ])
             ->add('description', TextareaType::class, [

@@ -14,12 +14,12 @@ use Webmozart\Assert\Assert;
  */
 class Configuration
 {
-    public const DEFAULT_OUTPUT_DIR = 'web';
+    public const DEFAULT_OUTPUT_DIR = 'public';
 
     /**
      * @var string
      */
-    private $name = 'Composer repository';
+    private $name = 'localhost/repository';
 
     /**
      * @var string
