@@ -15,11 +15,9 @@ class SatisController extends AbstractProtectedController
         return $this->render('@PlaybloomSatisfy/satis_build.html.twig');
     }
 
-    public function buildRunAction(): Response
+    public function buildRunAction(SatisBuildRunner $runner): Response
     {
         $this->checkAccess();
-
-        $runner = $this->container->get(SatisBuildRunner::class);
         $output = $runner->run();
 
         return ProcessResponse::createFromOutput($output);

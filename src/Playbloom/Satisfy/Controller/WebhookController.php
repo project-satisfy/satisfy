@@ -6,13 +6,13 @@ use Playbloom\Satisfy\Webhook\AbstractWebhook;
 use Playbloom\Satisfy\Webhook\BitbucketWebhook;
 use Playbloom\Satisfy\Webhook\GithubWebhook;
 use Playbloom\Satisfy\Webhook\GitlabWebhook;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
-class WebhookController extends Controller
+class WebhookController extends AbstractController
 {
     /**
      * @throws BadRequestHttpException

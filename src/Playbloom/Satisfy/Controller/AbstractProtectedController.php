@@ -2,10 +2,11 @@
 
 namespace Playbloom\Satisfy\Controller;
 
+use Playbloom\Satisfy\Service\Manager;
 use Playbloom\Satisfy\Validator\EnvValidator;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-abstract class AbstractProtectedController extends Controller
+abstract class AbstractProtectedController extends AbstractController
 {
     /**
      * Check admin access.
@@ -27,5 +28,14 @@ abstract class AbstractProtectedController extends Controller
         } catch (\RuntimeException $exception) {
             $this->addFlash('warning', $exception->getMessage());
         }
+    }
+
+    public static function getSubscribedServices()
+    {
+        $services = parent::getSubscribedServices();
+        $services[] = EnvValidator::class;
+        $services[] = Manager::class;
+
+        return $services;
     }
 }

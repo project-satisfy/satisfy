@@ -1,64 +1,69 @@
 services:
   _defaults:
     public: false
+    autowire: true
 
   Playbloom\Satisfy\Command\RebuildCommand:
-    autowire: true
     tags:
       - { name: console.command }
 
+  Playbloom\Satisfy\Controller\ConfigurationController:
+    public: true
+    tags:
+      - { name: container.service_subscriber }
+
+  Playbloom\Satisfy\Controller\RepositoryController:
+    public: true
+    tags:
+      - { name: container.service_subscriber }
+
+  Playbloom\Satisfy\Controller\SatisController:
+    public: true
+    autoconfigure: true
+    tags:
+      - { name: container.service_subscriber }
+
+  Playbloom\Satisfy\Controller\SecurityController:
+    public: true
+    tags:
+      - { name: container.service_subscriber }
+
+  Playbloom\Satisfy\Controller\WebhookController:
+    public: true
+    tags:
+      - { name: container.service_subscriber }
+
   Playbloom\Satisfy\Service\Manager:
-    autowire: true
     public: true
     bind:
       Symfony\Component\Lock\Lock: "@lock.satis"
 
-  satisfy.manager:
-    alias: Playbloom\Satisfy\Service\Manager
-
   Playbloom\Satisfy\Persister\FilePersister:
-    autowire: true
     arguments:
       $filename: "%satis_filename%"
       $logPath: "%satis_log_path%"
-
-  satisfy.persister.file:
-    alias: Playbloom\Satisfy\Persister\FilePersister
 
   Playbloom\Satisfy\Persister\JsonPersister:
     class: Playbloom\Satisfy\Persister\JsonPersister
     public: false
     arguments:
-      - "@satisfy.persister.file"
+      - "@Playbloom\\Satisfy\\Persister\\FilePersister"
       - "@serializer"
       - "Playbloom\\Satisfy\\Model\\Configuration"
 
   Playbloom\Satisfy\Persister\ConfigurationNormalizer:
-    autowire: true
     tags:
       - { name: serializer.normalizer, priority: 1000 }
 
-  satisfy.persister.json:
-    alias: Playbloom\Satisfy\Persister\JsonPersister
-
-  satisfy.processor.lock_processor:
-    alias: Playbloom\Satisfy\Service\LockProcessor
-
   Playbloom\Satisfy\Service\LockProcessor:
-    autowire: true
     public: true
 
-  satisfy.process.factory:
-    alias: Playbloom\Satisfy\Process\ProcessFactory
-
   Playbloom\Satisfy\Process\ProcessFactory:
-    autowire: true
     arguments:
       $rootPath: "%kernel.project_dir%"
       $composerHome: "%composer.home%"
 
   Playbloom\Satisfy\Runner\SatisBuildRunner:
-    autowire: true
     public: true
     arguments:
       $satisFilename: "%satis_filename%"
@@ -69,17 +74,14 @@ services:
 
   ### Webhook handlers
   Playbloom\Satisfy\Webhook\BitbucketWebhook:
-    autowire: true
     public: true
 
   Playbloom\Satisfy\Webhook\GithubWebhook:
-    autowire: true
     public: true
     arguments:
       $secret: "%github.secret%"
 
   Playbloom\Satisfy\Webhook\GitlabWebhook:
-    autowire: true
     public: true
     arguments:
       $secret: "%gitlab.secret%"
@@ -87,7 +89,6 @@ services:
       $autoAddType: "%gitlab.auto_add_repo_type%"
 
   Playbloom\Satisfy\Validator\EnvValidator:
-    autowire: true
     public: true
     arguments:
       $root: "%kernel.project_dir%"
