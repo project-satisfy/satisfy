@@ -4,6 +4,7 @@ namespace Playbloom\Satisfy\Persister;
 
 use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\PackageConstraint;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerAwareTrait;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -48,6 +49,7 @@ class JsonPersister implements PersisterInterface
                 'repositories' => [$this, 'normalizeRepositories'],
                 'require' => [$this, 'normalizeRequire'],
             ],
+            JsonEncode::OPTIONS => JSON_PRETTY_PRINT,
         ]);
         $this->persister->flush($jsonString);
     }
