@@ -44,7 +44,7 @@ abstract class AbstractWebhook
             throw new ServiceUnavailableHttpException();
         }
 
-        return new Response($status);
+        return new Response((string)$status);
     }
 
     public function handle(RepositoryInterface $repository): ?int
