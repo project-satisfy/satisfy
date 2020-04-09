@@ -22,7 +22,7 @@ class Archive
     private $format = 'tar';
 
     /**
-     * @var string
+     * @var string|null
      * @SerializedName("absolute-directory")
      */
     private $absoluteDirectory;
@@ -74,12 +74,12 @@ class Archive
         $this->format = $format;
     }
 
-    public function getAbsoluteDirectory(): string
+    public function getAbsoluteDirectory(): ?string
     {
         return $this->absoluteDirectory;
     }
 
-    public function setAbsoluteDirectory(string $absoluteDirectory): void
+    public function setAbsoluteDirectory(?string $absoluteDirectory): void
     {
         $this->absoluteDirectory = $absoluteDirectory;
     }
