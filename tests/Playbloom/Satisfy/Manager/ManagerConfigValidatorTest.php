@@ -35,7 +35,7 @@ class ManagerConfigValidatorTest extends TestCase
     /**
      * @dataProvider configFileProvider
      */
-    public function testConfigIsMatchingSatisSchema($configFilename)
+    public function testConfigIsMatchingSatisSchema($configFilename): void
     {
         $this->assertTrue(copy($configFilename, $this->config->url()));
         $persister = $this->prophesize(JsonPersister::class);
@@ -56,10 +56,7 @@ class ManagerConfigValidatorTest extends TestCase
         $this->assertJsonFileEqualsJsonFile($configFilename, $this->config->url());
     }
 
-    /**
-     * @return array
-     */
-    public function configFileProvider()
+    public function configFileProvider(): array
     {
         return [
             [__DIR__ . '/../../../fixtures/satis-minimal.json'],

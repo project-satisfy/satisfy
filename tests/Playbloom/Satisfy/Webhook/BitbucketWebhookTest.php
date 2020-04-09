@@ -28,7 +28,7 @@ class BitbucketWebhookTest extends KernelTestCase
     /**
      * @dataProvider invalidRequestProvider
      */
-    public function testInvalidRequestMustThrowException($request)
+    public function testInvalidRequestMustThrowException($request): void
     {
         $this->expectException(BadRequestHttpException::class);
         /** @var BitbucketWebhook $handler */
@@ -36,7 +36,7 @@ class BitbucketWebhookTest extends KernelTestCase
         $handler->getResponse($request);
     }
 
-    public function invalidRequestProvider()
+    public function invalidRequestProvider(): \Generator
     {
         // invalid IP
         yield [$this->createRequest('', '1.1.1.1')];
@@ -53,7 +53,7 @@ class BitbucketWebhookTest extends KernelTestCase
         yield [$this->createRequest($content)];
     }
 
-    public function testValidRequestMustTriggerBuild()
+    public function testValidRequestMustTriggerBuild(): void
     {
         /** @var TestContainer $container */
         $container = self::$kernel->getContainer();

@@ -8,6 +8,7 @@ use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Service\Manager;
 use Playbloom\Satisfy\Webhook\GithubWebhook;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -18,7 +19,7 @@ class GithubWebhookTest extends TestCase
     /**
      * @dataProvider invalidRequestProvider
      */
-    public function testInvalidRequest($request)
+    public function testInvalidRequest($request): void
     {
         $this->expectException(BadRequestHttpException::class);
 
@@ -26,7 +27,7 @@ class GithubWebhookTest extends TestCase
         $handler->getResponse($request);
     }
 
-    public function invalidRequestProvider()
+    public function invalidRequestProvider(): \Generator
     {
         yield [$this->createRequest([], '')];
 
@@ -35,7 +36,7 @@ class GithubWebhookTest extends TestCase
         yield [$this->createRequest(['repository' => []])];
     }
 
-    public function testValidRequest()
+    public function testValidRequest(): void
     {
         $manager = $this->getManagerMock();
         $manager
@@ -76,12 +77,12 @@ class GithubWebhookTest extends TestCase
         return $request;
     }
 
-    protected function getManagerMock()
+    protected function getManagerMock(): ObjectProphecy
     {
         return $this->prophesize(Manager::class);
     }
 
-    protected function getDispatcherMock()
+    protected function getDispatcherMock(): ObjectProphecy
     {
         return $this->prophesize(EventDispatcher::class);
     }

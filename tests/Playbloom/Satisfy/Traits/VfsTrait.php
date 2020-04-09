@@ -10,7 +10,7 @@ trait VfsTrait
     /** @var vfsStreamDirectory|null */
     protected $vfsRoot;
 
-    protected function vfsSetup()
+    protected function vfsSetup(): void
     {
         $this->vfsRoot = vfsStream::setup();
     }

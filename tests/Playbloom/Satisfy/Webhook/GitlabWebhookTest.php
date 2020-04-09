@@ -8,6 +8,7 @@ use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Service\Manager;
 use Playbloom\Satisfy\Webhook\GitlabWebhook;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ class GitlabWebhookTest extends TestCase
     /**
      * @dataProvider invalidRequestProvider
      */
-    public function testInvalidRequest($request)
+    public function testInvalidRequest($request): void
     {
         $this->expectException(BadRequestHttpException::class);
 
@@ -26,7 +27,7 @@ class GitlabWebhookTest extends TestCase
         $handler->getResponse($request);
     }
 
-    public function invalidRequestProvider()
+    public function invalidRequestProvider(): \Generator
     {
         yield [$this->createRequest([], '')];
 
@@ -35,7 +36,7 @@ class GitlabWebhookTest extends TestCase
         yield [$this->createRequest(['repository' => []])];
     }
 
-    public function testValidRequest()
+    public function testValidRequest(): void
     {
         $manager = $this->getManagerMock();
         $manager
@@ -61,7 +62,7 @@ class GitlabWebhookTest extends TestCase
         $this->assertEquals(0, $response->getContent());
     }
 
-    public function testValidRequestWithRepoAutoAdd()
+    public function testValidRequestWithRepoAutoAdd(): void
     {
         $manager = $this->getManagerMock();
         $manager
@@ -91,7 +92,7 @@ class GitlabWebhookTest extends TestCase
         $this->assertEquals(0, $response->getContent());
     }
 
-    public function testDeprecatedRequestBodyValidRequest()
+    public function testDeprecatedRequestBodyValidRequest(): void
     {
         $manager = $this->getManagerMock();
         $manager
@@ -117,7 +118,7 @@ class GitlabWebhookTest extends TestCase
         $this->assertEquals(0, $response->getContent());
     }
 
-    public function testInvalidTokenRequest()
+    public function testInvalidTokenRequest(): void
     {
         $manager = $this->getManagerMock();
         $manager
@@ -138,7 +139,7 @@ class GitlabWebhookTest extends TestCase
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 
-    public function testAutoAddOnlyHttp()
+    public function testAutoAddOnlyHttp(): void
     {
         $url = 'https://gitlab.com/example/nonexistant.git';
         $request = $this->createRequest([
@@ -173,12 +174,12 @@ class GitlabWebhookTest extends TestCase
         return $request;
     }
 
-    protected function getManagerMock()
+    protected function getManagerMock(): ObjectProphecy
     {
         return $this->prophesize(Manager::class);
     }
 
-    protected function getDispatcherMock()
+    protected function getDispatcherMock(): ObjectProphecy
     {
         return $this->prophesize(EventDispatcher::class);
     }

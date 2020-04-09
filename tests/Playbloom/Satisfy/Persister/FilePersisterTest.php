@@ -33,7 +33,7 @@ class FilePersisterTest extends TestCase
         $this->persister = null;
     }
 
-    public function testDumpMustTruncateFile()
+    public function testDumpMustTruncateFile(): void
     {
         $config = [
             'name' => 'test',

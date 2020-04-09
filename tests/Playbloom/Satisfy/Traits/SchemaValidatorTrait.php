@@ -7,17 +7,14 @@ use JsonSchema\Validator;
 
 trait SchemaValidatorTrait
 {
-    /**
-     * @return object
-     */
-    protected function getSatisSchema()
+    protected function getSatisSchema(): \stdClass
     {
         $retriever = new UriRetriever();
 
         return $retriever->retrieve('file://'.__DIR__.'/../../../../vendor/composer/satis/res/satis-schema.json');
     }
 
-    protected function validateSchema($content, \stdClass $schema)
+    protected function validateSchema($content, \stdClass $schema): void
     {
         $validator = new Validator();
         $validator->check($content, $schema);
