@@ -8,7 +8,7 @@ use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Persister\JsonPersister;
 use Playbloom\Satisfy\Service\Manager;
 use Prophecy\Argument;
-use Symfony\Component\Lock\Factory;
+use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\FlockStore;
 use Tests\Playbloom\Satisfy\Traits\SchemaValidatorTrait;
 use Tests\Playbloom\Satisfy\Traits\VfsTrait;
@@ -46,7 +46,7 @@ class ManagerConfigValidatorTest extends TestCase
             ->flush(Argument::type(Configuration::class))
             ->shouldBeCalled();
 
-        $lockFactory = new Factory(new FlockStore());
+        $lockFactory = new LockFactory(new FlockStore());
         $lock = $lockFactory->createLock('satis');
         /** @var Manager $manager */
         $manager = new Manager($lock, $persister->reveal());
