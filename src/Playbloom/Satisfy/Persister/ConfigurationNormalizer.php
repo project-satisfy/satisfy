@@ -82,11 +82,15 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
 
     private function denormalizeRepositories($data)
     {
-        $repos = [];
-        foreach ($data as $repo) {
-            $repos[] = new Repository($repo['url'], $repo['type']);
+        $list = [];
+        foreach ($data as $item) {
+            $repository = new Repository($item['url'], $item['type']);
+            if (!empty($item['installation-source'])) {
+                $repository->setInstallationSource($item['installation-source']);
+            }
+            $list[$repository->getId()] = $repository;
         }
 
-        return $repos;
+        return $list;
     }
 }
