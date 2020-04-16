@@ -2,6 +2,7 @@
 
 namespace Tests\Playbloom\Satisfy\Webhook;
 
+use Playbloom\Satisfy\Controller\WebhookController;
 use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Process\ProcessFactory;
 use Playbloom\Satisfy\Runner\SatisBuildRunner;
@@ -31,9 +32,8 @@ class BitbucketWebhookTest extends KernelTestCase
     public function testInvalidRequestMustThrowException($request): void
     {
         $this->expectException(BadRequestHttpException::class);
-        /** @var BitbucketWebhook $handler */
-        $handler = self::$kernel->getContainer()->get(BitbucketWebhook::class);
-        $handler->getResponse($request);
+        $controller = self::$kernel->getContainer()->get(WebhookController::class);
+        $controller->bitbucketAction($request);
     }
 
     public function invalidRequestProvider(): \Generator

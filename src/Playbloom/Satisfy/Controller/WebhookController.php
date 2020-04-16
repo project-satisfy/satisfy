@@ -43,4 +43,14 @@ class WebhookController extends AbstractController
     {
         return $webhook->getResponse($request);
     }
+
+    public static function getSubscribedServices(): array
+    {
+        $services = parent::getSubscribedServices();
+        $services[] = BitbucketWebhook::class;
+        $services[] = GithubWebhook::class;
+        $services[] = GitlabWebhook::class;
+
+        return $services;
+    }
 }
