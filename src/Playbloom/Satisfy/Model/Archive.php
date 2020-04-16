@@ -44,7 +44,7 @@ class Archive
     private $blacklist = [];
 
     /**
-     * @var string
+     * @var string|null
      * @SerializedName("prefix-url")
      */
     private $prefixUrl;
@@ -114,12 +114,12 @@ class Archive
         $this->blacklist = $blacklist;
     }
 
-    public function getPrefixUrl(): string
+    public function getPrefixUrl(): ?string
     {
         return $this->prefixUrl;
     }
 
-    public function setPrefixUrl(string $prefixUrl): void
+    public function setPrefixUrl(?string $prefixUrl): void
     {
         $this->prefixUrl = $prefixUrl;
     }
