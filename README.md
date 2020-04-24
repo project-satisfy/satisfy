@@ -52,7 +52,7 @@ You can restrict the access setting `admin.auth` parameter (in `app/config/param
 
 ## Run Satisfy
 
-Create a webserver pointing to the `web` directory. Browse to »/admin/« to manage the `satis.json`. To serve the `package.json` it is required to run Satis first.
+Create a webserver pointing to the `public` directory. Browse to »/admin/« to manage the `satis.json`. To serve the `package.json` it is required to run Satis first.
 
 ### Satis packages definition generation
 
