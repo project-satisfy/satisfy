@@ -87,6 +87,7 @@ services:
       $secret: "%gitlab.secret%"
       $autoAdd: "%gitlab.auto_add_repo%"
       $autoAddType: "%gitlab.auto_add_repo_type%"
+      $preferSshUrlType: "%gitlab.prefer_ssh_url_type%"
 
   Playbloom\Satisfy\Validator\EnvValidator:
     public: true
