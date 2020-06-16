@@ -28,7 +28,7 @@ class GitlabWebhook extends AbstractWebhook
         EventDispatcherInterface $dispatcher,
         ?string $secret = null,
         ?bool $autoAdd = false,
-        ?string $autoAddType = 'gitlab',
+        ?string $autoAddType = 'git',
         ?bool $preferSshUrlType = false
     ) {
         parent::__construct($manager, $dispatcher);

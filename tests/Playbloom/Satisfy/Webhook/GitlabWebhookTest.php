@@ -260,7 +260,7 @@ class GitlabWebhookTest extends TestCase
         $manager
             ->add(Argument::exact($repository))
             ->shouldBeCalledTimes(1);
-        
+
         $dispatcher = $this->getDispatcherMock();
 
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', false);
@@ -291,8 +291,4 @@ class GitlabWebhookTest extends TestCase
         return $this->prophesize(EventDispatcher::class);
     }
 
-    protected function getRepositoryMock(): ObjectProphecy
-    {
-        return $this->prophesize( Repository::class);
-    }
 }
