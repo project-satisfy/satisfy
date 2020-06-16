@@ -20,17 +20,24 @@ class GitlabWebhook extends AbstractWebhook
     /** @var string */
     protected $autoAddType = '';
 
+    /**  @var array */
+    protected $urlCheckOrder = [self::BODY_HTTP_URL_KEY, self::BODY_SSH_URL_KEY];
+
     public function __construct(
         Manager $manager,
         EventDispatcherInterface $dispatcher,
         ?string $secret = null,
         ?bool $autoAdd = false,
-        ?string $autoAddType = 'gitlab'
+        ?string $autoAddType = 'git',
+        ?bool $preferSshUrlType = false
     ) {
         parent::__construct($manager, $dispatcher);
         $this->secret = $secret;
         $this->autoAdd = $autoAdd;
         $this->autoAddType = $autoAddType;
+        if ($preferSshUrlType) {
+            $this->urlCheckOrder = [self::BODY_SSH_URL_KEY, self::BODY_HTTP_URL_KEY];
+        }
     }
 
     public function setSecret(string $secret = null): self
@@ -55,7 +62,7 @@ class GitlabWebhook extends AbstractWebhook
 
         $urls = [];
         $originalUrls = [];
-        foreach ([self::BODY_HTTP_URL_KEY, self::BODY_SSH_URL_KEY] as $key) {
+        foreach ($this->urlCheckOrder as $key) {
             if (empty($repositoryData[$key])) {
                 continue;
             }

@@ -160,6 +160,113 @@ class GitlabWebhookTest extends TestCase
         $response = $handler->getResponse($request);
     }
 
+    public function testAutoAddPreferSsh(): void
+    {
+        $httpUrl = 'https://gitlab.com/example/nonexistant.git';
+        $sshUrl = 'git@gitlab.com:example/nonexistant.git';
+        $request = $this->createRequest([
+            'project' => [
+                'git_http_url' => $httpUrl,
+                'git_ssh_url' => $sshUrl
+            ],
+        ]);
+
+        $repository = new Repository($sshUrl, 'git');
+
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::exact('#^git@gitlab\.com\:example/nonexistant\.git$#'))
+            ->shouldBeCalledTimes(1);
+        $manager
+            ->findByUrl(Argument::exact('#^https\://gitlab\.com/example/nonexistant\.git$#'))
+            ->shouldBeCalledTimes(1);
+        $manager
+            ->add(Argument::exact($repository))
+            ->shouldBeCalledTimes(1);
+        $dispatcher = $this->getDispatcherMock();
+
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', true);
+        $response = $handler->getResponse($request);
+    }
+
+    public function testAutoAddPreferSshFallback(): void
+    {
+        $httpUrl = 'https://gitlab.com/example/nonexistant.git';
+        $request = $this->createRequest([
+            'project' => [
+                'git_http_url' => $httpUrl
+            ],
+        ]);
+
+        $repository = new Repository($httpUrl, 'git');
+
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::exact('#^https\://gitlab\.com/example/nonexistant\.git$#'))
+            ->shouldBeCalledTimes(1);
+        $manager
+            ->add(Argument::exact($repository))
+            ->shouldBeCalledTimes(1);
+        $dispatcher = $this->getDispatcherMock();
+
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', true);
+        $response = $handler->getResponse($request);
+    }
+
+    public function testAutoAddPreferHttps(): void
+    {
+        $httpUrl = 'https://gitlab.com/example/nonexistant.git';
+        $sshUrl = 'git@gitlab.com:example/nonexistant.git';
+        $request = $this->createRequest([
+            'project' => [
+                'git_http_url' => $httpUrl,
+                'git_ssh_url' => $sshUrl
+            ],
+        ]);
+
+        $repository = new Repository($httpUrl, 'git');
+
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::exact('#^git@gitlab\.com\:example/nonexistant\.git$#'))
+            ->shouldBeCalledTimes(1);
+        $manager
+            ->findByUrl(Argument::exact('#^https\://gitlab\.com/example/nonexistant\.git$#'))
+            ->shouldBeCalledTimes(1);
+        $manager
+            ->add(Argument::exact($repository))
+            ->shouldBeCalledTimes(1);
+        $dispatcher = $this->getDispatcherMock();
+
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', false);
+        $response = $handler->getResponse($request);
+    }
+
+    public function testAutoAddPreferHttpsFallback(): void
+    {
+        $sshUrl = 'git@gitlab.com:example/nonexistant.git';
+        $request = $this->createRequest([
+            'project' => [
+                'git_ssh_url' => $sshUrl
+            ],
+        ]);
+
+        $repository = new Repository($sshUrl, 'git');
+
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::exact('#^git@gitlab\.com\:example/nonexistant\.git$#'))
+            ->shouldBeCalledTimes(1);
+        $manager
+            ->add(Argument::exact($repository))
+            ->shouldBeCalledTimes(1);
+
+        $dispatcher = $this->getDispatcherMock();
+
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', false);
+        $response = $handler->getResponse($request);
+    }
+
     protected function createRequest($content, string $event = 'push', string $token = null): Request
     {
         if (!is_string($content)) {
@@ -183,4 +290,5 @@ class GitlabWebhookTest extends TestCase
     {
         return $this->prophesize(EventDispatcher::class);
     }
+
 }
