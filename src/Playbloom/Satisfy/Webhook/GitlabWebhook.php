@@ -20,7 +20,7 @@ class GitlabWebhook extends AbstractWebhook
     /** @var string */
     protected $autoAddType = '';
 
-    /**  @var array */
+    /** @var array */
     protected $urlCheckOrder = [self::BODY_HTTP_URL_KEY, self::BODY_SSH_URL_KEY];
 
     public function __construct(

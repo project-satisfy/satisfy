@@ -167,7 +167,7 @@ class GitlabWebhookTest extends TestCase
         $request = $this->createRequest([
             'project' => [
                 'git_http_url' => $httpUrl,
-                'git_ssh_url' => $sshUrl
+                'git_ssh_url' => $sshUrl,
             ],
         ]);
 
@@ -194,7 +194,7 @@ class GitlabWebhookTest extends TestCase
         $httpUrl = 'https://gitlab.com/example/nonexistant.git';
         $request = $this->createRequest([
             'project' => [
-                'git_http_url' => $httpUrl
+                'git_http_url' => $httpUrl,
             ],
         ]);
 
@@ -220,7 +220,7 @@ class GitlabWebhookTest extends TestCase
         $request = $this->createRequest([
             'project' => [
                 'git_http_url' => $httpUrl,
-                'git_ssh_url' => $sshUrl
+                'git_ssh_url' => $sshUrl,
             ],
         ]);
 
@@ -247,7 +247,7 @@ class GitlabWebhookTest extends TestCase
         $sshUrl = 'git@gitlab.com:example/nonexistant.git';
         $request = $this->createRequest([
             'project' => [
-                'git_ssh_url' => $sshUrl
+                'git_ssh_url' => $sshUrl,
             ],
         ]);
 
@@ -290,5 +290,4 @@ class GitlabWebhookTest extends TestCase
     {
         return $this->prophesize(EventDispatcher::class);
     }
-
 }
