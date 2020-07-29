@@ -172,7 +172,7 @@
             },
             "require": {
                 "composer/composer": "^1.10",
-                "php": "^7.3||^8.0",
+                "php": "^7.2||^8.0",
                 "symfony/console": "^4.4||^5.0",
                 "twig/twig": "^2.12||^3.0"
             },
