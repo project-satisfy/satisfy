@@ -392,4 +392,36 @@ class Configuration
 
         return $this;
     }
+
+    private function isJson($string)
+    {
+        if (!is_string($string)) {
+            return false;
+        }
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
+
+    public function convertConfigToJsonString()
+    {
+        if ($this->isJson($this->config)) {
+            return;
+        }
+        if (is_array($this->config)) {
+            $this->config = json_encode($this->config, JSON_PRETTY_PRINT);
+            return;
+        }
+        $this->config = null;
+    }
+
+    public function convertConfigToArray()
+    {
+        if (is_string($this->config)) {
+            $this->config = json_decode($this->config, true);
+            return;
+        }
+        if (!is_array($this->config)) {
+            $this->config = null;
+        }
+    }
 }

@@ -16,9 +16,12 @@ class ConfigurationController extends AbstractProtectedController
 
         $manager = $this->get(Manager::class);
         $config = $manager->getConfig();
+        $config->convertConfigToJsonString();
+
         $form = $this->createForm(ConfigurationType::class, $config);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $config->convertConfigToArray();
             $manager->flush();
         }
 
