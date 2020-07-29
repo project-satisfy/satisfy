@@ -27,7 +27,7 @@
         "ext-json": "*",
         "ext-xml": "*",
         "composer/composer": "^1.9",
-        "composer/satis": "dev-master",
+        "composer/satis": "dev-master#4ffdaed2aaaf3daf1e4ce1b422d968f8cdc756f9",
         "doctrine/annotations": "~1.6",
         "doctrine/instantiator": "~1.1",
         "incenteev/composer-parameter-handler": "^2.1",
