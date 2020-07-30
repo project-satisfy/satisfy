@@ -355,7 +355,10 @@ class Configuration
         $this->twigTemplate = $twigTemplate;
     }
 
-    public function getConfig(): ?array
+    /**
+     * @return array|string|null
+     */
+    public function getConfig()
     {
         return $this->config;
     }
