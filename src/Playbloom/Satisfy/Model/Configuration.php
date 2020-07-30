@@ -124,7 +124,7 @@ class Configuration
     private $abandoned;
 
     /**
-     * @var array|null
+     * @var array|null|string
      */
     private $config;
 
@@ -416,8 +416,8 @@ class Configuration
 
     public function convertConfigToArray()
     {
-        if (is_string($this->config)) {
-            $this->config = json_decode($this->config, true);
+        if (is_string($this->config) && ($config = json_decode($this->config, true))) {
+            $this->config = $config;
             return;
         }
         if (!is_array($this->config)) {
