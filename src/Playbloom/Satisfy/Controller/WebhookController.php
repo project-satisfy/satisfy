@@ -5,6 +5,7 @@ namespace Playbloom\Satisfy\Controller;
 use Playbloom\Satisfy\Webhook\AbstractWebhook;
 use Playbloom\Satisfy\Webhook\BitbucketWebhook;
 use Playbloom\Satisfy\Webhook\GithubWebhook;
+use Playbloom\Satisfy\Webhook\GiteaWebhook;
 use Playbloom\Satisfy\Webhook\GitlabWebhook;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,13 @@ class WebhookController extends AbstractController
         return $this->handleRequest($request, $webhook);
     }
 
+    public function giteaAction(Request $request): Response
+    {
+        $webhook = $this->container->get(GiteaWebhook::class);
+
+        return $this->handleRequest($request, $webhook);
+    }
+
     public function gitlabAction(Request $request): Response
     {
         $webhook = $this->container->get(GitlabWebhook::class);
@@ -50,6 +58,7 @@ class WebhookController extends AbstractController
         $services[] = BitbucketWebhook::class;
         $services[] = GithubWebhook::class;
         $services[] = GitlabWebhook::class;
+        $services[] = GiteaWebhook::class;
 
         return $services;
     }

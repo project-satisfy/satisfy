@@ -81,6 +81,11 @@ services:
     arguments:
       $secret: "%github.secret%"
 
+  Playbloom\Satisfy\Webhook\GiteaWebhook:
+    public: true
+    arguments:
+      $secret: "%gitea.secret%"
+
   Playbloom\Satisfy\Webhook\GitlabWebhook:
     public: true
     arguments:

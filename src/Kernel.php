@@ -81,6 +81,9 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
             ->add('/webhook/github', $controllerBase . 'WebhookController::githubAction', 'webhook_github')
             ->setMethods(['GET', 'POST']);
         $routes
+            ->add('/webhook/gitea', $controllerBase . 'WebhookController::giteaAction', 'webhook_gitea')
+            ->setMethods(['GET', 'POST']);
+        $routes
             ->add('/webhook/gitlab', $controllerBase . 'WebhookController::gitlabAction', 'webhook_gitlab')
             ->setMethods(['GET', 'POST']);
     }
