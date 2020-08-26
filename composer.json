@@ -39,14 +39,14 @@
         "symfony/framework-bundle": "^4.4",
         "symfony/lock": "^4.4",
         "symfony/property-info": "^5.0",
-        "symfony/psr-http-message-bridge": "^1.1",
+        "symfony/psr-http-message-bridge": "^2.0",
         "symfony/security-bundle": "^4.4",
         "symfony/serializer": "^5.0",
         "symfony/templating": "^4.4",
         "symfony/twig-bundle": "^4.4",
         "symfony/validator": "^4.4",
         "symfony/yaml": "^4.4",
-        "zendframework/zend-diactoros": "^1.8"
+        "laminas/laminas-diactoros": "^2.3"
     },
     "require-dev": {
         "symfony/browser-kit": "^4.4",

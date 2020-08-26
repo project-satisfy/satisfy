@@ -2,13 +2,18 @@
 
 namespace Playbloom\Satisfy\Webhook;
 
+use Laminas\Diactoros\ResponseFactory;
+use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\StreamFactory;
+use Laminas\Diactoros\UploadedFileFactory;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
+use Psr\Http\Message\RequestInterface;
 use Swop\GitHubWebHook\Event\GitHubEventFactory;
 use Swop\GitHubWebHook\Exception\GitHubWebHookException;
 use Swop\GitHubWebHook\Exception\InvalidGitHubRequestSignatureException;
 use Swop\GitHubWebHook\Security\SignatureValidator;
-use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,8 +63,7 @@ class GithubWebhook extends AbstractWebhook
     protected function validate(Request $request): void
     {
         if (!empty($this->secret)) {
-            $psr7Factory = new DiactorosFactory();
-            $psrRequest = $psr7Factory->createRequest($request);
+            $psrRequest = $this->createPsr7Request($request);
             $validator = new SignatureValidator();
             try {
                 $validator->validate($psrRequest, $this->secret);
@@ -79,8 +83,7 @@ class GithubWebhook extends AbstractWebhook
 
     protected function getRepository(Request $request): RepositoryInterface
     {
-        $psr7Factory = new DiactorosFactory();
-        $psrRequest = $psr7Factory->createRequest($request);
+        $psrRequest = $psrRequest = $this->createPsr7Request($request);
         $eventFactory = new GitHubEventFactory();
         try {
             $event = $eventFactory->buildFromRequest($psrRequest);
@@ -105,5 +108,17 @@ class GithubWebhook extends AbstractWebhook
         }
 
         return $repository;
+    }
+
+    protected function createPsr7Request(Request $request): RequestInterface
+    {
+        $psr7Factory = new PsrHttpFactory(
+            new ServerRequestFactory(),
+            new StreamFactory(),
+            new UploadedFileFactory(),
+            new ResponseFactory()
+        );
+
+        return $psr7Factory->createRequest($request);
     }
 }
