@@ -8,6 +8,7 @@ use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Service\Manager;
 use Playbloom\Satisfy\Webhook\GitlabWebhook;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class GitlabWebhookTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider invalidRequestProvider
      */

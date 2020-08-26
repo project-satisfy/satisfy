@@ -23,11 +23,11 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "ext-json": "*",
         "ext-xml": "*",
-        "composer/composer": "^1.9",
-        "composer/satis": "dev-master#4ffdaed2aaaf3daf1e4ce1b422d968f8cdc756f9",
+        "composer/composer": "^1.10",
+        "composer/satis": "dev-master",
         "doctrine/annotations": "~1.6",
         "doctrine/instantiator": "~1.1",
         "incenteev/composer-parameter-handler": "^2.1",
@@ -51,11 +51,12 @@
     "require-dev": {
         "symfony/browser-kit": "^4.4",
         "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.3",
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
-        "phpstan/phpstan-symfony": "^0.12"
+        "phpstan/phpstan-symfony": "^0.12",
+        "phpspec/prophecy-phpunit": "^2.0"
     },
     "autoload": {
         "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" },
