@@ -28,6 +28,6 @@ jobs:
       - name: Execute tests
         run: bin/phpunit
 
-      - name: Static analyses
-        run: bin/phpstan
+      - name: Static analysis
+        run: bin/phpstan --no-progress
 
