@@ -4,6 +4,7 @@ namespace Playbloom\Satisfy\Controller;
 
 use Playbloom\Satisfy\Webhook\AbstractWebhook;
 use Playbloom\Satisfy\Webhook\BitbucketWebhook;
+use Playbloom\Satisfy\Webhook\DevOpsWebhook;
 use Playbloom\Satisfy\Webhook\GithubWebhook;
 use Playbloom\Satisfy\Webhook\GiteaWebhook;
 use Playbloom\Satisfy\Webhook\GitlabWebhook;
@@ -47,6 +48,13 @@ class WebhookController extends AbstractController
         return $this->handleRequest($request, $webhook);
     }
 
+    public function devopsAction(Request $request): Response
+    {
+        $webhook = $this->container->get(DevOpsWebhook::class);
+
+        return $this->handleRequest($request, $webhook);
+    }
+
     private function handleRequest(Request $request, AbstractWebhook $webhook): Response
     {
         return $webhook->getResponse($request);
@@ -59,7 +67,9 @@ class WebhookController extends AbstractController
         $services[] = GithubWebhook::class;
         $services[] = GitlabWebhook::class;
         $services[] = GiteaWebhook::class;
+        $services[] = DevOpsWebhook::class;
 
         return $services;
     }
+
 }

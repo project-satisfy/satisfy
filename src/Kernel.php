@@ -4,7 +4,6 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
@@ -86,6 +85,9 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
         $routes
             ->add('/webhook/gitlab', $controllerBase . 'WebhookController::gitlabAction', 'webhook_gitlab')
             ->setMethods(['GET', 'POST']);
+        $routes
+            ->add('/webhook/devops', $controllerBase . 'WebhookController::devopsAction', 'webhook_devops')
+            ->setMethods(['GET', 'POST']);
     }
 
     // optional, to use the standard Symfony cache directory
@@ -110,6 +112,6 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
             return $this->getContainer()->get('templating')->renderResponse('unavailable.html.twig');
         }
 
-        return new BinaryFileResponse($indexFile, 200, [], false);
+        return new Response(file_get_contents($indexFile));
     }
 }

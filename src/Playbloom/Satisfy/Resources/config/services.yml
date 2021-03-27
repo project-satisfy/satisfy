@@ -100,3 +100,9 @@ services:
       $root: "%kernel.project_dir%"
       $satisFilename: "%satis_filename%"
       $composerHome: "%composer.home%"
+
+  Playbloom\Satisfy\Webhook\DevOpsWebhook:
+    autowire: true
+    public: true
+    arguments:
+      $secret: "%devops.secret%"

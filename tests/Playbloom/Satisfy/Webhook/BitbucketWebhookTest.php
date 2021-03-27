@@ -9,6 +9,7 @@ use Playbloom\Satisfy\Runner\SatisBuildRunner;
 use Playbloom\Satisfy\Service\Manager;
 use Playbloom\Satisfy\Webhook\BitbucketWebhook;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ use Tests\Playbloom\Satisfy\Traits\VfsTrait;
 class BitbucketWebhookTest extends KernelTestCase
 {
     use VfsTrait;
+    use ProphecyTrait;
 
     protected function setUp(): void
     {
