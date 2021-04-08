@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Playbloom\Satisfy\Webhook;
-
 
 use InvalidArgumentException;
 use Playbloom\Satisfy\Model\RepositoryInterface;
@@ -33,7 +31,7 @@ class DevOpsWebhook extends AbstractWebhook
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function validate(Request $request): void
     {
@@ -43,7 +41,7 @@ class DevOpsWebhook extends AbstractWebhook
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getRepository(Request $request): RepositoryInterface
     {
@@ -62,9 +60,10 @@ class DevOpsWebhook extends AbstractWebhook
         $repositoryUrlHttp = $content['resource']['repository']['url'];
         $repositoryUrlPattern = preg_replace('/(https:\/\/)([^\/]+)(.+)/', '$3', $repositoryUrlHttp);
         $repository = $this->manager->findByUrl('#'.$repositoryUrlPattern.'$#');
-        if(!$repository instanceof RepositoryInterface) {
+        if (!$repository instanceof RepositoryInterface) {
             throw new InvalidArgumentException('Invalid Repository');
         }
+
         return $repository;
     }
 }

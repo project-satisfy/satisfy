@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUndefinedMethodInspection */
+<?php
+
+/** @noinspection PhpUndefinedMethodInspection */
 declare(strict_types=1);
 
 namespace Tests\Playbloom\Satisfy\Webhook;
@@ -22,8 +24,6 @@ class DevOpsWebhookTest extends TestCase
 
     /**
      * @dataProvider invalidRequestProvider
-     *
-     * @param Request $request
      */
     public function testInvalidRequest(Request $request): void
     {
@@ -90,7 +90,7 @@ class DevOpsWebhookTest extends TestCase
 
         yield [self::createRequest([], self::secret)];
 
-        yield [self::createRequest(['resource' => [ 'repository' => ['url' => ''] ]])];
+        yield [self::createRequest(['resource' => ['repository' => ['url' => '']]])];
     }
 
     protected static function createRequest($content, string $token = null): Request
