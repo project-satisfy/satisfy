@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Form\Type;
 
+use Playbloom\Satisfy\Form\DataTransformer\JsonTextTransformer;
 use Playbloom\Satisfy\Model\Configuration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
@@ -151,5 +152,6 @@ END
                     'data-title' => 'when not checked, the JSON_PRETTY_PRINT option will not be used on encoding.',
                 ],
             ]);
+        $builder->get('config')->addModelTransformer(new JsonTextTransformer());
     }
 }

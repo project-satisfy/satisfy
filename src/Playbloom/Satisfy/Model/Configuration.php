@@ -124,7 +124,7 @@ class Configuration
     private $abandoned;
 
     /**
-     * @var array|null
+     * @var mixed[]|null
      */
     private $config;
 

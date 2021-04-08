@@ -24,6 +24,9 @@
     "blacklist": [],
     "prefix-url": "http://test.com"
   },
+  "config": {
+    "process-timeout": 600
+  },
   "providers": true,
   "providers-history-size": 1,
   "minimum-stability": "dev",
