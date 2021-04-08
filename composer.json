@@ -51,12 +51,12 @@
     "require-dev": {
         "symfony/browser-kit": "^4.4",
         "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^9.3",
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-symfony": "^0.12",
-        "phpspec/prophecy-phpunit": "^2.0"
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" },
