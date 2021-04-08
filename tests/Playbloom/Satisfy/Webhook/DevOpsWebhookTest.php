@@ -12,6 +12,7 @@ use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Service\Manager;
 use Playbloom\Satisfy\Webhook\DevOpsWebhook;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class DevOpsWebhookTest extends TestCase
 {
+    use ProphecyTrait;
+
     protected const secret = '12345';
 
     /**
