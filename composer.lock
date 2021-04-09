@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "872dfeb48fe4c98c8d8f4ab559497e3d",
+    "content-hash": "4d5b336b00efb93a8714b2f28dc57bc4",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1827,30 +1827,31 @@
         },
         {
             "name": "swop/github-webhook",
-            "version": "v2.0",
+            "version": "v3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Swop/github-webhook.git",
-                "reference": "1fdff1a0ef439fe13c70031f461ecf75934bb8c6"
+                "reference": "7a7aca622a4ab4afc19dbb3c22f8465036720f4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Swop/github-webhook/zipball/1fdff1a0ef439fe13c70031f461ecf75934bb8c6",
-                "reference": "1fdff1a0ef439fe13c70031f461ecf75934bb8c6",
+                "url": "https://api.github.com/repos/Swop/github-webhook/zipball/7a7aca622a4ab4afc19dbb3c22f8465036720f4c",
+                "reference": "7a7aca622a4ab4afc19dbb3c22f8465036720f4c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4",
+                "ext-json": "*",
+                "php": "^7.2|^8.0",
                 "psr/http-message": "^1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.5.0",
-                "zendframework/zend-diactoros": "^1.3"
+                "laminas/laminas-diactoros": "^2.4",
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -1875,7 +1876,7 @@
                 "security",
                 "webhook"
             ],
-            "time": "2016-11-21T22:17:21+00:00"
+            "time": "2020-11-14T10:26:36+00:00"
         },
         {
             "name": "symfony/asset",

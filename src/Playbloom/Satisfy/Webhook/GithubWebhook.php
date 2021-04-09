@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Webhook;
 
+use InvalidArgumentException;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\StreamFactory;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
+use Throwable;
 
 class GithubWebhook extends AbstractWebhook
 {
@@ -41,9 +43,9 @@ class GithubWebhook extends AbstractWebhook
         try {
             $this->validate($request);
             $repository = $this->getRepository($request);
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             throw new BadRequestHttpException($exception->getMessage(), $exception);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new ServiceUnavailableHttpException();
         }
 
@@ -68,7 +70,7 @@ class GithubWebhook extends AbstractWebhook
             try {
                 $validator->validate($psrRequest, $this->secret);
             } catch (InvalidGitHubRequestSignatureException $exception) {
-                throw new \InvalidArgumentException($exception->getMessage());
+                throw new InvalidArgumentException($exception->getMessage());
             }
         }
     }
@@ -83,12 +85,12 @@ class GithubWebhook extends AbstractWebhook
 
     protected function getRepository(Request $request): RepositoryInterface
     {
-        $psrRequest = $psrRequest = $this->createPsr7Request($request);
+        $psrRequest = $this->createPsr7Request($request);
         $eventFactory = new GitHubEventFactory();
         try {
             $event = $eventFactory->buildFromRequest($psrRequest);
         } catch (GitHubWebHookException $exception) {
-            throw new \InvalidArgumentException($exception->getMessage(), 0, $exception);
+            throw new InvalidArgumentException($exception->getMessage(), 0, $exception);
         }
 
         $payload = $event->getPayload();
@@ -104,7 +106,7 @@ class GithubWebhook extends AbstractWebhook
 
         $repository = $this->findRepository($urls);
         if (!$repository) {
-            throw new \InvalidArgumentException('Cannot find specified repository');
+            throw new InvalidArgumentException('Cannot find specified repository');
         }
 
         return $repository;
