@@ -1,0 +1,68 @@
+{
+    "name": "DSE Components",
+    "homepage": "https://satis.dseapps.com/",
+    "repositories": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/ssgglobal/api-foundation"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/colossus-php-sdk"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/egm-mathmatical-finance"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/eloquent-spi"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/export"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/foundation"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/php-problems"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/php-jsonapi"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/repository-php"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/skynet"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/socialite-o365"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ssgglobal/socialite-ssg.git"
+        }
+    ],
+    "require-all": false,
+    "require": {
+        "ssgglobal/colossus-php-sdk": "*",
+        "ssgglobal/egm-mathmatical-finance": "1.0.*",
+        "ssgglobal/eloquent-spi": "2.*|3.*",
+        "ssgglobal/export": "1.*",
+        "ssgglobal/foundation": "1.*|2.*",
+        "ssgglobal/jsonapi": "1.*",
+        "ssgglobal/problems": "0.*",
+        "ssgglobal/repository": "1.*",
+        "ssgglobal/skynet": "*",
+        "ssgglobal/socialite-o365": "1.*",
+        "ssgglobal/socialite-ssg" : "1.*|2.*"
+    }
+}

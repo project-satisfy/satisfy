@@ -6,7 +6,7 @@ config/parameters.yml
 /.composer
 
 # Satis default configuration
-satis.json
+#satis.json
 public/packages.json
 public/index.html
 public/include/*
