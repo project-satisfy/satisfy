@@ -14,7 +14,7 @@ jobs:
 
       - uses: actions/checkout@v2
       - run: echo BUILD_ENV='test' >> $GITHUB_ENV
-      - run: echo ECR_REPO='satis/Satisfy' >> $GITHUB_ENV
+      - run: echo ECR_REPO='satis/satisfy' >> $GITHUB_ENV
         #- run: echo ECR_TAGS='latest,${{ env.REL_VERSION }}' >> $GITHUB_ENV
       - run: echo ECR_TAGS='latest' >> $GITHUB_ENV
 
