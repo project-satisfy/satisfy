@@ -4,7 +4,7 @@ RUN apt-get update -q \
     && apt-get install -qy git cron supervisor zip unzip \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD conf/supervisor/* /etc/supervisor/conf.d/
+ADD conf/supervisor/*.conf /etc/supervisor/conf.d/
 ADD conf/cron.conf /etc/cron.d/satisfy
 ADD conf/apache.conf /etc/apache2/sites-available/000-default.conf
 ADD conf/php.ini /usr/local/etc/php/conf.d/php.ini
