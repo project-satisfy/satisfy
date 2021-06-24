@@ -44,17 +44,3 @@ jobs:
           create_repo: true
           tags: ${{ env.ECR_TAGS }}
 
-          #      - name: Update Paroles service
-          #        uses: ItsKarma/aws-cli@v1.70.0
-          #env:
-          #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          #AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          #with:
-          #args: ecs update-service --cluster production --service uw2-prod-identity-paroles_srv --force-new-deployment --desired-count 1
-
-          #- name: Notify team of deployment
-          #uses: dhollerbach/github-action-send-message-to-ms-teams@1.0.10
-          #with:
-          #webhook: '${{ secrets.PLATFORM_MS_TEAMS_WEBHOOK }}'
-          #message: '${{ github.actor }} has released v${{ env.REL_VERSION }} of <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}">${{ github.repository }}</a>.'
