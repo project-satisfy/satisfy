@@ -4,10 +4,10 @@ RUN apt-get update -q \
     && apt-get install -qy git cron supervisor zip unzip \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD conf/supervisor/*.conf /etc/supervisor/conf.d/
-ADD conf/cron.conf /etc/cron.d/satisfy
-ADD conf/apache.conf /etc/apache2/sites-available/000-default.conf
-ADD conf/php.ini /usr/local/etc/php/conf.d/php.ini
+ADD ./conf/supervisor/*.conf /etc/supervisor/conf.d/
+ADD ./conf/cron.conf         /etc/cron.d/satisfy
+ADD ./conf/apache.conf       /etc/apache2/sites-available/000-default.conf
+ADD ./conf/php.ini           /usr/local/etc/php/conf.d/php.ini
 RUN a2enmod rewrite
 
 RUN mkdir /var/www/.ssh && chown -R www-data:www-data /var/www
