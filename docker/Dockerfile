@@ -17,6 +17,7 @@ ARG APP_DEBUG=0
 ARG APP_ENV=dev
 # symbolic links to index.php and static files
 ARG APP_PATH=/var/www/satisfy
+COPY ./*     /var/www/satisfy
 
 WORKDIR /var/www/satisfy
 
