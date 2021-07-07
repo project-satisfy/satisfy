@@ -21,4 +21,4 @@ ARG APP_PATH=/var/www/satisfy
 
 WORKDIR /var/www/satisfy
 
-ENTRYPOINT ["supervisord", "-n", "-c /etc/supervisor/conf.d/supervisord.conf"]
+ENTRYPOINT ["supervisord", "-n"]
