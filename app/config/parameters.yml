@@ -1,0 +1,4 @@
+parameters:
+    satis_filename: "%kernel.project_dir%/satis.json"
+    satis_log_path: "/dev/stdout"
+    composer.home: "%kernel.project_dir%/var/composer"
