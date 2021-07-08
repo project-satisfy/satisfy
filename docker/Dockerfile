@@ -22,4 +22,4 @@ ARG APP_PATH=/var/www/satisfy
 WORKDIR /var/www/satisfy
 
 #ENTRYPOINT ["supervisord", "-n"]
-CMD [ "bash", "start.sh &" ]
+CMD [ "/bin/bash", "./start.sh &" ]

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-mv satis.json /var/www/satisfy/storage/
+mv ./satis.json /var/www/satisfy/storage/
 /usr/bin/supervisord -n
