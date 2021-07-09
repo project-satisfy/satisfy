@@ -11,6 +11,8 @@ ADD docker/conf/php.ini           /usr/local/etc/php/conf.d/php.ini
 RUN a2enmod rewrite
 
 COPY ./*  /var/www/satisfy/
+RUN rm    /var/www/satisfy/satis.json
+
 RUN mkdir /var/www/.ssh && chown -R www-data:www-data /var/www
 VOLUME    /var/www/.ssh
 
