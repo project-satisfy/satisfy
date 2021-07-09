@@ -12,7 +12,6 @@ RUN a2enmod rewrite
 
 COPY ./*  /var/www/satisfy/
 RUN rm    /var/www/satisfy/satis.json
-RUN ln -s /var/www/satisfy/storage/satisfy/satis.json /var/www/satisfy/satis.json
 
 RUN mkdir /var/www/.ssh && chown -R www-data:www-data /var/www
 VOLUME    /var/www/.ssh
