@@ -2,4 +2,5 @@ parameters:
     satis_filename: "/var/www/satisfy/storage/satisfy/satis.json"
     satis_log_path: "/dev/stdout"
     composer.home: "%kernel.project_dir%/var/composer"
+    github.username: "dsebot"
     github.secret: "c31efc9bd0e73f2fd469e5495c36229f5cc6e3cc"
