@@ -3,7 +3,7 @@ FROM php:7.3-apache
 ENV GITHUB_TOKEN=null
 RUN apt-get update -q \
     && apt-get install -qy git cron supervisor zip unzip wget \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 ADD docker/conf/supervisor/*.conf /etc/supervisor/conf.d/
