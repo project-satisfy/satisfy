@@ -51,7 +51,7 @@
     "require-dev": {
         "symfony/browser-kit": "^4.4",
         "mikey179/vfsstream": "^1.6",
-        "friendsofphp/php-cs-fixer": "^2.19",
+        "friendsofphp/php-cs-fixer": "^3.1",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-symfony": "^0.12",
