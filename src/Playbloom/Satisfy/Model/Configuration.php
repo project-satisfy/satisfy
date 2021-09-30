@@ -278,7 +278,7 @@ class Configuration
     }
 
     /**
-     * @param RepositoryInterface[] $repositories
+     * @param \ArrayIterator|array|RepositoryInterface[] $repositories
      *
      * @return $this
      */
