@@ -10,7 +10,7 @@ satis.json
 public/packages.json
 public/index.html
 public/include/*
-public/p
+public/p*
 
 # Test
 .atoum.php
