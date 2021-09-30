@@ -26,7 +26,7 @@
         "php": "^7.3||^8.0",
         "ext-json": "*",
         "ext-xml": "*",
-        "composer/composer": "^1.10",
+        "composer/composer": "^2.1",
         "composer/satis": "dev-main",
         "doctrine/annotations": "~1.6",
         "doctrine/instantiator": "~1.1",
@@ -51,7 +51,7 @@
     "require-dev": {
         "symfony/browser-kit": "^4.4",
         "mikey179/vfsstream": "^1.6",
-        "friendsofphp/php-cs-fixer": "^2.13",
+        "friendsofphp/php-cs-fixer": "^2.19",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-symfony": "^0.12",
