@@ -9,7 +9,7 @@ class ProcessResponse extends StreamedResponse
     public static function createFromOutput(\Iterator $output): self
     {
         ini_set('implicit_flush', '1');
-        ob_implicit_flush(1);
+        ob_implicit_flush(true);
 
         $callback = function () use ($output) {
             foreach ($output as $line) {
