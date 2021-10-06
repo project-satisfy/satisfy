@@ -12,3 +12,5 @@ framework:
 services:
   logger:
     class: Psr\Log\Test\TestLogger
+  twig.exception_listener:
+    class: stdClass

@@ -93,6 +93,8 @@ class FilePersisterTest extends KernelTestCase
         $this->assertCount(1, $repositories);
         $this->assertIsString($repositories->key());
         $this->assertInstanceOf(RepositoryInterface::class, $repositories->current());
+        self::assertIsArray($stability = $config->getMinimumStabilityPerPackage());
+        self::assertArrayHasKey(0, $stability);
 
         // append additional repo
         $repositories->append(new Repository('http://localhost'));
@@ -105,6 +107,9 @@ class FilePersisterTest extends KernelTestCase
             $constraint,
             new PackageConstraint('psr/log', '^1.0'),
         ]);
+
+        // add required specific package stability
+        $config->addMinimumStabilityPerPackage('phpunit/phpunit', 'alpha');
 
         $persister->flush($config);
 

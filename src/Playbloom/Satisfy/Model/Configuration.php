@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Model;
 
+use Symfony\Component\Asset\Package;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Webmozart\Assert\Assert;
 
@@ -96,10 +97,16 @@ class Configuration
     private $archive;
 
     /**
-     * @var string
+     * @var string|null
      * @SerializedName("minimum-stability")
      */
     private $minimumStability = 'dev';
+
+    /**
+     * @var PackageStability[]
+     * @SerializedName("minimum-stability-per-package")
+     */
+    private $minimumStabilityPerPackage = [];
 
     /**
      * @var bool
@@ -328,9 +335,30 @@ class Configuration
         return $this->minimumStability;
     }
 
-    public function setMinimumStability(string $minimumStability): void
+    public function setMinimumStability(?string $minimumStability): void
     {
         $this->minimumStability = $minimumStability;
+    }
+
+    /**
+     * @return PackageStability[]
+     */
+    public function getMinimumStabilityPerPackage(): array
+    {
+        return $this->minimumStabilityPerPackage;
+    }
+
+    /**
+     * @param PackageStability[] $minimumStabilityPerPackage
+     */
+    public function setMinimumStabilityPerPackage(array $minimumStabilityPerPackage): void
+    {
+        $this->minimumStabilityPerPackage = $minimumStabilityPerPackage;
+    }
+
+    public function addMinimumStabilityPerPackage(string $package, string $stability): void
+    {
+        $this->minimumStabilityPerPackage[] = new PackageStability($package, $stability);
     }
 
     public function isProviders(): bool

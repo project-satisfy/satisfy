@@ -30,6 +30,9 @@
   "providers": true,
   "providers-history-size": 1,
   "minimum-stability": "dev",
+  "minimum-stability-per-package": {
+    "psr/log": "stable"
+  },
   "_comment": "",
   "pretty-print": true
 }
