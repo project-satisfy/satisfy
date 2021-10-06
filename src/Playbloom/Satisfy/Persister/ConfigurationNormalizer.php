@@ -2,8 +2,8 @@
 
 namespace Playbloom\Satisfy\Persister;
 
-use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\PackageConstraint;
+use Playbloom\Satisfy\Model\PackageStability;
 use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -36,6 +36,10 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
             return $this->denormalizeRepositories($data);
         }
 
+        if ($type === PackageStability::class . '[]') {
+            return $this->denormalizePackageStability($data);
+        }
+
         if ($this->serializer instanceof DenormalizerInterface) {
             return $this->serializer->denormalize($data, $type, $format, $context);
         }
@@ -48,6 +52,7 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
         switch ($type) {
             case PackageConstraint::class . '[]':
             case RepositoryInterface::class . '[]':
+            case PackageStability::class . '[]':
                 return true;
             default:
         }
@@ -58,16 +63,6 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
     public function setSerializer(SerializerInterface $serializer)
     {
         $this->serializer = $serializer;
-    }
-
-    private function normalizeRequire($list)
-    {
-        $require = [];
-        foreach ($list as $constraint) {
-            $require[$constraint->getPackage()] = $constraint->getConstraint();
-        }
-
-        return $require;
     }
 
     private function denormalizeRequire($data)
@@ -89,6 +84,16 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
                 $repository->setInstallationSource($item['installation-source']);
             }
             $list[$repository->getId()] = $repository;
+        }
+
+        return $list;
+    }
+
+    private function denormalizePackageStability($data): array
+    {
+        $list = [];
+        foreach ($data as $package => $stability) {
+            $list[] = new PackageStability($package, $stability);
         }
 
         return $list;

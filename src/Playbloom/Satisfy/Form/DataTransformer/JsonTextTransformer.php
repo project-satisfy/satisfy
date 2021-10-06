@@ -29,6 +29,9 @@ class JsonTextTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         $value = trim($value);
+        if (empty($value)) {
+            return null;
+        }
         try {
             $decoded = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
         } catch (\JsonException $exception) {

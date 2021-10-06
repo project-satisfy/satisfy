@@ -4,7 +4,10 @@ namespace Playbloom\Satisfy\Form\Type;
 
 use Playbloom\Satisfy\Form\DataTransformer\JsonTextTransformer;
 use Playbloom\Satisfy\Model\Configuration;
+use Playbloom\Satisfy\Model\PackageStability;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -12,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ConfigurationType extends AbstractType
@@ -76,12 +81,23 @@ END
             ])
             ->add('minimumStability', ChoiceType::class, [
                 'required' => false,
-                'choices' => [
-                    'dev' => 'dev',
-                    'alpha' => 'alpha',
-                    'beta' => 'beta',
-                    'RC' => 'RC',
-                    'stable' => 'stable',
+                'choices' => PackageStabilityType::STABILITY_LEVELS,
+                'constraints' => [
+                    new Assert\Choice(['choices' => PackageStabilityType::STABILITY_LEVELS]),
+                ],
+            ])
+            ->add('minimumStabilityPerPackage', CollectionType::class, [
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'delete_empty' => true,
+                'entry_type' => PackageStabilityType::class,
+                'prototype' => true,
+                'attr' => [
+                    'class' => 'collection_require',
+                ],
+                'constraints' => [
+                    new Assert\Valid(),
                 ],
             ])
             ->add('includeFilename', TextType::class, [
@@ -124,6 +140,7 @@ END
             ->add('config', TextareaType::class, [
                 'required' => false,
                 'empty_data' => '',
+                'trim' => true,
                 'attr' => [
                     'rel' => 'tooltip',
                     'data-title' => 'a configuration options in json format',

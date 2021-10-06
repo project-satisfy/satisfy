@@ -4,6 +4,7 @@ namespace Playbloom\Satisfy\Persister;
 
 use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\PackageConstraint;
+use Playbloom\Satisfy\Model\PackageStability;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerAwareTrait;
@@ -48,6 +49,7 @@ class JsonPersister implements PersisterInterface
             AbstractObjectNormalizer::CALLBACKS => [
                 'repositories' => [$this, 'normalizeRepositories'],
                 'require' => [$this, 'normalizeRequire'],
+                'minimumStabilityPerPackage' => [$this, 'normalizePackageStability'],
             ],
             JsonEncode::OPTIONS => JSON_PRETTY_PRINT,
         ]);
@@ -77,5 +79,24 @@ class JsonPersister implements PersisterInterface
         }
 
         return $require;
+    }
+
+    /**
+     * @param PackageStability[] $list
+     *
+     * @return array<string, string>|null
+     */
+    public function normalizePackageStability(array $list): ?array
+    {
+        if (empty($list)) {
+            return null;
+        }
+
+        $data = [];
+        foreach ($list as $item) {
+            $data[$item->getPackage()] = $item->getStability();
+        }
+
+        return $data;
     }
 }
