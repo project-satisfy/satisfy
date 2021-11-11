@@ -80,11 +80,13 @@ services:
     public: true
     arguments:
       $secret: "%github.secret%"
+      $sourceUrls: "%github.source_urls%"
 
   Playbloom\Satisfy\Webhook\GiteaWebhook:
     public: true
     arguments:
       $secret: "%gitea.secret%"
+      $sourceUrls: "%gitea.source_urls%"
 
   Playbloom\Satisfy\Webhook\GitlabWebhook:
     public: true
