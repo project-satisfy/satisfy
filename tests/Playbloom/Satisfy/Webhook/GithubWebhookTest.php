@@ -69,6 +69,42 @@ class GithubWebhookTest extends TestCase
         $this->assertEquals('OK', $result);
     }
 
+    public function testValidRequestWithRepoAutoAdd()
+    {
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::type('string'))
+            ->willReturn(null)
+            ->shouldBeCalledTimes(4);
+
+        $manager
+            ->add(Argument::type(Repository::class))
+            ->shouldBeCalledTimes(1);
+
+        $dispatcher = $this->getDispatcherMock();
+        $dispatcher
+            ->dispatch(Argument::type(BuildEvent::class))
+            ->will(
+                function ($args) {
+                    $args[0]->setStatus(0);
+                }
+            )
+            ->shouldBeCalledTimes(1);
+
+        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/github-push.json'));
+        $handler = new GithubWebhook($manager->reveal(), $dispatcher->reveal());
+        $handler->setAutoAdd(true);
+        $handler->setAutoAddType('github');
+        $response = $handler->getResponse($request);
+
+        $this->assertInstanceOf(StreamedResponse::class, $response);
+        ob_start();
+        $response->sendContent();
+        $result = ob_get_clean();
+
+        $this->assertEquals('OK', $result);
+    }
+
     protected function createRequest($content, string $event = 'push'): Request
     {
         if (!is_string($content)) {
