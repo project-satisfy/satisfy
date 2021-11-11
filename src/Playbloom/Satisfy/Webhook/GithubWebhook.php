@@ -7,6 +7,7 @@ use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\StreamFactory;
 use Laminas\Diactoros\UploadedFileFactory;
+use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
 use Psr\Http\Message\RequestInterface;
@@ -28,6 +29,12 @@ class GithubWebhook extends AbstractWebhook
     /** @var string[] */
     protected $sourceUrls = ['git_url', 'ssh_url', 'clone_url', 'svn_url'];
 
+    /** @var bool */
+    protected $autoAdd = false;
+
+    /** @var string */
+    protected $autoAddType = '';
+
     public function __construct(Manager $manager, EventDispatcherInterface $dispatcher)
     {
         parent::__construct($manager, $dispatcher);
@@ -48,6 +55,26 @@ class GithubWebhook extends AbstractWebhook
     public function setSourceUrls(array $sourceUrls): self
     {
         $this->sourceUrls = $sourceUrls;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setAutoAdd(bool $autoAdd): self
+    {
+        $this->autoAdd = $autoAdd;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setAutoAddType(string $autoAddType): self
+    {
+        $this->autoAddType = $autoAddType;
 
         return $this;
     }
@@ -111,16 +138,23 @@ class GithubWebhook extends AbstractWebhook
         $repositoryData = $payload['repository'] ?? [];
 
         $urls = [];
+        $originalUrls = [];
         foreach ($this->sourceUrls as $key) {
             $url = $repositoryData[$key] ?? null;
             if (!empty($url)) {
+                $originalUrls[] = $url;
                 $urls[] = $this->getUrlPattern($url);
             }
         }
 
         $repository = $this->findRepository($urls);
         if (!$repository) {
-            throw new InvalidArgumentException('Cannot find specified repository');
+            if ($this->autoAdd && !empty($originalUrls)) {
+                $repository = new Repository($originalUrls[0], $this->autoAddType);
+                $this->manager->add($repository);
+            } else {
+                throw new InvalidArgumentException('Cannot find specified repository');
+            }
         }
 
         return $repository;
