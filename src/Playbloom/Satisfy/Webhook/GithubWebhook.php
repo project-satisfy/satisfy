@@ -25,15 +25,29 @@ use Throwable;
 
 class GithubWebhook extends AbstractWebhook
 {
-    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher, ?string $secret = null)
+    /** @var string[] */
+    protected $sourceUrls = ['git_url', 'ssh_url', 'clone_url', 'svn_url'];
+
+    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher)
     {
         parent::__construct($manager, $dispatcher);
-        $this->secret = $secret;
     }
 
     public function setSecret(string $secret = null): self
     {
         $this->secret = $secret;
+
+        return $this;
+    }
+
+    /**
+     * @param string[] $sourceUrls
+     *
+     * @return $this
+     */
+    public function setSourceUrls(array $sourceUrls): self
+    {
+        $this->sourceUrls = $sourceUrls;
 
         return $this;
     }
@@ -97,7 +111,7 @@ class GithubWebhook extends AbstractWebhook
         $repositoryData = $payload['repository'] ?? [];
 
         $urls = [];
-        foreach (['git_url', 'ssh_url', 'clone_url', 'svn_url'] as $key) {
+        foreach ($this->sourceUrls as $key) {
             $url = $repositoryData[$key] ?? null;
             if (!empty($url)) {
                 $urls[] = $this->getUrlPattern($url);
