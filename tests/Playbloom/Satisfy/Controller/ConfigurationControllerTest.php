@@ -10,6 +10,7 @@ class ConfigurationControllerTest extends WebTestCase
 {
     protected function setUp(): void
     {
+        parent::setUp();
         vfsStream::setup();
     }
 

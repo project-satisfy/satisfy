@@ -12,6 +12,7 @@ class SecurityControllerTest extends WebTestCase
 {
     protected function setUp(): void
     {
+        parent::setUp();
         vfsStream::setup();
     }
 

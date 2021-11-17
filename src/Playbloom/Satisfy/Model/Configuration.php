@@ -420,4 +420,50 @@ class Configuration
 
         return $this;
     }
+
+    /**
+     * @return string[]|null
+     */
+    public function getStripHosts(): ?array
+    {
+        return $this->stripHosts;
+    }
+
+    /**
+     * @param string[] $stripHosts
+     */
+    public function setStripHosts(array $stripHosts): void
+    {
+        $this->stripHosts = $stripHosts;
+    }
+
+    public function getProvidersHistorySize(): ?int
+    {
+        return $this->providersHistorySize;
+    }
+
+    public function setProvidersHistorySize(?int $providersHistorySize): void
+    {
+        $this->providersHistorySize = $providersHistorySize;
+    }
+
+    public function getAbandoned(): ?\stdClass
+    {
+        return $this->abandoned;
+    }
+
+    public function setAbandoned(\stdClass $abandoned): void
+    {
+        $this->abandoned = $abandoned;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): void
+    {
+        $this->comment = $comment;
+    }
 }

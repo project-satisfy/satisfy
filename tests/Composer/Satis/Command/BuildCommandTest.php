@@ -25,6 +25,7 @@ class BuildCommandTest extends KernelTestCase
      */
     protected function setUp(): void
     {
+        parent::setUp();
         $this->vfsRoot = vfsStream::setup();
     }
 
@@ -34,6 +35,7 @@ class BuildCommandTest extends KernelTestCase
     protected function tearDown(): void
     {
         $this->vfsRoot = null;
+        parent::tearDown();
     }
 
     public function testMissingConfigBuildMustFail()

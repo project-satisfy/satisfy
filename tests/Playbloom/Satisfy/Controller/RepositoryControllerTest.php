@@ -14,12 +14,14 @@ class RepositoryControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->vfsSetup();
     }
 
     protected function tearDown(): void
     {
         $this->vfsTearDown();
+        parent::tearDown();
     }
 
     public function testRepositoryIndex()
