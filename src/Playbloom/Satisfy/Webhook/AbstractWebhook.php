@@ -44,7 +44,7 @@ abstract class AbstractWebhook
             throw new ServiceUnavailableHttpException();
         }
 
-        return new Response((string)$status);
+        return new Response((string) $status, 0 === $status ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     public function handle(RepositoryInterface $repository): ?int
