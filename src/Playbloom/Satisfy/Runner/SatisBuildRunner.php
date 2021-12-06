@@ -5,6 +5,7 @@ namespace Playbloom\Satisfy\Runner;
 use Playbloom\Satisfy\Event\BuildEvent;
 use Playbloom\Satisfy\Process\ProcessFactory;
 use Playbloom\Satisfy\Service\Manager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Lock\Lock;
 use Symfony\Component\Process\Exception\RuntimeException;
 
@@ -25,12 +26,16 @@ class SatisBuildRunner
     /** @var Manager */
     protected $manager;
 
-    public function __construct(string $satisFilename, Lock $lock, ProcessFactory $processFactory, Manager $manager)
+    /** @var LoggerInterface */
+    protected $logger;
+
+    public function __construct(string $satisFilename, Lock $lock, ProcessFactory $processFactory, Manager $manager, LoggerInterface $logger)
     {
         $this->satisFilename = $satisFilename;
         $this->lock = $lock;
         $this->processFactory = $processFactory;
         $this->manager = $manager;
+        $this->logger = $logger;
     }
 
     public function setProcessFactory(ProcessFactory $processFactory)
@@ -75,8 +80,22 @@ class SatisBuildRunner
         try {
             $this->lock->acquire(true);
             $status = $process->run();
+
+            if (0 !== $status) {
+                $this->logger->error('Failed to run build command', [
+                    'cmd_line' => $process->getCommandLine(),
+                    'cmd_status' => $status,
+                    'cmd_stdout' => $process->getOutput(),
+                    'cmd_stderr' => $process->getErrorOutput(),
+                ]);
+            }
         } catch (RuntimeException $exception) {
             $status = 1;
+
+            $this->logger->error(sprintf('Exception caught during build command, %s: %s', get_class($exception), $exception->getMessage()), [
+                'cmd_line' => $process->getCommandLine(),
+                'exception' => $exception,
+            ]);
         } finally {
             $this->lock->release();
         }
