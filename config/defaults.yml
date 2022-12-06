@@ -1,0 +1,14 @@
+parameters:
+  github.secret: ~
+  github.source_urls: [ 'git_url', 'ssh_url', 'clone_url', 'svn_url' ]
+  github.auto_add_repo: false
+  github.auto_add_repo_type: false
+  gitlab.secret: ~
+  gitlab.auto_add_repo: false
+  gitlab.auto_add_repo_type: ~
+  gitlab.prefer_ssh_url_type: false
+  gitea.secret: ~
+  gitea.source_urls: [ 'git_url', 'ssh_url', 'clone_url', 'svn_url' ]
+  gitea.auto_add_repo: false
+  gitea.auto_add_repo_type: false
+  devops.secret: ~

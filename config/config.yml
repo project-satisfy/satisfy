@@ -1,4 +1,5 @@
 imports:
+  - { resource: defaults.yml }
   - { resource: parameters.yml }
   - { resource: security.yml }
 
@@ -20,3 +21,14 @@ framework:
 
 twig:
   form_themes: ['bootstrap_3_layout.html.twig']
+
+monolog:
+  handlers:
+    errors:
+      type: fingers_crossed
+      action_level: error
+      handler: file_log
+    file_log:
+      type: rotating_file
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      max_files: 30
