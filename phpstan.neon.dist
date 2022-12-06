@@ -7,6 +7,9 @@ parameters:
 		- php
 	symfony:
 		container_xml_path: var/cache/test/srcTestKernelTestDebugContainer.xml
+	ignoreErrors:
+		- '#Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy::.+\(\)#'
+	reportUnmatchedIgnoredErrors: false
 	inferPrivatePropertyTypeFromConstructor: true
 
 includes:
