@@ -21,6 +21,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring
+          coverage: none
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist --no-interaction
