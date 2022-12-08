@@ -36,7 +36,10 @@ services:
   Playbloom\Satisfy\Service\Manager:
     public: true
     bind:
-      Symfony\Component\Lock\Lock: "@lock.satis"
+      Symfony\Component\Lock\LockInterface: '@lock.satis'
+
+  Playbloom\Satisfy\Model\Configuration:
+    factory: ['@Playbloom\Satisfy\Service\Manager', 'getConfig']
 
   Playbloom\Satisfy\Persister\FilePersister:
     arguments:
@@ -47,9 +50,9 @@ services:
     class: Playbloom\Satisfy\Persister\JsonPersister
     public: false
     arguments:
-      - "@Playbloom\\Satisfy\\Persister\\FilePersister"
+      - '@Playbloom\Satisfy\Persister\FilePersister'
       - "@serializer"
-      - "Playbloom\\Satisfy\\Model\\Configuration"
+      - 'Playbloom\Satisfy\Model\Configuration'
 
   Playbloom\Satisfy\Persister\ConfigurationNormalizer:
     tags:
@@ -68,7 +71,7 @@ services:
     arguments:
       $satisFilename: "%satis_filename%"
     bind:
-      Symfony\Component\Lock\Lock: "@lock.build"
+      Symfony\Component\Lock\LockInterface: "@lock.build"
     tags:
       - { name: kernel.event_listener, event: Playbloom\Satisfy\Event\BuildEvent, method: onBuild }
 

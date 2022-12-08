@@ -13,10 +13,8 @@ class ComposerLock extends Constraint
 {
     /**
      * Returns the path to the composer.lock Schema file.
-     *
-     * @return string
      */
-    public function getSchemaPath()
+    public function getSchemaPath(): string
     {
         return __DIR__ . '/../../Resources/schemas/composer_lock.json';
     }
@@ -24,7 +22,7 @@ class ComposerLock extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::PROPERTY_CONSTRAINT;
     }
@@ -32,7 +30,7 @@ class ComposerLock extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function getDefaultOption()
+    public function getDefaultOption(): string
     {
         return '';
     }

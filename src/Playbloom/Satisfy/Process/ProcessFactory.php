@@ -6,11 +6,9 @@ use Symfony\Component\Process\Process;
 
 class ProcessFactory
 {
-    /** @var string */
-    protected $rootPath;
+    protected string $rootPath;
 
-    /** @var string */
-    protected $composerHome;
+    protected string $composerHome;
 
     public function __construct(string $rootPath, string $composerHome)
     {

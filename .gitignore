@@ -1,3 +1,4 @@
+.env
 config/parameters.yml
 /bin
 /vendor/

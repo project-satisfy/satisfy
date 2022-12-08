@@ -8,9 +8,8 @@ parameters:
 
 framework:
   secret: "%secret%"
-  session: ~
-  templating:
-    engines: ['twig']
+  session:
+    save_path: '%kernel.project_dir%/var/sessions'
   assets: ~
   profiler:
     collect: false
@@ -21,6 +20,8 @@ framework:
 
 twig:
   form_themes: ['bootstrap_3_layout.html.twig']
+  globals:
+    satis: '@Playbloom\Satisfy\Model\Configuration'
 
 monolog:
   handlers:

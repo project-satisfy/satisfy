@@ -22,7 +22,7 @@ abstract class AbstractProtectedController extends AbstractController
 
     protected function checkEnvironment(): void
     {
-        $validator = $this->get(EnvValidator::class);
+        $validator = $this->container->get(EnvValidator::class);
         try {
             $validator->validate();
         } catch (\RuntimeException $exception) {

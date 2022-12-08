@@ -8,7 +8,7 @@ use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Persister\JsonPersister;
 use Playbloom\Satisfy\Persister\PersisterInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Lock\Lock;
+use Symfony\Component\Lock\LockInterface;
 
 /**
  * Satis configuration definition manager
@@ -17,19 +17,16 @@ use Symfony\Component\Lock\Lock;
  */
 class Manager
 {
-    /** @var Lock */
-    private $lock;
+    private LockInterface $lock;
 
-    /** @var PersisterInterface */
-    private $persister;
+    private PersisterInterface $persister;
 
-    /** @var Configuration|null */
-    private $configuration;
+    private ?Configuration $configuration = null;
 
     /**
      * Constructor
      */
-    public function __construct(Lock $lock, JsonPersister $persister)
+    public function __construct(LockInterface $lock, JsonPersister $persister)
     {
         $this->lock = $lock;
         $this->persister = $persister;
@@ -72,7 +69,7 @@ class Manager
     /**
      * Add a new repository
      */
-    public function add(RepositoryInterface $repository)
+    public function add(RepositoryInterface $repository): void
     {
         $lock = $this->acquireLock();
         try {
@@ -89,7 +86,7 @@ class Manager
      *
      * @param RepositoryInterface[] $repositories
      */
-    public function addAll(array $repositories)
+    public function addAll(array $repositories): void
     {
         $lock = $this->acquireLock();
         try {
@@ -107,7 +104,7 @@ class Manager
      *
      * @throws \RuntimeException
      */
-    public function update(RepositoryInterface $repository, RepositoryInterface $updated)
+    public function update(RepositoryInterface $repository, RepositoryInterface $updated): void
     {
         $repos = $this->getRepositories();
         if (!$repos->offsetExists($repository->getId())) {
@@ -127,7 +124,7 @@ class Manager
     /**
      * Delete a repository
      */
-    public function delete(RepositoryInterface $repository)
+    public function delete(RepositoryInterface $repository): void
     {
         $lock = $this->acquireLock();
         try {
@@ -144,7 +141,7 @@ class Manager
     /**
      * Persist current configuration
      */
-    public function flush()
+    public function flush(): void
     {
         $this->persister->flush($this->getConfig());
     }
@@ -154,7 +151,7 @@ class Manager
      *
      * @return $this
      */
-    private function doAdd(RepositoryInterface $repository)
+    private function doAdd(RepositoryInterface $repository): self
     {
         $this
             ->getConfig()
@@ -180,7 +177,7 @@ class Manager
         return $this->configuration;
     }
 
-    public function acquireLock(): Lock
+    public function acquireLock(): LockInterface
     {
         if (!$this->lock->acquire()) {
             throw new IOException('Cannot acquire lock for satis configuration file');

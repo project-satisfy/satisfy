@@ -1,8 +1,15 @@
 <?php
 
-use RDV\SymfonyContainerMocks\DependencyInjection\TestKernelTrait;
+use RDV\SymfonyContainerMocks\DependencyInjection\TestContainer;
 
 class TestKernel extends Kernel
 {
-    use TestKernelTrait;
+    protected function getContainerBaseClass(): string
+    {
+        if ('test' === $this->environment) {
+            return TestContainer::class;
+        }
+
+        return parent::getContainerBaseClass();
+    }
 }

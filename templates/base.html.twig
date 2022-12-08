@@ -40,11 +40,9 @@
   </head>
     <body>
         <div class="container">
-            {% if  app['auth.use_login_form'] %}
-            {% include '_user.html.twig' %}
-            {% endif %}
-            <a class="btn" href="{{ path('index') }}">Home page</a> |
-            <a class="btn" href="{{ path('repository') }}">Admin home page</a>
+            <a class="btn" href="{{ path('index') }}">Home page</a>
+            | <a class="btn" href="{{ path('repository') }}">Admin home page</a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY')  %} | <a class="btn" href="{{ path('logout') }}">Logout</a>{% endif %}
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-dismissible alert-{{ label }}" role="alert">
@@ -57,7 +55,7 @@
             <h1>
                 {% block header %}
                     <a href="{{ path('repository') }}">
-                        {{ app.satis.name }}
+                        {{ satis.name }}
                     </a>
                 {% endblock %}
             </h1>

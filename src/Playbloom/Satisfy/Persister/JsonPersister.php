@@ -27,7 +27,7 @@ class JsonPersister implements PersisterInterface
 
     public function __construct(PersisterInterface $persister, SerializerInterface $serializer, string $satisClass)
     {
-        $this->serializer = $serializer;
+        $this->setSerializer($serializer);
         $this->persister = $persister;
         $this->satisClass = $satisClass;
     }
@@ -56,11 +56,13 @@ class JsonPersister implements PersisterInterface
         $this->persister->flush($jsonString);
     }
 
-    public function normalizeRepositories($repositories)
+    public function normalizeRepositories($repositories): array
     {
         if ($repositories instanceof \ArrayIterator) {
             return array_values($repositories->getArrayCopy());
         }
+
+        return [];
     }
 
     /**

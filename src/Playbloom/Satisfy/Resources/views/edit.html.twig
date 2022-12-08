@@ -10,7 +10,7 @@
             Edit repository
         </h2>
 
-        {% include 'PlaybloomSatisfyBundle::_form.html.twig' %}
+        {% include '@PlaybloomSatisfy/_form.html.twig' %}
 
         <button class="btn btn-large btn-block btn-primary" type="submit">Update</button>
         <a href="{{ path('repository_delete', { 'repository': repository.id }) }}" class="btn btn-large btn-block btn-danger" >Delete</a>

@@ -41,8 +41,8 @@ class FilePersister implements PersisterInterface
 
         try {
             $content = trim(file_get_contents($this->filename));
-        } catch (Exception $exception) {
-            throw new RuntimeException(sprintf('Unable to load the data from "%s"', $this->filename), 0, $exception);
+        } catch (\Exception $exception) {
+            throw new \RuntimeException(sprintf('Unable to load the data from "%s"', $this->filename), 0, $exception);
         }
 
         if (empty($content)) {
@@ -57,7 +57,7 @@ class FilePersister implements PersisterInterface
      *
      * @param string $content
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function flush($content): void
     {
@@ -67,8 +67,8 @@ class FilePersister implements PersisterInterface
             if (false === @file_put_contents($this->filename, $content)) {
                 throw new IOException(sprintf('Failed to write file "%s".', $this->filename), 0, null, $this->filename);
             }
-        } catch (Exception $exception) {
-            throw new RuntimeException(sprintf('Unable to persist the data to "%s"', $this->filename), 0, $exception);
+        } catch (\Exception $exception) {
+            throw new \RuntimeException(sprintf('Unable to persist the data to "%s"', $this->filename), 0, $exception);
         }
     }
 

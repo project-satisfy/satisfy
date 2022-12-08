@@ -40,13 +40,6 @@ class GitlabWebhook extends AbstractWebhook
         }
     }
 
-    public function setSecret(string $secret = null): self
-    {
-        $this->secret = $secret;
-
-        return $this;
-    }
-
     protected function getRepository(Request $request): RepositoryInterface
     {
         $content = json_decode($request->getContent(), true);

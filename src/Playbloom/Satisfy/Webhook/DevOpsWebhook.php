@@ -23,20 +23,13 @@ class DevOpsWebhook extends AbstractWebhook
         $this->secret = $secret;
     }
 
-    public function setSecret(string $secret = null): self
-    {
-        $this->secret = $secret;
-
-        return $this;
-    }
-
     /**
      * {@inheritDoc}
      */
     protected function validate(Request $request): void
     {
         if ($request->headers->get(self::HTTP_TOKEN) !== $this->secret) {
-            throw new InvalidArgumentException('Invalid Token');
+            throw new \InvalidArgumentException('Invalid Token');
         }
     }
 
@@ -55,13 +48,13 @@ class DevOpsWebhook extends AbstractWebhook
             || !array_key_exists('url', $content['resource']['repository'])
             || empty($content['resource']['repository']['url'])
         ) {
-            throw new InvalidArgumentException('Invalid Request');
+            throw new \InvalidArgumentException('Invalid Request');
         }
         $repositoryUrlHttp = $content['resource']['repository']['url'];
         $repositoryUrlPattern = preg_replace('/(https:\/\/)([^\/]+)(.+)/', '$3', $repositoryUrlHttp);
         $repository = $this->manager->findByUrl('#'.$repositoryUrlPattern.'$#');
         if (!$repository instanceof RepositoryInterface) {
-            throw new InvalidArgumentException('Invalid Repository');
+            throw new \InvalidArgumentException('Invalid Repository');
         }
 
         return $repository;

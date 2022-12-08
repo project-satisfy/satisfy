@@ -3,5 +3,5 @@ parameters:
     satis_filename: "%kernel.project_dir%/satis.json"
     satis_log_path: "%kernel.project_dir%/var/satis"
     admin.auth: false
-    admin.users: ~
+    admin.users: []
     composer.home: "%kernel.project_dir%/var/composer"

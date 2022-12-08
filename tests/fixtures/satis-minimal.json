@@ -1,4 +1,5 @@
 {
   "name": "test/test",
-  "homepage": "http://test.com"
+  "homepage": "http://test.com",
+  "repositories": []
 }

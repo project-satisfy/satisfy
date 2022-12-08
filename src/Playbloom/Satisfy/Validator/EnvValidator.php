@@ -7,17 +7,13 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class EnvValidator
 {
-    /** @var string */
-    private $basePath;
+    private string $basePath;
 
-    /** @var string */
-    private $satisFilename;
+    private string $satisFilename;
 
-    /** @var string */
-    private $composerHome;
+    private string $composerHome;
 
-    /** @var string */
-    private $outputDir;
+    private string $outputDir;
 
     public function __construct(string $root, string $satisFilename, string $composerHome, Manager $manager)
     {
@@ -27,7 +23,7 @@ class EnvValidator
         $this->outputDir = $manager->getConfig()->getOutputDir();
     }
 
-    public function validate()
+    public function validate(): void
     {
         $filesystem = new Filesystem();
         if (!is_file($this->satisFilename)) {

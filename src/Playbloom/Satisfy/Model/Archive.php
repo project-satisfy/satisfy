@@ -23,12 +23,14 @@ class Archive
 
     /**
      * @var string|null
+     *
      * @SerializedName("absolute-directory")
      */
     private $absoluteDirectory;
 
     /**
      * @var bool
+     *
      * @SerializedName("skip-dev")
      */
     private $skipDev = true;
@@ -45,6 +47,7 @@ class Archive
 
     /**
      * @var string|null
+     *
      * @SerializedName("prefix-url")
      */
     private $prefixUrl;

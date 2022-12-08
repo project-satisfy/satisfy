@@ -51,6 +51,8 @@ class DevOpsWebhookTest extends TestCase
             ->will(
                 function ($args) {
                     $args[0]->setStatus(0);
+
+                    return $args[0];
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -87,7 +89,7 @@ class DevOpsWebhookTest extends TestCase
         self::assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 
-    public function invalidRequestProvider(): Generator
+    public function invalidRequestProvider(): \Generator
     {
         yield [self::createRequest([], '')];
 

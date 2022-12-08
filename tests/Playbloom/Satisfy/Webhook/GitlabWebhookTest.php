@@ -2,6 +2,7 @@
 
 namespace Tests\Playbloom\Satisfy\Webhook;
 
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Playbloom\Satisfy\Event\BuildEvent;
 use Playbloom\Satisfy\Model\Repository;
@@ -53,6 +54,8 @@ class GitlabWebhookTest extends TestCase
             ->will(
                 function ($args) {
                     $args[0]->setStatus(0);
+
+                    return $args[0];
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -83,6 +86,8 @@ class GitlabWebhookTest extends TestCase
             ->will(
                 function ($args) {
                     $args[0]->setStatus(0);
+
+                    return $args[0];
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -109,6 +114,8 @@ class GitlabWebhookTest extends TestCase
             ->will(
                 function ($args) {
                     $args[0]->setStatus(0);
+
+                    return $args[0];
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -159,8 +166,18 @@ class GitlabWebhookTest extends TestCase
             ->add(Argument::type(Repository::class))
             ->shouldBeCalledTimes(1);
         $dispatcher = $this->getDispatcherMock();
+        $dispatcher
+            ->dispatch(Argument::type(BuildEvent::class))
+            ->will(function ($args) {
+                $event = $args[0];
+                Assert::assertInstanceOf(BuildEvent::class, $event);
+                $event->setStatus(0);
+
+                return $event;
+            });
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true);
         $response = $handler->getResponse($request);
+        self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
     public function testAutoAddPreferSsh(): void
@@ -187,6 +204,9 @@ class GitlabWebhookTest extends TestCase
             ->add(Argument::exact($repository))
             ->shouldBeCalledTimes(1);
         $dispatcher = $this->getDispatcherMock();
+        $dispatcher
+            ->dispatch(Argument::type(BuildEvent::class))
+            ->willReturnArgument(0);
 
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', true);
         $response = $handler->getResponse($request);
@@ -211,6 +231,9 @@ class GitlabWebhookTest extends TestCase
             ->add(Argument::exact($repository))
             ->shouldBeCalledTimes(1);
         $dispatcher = $this->getDispatcherMock();
+        $dispatcher
+            ->dispatch(Argument::type(BuildEvent::class))
+            ->willReturnArgument(0);
 
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', true);
         $response = $handler->getResponse($request);
@@ -240,6 +263,9 @@ class GitlabWebhookTest extends TestCase
             ->add(Argument::exact($repository))
             ->shouldBeCalledTimes(1);
         $dispatcher = $this->getDispatcherMock();
+        $dispatcher
+            ->dispatch(Argument::type(BuildEvent::class))
+            ->willReturnArgument(0);
 
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', false);
         $response = $handler->getResponse($request);
@@ -265,6 +291,9 @@ class GitlabWebhookTest extends TestCase
             ->shouldBeCalledTimes(1);
 
         $dispatcher = $this->getDispatcherMock();
+        $dispatcher
+            ->dispatch(Argument::type(BuildEvent::class))
+            ->willReturnArgument(0);
 
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', false);
         $response = $handler->getResponse($request);

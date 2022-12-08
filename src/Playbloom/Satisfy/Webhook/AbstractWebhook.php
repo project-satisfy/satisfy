@@ -13,19 +13,23 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 abstract class AbstractWebhook
 {
-    /** @var EventDispatcherInterface */
-    protected $dispatcher;
+    protected EventDispatcherInterface $dispatcher;
 
-    /** @var Manager */
-    protected $manager;
+    protected Manager $manager;
 
-    /** @var string|null */
-    protected $secret;
+    protected ?string $secret = null;
 
     public function __construct(Manager $manager, EventDispatcherInterface $dispatcher)
     {
         $this->manager = $manager;
         $this->dispatcher = $dispatcher;
+    }
+
+    public function setSecret(string $secret): self
+    {
+        $this->secret = $secret;
+
+        return $this;
     }
 
     /**
@@ -41,7 +45,7 @@ abstract class AbstractWebhook
         } catch (\InvalidArgumentException $exception) {
             throw new BadRequestHttpException($exception->getMessage(), $exception);
         } catch (\Throwable $exception) {
-            throw new ServiceUnavailableHttpException();
+            throw new ServiceUnavailableHttpException(null, '', $exception, $exception->getCode());
         }
 
         return new Response((string) $status, 0 === $status ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);

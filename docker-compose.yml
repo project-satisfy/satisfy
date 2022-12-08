@@ -1,13 +1,27 @@
-version: '2'
+version: '3'
 services:
-  satisfy:
-    container_name: satisfy
-    build: ./docker
+  php:
+    build:
+      context: ./docker/php
+    container_name: satisfy_php
+    user: www-data
+    working_dir: /var/www/satisfy
     volumes:
       - .:/var/www/satisfy
+      - /var/www/.composer
     environment:
+      APP_ENV: ${APP_ENV:-dev}
+      APP_DEBUG: ${APP_DEBUG:-1}
       APP_PATH: /var/www/satisfy
-      APP_ENV: dev
-      APP_DEBUG: 0
+
+  nginx:
+    image: nginx:1.22-alpine
     ports:
-      - "80:80"
+      - "${APP_PORT:-8000}:80"
+    volumes:
+      - .:/var/www/satisfy
+      - ./docker/nginx/templates:/etc/nginx/templates
+    environment:
+      - PHP_SERVICE_NAME=php
+    depends_on:
+      - php

@@ -14,12 +14,13 @@ class ConfigurationController extends AbstractProtectedController
         $this->checkAccess();
         $this->checkEnvironment();
 
-        $manager = $this->get(Manager::class);
+        $manager = $this->container->get(Manager::class);
         $config = $manager->getConfig();
         $form = $this->createForm(ConfigurationType::class, $config);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->flush();
+            $this->addFlash('success', 'Configuration updated successfully');
         }
 
         return $this->render('@PlaybloomSatisfy/configuration.html.twig', ['form' => $form->createView()]);

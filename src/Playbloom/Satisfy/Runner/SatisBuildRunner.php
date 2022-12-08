@@ -5,27 +5,22 @@ namespace Playbloom\Satisfy\Runner;
 use Playbloom\Satisfy\Event\BuildEvent;
 use Playbloom\Satisfy\Process\ProcessFactory;
 use Playbloom\Satisfy\Service\Manager;
-use Symfony\Component\Lock\Lock;
+use Symfony\Component\Lock\LockInterface;
 use Symfony\Component\Process\Exception\RuntimeException;
 
 class SatisBuildRunner
 {
-    /** @var string */
-    protected $satisFilename;
+    protected string $satisFilename;
 
-    /** @var ProcessFactory */
-    protected $processFactory;
+    protected ProcessFactory $processFactory;
 
-    /** @var int */
-    protected $timeout = 600;
+    protected int $timeout = 600;
 
-    /** @var Lock */
-    protected $lock;
+    protected LockInterface $lock;
 
-    /** @var Manager */
-    protected $manager;
+    protected Manager $manager;
 
-    public function __construct(string $satisFilename, Lock $lock, ProcessFactory $processFactory, Manager $manager)
+    public function __construct(string $satisFilename, LockInterface $lock, ProcessFactory $processFactory, Manager $manager)
     {
         $this->satisFilename = $satisFilename;
         $this->lock = $lock;
@@ -33,7 +28,7 @@ class SatisBuildRunner
         $this->manager = $manager;
     }
 
-    public function setProcessFactory(ProcessFactory $processFactory)
+    public function setProcessFactory(ProcessFactory $processFactory): self
     {
         $this->processFactory = $processFactory;
 
@@ -66,7 +61,7 @@ class SatisBuildRunner
         }
     }
 
-    public function onBuild(BuildEvent $event)
+    public function onBuild(BuildEvent $event): void
     {
         $repository = $event->getRepository();
         $command = $this->getCommandLine($repository ? $repository->getUrl() : null);

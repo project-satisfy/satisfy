@@ -27,25 +27,11 @@ use Throwable;
 class GithubWebhook extends AbstractWebhook
 {
     /** @var string[] */
-    protected $sourceUrls = ['git_url', 'ssh_url', 'clone_url', 'svn_url'];
+    protected array $sourceUrls = ['git_url', 'ssh_url', 'clone_url', 'svn_url'];
 
-    /** @var bool */
-    protected $autoAdd = false;
+    protected bool $autoAdd = false;
 
-    /** @var string */
-    protected $autoAddType = '';
-
-    public function __construct(Manager $manager, EventDispatcherInterface $dispatcher)
-    {
-        parent::__construct($manager, $dispatcher);
-    }
-
-    public function setSecret(string $secret = null): self
-    {
-        $this->secret = $secret;
-
-        return $this;
-    }
+    protected string $autoAddType = '';
 
     /**
      * @param string[] $sourceUrls
@@ -84,9 +70,9 @@ class GithubWebhook extends AbstractWebhook
         try {
             $this->validate($request);
             $repository = $this->getRepository($request);
-        } catch (InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             throw new BadRequestHttpException($exception->getMessage(), $exception);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             throw new ServiceUnavailableHttpException();
         }
 
@@ -111,7 +97,7 @@ class GithubWebhook extends AbstractWebhook
             try {
                 $validator->validate($psrRequest, $this->secret);
             } catch (InvalidGitHubRequestSignatureException $exception) {
-                throw new InvalidArgumentException($exception->getMessage());
+                throw new \InvalidArgumentException($exception->getMessage());
             }
         }
     }
@@ -131,7 +117,7 @@ class GithubWebhook extends AbstractWebhook
         try {
             $event = $eventFactory->buildFromRequest($psrRequest);
         } catch (GitHubWebHookException $exception) {
-            throw new InvalidArgumentException($exception->getMessage(), 0, $exception);
+            throw new \InvalidArgumentException($exception->getMessage(), 0, $exception);
         }
 
         $payload = $event->getPayload();
@@ -153,7 +139,7 @@ class GithubWebhook extends AbstractWebhook
                 $repository = new Repository($originalUrls[0], $this->autoAddType);
                 $this->manager->add($repository);
             } else {
-                throw new InvalidArgumentException('Cannot find specified repository');
+                throw new \InvalidArgumentException('Cannot find specified repository');
             }
         }
 

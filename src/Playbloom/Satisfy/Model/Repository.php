@@ -14,6 +14,7 @@ class Repository implements RepositoryInterface
 
     /**
      * @var string
+     *
      * @SerializedName("installation-source")
      */
     private $installationSource = 'dist';

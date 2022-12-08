@@ -34,12 +34,14 @@ class Configuration
 
     /**
      * @var string
+     *
      * @SerializedName("output-dir")
      */
     private $outputDir = self::DEFAULT_OUTPUT_DIR;
 
     /**
      * @var bool
+     *
      * @SerializedName("output-html")
      */
     private $outputHtml = true;
@@ -51,42 +53,49 @@ class Configuration
 
     /**
      * @var PackageConstraint[]
+     *
      * @SerializedName("require")
      */
     private $require;
 
     /**
      * @var bool
+     *
      * @SerializedName("require-all")
      */
     private $requireAll = false;
 
     /**
      * @var bool
+     *
      * @SerializedName("require-dependencies")
      */
     private $requireDependencies = false;
 
     /**
      * @var bool
+     *
      * @SerializedName("require-dev-dependencies")
      */
     private $requireDevDependencies = false;
 
     /**
      * @var bool
+     *
      * @SerializedName("require-dependency-filter")
      */
     private $requireDependencyFilter = true;
 
     /**
      * @var string[]
+     *
      * @SerializedName("strip-hosts")
      */
     private $stripHosts;
 
     /**
      * @var string|null
+     *
      * @SerializedName("include-filename")
      */
     private $includeFilename;
@@ -98,12 +107,14 @@ class Configuration
 
     /**
      * @var string|null
+     *
      * @SerializedName("minimum-stability")
      */
     private $minimumStability = 'dev';
 
     /**
      * @var PackageStability[]
+     *
      * @SerializedName("minimum-stability-per-package")
      */
     private $minimumStabilityPerPackage = [];
@@ -115,12 +126,14 @@ class Configuration
 
     /**
      * @var int|null
+     *
      * @SerializedName("providers-history-size")
      */
     private $providersHistorySize;
 
     /**
      * @var string|null
+     *
      * @SerializedName("twig-template")
      */
     private $twigTemplate;
@@ -137,18 +150,21 @@ class Configuration
 
     /**
      * @var string|null
+     *
      * @SerializedName("notify-batch")
      */
     private $notifyBatch;
 
     /**
      * @var string|null
+     *
      * @SerializedName("_comment")
      */
     private $comment;
 
     /**
      * @var bool
+     *
      * @SerializedName("pretty-print")
      */
     private $prettyPrint = true;

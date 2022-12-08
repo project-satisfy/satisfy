@@ -60,6 +60,7 @@ class RepositoryController extends AbstractProtectedController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->manager->add($form->getData());
+                $this->addFlash('success', 'New repository added successfully');
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {
@@ -83,6 +84,7 @@ class RepositoryController extends AbstractProtectedController
             try {
                 $lock = $form->get('file')->getData()->openFile();
                 $this->lockProcessor->processFile($lock);
+                $this->addFlash('success', 'Composer lock file parsed successfully');
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {
@@ -109,6 +111,7 @@ class RepositoryController extends AbstractProtectedController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->manager->update($repository, $form->getData());
+                $this->addFlash('success', 'Repository updated successfully');
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {
@@ -131,6 +134,7 @@ class RepositoryController extends AbstractProtectedController
         if (Request::METHOD_DELETE === $request->getMethod()) {
             try {
                 $this->manager->delete($repository);
+                $this->addFlash('success', 'Repository removed successfully');
 
                 return $this->redirectToRoute('repository');
             } catch (\Exception $e) {

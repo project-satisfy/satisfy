@@ -53,6 +53,8 @@ class GithubWebhookTest extends TestCase
             ->will(
                 function ($args) {
                     $args[0]->setStatus(0);
+
+                    return $args[0];
                 }
             )
             ->shouldBeCalledTimes(1);
@@ -87,6 +89,8 @@ class GithubWebhookTest extends TestCase
             ->will(
                 function ($args) {
                     $args[0]->setStatus(0);
+
+                    return $args[0];
                 }
             )
             ->shouldBeCalledTimes(1);

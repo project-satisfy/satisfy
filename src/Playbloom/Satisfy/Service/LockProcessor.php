@@ -11,8 +11,7 @@ use Playbloom\Satisfy\Model\Repository;
  */
 class LockProcessor
 {
-    /** @var Manager */
-    private $manager;
+    private Manager $manager;
 
     /**
      * Constructor
@@ -25,7 +24,7 @@ class LockProcessor
     /**
      * Adds repositories from composer.lock JSON file.
      */
-    public function processFile(\SplFileObject $file)
+    public function processFile(\SplFileObject $file): void
     {
         $content = $this->getComposerLockData($file);
         $this->addReposFromContent($content);
@@ -44,7 +43,7 @@ class LockProcessor
     /**
      * Adds all repos from composer.lock data, even require-dev ones.
      */
-    private function addReposFromContent(\stdClass $content)
+    private function addReposFromContent(\stdClass $content): void
     {
         $repositories = [];
         if (!empty($content->packages)) {
@@ -61,7 +60,7 @@ class LockProcessor
     /**
      * @return Repository[]
      */
-    protected function getRepositories(array $packages)
+    protected function getRepositories(array $packages): array
     {
         $repos = [];
 
