@@ -64,6 +64,10 @@ A bin shortcut to Satis is already included in Satisfy, so run the following com
 ./bin/satis build
 ```
 
+### Automatically build a single package using WebHooks
+
+For example, you can trigger a package generation for your BitBucket project by setting up a BitBucket webhook to connect back to [your-satis-url]/webhook/bitbucket every time you do a code push. This is more efficient than doing a full build, and avoids you having to run full builds on a frequent schedule, or logging in to the admin interface just to force a build.
+
 ## Authors
 
 * Ludovic Fleury - <ludo.fleury@gmail.com> - <http://twitter.com/ludofleury>
