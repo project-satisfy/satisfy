@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Persister;
 
+use Playbloom\Satisfy\Model\Abandoned;
 use Playbloom\Satisfy\Model\PackageConstraint;
 use Playbloom\Satisfy\Model\PackageStability;
 use Playbloom\Satisfy\Model\Repository;
@@ -40,6 +41,10 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
             return $this->denormalizePackageStability($data);
         }
 
+        if ($type === Abandoned::class . '[]') {
+            return $this->denormalizeAbandoned($data);
+        }
+
         if ($this->serializer instanceof DenormalizerInterface) {
             return $this->serializer->denormalize($data, $type, $format, $context);
         }
@@ -53,6 +58,7 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
             case PackageConstraint::class . '[]':
             case RepositoryInterface::class . '[]':
             case PackageStability::class . '[]':
+            case Abandoned::class . '[]':
                 return true;
             default:
         }
@@ -94,6 +100,19 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
         $list = [];
         foreach ($data as $package => $stability) {
             $list[] = new PackageStability($package, $stability);
+        }
+
+        return $list;
+    }
+
+    private function denormalizeAbandoned($data): array
+    {
+        $list = [];
+        foreach ($data as $package => $replacement) {
+            if (!is_string($replacement)) {
+                $replacement = null;
+            }
+            $list[] = new Abandoned($package, $replacement);
         }
 
         return $list;

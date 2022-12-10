@@ -39,6 +39,7 @@ services:
       Symfony\Component\Lock\LockInterface: '@lock.satis'
 
   Playbloom\Satisfy\Model\Configuration:
+    lazy: true
     factory: ['@Playbloom\Satisfy\Service\Manager', 'getConfig']
 
   Playbloom\Satisfy\Persister\FilePersister:

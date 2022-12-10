@@ -2,6 +2,7 @@
 
 namespace Playbloom\Satisfy\Persister;
 
+use Playbloom\Satisfy\Model\Abandoned;
 use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\PackageConstraint;
 use Playbloom\Satisfy\Model\PackageStability;
@@ -49,6 +50,8 @@ class JsonPersister implements PersisterInterface
             AbstractObjectNormalizer::CALLBACKS => [
                 'repositories' => [$this, 'normalizeRepositories'],
                 'require' => [$this, 'normalizeRequire'],
+                'blacklist' => [$this, 'normalizeRequire'],
+                'abandoned' => [$this, 'normalizeAbandoned'],
                 'minimumStabilityPerPackage' => [$this, 'normalizePackageStability'],
             ],
             JsonEncode::OPTIONS => JSON_PRETTY_PRINT,
@@ -81,6 +84,28 @@ class JsonPersister implements PersisterInterface
         }
 
         return $require;
+    }
+
+    /**
+     * @param Abandoned[]|null $abandoned
+     *
+     * @return array<string, bool|string>|null
+     */
+    public function normalizeAbandoned($abandoned)
+    {
+        if (empty($abandoned)) {
+            return null;
+        }
+        $list = [];
+        foreach ($abandoned as $package) {
+            $replacement = $package->getReplacement();
+            if (empty($replacement)) {
+                $replacement = true;
+            }
+            $list[$package->getPackage()] = $replacement;
+        }
+
+        return $list;
     }
 
     /**

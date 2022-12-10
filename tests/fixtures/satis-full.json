@@ -12,6 +12,13 @@
   "require": {
     "ludofleury\/satisfy":"*"
   },
+  "abandoned": {
+    "psr/log": true,
+    "psr/container": "psr/constainer2"
+  },
+  "blacklist": {
+    "psr/log": "0.x"
+  },
   "require-all": true,
   "require-dependencies": true,
   "require-dev-dependencies": false,

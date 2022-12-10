@@ -57,6 +57,18 @@ class Archive
      */
     private $checksum = true;
 
+    /**
+     * @SerializedName("ignore-filters")
+     */
+    private bool $ignoreFilters = false;
+
+    /**
+     * @SerializedName("override-dist-type")
+     */
+    private bool $overrideDistType = false;
+
+    private bool $rearchive = true;
+
     public function getDirectory(): string
     {
         return $this->directory;
@@ -135,5 +147,35 @@ class Archive
     public function setChecksum(bool $checksum): void
     {
         $this->checksum = $checksum;
+    }
+
+    public function isIgnoreFilters(): bool
+    {
+        return $this->ignoreFilters;
+    }
+
+    public function setIgnoreFilters(bool $ignoreFilters): void
+    {
+        $this->ignoreFilters = $ignoreFilters;
+    }
+
+    public function isOverrideDistType(): bool
+    {
+        return $this->overrideDistType;
+    }
+
+    public function setOverrideDistType(bool $overrideDistType): void
+    {
+        $this->overrideDistType = $overrideDistType;
+    }
+
+    public function isRearchive(): bool
+    {
+        return $this->rearchive;
+    }
+
+    public function setRearchive(bool $rearchive): void
+    {
+        $this->rearchive = $rearchive;
     }
 }

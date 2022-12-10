@@ -3,6 +3,7 @@
 namespace Playbloom\Satisfy\Form\Type;
 
 use Playbloom\Satisfy\Form\DataTransformer\JsonTextTransformer;
+use Playbloom\Satisfy\Model\Abandoned;
 use Playbloom\Satisfy\Model\Configuration;
 use Playbloom\Satisfy\Model\PackageStability;
 use Symfony\Component\Form\AbstractType;
@@ -52,6 +53,38 @@ class ConfigurationType extends AbstractType
                 'prototype' => true,
                 'attr' => [
                     'class' => 'collection_require',
+                ],
+                'constraints' => [
+                    new Assert\Valid(),
+                ],
+            ])
+            ->add('blacklist', CollectionType::class, [
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'delete_empty' => true,
+                'entry_type' => PackageConstraintType::class,
+                'prototype' => true,
+                'attr' => [
+                    'class' => 'collection_require',
+                    'rel' => 'tooltip',
+                    'data-title' => 'Package name (keys) and version constraints (values) to exclude after selecting packages',
+                ],
+                'constraints' => [
+                    new Assert\Valid(),
+                ],
+            ])
+            ->add('abandoned', CollectionType::class, [
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'delete_empty' => true,
+                'entry_type' => AbandonedType::class,
+                'prototype' => true,
+                'attr' => [
+                    'class' => 'collection_require',
+                    'rel' => 'tooltip',
+                    'data-title' => 'List of packages marked as abandoned for this repository',
                 ],
                 'constraints' => [
                     new Assert\Valid(),

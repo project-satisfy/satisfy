@@ -2,7 +2,7 @@
 
 namespace Playbloom\Satisfy\Model;
 
-use Symfony\Component\Asset\Package;
+use stdClass;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Webmozart\Assert\Assert;
 
@@ -139,9 +139,14 @@ class Configuration
     private $twigTemplate;
 
     /**
-     * @var \stdClass
+     * @var Abandoned[]
      */
-    private $abandoned;
+    private array $abandoned = [];
+
+    /**
+     * @var PackageConstraint[]
+     */
+    private array $blacklist = [];
 
     /**
      * @var mixed[]|null
@@ -463,14 +468,30 @@ class Configuration
         $this->providersHistorySize = $providersHistorySize;
     }
 
-    public function getAbandoned(): ?\stdClass
+    /**
+     * @return Abandoned[]|null
+     */
+    public function getAbandoned(): ?array
     {
         return $this->abandoned;
     }
 
-    public function setAbandoned(\stdClass $abandoned): void
+    /**
+     * @param Abandoned[]|null $abandoned
+     */
+    public function setAbandoned(?array $abandoned): void
     {
         $this->abandoned = $abandoned;
+    }
+
+    public function getBlacklist(): ?array
+    {
+        return $this->blacklist;
+    }
+
+    public function setBlacklist(?array $blacklist): void
+    {
+        $this->blacklist = $blacklist;
     }
 
     public function getComment(): ?string
