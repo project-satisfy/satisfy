@@ -75,7 +75,7 @@ class RepositoryControllerTest extends WebTestCase
         $config = json_decode($config, false);
         $this->assertNotEmpty($config);
 
-        $this->assertObjectHasAttribute('repositories', $config);
+        self::assertObjectHasProperty('repositories', $config);
         $this->assertIsArray($config->repositories);
         $this->assertEquals($url, $config->repositories[0]->url);
         $this->assertEquals('git', $config->repositories[0]->type);
