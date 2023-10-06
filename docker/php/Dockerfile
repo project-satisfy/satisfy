@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.1-fpm
 
 RUN apt update && \
     apt install -qy wget curl git zip unzip libzip-dev && \
