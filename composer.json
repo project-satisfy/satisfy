@@ -23,7 +23,7 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1,<8.3",
         "ext-json": "*",
         "ext-xml": "*",
         "composer/composer": "^2.4",
