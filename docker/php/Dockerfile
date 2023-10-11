@@ -1,12 +1,12 @@
 FROM php:8.1-fpm
 
 RUN apt update && \
-    apt install -qy wget curl git zip unzip libzip-dev && \
+    apt install -qy wget curl git zip unzip && \
     apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN docker-php-ext-install zip
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/download/2.1.58/install-php-extensions /usr/local/bin/
+RUN install-php-extensions @composer zip
 
-RUN wget -O /usr/local/bin/composer https://getcomposer.org/download/latest-stable/composer.phar && chmod +x /usr/local/bin/composer
 RUN chown -R www-data:www-data /var/www
 
 COPY php.ini /usr/local/etc/php/conf.d/satisfy.ini

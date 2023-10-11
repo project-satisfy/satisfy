@@ -31,8 +31,9 @@ Basically, it just reads/writes the satis.json file and provides a web CRUD.
 
 ### Composer
 
+* Clone project `git clone https://github.com/project-satisfy/satisfy.git`
 * Download composer `wget http://getcomposer.org/composer.phar`
-* Install `php composer.phar create-project playbloom/satisfy`
+* Install `php composer.phar install -n`
 
 ### Satis configuration
 
@@ -67,6 +68,49 @@ A bin shortcut to Satis is already included in Satisfy, so run the following com
 ### Automatically build a single package using WebHooks
 
 For example, you can trigger a package generation for your BitBucket project by setting up a BitBucket webhook to connect back to [your-satis-url]/webhook/bitbucket every time you do a code push. This is more efficient than doing a full build and avoids you having to run full builds on a frequent schedule or logging in to the admin interface just to force a build.
+
+## Prebuilt docker image
+
+You can run satisfy using prebuilt docker image. Here is an example how to setup it.
+
+1. Create dir for configuration files
+2. Add parameters.yml file, can be copied from config/parameters.yml.dist
+3. Add auth.json with all required composer authentication tokens
+4. Add simple satis.json with basic information
+5. Add nginx dir with site configuration templates
+6. Create docker-compose.yml using example below
+7. Start containers `docker-compose up`
+8. Access container shell `docker-compose exec php bash`
+9. Run initial build `./bin/satis build`
+10. Open satis page on `http://localhost:8000`
+
+```
+version: '3'
+services:
+  php:
+    image: ghcr.io/project-satisfy/satisfy:latest
+    volumes:
+      - ./satis.json:/var/www/satisfy/satis.json
+      - ./parameters.yml:/var/www/satisfy/config/parameters.yml
+      - ./auth.json:/var/www/.composer/auth.json:ro
+      - /var/www/satisfy
+    environment:
+      APP_ENV: ${APP_ENV:-dev}
+      APP_DEBUG: ${APP_DEBUG:-1}
+
+  nginx:
+    image: nginx:1.22-alpine
+    ports:
+      - "${APP_PORT:-8000}:80"
+    volumes:
+      - ./nginx:/etc/nginx/templates
+    volumes_from:
+      - php:ro
+    environment:
+      - PHP_SERVICE_NAME=php
+    depends_on:
+      - php
+```
 
 ## Authors
 
