@@ -21,7 +21,7 @@ class ProcessFactory
         return $this->rootPath;
     }
 
-    public function create(array $command, int $timeout = null): Process
+    public function create(array $command, ?int $timeout = null): Process
     {
         $exec = reset($command);
         $command[key($command)] = $this->rootPath . '/' . $exec;

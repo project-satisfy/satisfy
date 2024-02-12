@@ -25,7 +25,7 @@ abstract class AbstractWebhook
         $this->dispatcher = $dispatcher;
     }
 
-    public function setSecret(string $secret): self
+    public function setSecret(?string $secret): self
     {
         $this->secret = $secret;
 

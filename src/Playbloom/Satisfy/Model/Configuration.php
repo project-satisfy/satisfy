@@ -202,7 +202,7 @@ class Configuration
         return $this->description;
     }
 
-    public function setDescription(string $description = null): void
+    public function setDescription(?string $description = null): void
     {
         $this->description = $description;
     }
@@ -287,7 +287,7 @@ class Configuration
         return $this->includeFilename;
     }
 
-    public function setIncludeFilename(string $includeFilename = null): self
+    public function setIncludeFilename(?string $includeFilename = null): self
     {
         if (empty($includeFilename)) {
             $includeFilename = null;
@@ -399,7 +399,7 @@ class Configuration
         return $this->twigTemplate;
     }
 
-    public function setTwigTemplate(string $twigTemplate = null): void
+    public function setTwigTemplate(?string $twigTemplate = null): void
     {
         $this->twigTemplate = $twigTemplate;
     }

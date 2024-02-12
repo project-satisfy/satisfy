@@ -98,7 +98,7 @@ class DevOpsWebhookTest extends TestCase
         yield [self::createRequest(['resource' => ['repository' => ['url' => '']]])];
     }
 
-    protected static function createRequest($content, string $token = null): Request
+    protected static function createRequest($content, ?string $token = null): Request
     {
         if (!is_string($content)) {
             $content = json_encode($content);

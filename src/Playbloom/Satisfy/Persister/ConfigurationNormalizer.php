@@ -17,17 +17,17 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
     /** @var SerializerInterface */
     private $serializer;
 
-    public function normalize($object, string $format = null, array $context = [])
+    public function normalize($object, ?string $format = null, array $context = [])
     {
         return $object;
     }
 
-    public function supportsNormalization($data, string $format = null)
+    public function supportsNormalization($data, ?string $format = null)
     {
         return false;
     }
 
-    public function denormalize($data, string $type, string $format = null, array $context = [])
+    public function denormalize($data, string $type, ?string $format = null, array $context = [])
     {
         if ($type === PackageConstraint::class . '[]') {
             return $this->denormalizeRequire($data);
@@ -52,7 +52,7 @@ class ConfigurationNormalizer implements NormalizerInterface, DenormalizerInterf
         return $data;
     }
 
-    public function supportsDenormalization($data, string $type, string $format = null)
+    public function supportsDenormalization($data, string $type, ?string $format = null)
     {
         switch ($type) {
             case PackageConstraint::class . '[]':

@@ -15,7 +15,7 @@ class BuildEvent extends Event
     /** @var int|null */
     private $status;
 
-    public function __construct(RepositoryInterface $repository = null)
+    public function __construct(?RepositoryInterface $repository = null)
     {
         $this->repository = $repository;
     }

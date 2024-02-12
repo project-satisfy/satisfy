@@ -6,18 +6,18 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-class Kernel extends \Symfony\Component\HttpKernel\Kernel
+class Kernel extends Symfony\Component\HttpKernel\Kernel
 {
     use MicroKernelTrait;
 
     public function registerBundles(): iterable
     {
         return [
-            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Symfony\Bundle\MonologBundle\MonologBundle(),
-            new \Playbloom\Satisfy\PlaybloomSatisfyBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Playbloom\Satisfy\PlaybloomSatisfyBundle(),
         ];
     }
 

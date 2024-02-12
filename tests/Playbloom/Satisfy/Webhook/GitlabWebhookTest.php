@@ -299,7 +299,7 @@ class GitlabWebhookTest extends TestCase
         $response = $handler->getResponse($request);
     }
 
-    protected function createRequest($content, string $event = 'push', string $token = null): Request
+    protected function createRequest($content, string $event = 'push', ?string $token = null): Request
     {
         if (!is_string($content)) {
             $content = json_encode($content);
