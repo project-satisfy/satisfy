@@ -1,4 +1,6 @@
-.env
+.env.local
+.env.local.php
+.env.prod.local
 config/parameters.yml
 /bin
 /vendor/

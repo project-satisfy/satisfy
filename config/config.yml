@@ -27,9 +27,12 @@ monolog:
   handlers:
     errors:
       type: fingers_crossed
-      action_level: error
-      handler: file_log
+      action_level: '%log.level%'
+      handler: '%log.handler%'
     file_log:
       type: rotating_file
       path: "%kernel.logs_dir%/%kernel.environment%.log"
       max_files: 30
+    docker:
+      type: stream
+      path: "php://stderr"
