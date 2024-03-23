@@ -1,7 +1,8 @@
 parameters:
-    secret: "ThisTokenIsNotSoSecretChangeIt"
-    satis_filename: "%kernel.project_dir%/satis.json"
-    satis_log_path: "%kernel.project_dir%/var/satis"
+    secret: "%env(APP_SECRET)%"
+    satis_filename: "%env(resolve:SATIS_CONFIG)%"
+    satis_log_path: "%env(resolve:SATIS_LOG)%"
     admin.auth: false
     admin.users: []
-    composer.home: "%kernel.project_dir%/var/composer"
+    composer.home: "%env(resolve:COMPOSER_HOME)%"
+    composer.cache: "%env(resolve:COMPOSER_CACHE)%"

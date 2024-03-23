@@ -49,7 +49,8 @@
         "symfony/monolog-bundle": "^3.8",
         "symfony/dependency-injection": "^5.4",
         "symfony/event-dispatcher": "^5.4",
-        "symfony/proxy-manager-bridge": "^6.0"
+        "symfony/proxy-manager-bridge": "^6.0",
+        "symfony/dotenv": "^6.4"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
