@@ -58,7 +58,7 @@ class ManagerConfigValidatorTest extends TestCase
         $this->assertJsonFileEqualsJsonFile($configFilename, $this->config->url());
     }
 
-    public function configFileProvider(): array
+    public static function configFileProvider(): array
     {
         return [
             [__DIR__ . '/../../../fixtures/satis-minimal.json'],

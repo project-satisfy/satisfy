@@ -5,7 +5,6 @@ declare(strict_types=1);
 
 namespace Tests\Playbloom\Satisfy\Webhook;
 
-use Generator;
 use PHPUnit\Framework\TestCase;
 use Playbloom\Satisfy\Event\BuildEvent;
 use Playbloom\Satisfy\Model\Repository;
@@ -66,7 +65,7 @@ class DevOpsWebhookTest extends TestCase
         self::assertEquals(0, $response->getContent());
     }
 
-    public function testInvalidTokenRequest()
+    public function testInvalidTokenRequest(): void
     {
         $manager = $this->getManagerMock();
         $manager
@@ -89,7 +88,7 @@ class DevOpsWebhookTest extends TestCase
         self::assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 
-    public function invalidRequestProvider(): \Generator
+    public static function invalidRequestProvider(): \Generator
     {
         yield [self::createRequest([], '')];
 

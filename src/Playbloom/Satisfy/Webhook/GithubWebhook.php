@@ -78,10 +78,6 @@ class GithubWebhook extends AbstractWebhook
 
         $callback = function () use ($repository) {
             echo 'OK';
-            if (!isset($GLOBALS['__PHPUNIT_BOOTSTRAP'])) {
-                ignore_user_abort(true);
-                Response::closeOutputBuffers(0, true);
-            }
             $this->handle($repository);
         };
 
