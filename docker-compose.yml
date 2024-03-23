@@ -4,24 +4,15 @@ services:
     build:
       context: ./docker/php
     container_name: satisfy_php
-    user: www-data
-    working_dir: /var/www/satisfy
+    working_dir: /var/www/html
+    ports:
+      - "${APP_PORT:-8000}:80"
     volumes:
-      - .:/var/www/satisfy
+      - .:/var/www/html
+      - ./docker/php/unit.json:/docker-entrypoint.d/config.json
       - /var/www/.composer
     environment:
       APP_ENV: ${APP_ENV:-dev}
       APP_DEBUG: ${APP_DEBUG:-1}
-      APP_PATH: /var/www/satisfy
-
-  nginx:
-    image: nginx:1.22-alpine
-    ports:
-      - "${APP_PORT:-8000}:80"
-    volumes:
-      - .:/var/www/satisfy
-      - ./docker/nginx/templates:/etc/nginx/templates
-    environment:
-      - PHP_SERVICE_NAME=php
-    depends_on:
-      - php
+      APP_PATH: /var/www/html
+      COMPOSER_HOME: /var/www/.composer
