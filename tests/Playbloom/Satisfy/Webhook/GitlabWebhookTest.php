@@ -31,13 +31,13 @@ class GitlabWebhookTest extends TestCase
         $handler->getResponse($request);
     }
 
-    public function invalidRequestProvider(): \Generator
+    public static function invalidRequestProvider(): \Generator
     {
-        yield [$this->createRequest([], '')];
+        yield [self::createRequest([], '')];
 
-        yield [$this->createRequest([])];
+        yield [self::createRequest([])];
 
-        yield [$this->createRequest(['repository' => []])];
+        yield [self::createRequest(['repository' => []])];
     }
 
     public function testValidRequest(): void
@@ -60,7 +60,7 @@ class GitlabWebhookTest extends TestCase
             )
             ->shouldBeCalledTimes(1);
 
-        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push.json'));
+        $request = self::createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push.json'));
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal());
         $response = $handler->getResponse($request);
 
@@ -92,7 +92,7 @@ class GitlabWebhookTest extends TestCase
             )
             ->shouldBeCalledTimes(1);
 
-        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push-nonexistant.json'));
+        $request = self::createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push-nonexistant.json'));
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true);
         $response = $handler->getResponse($request);
 
@@ -120,7 +120,7 @@ class GitlabWebhookTest extends TestCase
             )
             ->shouldBeCalledTimes(1);
 
-        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push-deprecated.json'));
+        $request = self::createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push-deprecated.json'));
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal());
         $response = $handler->getResponse($request);
 
@@ -142,7 +142,7 @@ class GitlabWebhookTest extends TestCase
 
         $this->expectException(BadRequestHttpException::class);
         $this->expectExceptionMessage('Invalid Token');
-        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push.json'), 'push', 'invalid-token');
+        $request = self::createRequest(file_get_contents(__DIR__ . '/../../../fixtures/gitlab-push.json'), 'push', 'invalid-token');
         $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal());
         $response = $handler->getResponse($request);
 
@@ -152,7 +152,7 @@ class GitlabWebhookTest extends TestCase
     public function testAutoAddOnlyHttp(): void
     {
         $url = 'https://gitlab.com/example/nonexistant.git';
-        $request = $this->createRequest([
+        $request = self::createRequest([
             'project' => [
                 'git_http_url' => $url,
             ],
@@ -184,7 +184,7 @@ class GitlabWebhookTest extends TestCase
     {
         $httpUrl = 'https://gitlab.com/example/nonexistant.git';
         $sshUrl = 'git@gitlab.com:example/nonexistant.git';
-        $request = $this->createRequest([
+        $request = self::createRequest([
             'project' => [
                 'git_http_url' => $httpUrl,
                 'git_ssh_url' => $sshUrl,
@@ -215,7 +215,7 @@ class GitlabWebhookTest extends TestCase
     public function testAutoAddPreferSshFallback(): void
     {
         $httpUrl = 'https://gitlab.com/example/nonexistant.git';
-        $request = $this->createRequest([
+        $request = self::createRequest([
             'project' => [
                 'git_http_url' => $httpUrl,
             ],
@@ -243,7 +243,7 @@ class GitlabWebhookTest extends TestCase
     {
         $httpUrl = 'https://gitlab.com/example/nonexistant.git';
         $sshUrl = 'git@gitlab.com:example/nonexistant.git';
-        $request = $this->createRequest([
+        $request = self::createRequest([
             'project' => [
                 'git_http_url' => $httpUrl,
                 'git_ssh_url' => $sshUrl,
@@ -274,7 +274,7 @@ class GitlabWebhookTest extends TestCase
     public function testAutoAddPreferHttpsFallback(): void
     {
         $sshUrl = 'git@gitlab.com:example/nonexistant.git';
-        $request = $this->createRequest([
+        $request = self::createRequest([
             'project' => [
                 'git_ssh_url' => $sshUrl,
             ],
@@ -299,7 +299,7 @@ class GitlabWebhookTest extends TestCase
         $response = $handler->getResponse($request);
     }
 
-    protected function createRequest($content, string $event = 'push', ?string $token = null): Request
+    protected static function createRequest($content, string $event = 'push', ?string $token = null): Request
     {
         if (!is_string($content)) {
             $content = json_encode($content);

@@ -30,13 +30,13 @@ class GithubWebhookTest extends TestCase
         $handler->getResponse($request);
     }
 
-    public function invalidRequestProvider(): \Generator
+    public static function invalidRequestProvider(): \Generator
     {
-        yield [$this->createRequest([], '')];
+        yield [self::createRequest([], '')];
 
-        yield [$this->createRequest([])];
+        yield [self::createRequest([])];
 
-        yield [$this->createRequest(['repository' => []])];
+        yield [self::createRequest(['repository' => []])];
     }
 
     public function testValidRequest(): void
@@ -59,7 +59,7 @@ class GithubWebhookTest extends TestCase
             )
             ->shouldBeCalledTimes(1);
 
-        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/github-push.json'));
+        $request = self::createRequest(file_get_contents(__DIR__ . '/../../../fixtures/github-push.json'));
         $handler = new GithubWebhook($manager->reveal(), $dispatcher->reveal());
         $response = $handler->getResponse($request);
 
@@ -71,7 +71,7 @@ class GithubWebhookTest extends TestCase
         $this->assertEquals('OK', $result);
     }
 
-    public function testValidRequestWithRepoAutoAdd()
+    public function testValidRequestWithRepoAutoAdd(): void
     {
         $manager = $this->getManagerMock();
         $manager
@@ -95,7 +95,7 @@ class GithubWebhookTest extends TestCase
             )
             ->shouldBeCalledTimes(1);
 
-        $request = $this->createRequest(file_get_contents(__DIR__ . '/../../../fixtures/github-push.json'));
+        $request = self::createRequest(file_get_contents(__DIR__ . '/../../../fixtures/github-push.json'));
         $handler = new GithubWebhook($manager->reveal(), $dispatcher->reveal());
         $handler->setAutoAdd(true);
         $handler->setAutoAddType('github');
@@ -109,7 +109,7 @@ class GithubWebhookTest extends TestCase
         $this->assertEquals('OK', $result);
     }
 
-    protected function createRequest($content, string $event = 'push'): Request
+    protected static function createRequest($content, string $event = 'push'): Request
     {
         if (!is_string($content)) {
             $content = json_encode($content);

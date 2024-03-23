@@ -39,21 +39,21 @@ class BitbucketWebhookTest extends KernelTestCase
         $controller->bitbucketAction($request);
     }
 
-    public function invalidRequestProvider(): \Generator
+    public static function invalidRequestProvider(): \Generator
     {
         // invalid IP
-        yield [$this->createRequest('', '1.1.1.1')];
+        yield [self::createRequest('', '1.1.1.1')];
 
         // valid IP, missing content
         yield [Request::create('')];
 
         // valid IP, missing required param
         $content = ['repository' => ['full_name' => '']];
-        yield [$this->createRequest($content)];
+        yield [self::createRequest($content)];
 
         // valid content, unknown repository url
         $content = ['repository' => ['full_name' => 'test/test']];
-        yield [$this->createRequest($content)];
+        yield [self::createRequest($content)];
     }
 
     public function testValidRequestMustTriggerBuild(): void
@@ -87,7 +87,7 @@ class BitbucketWebhookTest extends KernelTestCase
             ->getRootPath()
             ->willReturn($rootPath);
 
-        $request = $this->createRequest(['repository' => ['full_name' => 'test/test']]);
+        $request = self::createRequest(['repository' => ['full_name' => 'test/test']]);
         /** @var BitbucketWebhook $webhook */
         $webhook = $container->get(BitbucketWebhook::class);
         $response = $webhook->getResponse($request);
@@ -95,7 +95,7 @@ class BitbucketWebhookTest extends KernelTestCase
         $this->assertEquals(0, $response->getContent());
     }
 
-    protected function createRequest($content, string $ipAddress = '127.0.0.1'): Request
+    protected static function createRequest($content, string $ipAddress = '127.0.0.1'): Request
     {
         return Request::create('', 'GET', [], [], [], ['REMOTE_ADDR' => $ipAddress], json_encode($content));
     }
