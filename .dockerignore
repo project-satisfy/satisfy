@@ -2,10 +2,12 @@
 /config/parameters.yml
 /tests
 /var
+.idea
+.git
 .gitignore
 .php-cs-fixer.dist.php
 .phpstorm.meta.php
-.travis.yml
+.phpunit.cache
 docker-compose.yml
 ide-twig.json
 phpstan.neon.dist

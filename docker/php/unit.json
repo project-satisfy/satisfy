@@ -1,0 +1,52 @@
+{
+  "listeners": {
+    "*:80": {
+      "pass": "routes"
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": [
+          "*.php",
+          "*.php/*"
+        ]
+      },
+      "action": {
+        "pass": "applications/satisfy/direct"
+      }
+    },
+    {
+      "action": {
+        "share": "/var/www/html/public$uri",
+        "fallback": {
+          "pass": "applications/satisfy/index"
+        }
+      }
+    }
+  ],
+  "applications": {
+    "satisfy": {
+      "type": "php",
+      "processes": {
+        "max": 16,
+        "spare": 1,
+        "idle_timeout": 30
+      },
+      "user": "www-data",
+      "group": "www-data",
+      "working_directory": "/var/www/html",
+      "stderr": "/dev/stderr",
+      "stdout": "/dev/stdout",
+      "targets": {
+        "direct": {
+          "root": "/var/www/html"
+        },
+        "index": {
+          "root": "/var/www/html/public",
+          "script": "index.php"
+        }
+      }
+    }
+  }
+}

@@ -29,6 +29,7 @@ monolog:
       type: fingers_crossed
       action_level: '%log.level%'
       handler: '%log.handler%'
+      bubble: false
     file_log:
       type: rotating_file
       path: "%kernel.logs_dir%/%kernel.environment%.log"
