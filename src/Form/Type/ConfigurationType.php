@@ -97,7 +97,7 @@ class ConfigurationType extends AbstractType
                     'rel' => 'tooltip',
                     'data-title' => <<<END
 satis will attempt to resolve all the required packages from the listed repositories
-END
+END,
                 ],
             ])
             ->add('requireDevDependencies', Type\CheckboxType::class, [
@@ -133,7 +133,7 @@ END
                     'rel' => 'tooltip',
                     'data-title' => <<<END
 Specify filename instead of default include/all\${SHA1_HASH}.json
-END
+END,
                 ],
             ])
             ->add('outputDir', TextType::class, [
@@ -146,7 +146,7 @@ END
                     'rel' => 'tooltip',
                     'data-title' => <<<END
 defines where to output the repository files if not provided as an argument when calling the build command
-END
+END,
                 ],
             ])
             ->add('outputHtml', Type\CheckboxType::class, [

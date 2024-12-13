@@ -14,7 +14,7 @@ class DevOpsWebhook extends AbstractWebhook
     public function __construct(
         Manager $manager,
         EventDispatcherInterface $dispatcher,
-        ?string $secret = null
+        ?string $secret = null,
     ) {
         parent::__construct($manager, $dispatcher);
         $this->manager = $manager;

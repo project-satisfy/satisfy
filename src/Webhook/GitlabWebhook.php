@@ -29,7 +29,7 @@ class GitlabWebhook extends AbstractWebhook
         ?string $secret = null,
         ?bool $autoAdd = false,
         ?string $autoAddType = 'git',
-        ?bool $preferSshUrlType = false
+        ?bool $preferSshUrlType = false,
     ) {
         parent::__construct($manager, $dispatcher);
         $this->secret = $secret;
