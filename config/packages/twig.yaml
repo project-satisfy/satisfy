@@ -2,7 +2,7 @@ twig:
     file_name_pattern: '*.twig'
     form_themes: [ 'bootstrap_3_layout.html.twig' ]
     globals:
-        satis: 'Playbloom\Model\Configuration'
+        satis: '@Playbloom\Model\Configuration'
 
 when@test:
     twig:

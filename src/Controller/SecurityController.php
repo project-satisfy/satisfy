@@ -21,7 +21,7 @@ class SecurityController extends AbstractController
         // get the login error if there is one
         $error = $authUtils->getLastAuthenticationError();
 
-        return $this->render('@PlaybloomSatisfy/login.html.twig', compact('username', 'error'));
+        return $this->render('views/login.html.twig', compact('username', 'error'));
     }
 
     public static function getSubscribedServices(): array

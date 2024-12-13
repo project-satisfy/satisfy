@@ -45,7 +45,7 @@ class RepositoryController extends AbstractProtectedController
             'repositories' => [$satisRepository],
         ];
 
-        return $this->render('@PlaybloomSatisfy/home.html.twig', compact('config', 'repositories'));
+        return $this->render('views/home.html.twig', compact('config', 'repositories'));
     }
 
     #[Route('/admin/new', name: 'repository_new', methods: ['GET', 'POST'])]
@@ -71,7 +71,7 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('views/new.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -96,7 +96,7 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/upload.html.twig', ['form' => $form->createView()]);
+        return $this->render('views/upload.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route('/admin/edit/{repository}', name: 'repository_edit', requirements: ['repository' => '[a-zA-Z0-9_-]+'], methods: ['GET', 'POST'])]
@@ -124,7 +124,7 @@ class RepositoryController extends AbstractProtectedController
             }
         }
 
-        return $this->render('@PlaybloomSatisfy/edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('views/edit.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route('/admin/delete/{repository}', name: 'repository_delete', requirements: ['repository' => '[a-zA-Z0-9_-]+'], methods: ['GET', 'DELETE'])]
@@ -149,7 +149,7 @@ class RepositoryController extends AbstractProtectedController
         }
 
         return $this->render(
-            '@PlaybloomSatisfy/delete.html.twig',
+            'views/delete.html.twig',
             ['form' => $form->createView(), 'repository' => $repository]
         );
     }

@@ -25,6 +25,6 @@ class ConfigurationController extends AbstractProtectedController
             $this->addFlash('success', 'Configuration updated successfully');
         }
 
-        return $this->render('@PlaybloomSatisfy/configuration.html.twig', ['form' => $form->createView()]);
+        return $this->render('views/configuration.html.twig', ['form' => $form->createView()]);
     }
 }

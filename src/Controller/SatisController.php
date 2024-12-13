@@ -14,7 +14,7 @@ class SatisController extends AbstractProtectedController
     {
         $this->checkAccess();
 
-        return $this->render('@PlaybloomSatisfy/satis_build.html.twig');
+        return $this->render('views/satis_build.html.twig');
     }
 
     #[Route('/admin/satis/buildRun', name: 'satis_build_run', methods: ['GET'])]

@@ -20,10 +20,6 @@ framework:
     assets: ~
     profiler:
         collect: false
-    lock:
-        resources:
-            satis: "flock"
-            build: "flock"
 
 when@test:
     framework:
