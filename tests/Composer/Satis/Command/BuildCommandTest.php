@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Composer\Satis\Command;
+namespace Playbloom\Tests\Composer\Satis\Command;
 
 use Composer\Satis\Console\Application;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\AssertionFailedError;
-use Playbloom\Satisfy\Model\Configuration;
-use Playbloom\Satisfy\Persister\FilePersister;
-use Playbloom\Satisfy\Persister\JsonPersister;
+use Playbloom\Model\Configuration;
+use Playbloom\Persister\FilePersister;
+use Playbloom\Persister\JsonPersister;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;

@@ -34,23 +34,26 @@
         "ninsuo/symfony-collection": "^2.1",
         "ramunasd/symfony-container-mocks": "^0.6.0",
         "swop/github-webhook": "^3.1",
-        "symfony/asset": "^5.4",
-        "symfony/form": "^5.4",
-        "symfony/framework-bundle": "^5.4",
-        "symfony/lock": "^5.4",
-        "symfony/property-info": "^5.0",
-        "symfony/psr-http-message-bridge": "^2.0",
-        "symfony/security-bundle": "^5.4",
-        "symfony/serializer": "^5.4",
-        "symfony/twig-bundle": "^5.4",
-        "symfony/validator": "^5.4",
-        "symfony/yaml": "^5.4",
+        "symfony/asset": "6.4.*",
+        "symfony/form": "6.4.*",
+        "symfony/framework-bundle": "6.4.*",
+        "symfony/lock": "6.4.*",
+        "symfony/property-info": "6.4.*",
+        "symfony/psr-http-message-bridge": "6.4.*",
+        "symfony/security-bundle": "6.4.*",
+        "symfony/serializer": "6.4.*",
+        "symfony/twig-bundle": "6.4.*",
+        "symfony/validator": "6.4.*",
+        "symfony/yaml": "6.4.*",
         "laminas/laminas-diactoros": "^2.3",
         "symfony/monolog-bundle": "^3.8",
-        "symfony/dependency-injection": "^5.4",
-        "symfony/event-dispatcher": "^5.4",
-        "symfony/proxy-manager-bridge": "^6.0",
-        "symfony/dotenv": "^6.4"
+        "symfony/dependency-injection": "6.4.*",
+        "symfony/event-dispatcher": "6.4.*",
+        "symfony/proxy-manager-bridge": "6.4.*",
+        "symfony/dotenv": "6.4.*",
+        "symfony/flex": "^2.4",
+        "symfony/console": "6.4.*",
+        "symfony/runtime": "6.4.*"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
@@ -60,15 +63,13 @@
         "phpstan/phpstan-symfony": "^1.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^10.5",
-        "symfony/browser-kit": "^5.4"
+        "symfony/browser-kit": "6.4.*"
     },
     "autoload": {
-        "psr-4": { "Playbloom\\Satisfy\\": "src/Playbloom/Satisfy" },
-        "files": ["src/Kernel.php"]
+        "psr-4": { "Playbloom\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\": "tests" },
-        "files": ["src/TestKernel.php"]
+        "psr-4": { "Playbloom\\Tests\\": "tests" }
     },
     "scripts": {
         "post-install-cmd": [
@@ -84,9 +85,17 @@
         ],
         "phpunit": "phpunit",
         "phpstan": "phpstan analyse",
-        "php-cs-fixer": "php-cs-fixer fix --diff --show-progress=dots"
+        "php-cs-fixer": "php-cs-fixer fix --diff --show-progress=dots",
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
     },
     "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "6.4.*"
+        },
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         },
@@ -97,7 +106,9 @@
     "config": {
         "bin-dir": "bin",
         "allow-plugins": {
-            "composer/satis": true
+            "composer/satis": true,
+            "symfony/flex": true,
+            "symfony/runtime": true
         }
     }
 }

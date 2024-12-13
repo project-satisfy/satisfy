@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\app;
+namespace Playbloom\Tests\app;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;

@@ -1,0 +1,154 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    secret: '%env(APP_SECRET)%'
+    satis_filename: '%env(resolve:SATIS_CONFIG)%'
+    satis_log_path: '%env(resolve:SATIS_LOG)%'
+    admin.auth: false
+    admin.users: {  }
+    composer.home: '%env(resolve:COMPOSER_HOME)%'
+    composer.cache: '%env(resolve:COMPOSER_CACHE)%'
+    log.handler: 'file_log'
+    log.level: 'error'
+    github.secret: '%env(GITHUB_SECRET)%'
+    github.source_urls: [ 'git_url', 'ssh_url', 'clone_url', 'svn_url' ]
+    github.auto_add_repo: false
+    github.auto_add_repo_type: false
+    gitlab.secret: '%env(GITLAB_SECRET)%'
+    gitlab.auto_add_repo: false
+    gitlab.auto_add_repo_type: ~
+    gitlab.prefer_ssh_url_type: false
+    gitea.secret: '%env(GITEA_SECRET)%'
+    gitea.source_urls: [ 'git_url', 'ssh_url', 'clone_url', 'svn_url' ]
+    gitea.auto_add_repo: false
+    gitea.auto_add_repo_type: false
+    devops.secret: '%env(DEVOPS_SECRET)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Playbloom\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    Playbloom\Command\RebuildCommand:
+        tags:
+            - { name: console.command }
+
+    Playbloom\Controller\ConfigurationController:
+        public: true
+        tags:
+            - { name: container.service_subscriber }
+
+    Playbloom\Controller\RepositoryController:
+        public: true
+        tags:
+            - { name: container.service_subscriber }
+
+    Playbloom\Controller\SatisController:
+        public: true
+        autoconfigure: true
+        tags:
+            - { name: container.service_subscriber }
+
+    Playbloom\Controller\SecurityController:
+        public: true
+        tags:
+            - { name: container.service_subscriber }
+
+    Playbloom\Controller\WebhookController:
+        public: true
+        tags:
+            - { name: container.service_subscriber }
+
+    Playbloom\Service\Manager:
+        public: true
+
+    Playbloom\Model\Configuration:
+        lazy: true
+        factory: [ '@Playbloom\Service\Manager', 'getConfig' ]
+
+    Playbloom\Persister\FilePersister:
+        arguments:
+            $filename: "%satis_filename%"
+            $logPath: "%satis_log_path%"
+
+    Playbloom\Persister\JsonPersister:
+        class: Playbloom\Persister\JsonPersister
+        public: false
+        arguments:
+            - '@Playbloom\Persister\FilePersister'
+            - "@serializer"
+            - 'Playbloom\Model\Configuration'
+
+    Playbloom\Persister\ConfigurationNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: 1000 }
+
+    Playbloom\Service\LockProcessor:
+        public: true
+
+    Playbloom\Process\ProcessFactory:
+        arguments:
+            $rootPath: "%kernel.project_dir%"
+            $composerHome: "%composer.home%"
+
+    Playbloom\Runner\SatisBuildRunner:
+        public: true
+        arguments:
+            $satisFilename: "%satis_filename%"
+        tags:
+            - { name: kernel.event_listener, event: Playbloom\Event\BuildEvent, method: onBuild }
+
+    ### Webhook handlers
+    Playbloom\Webhook\BitbucketWebhook:
+        public: true
+
+    Playbloom\Webhook\GithubWebhook:
+        public: true
+        calls:
+            - [ setSecret, [ "%github.secret%" ] ]
+            - [ setSourceUrls, [ "%github.source_urls%" ] ]
+            - [ setAutoAdd, [ "%github.auto_add_repo%" ] ]
+            - [ setAutoAddType, [ "%github.auto_add_repo_type%" ] ]
+
+    Playbloom\Webhook\GiteaWebhook:
+        public: true
+        calls:
+            - [ setSecret, [ "%gitea.secret%" ] ]
+            - [ setSourceUrls, [ "%gitea.source_urls%" ] ]
+            - [ setAutoAdd, [ "%gitea.auto_add_repo%" ] ]
+            - [ setAutoAddType, [ "%gitea.auto_add_repo_type%" ] ]
+
+    Playbloom\Webhook\GitlabWebhook:
+        public: true
+        arguments:
+            $secret: "%gitlab.secret%"
+            $autoAdd: "%gitlab.auto_add_repo%"
+            $autoAddType: "%gitlab.auto_add_repo_type%"
+            $preferSshUrlType: "%gitlab.prefer_ssh_url_type%"
+
+    Playbloom\Validator\EnvValidator:
+        public: true
+        arguments:
+            $root: "%kernel.project_dir%"
+            $satisFilename: "%satis_filename%"
+            $composerHome: "%composer.home%"
+
+    Playbloom\Webhook\DevOpsWebhook:
+        autowire: true
+        public: true
+        arguments:
+            $secret: "%devops.secret%"
