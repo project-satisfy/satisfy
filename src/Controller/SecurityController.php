@@ -13,22 +13,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'login')]
-    public function loginAction(): Response
+    public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
-        $authUtils = $this->get('security.authentication_utils');
         // last username entered by the user
-        $username = $authUtils->getLastUsername();
+        $username = $authenticationUtils->getLastUsername();
         // get the login error if there is one
-        $error = $authUtils->getLastAuthenticationError();
+        $error = $authenticationUtils->getLastAuthenticationError();
 
         return $this->render('views/login.html.twig', compact('username', 'error'));
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        $services = parent::getSubscribedServices();
-        $services['security.authentication_utils'] = AuthenticationUtils::class;
-
-        return $services;
     }
 }

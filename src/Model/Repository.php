@@ -2,7 +2,7 @@
 
 namespace Playbloom\Model;
 
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 class Repository implements RepositoryInterface
 {
@@ -14,9 +14,8 @@ class Repository implements RepositoryInterface
 
     /**
      * @var string
-     *
-     * @SerializedName("installation-source")
      */
+    #[SerializedName('installation-source')]
     private $installationSource = 'dist';
 
     public function __construct(string $url = '', string $type = 'git')

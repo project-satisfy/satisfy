@@ -2,17 +2,29 @@
 
 namespace Playbloom\Tests\Persister;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use org\bovigo\vfs\vfsStreamFile;
 use Playbloom\Model\Configuration;
 use Playbloom\Model\PackageConstraint;
 use Playbloom\Model\Repository;
 use Playbloom\Model\RepositoryInterface;
+use Playbloom\Persister\ConfigurationNormalizer;
 use Playbloom\Persister\FilePersister;
 use Playbloom\Persister\JsonPersister;
 use Playbloom\Tests\Traits\SchemaValidatorTrait;
 use Playbloom\Tests\Traits\VfsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class FilePersisterTest extends KernelTestCase
 {
@@ -75,10 +87,23 @@ class FilePersisterTest extends KernelTestCase
         $file->setContent(file_get_contents(__DIR__ . '/../fixtures/satis-full.json'));
         $this->vfsRoot->addChild($file);
 
-        $kernel = self::bootKernel();
+        self::bootKernel();
+
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader(new AnnotationReader()));
+        $serializer = new Serializer(
+            [
+                new ConfigurationNormalizer(),
+                new ObjectNormalizer(
+                    classMetadataFactory: new ClassMetadataFactory(new AttributeLoader(new AnnotationReader())),
+                    nameConverter: new MetadataAwareNameConverter($classMetadataFactory, new CamelCaseToSnakeCaseNameConverter()),
+                    propertyTypeExtractor: new PropertyInfoExtractor([], [new PhpDocExtractor(), new ReflectionExtractor()])
+                ),
+            ],
+            [new JsonEncoder()]
+        );
         $persister = new JsonPersister(
             $this->persister,
-            $kernel->getContainer()->get('serializer'),
+            $serializer,
             Configuration::class
         );
         $config = $persister->load();

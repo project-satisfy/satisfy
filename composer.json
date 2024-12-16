@@ -53,7 +53,10 @@
         "symfony/dotenv": "6.4.*",
         "symfony/flex": "^2.4",
         "symfony/console": "7.2.*",
-        "symfony/runtime": "6.4.*"
+        "symfony/runtime": "6.4.*",
+        "phpdocumentor/reflection-docblock": "^5.6",
+        "phpstan/phpdoc-parser": "^2.0",
+        "symfony/property-access": "6.4.*"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",

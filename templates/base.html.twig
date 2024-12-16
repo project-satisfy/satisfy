@@ -42,7 +42,7 @@
         <div class="container">
             <a class="btn" href="{{ path('index') }}">Home page</a>
             | <a class="btn" href="{{ path('repository') }}">Admin home page</a>
-            {% if is_granted('IS_AUTHENTICATED_FULLY')  %} | <a class="btn" href="{{ path('logout') }}">Logout</a>{% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY')  %} | <a class="btn" href="{{ path('_logout_main') }}">Logout</a>{% endif %}
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-dismissible alert-{{ label }}" role="alert">

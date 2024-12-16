@@ -22,12 +22,6 @@ framework:
         collect: false
 
 when@test:
-    parameters:
-        log.handler: 'stderr'
-        log.level: 'error'
-        satis_filename: "vfs://root/satis.json"
-        satis_log_path: "vfs://root/satis/"
-        admin.auth: false
     framework:
         test: true
         session:
@@ -36,12 +30,6 @@ when@test:
             collect: false
 
 when@testsecure:
-    parameters:
-      admin.auth: true
-      admin.users:
-        test:
-          password: test
-          roles: 'ROLE_ADMIN'
     framework:
         test: true
         session:

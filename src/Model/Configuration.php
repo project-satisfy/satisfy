@@ -2,7 +2,7 @@
 
 namespace Playbloom\Model;
 
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 use Webmozart\Assert\Assert;
 
 /**
@@ -33,16 +33,14 @@ class Configuration
 
     /**
      * @var string
-     *
-     * @SerializedName("output-dir")
      */
+    #[SerializedName('output-dir')]
     private $outputDir = self::DEFAULT_OUTPUT_DIR;
 
     /**
      * @var bool
-     *
-     * @SerializedName("output-html")
      */
+    #[SerializedName('output-html')]
     private $outputHtml = true;
 
     /**
@@ -52,51 +50,44 @@ class Configuration
 
     /**
      * @var PackageConstraint[]
-     *
-     * @SerializedName("require")
      */
+    #[SerializedName('require')]
     private $require;
 
     /**
      * @var bool
-     *
-     * @SerializedName("require-all")
      */
+    #[SerializedName('require-all')]
     private $requireAll = false;
 
     /**
      * @var bool
-     *
-     * @SerializedName("require-dependencies")
      */
+    #[SerializedName('require-dependencies')]
     private $requireDependencies = false;
 
     /**
      * @var bool
-     *
-     * @SerializedName("require-dev-dependencies")
      */
+    #[SerializedName('require-dev-dependencies')]
     private $requireDevDependencies = false;
 
     /**
      * @var bool
-     *
-     * @SerializedName("require-dependency-filter")
      */
+    #[SerializedName('require-dependency-filter')]
     private $requireDependencyFilter = true;
 
     /**
-     * @var string[]
-     *
-     * @SerializedName("strip-hosts")
+     * @var string[]|null
      */
+    #[SerializedName('strip-hosts')]
     private $stripHosts;
 
     /**
      * @var string|null
-     *
-     * @SerializedName("include-filename")
      */
+    #[SerializedName('include-filename')]
     private $includeFilename;
 
     /**
@@ -106,16 +97,14 @@ class Configuration
 
     /**
      * @var string|null
-     *
-     * @SerializedName("minimum-stability")
      */
+    #[SerializedName('minimum-stability')]
     private $minimumStability = 'dev';
 
     /**
      * @var PackageStability[]
-     *
-     * @SerializedName("minimum-stability-per-package")
      */
+    #[SerializedName('minimum-stability-per-package')]
     private $minimumStabilityPerPackage = [];
 
     /**
@@ -125,16 +114,14 @@ class Configuration
 
     /**
      * @var int|null
-     *
-     * @SerializedName("providers-history-size")
      */
+    #[SerializedName('providers-history-size')]
     private $providersHistorySize;
 
     /**
      * @var string|null
-     *
-     * @SerializedName("twig-template")
      */
+    #[SerializedName('twig-template')]
     private $twigTemplate;
 
     /**
@@ -154,23 +141,20 @@ class Configuration
 
     /**
      * @var string|null
-     *
-     * @SerializedName("notify-batch")
      */
+    #[SerializedName('notify-batch')]
     private $notifyBatch;
 
     /**
      * @var string|null
-     *
-     * @SerializedName("_comment")
      */
+    #[SerializedName('_comment')]
     private $comment;
 
     /**
      * @var bool
-     *
-     * @SerializedName("pretty-print")
      */
+    #[SerializedName('pretty-print')]
     private $prettyPrint = true;
 
     /**
@@ -452,7 +436,7 @@ class Configuration
     /**
      * @param string[] $stripHosts
      */
-    public function setStripHosts(array $stripHosts): void
+    public function setStripHosts(?array $stripHosts): void
     {
         $this->stripHosts = $stripHosts;
     }

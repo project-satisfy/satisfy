@@ -11,7 +11,7 @@ class IndexController extends AbstractController
 {
     public function __construct(
         #[Autowire('%kernel.project_dir%')]
-        private readonly string $projectDir
+        private readonly string $projectDir,
     ) {
     }
 

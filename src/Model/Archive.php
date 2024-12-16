@@ -2,7 +2,7 @@
 
 namespace Playbloom\Model;
 
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 /**
  * Archive Configuration class
@@ -23,16 +23,15 @@ class Archive
 
     /**
      * @var string|null
-     *
-     * @SerializedName("absolute-directory")
      */
+    #[SerializedName("absolute-directory")]
     private $absoluteDirectory;
 
     /**
      * @var bool
      *
-     * @SerializedName("skip-dev")
      */
+    #[SerializedName("skip-dev")]
     private $skipDev = true;
 
     /**
@@ -48,8 +47,8 @@ class Archive
     /**
      * @var string|null
      *
-     * @SerializedName("prefix-url")
      */
+    #[SerializedName("prefix-url")]
     private $prefixUrl;
 
     /**
@@ -57,14 +56,10 @@ class Archive
      */
     private $checksum = true;
 
-    /**
-     * @SerializedName("ignore-filters")
-     */
+    #[SerializedName("ignore-filters")]
     private bool $ignoreFilters = false;
 
-    /**
-     * @SerializedName("override-dist-type")
-     */
+    #[SerializedName("override-dist-type")]
     private bool $overrideDistType = false;
 
     private bool $rearchive = true;

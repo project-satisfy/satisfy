@@ -5,11 +5,11 @@
     <env name="APP_ENV" value="test" force="true"/>
     <env name="APP_DEBUG" value="1" force="true"/>
     <env name="SHELL_VERBOSITY" value="-1"/>
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="test"/>
-        <env name="APP_SECRET" value="31d2023cffd1548dfa53540fb2f4c0d1"/>
-        <!-- ###- symfony/framework-bundle ### -->
+    <env name="COMPOSER_DISABLE_XDEBUG_WARN" value="1" force="true" />
+    <!-- ###+ symfony/framework-bundle ### -->
+    <env name="APP_ENV" value="test"/>
+    <env name="APP_SECRET" value="31d2023cffd1548dfa53540fb2f4c0d1"/>
+    <!-- ###- symfony/framework-bundle ### -->
   </php>
   <testsuites>
     <testsuite name="Satisfy Test Suite">
