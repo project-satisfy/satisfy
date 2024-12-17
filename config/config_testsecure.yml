@@ -1,7 +1,0 @@
-#
-#parameters:
-#  admin.auth: true
-#  admin.users:
-#    test:
-#      password: test
-#      roles: 'ROLE_ADMIN'
