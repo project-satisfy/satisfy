@@ -6,9 +6,9 @@ parameters:
 	fileExtensions:
 		- php
 	symfony:
-		container_xml_path: var/cache/test/TestKernelTestDebugContainer.xml
+		container_xml_path: var/cache/test/Playbloom_KernelTestDebugContainer.xml
 	ignoreErrors:
-		- '#Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy::.+\(\)#'
+		- '#Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy.+\(\)#'
 	reportUnmatchedIgnoredErrors: false
 	inferPrivatePropertyTypeFromConstructor: true
 
