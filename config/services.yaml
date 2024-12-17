@@ -93,9 +93,9 @@ services:
             - "@serializer"
             - 'Playbloom\Model\Configuration'
 
-#    Playbloom\Persister\ConfigurationNormalizer:
-#        tags:
-#            - { name: serializer.normalizer, priority: 1000 }
+    Playbloom\Persister\ConfigurationNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: 1000 }
 
     Playbloom\Service\LockProcessor:
         public: true
