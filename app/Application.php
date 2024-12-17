@@ -17,7 +17,7 @@ class Application extends BaseApplication
     /**
      * {@inheritdoc}
      */
-    public function doRun(InputInterface $input, OutputInterface $output)
+    public function doRun(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new ConsoleIO($input, $output, $this->getHelperSet());
 
