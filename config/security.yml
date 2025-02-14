@@ -20,5 +20,5 @@ security:
       memory:
         users: "%admin.users%"
   encoders:
-    Symfony\Component\Security\Core\User\User: plaintext
+    Symfony\Component\Security\Core\User\User: bcrypt
   access_control: ~

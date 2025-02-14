@@ -1,12 +1,13 @@
 version: '3'
 services:
   php:
+    image: docker.n-educatio.pl/satisfy-php:latest
     build:
       context: ./docker/php
     container_name: satisfy_php
     working_dir: /var/www/html
     ports:
-      - "${APP_PORT:-8000}:80"
+      - "${APP_PORT:-8010}:80"
     volumes:
       - .:/var/www/html
       - ./docker/php/unit.json:/docker-entrypoint.d/config.json
