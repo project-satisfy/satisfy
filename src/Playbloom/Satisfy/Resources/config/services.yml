@@ -116,8 +116,6 @@ services:
       $root: "%kernel.project_dir%"
       $satisFilename: "%satis_filename%"
       $composerHome: "%composer.home%"
-    calls:
-      - [setDebug, ["%webhook.debug%"]]
 
   Playbloom\Satisfy\Webhook\DevOpsWebhook:
     autowire: true
