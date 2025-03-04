@@ -55,6 +55,7 @@ abstract class AbstractWebhook
             throw new ServiceUnavailableHttpException(null, '', $exception, $exception->getCode());
         }
 
+        $success = 0 === $status;
         if ($this->debug && null !== $context) {
             $content = [
                 'status' => $status,
@@ -78,7 +79,7 @@ abstract class AbstractWebhook
             $status = json_encode($content);
         }
 
-        return new Response((string) $status, 0 === $status ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new Response((string) $status, $success ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     public function handle(RepositoryInterface $repository, ?BuildContext &$context): ?int
