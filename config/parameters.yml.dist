@@ -6,3 +6,4 @@ parameters:
     admin.users: []
     composer.home: "%env(resolve:COMPOSER_HOME)%"
     composer.cache: "%env(resolve:COMPOSER_CACHE)%"
+    webhook.debug: false

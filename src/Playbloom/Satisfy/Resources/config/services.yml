@@ -79,10 +79,13 @@ services:
   ### Webhook handlers
   Playbloom\Satisfy\Webhook\BitbucketWebhook:
     public: true
+    calls:
+      - [ setDebug, [ "%webhook.debug%" ] ]
 
   Playbloom\Satisfy\Webhook\GithubWebhook:
     public: true
     calls:
+      - [setDebug, ["%webhook.debug%"]]
       - [setSecret, ["%github.secret%"]]
       - [setSourceUrls, ["%github.source_urls%"]]
       - [setAutoAdd, ["%github.auto_add_repo%"]]
@@ -91,6 +94,7 @@ services:
   Playbloom\Satisfy\Webhook\GiteaWebhook:
     public: true
     calls:
+      - [setDebug, ["%webhook.debug%"]]
       - [setSecret, ["%gitea.secret%"]]
       - [setSourceUrls, ["%gitea.source_urls%"]]
       - [setAutoAdd, ["%gitea.auto_add_repo%"]]
@@ -103,6 +107,8 @@ services:
       $autoAdd: "%gitlab.auto_add_repo%"
       $autoAddType: "%gitlab.auto_add_repo_type%"
       $preferSshUrlType: "%gitlab.prefer_ssh_url_type%"
+    calls:
+      - [setDebug, ["%webhook.debug%"]]
 
   Playbloom\Satisfy\Validator\EnvValidator:
     public: true
@@ -110,9 +116,13 @@ services:
       $root: "%kernel.project_dir%"
       $satisFilename: "%satis_filename%"
       $composerHome: "%composer.home%"
+    calls:
+      - [setDebug, ["%webhook.debug%"]]
 
   Playbloom\Satisfy\Webhook\DevOpsWebhook:
     autowire: true
     public: true
     arguments:
       $secret: "%devops.secret%"
+    calls:
+      - [setDebug, ["%webhook.debug%"]]

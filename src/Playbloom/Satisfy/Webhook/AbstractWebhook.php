@@ -3,6 +3,7 @@
 namespace Playbloom\Satisfy\Webhook;
 
 use Playbloom\Satisfy\Event\BuildEvent;
+use Playbloom\Satisfy\Model\BuildContext;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -18,6 +19,7 @@ abstract class AbstractWebhook
     protected Manager $manager;
 
     protected ?string $secret = null;
+    protected bool $debug = false;
 
     public function __construct(Manager $manager, EventDispatcherInterface $dispatcher)
     {
@@ -32,6 +34,11 @@ abstract class AbstractWebhook
         return $this;
     }
 
+    public function setDebug(bool $debug): void
+    {
+        $this->debug = $debug;
+    }
+
     /**
      * @throws BadRequestHttpException
      * @throws ServiceUnavailableHttpException
@@ -41,20 +48,44 @@ abstract class AbstractWebhook
         try {
             $this->validate($request);
             $repository = $this->getRepository($request);
-            $status = $this->handle($repository);
+            $status = $this->handle($repository, $context);
         } catch (\InvalidArgumentException $exception) {
             throw new BadRequestHttpException($exception->getMessage(), $exception);
         } catch (\Throwable $exception) {
             throw new ServiceUnavailableHttpException(null, '', $exception, $exception->getCode());
         }
 
+        if ($this->debug && null !== $context) {
+            $content = [
+                'status' => $status,
+                'exit_code' => $context->getExitCode(),
+                'command' => $context->getCommand(),
+                'output' => $context->getOutput(),
+                'error_output' => $context->getErrorOutput(),
+                'exception' => null,
+            ];
+
+            if (null !== $context->getThrowable()) {
+                $content['exception'] = [
+                    'message' => $context->getThrowable()->getMessage(),
+                    'code' => $context->getThrowable()->getCode(),
+                    'file' => $context->getThrowable()->getFile(),
+                    'line' => $context->getThrowable()->getLine(),
+                    'trace' => $context->getThrowable()->getTrace(),
+                ];
+            }
+
+            $status = json_encode($content);
+        }
+
         return new Response((string) $status, 0 === $status ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function handle(RepositoryInterface $repository): ?int
+    public function handle(RepositoryInterface $repository, ?BuildContext &$context): ?int
     {
         $event = new BuildEvent($repository);
         $this->dispatcher->dispatch($event);
+        $context = $event->getContext();
 
         return $event->getStatus();
     }
