@@ -3,6 +3,7 @@
 namespace Tests\Playbloom\Satisfy\Webhook;
 
 use PHPUnit\Framework\TestCase;
+use Playbloom\Satisfy\Model\BuildContext;
 use Playbloom\Satisfy\Model\Repository;
 use Playbloom\Satisfy\Model\RepositoryInterface;
 use Playbloom\Satisfy\Service\Manager;
@@ -42,7 +43,7 @@ class AbstractWebhookTest extends TestCase
         $webhook = new class($manager->reveal(), new EventDispatcher()) extends AbstractWebhook {
             public $status;
 
-            public function handle(RepositoryInterface $repository): ?int
+            public function handle(RepositoryInterface $repository, ?BuildContext &$context): ?int
             {
                 return $this->status;
             }
