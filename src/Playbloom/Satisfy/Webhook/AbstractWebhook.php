@@ -72,7 +72,7 @@ abstract class AbstractWebhook
                     'code' => $context->getThrowable()->getCode(),
                     'file' => $context->getThrowable()->getFile(),
                     'line' => $context->getThrowable()->getLine(),
-                    'trace' => $context->getThrowable()->getTrace(),
+                    'trace' => $context->getThrowable()->getTraceAsString(),
                 ];
             }
 
