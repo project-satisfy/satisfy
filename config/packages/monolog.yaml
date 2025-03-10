@@ -1,0 +1,16 @@
+monolog:
+    channels:
+        - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+    handlers:
+        errors:
+            type: fingers_crossed
+            action_level: '%log.level%'
+            handler: '%log.handler%'
+            bubble: false
+        file_log:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            max_files: 30
+        stderr:
+            type: stream
+            path: "php://stderr"

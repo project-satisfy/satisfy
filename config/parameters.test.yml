@@ -1,6 +1,0 @@
-parameters:
-    log.handler: 'stderr'
-    log.level: 'error'
-    satis_filename: "vfs://root/satis.json"
-    satis_log_path: "vfs://root/satis/"
-    admin.auth: false

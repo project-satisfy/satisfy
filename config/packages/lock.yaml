@@ -1,0 +1,4 @@
+framework:
+    lock:
+        satis: '%env(LOCK_DSN)%'
+        build: '%env(LOCK_DSN)%'

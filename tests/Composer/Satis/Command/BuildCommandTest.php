@@ -1,19 +1,31 @@
 <?php
 
-namespace Tests\Composer\Satis\Command;
+namespace Playbloom\Tests\Composer\Satis\Command;
 
 use Composer\Satis\Console\Application;
+use Doctrine\Common\Annotations\AnnotationReader;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\AssertionFailedError;
-use Playbloom\Satisfy\Model\Configuration;
-use Playbloom\Satisfy\Persister\FilePersister;
-use Playbloom\Satisfy\Persister\JsonPersister;
+use Playbloom\Model\Configuration;
+use Playbloom\Persister\ConfigurationNormalizer;
+use Playbloom\Persister\FilePersister;
+use Playbloom\Persister\JsonPersister;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class BuildCommandTest extends KernelTestCase
 {
@@ -81,7 +93,18 @@ class BuildCommandTest extends KernelTestCase
         $this->vfsRoot->addChild($file);
 
         $container = self::bootKernel()->getContainer();
-        $serializer = $container->get('serializer');
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader(new AnnotationReader()));
+        $serializer = new Serializer(
+            [
+                new ConfigurationNormalizer(),
+                new ObjectNormalizer(
+                    classMetadataFactory: new ClassMetadataFactory(new AttributeLoader(new AnnotationReader())),
+                    nameConverter: new MetadataAwareNameConverter($classMetadataFactory, new CamelCaseToSnakeCaseNameConverter()),
+                    propertyTypeExtractor: new PropertyInfoExtractor([], [new PhpDocExtractor(), new ReflectionExtractor()])
+                ),
+            ],
+            [new JsonEncoder()]
+        );
 
         $filePersister = new FilePersister(new Filesystem(), $file->url(), $this->vfsRoot->url());
         $persister = new JsonPersister($filePersister, $serializer, Configuration::class);
