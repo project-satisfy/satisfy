@@ -3,6 +3,9 @@ name: "Create and publish docker image"
 on:
   release:
     types: [published]
+  schedule:
+    # Run at 2:00 AM UTC on the 1st of each month
+    - cron: '0 2 1 * *'
 
 permissions:
   contents: read
@@ -12,8 +15,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get latest release tag
+        if: github.event_name == 'schedule'
+        id: latest_release
+        run: |
+          LATEST_TAG=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          echo "RELEASE_TAG=$LATEST_TAG" >> $GITHUB_OUTPUT
+          
+      - name: Set release tag variable
+        id: release_tag
+        run: |
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+            echo "TAG=${{ steps.latest_release.outputs.RELEASE_TAG }}" >> $GITHUB_OUTPUT
+          else
+            echo "TAG=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release_tag.outputs.TAG }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -49,4 +70,4 @@ jobs:
           file: docker/php/package.Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/${{ github.repository }}:${{ github.event.release.tag_name }},ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository }}:${{ steps.release_tag.outputs.TAG }},ghcr.io/${{ github.repository }}:latest
