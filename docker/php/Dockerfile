@@ -13,6 +13,8 @@ COPY php.ini /usr/local/etc/php/conf.d/satisfy.ini
 
 USER www-data
 RUN mkdir -p ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan -H github.com >> ~/.ssh/known_hosts && \
-    mkdir -p ~/.composer && chown www-data:www-data ~/.composer
+    mkdir -p ~/.composer && chown www-data:www-data ~/.composer && \
+    git config --global --add safe.directory /var/www/html
 
 USER root
+RUN git config --system --add safe.directory /var/www/html
