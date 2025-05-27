@@ -1,4 +1,4 @@
-FROM unit:1.32.0-php8.2
+FROM unit:1.34.2-php8.4
 
 RUN apt update && \
     apt install -qy wget curl git zip unzip && \
