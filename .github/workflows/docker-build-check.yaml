@@ -1,0 +1,50 @@
+name: "Docker Build Check"
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'docker/**'
+      - '.github/workflows/docker-build-check.yaml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'docker/**'
+      - '.github/workflows/docker-build-check.yaml'
+  workflow_dispatch:  # Allows manual triggering
+
+permissions:
+  contents: read
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile: 
+          - docker/php/Dockerfile
+          - docker/php/package.Dockerfile
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
+
+      - name: Build Docker image (no push)
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.dockerfile == 'docker/php/Dockerfile' && './docker/php' || '.' }}
+          file: ${{ matrix.dockerfile }}
+          push: false
+          platforms: linux/amd64,linux/arm64
+          tags: satisfy-test:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
