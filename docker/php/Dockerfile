@@ -4,7 +4,7 @@ RUN apt update && \
     apt install -qy wget curl git zip unzip && \
     apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/download/2.2.5/install-php-extensions /usr/local/bin/
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/download/2.7.34/install-php-extensions /usr/local/bin/
 RUN install-php-extensions @composer zip
 
 RUN chown -R www-data:www-data /var/www
