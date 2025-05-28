@@ -14,6 +14,8 @@ COPY php.ini /usr/local/etc/php/conf.d/satisfy.ini
 USER www-data
 RUN mkdir -p ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan -H github.com >> ~/.ssh/known_hosts && \
     mkdir -p ~/.composer && chown www-data:www-data ~/.composer && \
+    wget -O ~/.composer/keys.dev.pub https://composer.github.io/snapshots.pub && \
+    wget -O ~/.composer/keys.tags.pub https://composer.github.io/releases.pub && \
     git config --global --add safe.directory /var/www/html
 
 USER root
