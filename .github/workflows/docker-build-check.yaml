@@ -44,7 +44,51 @@ jobs:
           context: ${{ matrix.dockerfile == 'docker/php/Dockerfile' && './docker/php' || '.' }}
           file: ${{ matrix.dockerfile }}
           push: false
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           tags: satisfy-test:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          load: true
+
+      - name: Install dependencies for development Dockerfile
+        if: matrix.dockerfile == 'docker/php/Dockerfile'
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www/html \
+            -w /var/www/html \
+            -e COMPOSER_HOME=/tmp/composer \
+            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            satisfy-test:${{ github.sha }} \
+            composer install --no-interaction --prefer-dist
+
+      - name: Run basic Composer diagnostics
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www/html \
+            -w /var/www/html \
+            -e COMPOSER_HOME=/tmp/composer \
+            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            satisfy-test:${{ github.sha }} \
+            composer diagnose
+
+      - name: Check platform requirements
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www/html \
+            -w /var/www/html \
+            -e COMPOSER_HOME=/tmp/composer \
+            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            satisfy-test:${{ github.sha }} \
+            composer check-platform-reqs
+
+      - name: Run PHPUnit tests
+        if: matrix.dockerfile == 'docker/php/Dockerfile'
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/var/www/html \
+            -w /var/www/html \
+            -e COMPOSER_HOME=/tmp/composer \
+            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            -e APP_ENV=test \
+            satisfy-test:${{ github.sha }} \
+            bin/phpunit
