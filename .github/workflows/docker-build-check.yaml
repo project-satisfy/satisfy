@@ -56,8 +56,9 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/var/www/html \
             -w /var/www/html \
-            -e COMPOSER_HOME=/tmp/composer \
+            -e COMPOSER_HOME=/var/www/.composer \
             -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            --user www-data \
             satisfy-test:${{ github.sha }} \
             composer install --no-interaction --prefer-dist
 
@@ -66,8 +67,9 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/var/www/html \
             -w /var/www/html \
-            -e COMPOSER_HOME=/tmp/composer \
+            -e COMPOSER_HOME=/var/www/.composer \
             -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            --user www-data \
             satisfy-test:${{ github.sha }} \
             composer diagnose
 
@@ -76,8 +78,9 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/var/www/html \
             -w /var/www/html \
-            -e COMPOSER_HOME=/tmp/composer \
+            -e COMPOSER_HOME=/var/www/.composer \
             -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            --user www-data \
             satisfy-test:${{ github.sha }} \
             composer check-platform-reqs
 
@@ -87,8 +90,9 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/var/www/html \
             -w /var/www/html \
-            -e COMPOSER_HOME=/tmp/composer \
+            -e COMPOSER_HOME=/var/www/.composer \
             -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
             -e APP_ENV=test \
+            --user www-data \
             satisfy-test:${{ github.sha }} \
             bin/phpunit
