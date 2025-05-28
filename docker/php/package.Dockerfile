@@ -9,13 +9,15 @@ RUN install-php-extensions @composer zip
 
 COPY docker/php/unit.json /docker-entrypoint.d/config.json
 COPY docker/php/php.ini /usr/local/etc/php/conf.d/satisfy.ini
-RUN chown -R www-data:www-data /var/www
+RUN chown -R www-data:www-data /var/www && \
+    git config --global --add safe.directory /var/www/html
 
 USER www-data
 RUN mkdir -p ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan -H github.com >> ~/.ssh/known_hosts && \
     mkdir -p ~/.composer && \
     wget -O ~/.composer/keys.dev.pub https://composer.github.io/snapshots.pub && \
-    wget -O ~/.composer/keys.tags.pub https://composer.github.io/releases.pub
+    wget -O ~/.composer/keys.tags.pub https://composer.github.io/releases.pub && \
+    git config --global --add safe.directory /var/www/html
 VOLUME /var/www/.composer
 
 ENV APP_PATH=/var/www/html
