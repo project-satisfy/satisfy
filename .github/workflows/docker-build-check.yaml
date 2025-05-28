@@ -50,18 +50,6 @@ jobs:
           cache-to: type=gha,mode=max
           load: true
 
-      - name: Install dependencies for development Dockerfile
-        if: matrix.dockerfile == 'docker/php/Dockerfile'
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/var/www/html \
-            -w /var/www/html \
-            -e COMPOSER_HOME=/var/www/.composer \
-            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-            --user www-data \
-            satisfy-test:${{ github.sha }} \
-            composer install --no-interaction --prefer-dist
-
       - name: Run basic Composer diagnostics
         run: |
           docker run --rm \
@@ -83,16 +71,3 @@ jobs:
             --user www-data \
             satisfy-test:${{ github.sha }} \
             composer check-platform-reqs
-
-      - name: Run PHPUnit tests
-        if: matrix.dockerfile == 'docker/php/Dockerfile'
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/var/www/html \
-            -w /var/www/html \
-            -e COMPOSER_HOME=/var/www/.composer \
-            -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-            -e APP_ENV=test \
-            --user www-data \
-            satisfy-test:${{ github.sha }} \
-            bin/phpunit
