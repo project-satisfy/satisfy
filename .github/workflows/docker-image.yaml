@@ -3,6 +3,10 @@ name: "Create and publish docker image"
 on:
   release:
     types: [published]
+  schedule:
+    # Run at 2:00 AM UTC on the 1st of each month
+    - cron: '0 2 1 * *'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -12,8 +16,41 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get latest release tag
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        id: latest_release
+        run: |
+          LATEST_TAG=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          echo "RELEASE_TAG=$LATEST_TAG" >> $GITHUB_OUTPUT
+          
+      - name: Set release tag variable
+        id: release_tag
+        run: |
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "TAG=${{ steps.latest_release.outputs.RELEASE_TAG }}" >> $GITHUB_OUTPUT
+          else
+            echo "TAG=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate semantic version tags
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        id: semantic_tags
+        run: |
+          TAG=${{ steps.latest_release.outputs.RELEASE_TAG }}
+          # Remove 'v' prefix if present
+          VERSION=${TAG#v}
+          
+          # Extract major and minor versions
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          
+          echo "MAJOR_TAG=$MAJOR" >> $GITHUB_OUTPUT
+          echo "MINOR_TAG=$MAJOR.$MINOR" >> $GITHUB_OUTPUT
+      
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release_tag.outputs.TAG }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -49,4 +86,8 @@ jobs:
           file: docker/php/package.Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/${{ github.repository }}:${{ github.event.release.tag_name }},ghcr.io/${{ github.repository }}:latest
+          tags: |
+            ${{ github.event_name == 'release' && format('ghcr.io/{0}:{1}', github.repository, steps.release_tag.outputs.TAG) || '' }}
+            ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && format('ghcr.io/{0}:{1}', github.repository, steps.semantic_tags.outputs.MAJOR_TAG) || '' }}
+            ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && format('ghcr.io/{0}:{1}', github.repository, steps.semantic_tags.outputs.MINOR_TAG) || '' }}
+            ghcr.io/${{ github.repository }}:latest

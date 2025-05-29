@@ -73,6 +73,16 @@ For example, you can trigger a package generation for your BitBucket project by 
 
 You can run satisfy using prebuilt docker image. Here is an example how to setup it.
 
+### Available Docker Image Tags
+
+The following Docker image tags are available:
+
+- **Specific version tags** (e.g., `3.7.0`, `3.6.1`): Immutable tags that point to exact release versions
+- **Semantic version tags** (e.g., `3`, `3.7`): Moving tags that are automatically updated every 30 days to point to the latest stable release in that version series
+- **`latest`**: Always points to the most recent stable release, rebuilt every 30 days
+
+**Recommendation**: Use specific version tags (e.g., `ghcr.io/project-satisfy/satisfy:3.7.0`) for production environments to ensure consistency, or semantic version tags (e.g., `ghcr.io/project-satisfy/satisfy:3.7`) if you want to automatically receive patch updates.
+
 1. Create dir for configuration files
 2. Add parameters.yml file, can be copied from config/parameters.yml.dist
 3. Add auth.json with all required composer authentication tokens
