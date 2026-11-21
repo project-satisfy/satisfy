@@ -1,56 +1,63 @@
-# Satisfy [![Build Status](https://travis-ci.org/ludofleury/satisfy.svg)](https://travis-ci.org/ludofleury/satisfy)
+# Satisfy [![Tests](https://github.com/project-satisfy/satisfy/actions/workflows/phpunit.yaml/badge.svg)](https://github.com/project-satisfy/satisfy/actions/workflows/phpunit.yaml)
 
-[Satis Composer repository manager](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md) with a simple web UI.
+[Satis Composer repository manager](https://getcomposer.org/doc/articles/handling-private-packages.md) with a web UI.
 
 <p>
-  <img src="http://project-satisfy.github.io/satisfy/images/list.png" width="280" height="235" alt="Satis: list composer repositories"/>
-  <img src="http://project-satisfy.github.io/satisfy/images/create.png" width="280" height="235" alt="Satis: add a new composer repository"/>
-  <img src="http://project-satisfy.github.io/satisfy/images/update.png" width="280" height="235" alt="Satis: update an existing composer repository"/>
+  <a href="docs/images/admin.png"><img src="docs/images/admin.png" width="420" alt="Repositories, beside the build queue, the sites asking for packages and the composer.json snippet"></a>
+  <a href="docs/images/edit-repository.png"><img src="docs/images/edit-repository.png" width="420" alt="Editing a repository, with the satis.json entry it writes"></a>
+  <a href="docs/images/configuration.png"><img src="docs/images/configuration.png" width="420" alt="Configuration: each option with its satis.json key, type and default"></a>
+  <a href="docs/images/package-access.png"><img src="docs/images/package-access.png" width="420" alt="Package access for one site, with the packages it is asking for"></a>
 </p>
 
 ## Introduction
 
 Satisfy provides:
 
-* a Web UI: A CRUD to manage your satis configuration file
-* a simple security layer with a login form
-* a webhook endpoints for the most popular version control systems
+* a web UI over `satis.json`: the repositories, the whole Satis configuration, imports from a `composer.lock`, and builds with their logs
+* a login form to restrict the admin UI
+* webhook endpoints for GitLab, GitHub, Gitea, Bitbucket and Azure DevOps, which queue a build of the repository pushed to
+* a worker that runs the queued builds, so no web request waits for Satis
 * Satis itself
 * optional plugins, enabled with `SATISFY_PLUGINS`: per-token access to the catalogue with per-package grants (`authz`), and a registration gate and publishing on tag for GitLab system hooks (`hookgate`). See [docs/plugins.md](docs/plugins.md), and each plugin's README: [authz](plugins/Authz/README.md), [hookgate](plugins/Hookgate/README.md)
 
-Satisfy ease your satis configuration management. It provides a simple web UI over Satis to avoid a hand-editing of the satis.json configuration file. All repositories from a composer.lock file can also be imported via upload.
+Satisfy saves you hand-editing `satis.json`. Every change made in the admin UI is written to the file; the repository pages show the entry they write, and the configuration page gives each option's key.
 
+## How it works
 
-## How it works?
+Satisfy reads and writes `satis.json`, and runs Satis to build the catalogue from it.
 
-Basically, it just reads/writes the satis.json file and provides a web CRUD.
+* On each HTTP request, `satis.json` is loaded.
+* Every write takes an exclusive lock on the file and writes it in place. When `var/satis/` exists, a copy of the previous version is kept there.
+* Webhooks and the admin UI queue builds. The worker, `bin/console satisfy:worker`, runs them one at a time and writes the last build's log to `var/log/build.log`.
+* The catalogue (`packages.json`, `p2/`, `include/`, `dist/` and the HTML page) is plain files in the output directory, `public/` by default.
 
-* On each HTTP request, the satis.json is loaded.
-* If a write occurs in this file, a backup is made in var/satis/
+Upgrading from 3.x: see [UPGRADE-4.0.md](UPGRADE-4.0.md). [docs/4.0-architecture.md](docs/4.0-architecture.md) describes the design.
 
 ## Installation
 
 ### Composer
 
-* Clone project `git clone https://github.com/project-satisfy/satisfy.git`
-* Download composer `wget http://getcomposer.org/composer.phar`
-* Install `php composer.phar install -n`
+Satisfy needs PHP 8.4 or later.
+
+* Clone the project: `git clone https://github.com/project-satisfy/satisfy.git`
+* Install its dependencies with [Composer](https://getcomposer.org/download/): `composer install -n`. This also writes `config/parameters.yml` from `config/parameters.yml.dist`.
 
 ### Satis configuration
 
-* Either define your [default/existing satis configuration](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md)
-* or use interactice satis CLI tool `./bin/satis init`
-* or submit form at /admin/configuration
+* Either define your [default or existing Satis configuration](https://getcomposer.org/doc/articles/handling-private-packages.md)
+* or use Satis's interactive command, `./bin/satis init`
+* or submit the form at `/admin/configuration`
 
-By default, the `satis.json` file is expected at the project root, but You can set another path under the parameter `satis_filename`.
+By default, `satis.json` is expected at the project root. Set `SATIS_CONFIG`, or the `satis_filename` parameter, to use another path.
 
 ### Application configuration
 
-* Customize `app/config/parameters.yml` according to your needs.
+* Customize `config/parameters.yml` to your needs. Its values override the defaults in `config/services.yaml`.
+* `.env` names the environment variables: paths, the build queue and timeout, the webhook secrets, `TRUSTED_PROXIES` and `SATISFY_PLUGINS`. Override them in `.env.local` or in the environment.
 
 ### Security
 
-You can restrict the access setting `admin.auth` parameter (in `config/parameters.yml`) to `true`. Set authorized users in `admin.users` config array, each with a password hash from `bin/console security:hash-password`:
+Restrict the admin UI by setting the `admin.auth` parameter in `config/parameters.yml` to `true`, and list the authorized users in `admin.users`, each with a password hash from `bin/console security:hash-password`:
 
 ```yaml
 admin.users:
@@ -63,17 +70,25 @@ A plaintext password, as 3.x used, still signs in but logs a warning. Five faile
 
 ## Run Satisfy
 
-Create a web server pointing to the `public` directory. Browse to »/admin/« to manage the `satis.json`. To serve the `package.json` it is required to run Satis first.
+Point a web server's document root at `public/`, and run the worker as a service, as the user the web server runs as:
 
-### Satis packages definition generation
-
-Since Satisfy does only manages the Satis configuration file, it is necessary to build the package definitions using Satis.
-
-A bin shortcut to Satis is already included in Satisfy, so run the following command to generate the files in the web folder.
-
- ```
-./bin/satis build
 ```
+bin/console satisfy:worker
+```
+
+Or run it from cron with `--once`, which runs whatever is queued and exits. Nothing builds without it. Browse to `/admin` to manage `satis.json`; Composer can read the repository once a build has written `packages.json`.
+
+### Building the catalogue
+
+Queue a full build from the admin UI's Build page, which also shows the last build's log, or build in the calling process:
+
+```
+bin/console satisfy:rebuild
+```
+
+`satisfy:rebuild` takes the same lock as the worker, so the two never run at once. `./bin/satis build` still runs Satis directly, without that lock.
+
+<a href="docs/images/build.png"><img src="docs/images/build.png" width="420" alt="The Build page: a build queued, and the last build's log"></a>
 
 ### Automatically build a single package using WebHooks
 
