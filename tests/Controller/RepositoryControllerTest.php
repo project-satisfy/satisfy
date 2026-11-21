@@ -50,12 +50,12 @@ class RepositoryControllerTest extends WebTestCase
         $url = 'git@github.com:YourAccount/YourRepo.git';
         $crawler = $client->request('GET', '/admin/new');
         $client->submit($crawler->filterXPath('//form')->form(), ['repository' => ['type' => 'git', 'url' => $url]]);
-        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
 
         $client->request('POST', '/admin/delete/' . md5($url), ['_method' => 'DELETE']);
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $client->request('POST', '/admin/delete/' . md5($url), ['_method' => 'DELETE', 'delete_form' => ['_token' => 'forged']]);
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         /** @var vfsStreamFile $configHandle */
         $configHandle = $this->vfsRoot->getChild('satis.json');

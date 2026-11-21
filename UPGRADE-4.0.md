@@ -12,11 +12,12 @@ With the Docker image:
 4. If Bitbucket's webhook reaches Satisfy through a reverse proxy, set `BITBUCKET_SECRET` and give the webhook the same secret.
 5. If another program writes `satis.json`, have it take an exclusive `flock()` on the file and write it in place.
 6. If a webhook auto-adds repositories (`*.auto_add_repo`), set its secret: 4.0 auto-adds only for deliveries checked against one.
+7. If `admin.auth` is on, replace each password in `admin.users` with the output of `bin/console security:hash-password`. Plaintext still signs in, with a warning in the log each time.
 
 Without the image:
 
 1. Run PHP 8.4 or later, then `composer install`.
-2. Steps 2 to 6 above.
+2. Steps 2 to 7 above.
 3. Run `bin/console satisfy:worker` as a service, as the user the web server runs as, or from cron with `--once`. Nothing builds without it.
 4. Point the web server's document root at `public/` as before. Serving `packages.json`, `p2/`, `include/` and `dist/` as static files, as the image's `docker/nginx.conf` does, keeps PHP out of Composer's requests.
 
@@ -42,6 +43,12 @@ Without the image:
 - `gitlab.auto_add_repo`, `github.auto_add_repo` and `gitea.auto_add_repo` add a repository only for a delivery checked against the webhook's secret: `GITLAB_SECRET`, `GITHUB_SECRET` or `GITEA_SECRET`. Without one, anyone who could reach the webhook could add a repository of theirs to `satis.json`, and the catalogue would publish its packages. Such a delivery for a repository `satis.json` does not list is answered `200 skipped: auto-add needs the webhook's secret to be set`.
 - GitLab's `X-Gitlab-Token` is compared in constant time, and the URL a GitLab delivery gives is matched as written; 3.x made a pattern of it with only `.` and `:` escaped.
 - For code that extends Satisfy: `AbstractWebhook::isAuthenticated()`, and `isAuthenticated()` on `WebhookReceivedEvent` and `RepositoryAddingEvent`, which take it as a fourth constructor argument, false when left out.
+
+## Admin passwords are hashed, and sign-in is throttled
+
+- A password in `admin.users` may be a hash, as `bin/console security:hash-password` prints one. 3.x stored them as plaintext, and plaintext still signs in, with a warning in the log each time; a value that is a hash is never compared as plaintext, so the hash itself is not a password.
+- Five failed sign-ins in a minute for one username from one address, or twenty-five from one address for any username, refuse further attempts until the minute is up. Behind a proxy, set `TRUSTED_PROXIES` so that the address counted is the client's and not the proxy's.
+- `symfony/rate-limiter` is a new dependency.
 
 ## Deleting a repository checks the form's token
 

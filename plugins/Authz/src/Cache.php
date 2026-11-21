@@ -9,6 +9,9 @@ namespace Playbloom\Plugin\Authz;
  */
 final class Cache
 {
+    /**
+     * @param-out bool $found whether the key was in the cache; callers may pass an unset variable
+     */
     public static function fetch(string $key, ?bool &$found = null): mixed
     {
         $found = false;

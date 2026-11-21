@@ -116,7 +116,7 @@ class FilePersisterTest extends KernelTestCase
         $this->assertCount(1, $repositories);
         $this->assertIsString($repositories->key());
         $this->assertInstanceOf(RepositoryInterface::class, $repositories->current());
-        self::assertIsArray($stability = $config->getMinimumStabilityPerPackage());
+        $stability = $config->getMinimumStabilityPerPackage();
         self::assertArrayHasKey(0, $stability);
 
         // append additional repo

@@ -49,14 +49,15 @@
         "symfony/runtime": "7.4.*",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.0",
-        "symfony/property-access": "7.4.*"
+        "symfony/property-access": "7.4.*",
+        "symfony/rate-limiter": "7.4.*"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
         "friendsofphp/php-cs-fixer": "^3.1",
-        "phpstan/phpstan": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "phpstan/phpstan-symfony": "^1.0",
+        "phpstan/phpstan": "^2.3",
+        "phpstan/phpstan-phpunit": "^2.1",
+        "phpstan/phpstan-symfony": "^2.1",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^10.5",
         "symfony/browser-kit": "7.4.*",

@@ -57,7 +57,16 @@ By default, `satis.json` is expected at the project root. Set `SATIS_CONFIG`, or
 
 ### Security
 
-Restrict the admin UI by setting the `admin.auth` parameter in `config/parameters.yml` to `true`, and list the authorized users in `admin.users`.
+Restrict the admin UI by setting the `admin.auth` parameter in `config/parameters.yml` to `true`, and list the authorized users in `admin.users`, each with a password hash from `bin/console security:hash-password`:
+
+```yaml
+admin.users:
+    alice:
+        password: '$2y$12$...'
+        roles: 'ROLE_ADMIN'
+```
+
+A plaintext password, as 3.x used, still signs in but logs a warning. Five failed sign-ins in a minute for one username from one address refuse further attempts until the minute is up.
 
 ## Run Satisfy
 

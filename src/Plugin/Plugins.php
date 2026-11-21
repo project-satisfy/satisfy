@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * Reads SATISFY_PLUGINS, a comma-separated list of plugin names or bundle
- * classes, for config/bundles.php.
+ * classes, for Kernel::registerBundles().
  */
 final class Plugins
 {

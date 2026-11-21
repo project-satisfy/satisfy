@@ -59,8 +59,10 @@ class BuildCommandTest extends KernelTestCase
 
         $this->assertEquals(1, $exitCode);
 
+        // Not necessarily first: one Composer process in 51 runs its cache
+        // garbage collection, and says so, before anything else.
         $outputContent = $output->fetch();
-        $this->assertStringStartsWith('File not found', $outputContent);
+        $this->assertMatchesRegularExpression('/^File not found: ' . preg_quote($file, '/') . '$/m', $outputContent);
     }
 
     public function testMinimalConfigBuild()

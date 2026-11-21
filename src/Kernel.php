@@ -25,6 +25,21 @@ class Kernel extends BaseKernel
         return [] === $plugins ? $dir : $dir . '/plugins-' . substr(sha1(implode(',', $plugins)), 0, 8);
     }
 
+    /**
+     * config/bundles.php, then the plugins SATISFY_PLUGINS names. They are added
+     * here and not in that file, which Symfony Flex rewrites as a plain list
+     * whenever a package it installs brings a bundle.
+     */
+    public function registerBundles(): iterable
+    {
+        $bundles = (require $this->getBundlesPath()) + Plugins::bundles();
+        foreach ($bundles as $class => $envs) {
+            if ($envs[$this->environment] ?? $envs['all'] ?? false) {
+                yield new $class();
+            }
+        }
+    }
+
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $configDir = $this->getConfigDir();

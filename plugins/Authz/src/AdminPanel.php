@@ -16,7 +16,10 @@ final class AdminPanel implements AdminPanelInterface
     ) {
     }
 
-    public function getAdminPanel(): ?array
+    /**
+     * @return array{template: string, context: array<string, mixed>}
+     */
+    public function getAdminPanel(): array
     {
         $db = $this->database->writable();
         $requests = [];
