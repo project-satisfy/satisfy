@@ -1,18 +1,30 @@
 {% extends "base.html.twig" %}
 
-{% block title %}New repository{% endblock %}
+{% block title %}Import composer.lock{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
-        <h2 class="form-signin-heading">
-            Upload composer.lock
-        </h2>
+  <div class="page-head">
+    <div>
+      <p class="crumbs"><a href="{{ path('repository') }}">Repositories</a> /</p>
+      <h1>Import from composer.lock</h1>
+      <p class="lead">Adds a repository for every package in the file that names a source URL, require-dev packages included. Satis reads them on the next build.</p>
+    </div>
+  </div>
 
-        {{ form_errors(form) }}
-        {{ form_widget(form) }}
-
-        {{ form_errors(form) }}
-
-        <button class="btn btn-large btn-block btn-primary" type="submit">Upload</button>
-    </form>
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="form-card">
+      <div class="field{{ form.file.vars.valid ? '' : ' has-error' }}">
+        <label for="{{ form.file.vars.id }}">composer.lock</label>
+        {{ form_widget(form.file, {attr: {accept: '.lock,application/json'}}) }}
+        <p class="help-text">The lock file from a project's root directory.</p>
+        {{ form_errors(form.file) }}
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" type="submit">Import repositories</button>
+      <a class="btn btn-quiet" href="{{ path('repository') }}">Cancel</a>
+    </div>
+  {{ form_end(form) }}
 {% endblock %}

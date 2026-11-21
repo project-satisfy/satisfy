@@ -1,17 +1,23 @@
+# Development: the image, with this checkout mounted over the application.
+# Run `composer install` first; the container uses this checkout's vendor/.
 services:
-  php:
+  satisfy:
     build:
-      context: ./docker/php
-    container_name: satisfy_php
-    working_dir: /var/www/html
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: satisfy
     ports:
       - "${APP_PORT:-8000}:80"
     volumes:
       - .:/var/www/html
-      - ./docker/php/unit.json:/docker-entrypoint.d/config.json
       - /var/www/.composer
     environment:
       APP_ENV: ${APP_ENV:-dev}
       APP_DEBUG: ${APP_DEBUG:-1}
-      APP_PATH: /var/www/html
-      COMPOSER_HOME: /var/www/.composer
+      # This checkout's public/ is the source; don't copy the image's over it.
+      SATISFY_SYNC_PUBLIC: 0
+      SATISFY_PLUGINS: ${SATISFY_PLUGINS:-}
+      SATISFY_MCP_TOKEN: ${SATISFY_MCP_TOKEN:-}
+      SATISFY_DIAGNOSIS_URL: ${SATISFY_DIAGNOSIS_URL:-}
+      SATISFY_DIAGNOSIS_MODEL: ${SATISFY_DIAGNOSIS_MODEL:-}
+      SATISFY_DIAGNOSIS_API_KEY: ${SATISFY_DIAGNOSIS_API_KEY:-}

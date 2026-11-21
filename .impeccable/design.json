@@ -1,0 +1,698 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T23:48:54Z",
+  "title": "Design System: Satisfy",
+  "extensions": {
+    "colorMeta": {
+      "php-900": {
+        "role": "primary",
+        "displayName": "Ink Purple",
+        "canonical": "#262c52",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "php-800": {
+        "role": "primary",
+        "displayName": "Deep PHP Purple",
+        "canonical": "#39437a",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "php-750": {
+        "role": "primary",
+        "displayName": "Header Hover Purple",
+        "canonical": "#45508a",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "php-700": {
+        "role": "primary",
+        "displayName": "PHP Purple",
+        "canonical": "#4f5b93",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "php-300": {
+        "role": "primary",
+        "displayName": "Lavender Rule",
+        "canonical": "#b9bedc",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "php-200": {
+        "role": "primary",
+        "displayName": "Lavender Tint",
+        "canonical": "#d5d8eb",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "php-100": {
+        "role": "primary",
+        "displayName": "Pale Lavender",
+        "canonical": "#e8e9f3",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "php-50": {
+        "role": "primary",
+        "displayName": "Lavender Wash",
+        "canonical": "#f3f4f9",
+        "tonalRamp": [
+          "#262c52",
+          "#39437a",
+          "#45508a",
+          "#4f5b93",
+          "#b9bedc",
+          "#d5d8eb",
+          "#e8e9f3",
+          "#f3f4f9"
+        ]
+      },
+      "now": {
+        "role": "secondary",
+        "displayName": "Now Amber",
+        "canonical": "#a35900",
+        "tonalRamp": [
+          "#160700",
+          "#391b00",
+          "#603200",
+          "#8b4b00",
+          "#b3681d",
+          "#d88945",
+          "#ffb06f",
+          "#feeadb"
+        ]
+      },
+      "now-dot": {
+        "role": "secondary",
+        "displayName": "Now Dot",
+        "canonical": "#d98a16",
+        "tonalRamp": [
+          "#140800",
+          "#351e01",
+          "#5b3601",
+          "#835103",
+          "#ae6c04",
+          "#d98a17",
+          "#feb258",
+          "#feebd7"
+        ]
+      },
+      "now-bg": {
+        "role": "secondary",
+        "displayName": "Now Wash",
+        "canonical": "#fdf3e4",
+        "tonalRamp": [
+          "#100a02",
+          "#2a2318",
+          "#463e32",
+          "#655c50",
+          "#857c6f",
+          "#a69d8f",
+          "#ccc3b4",
+          "#f7edde"
+        ]
+      },
+      "now-line": {
+        "role": "secondary",
+        "displayName": "Now Rule",
+        "canonical": "#efcd98",
+        "tonalRamp": [
+          "#120900",
+          "#322000",
+          "#553a01",
+          "#765824",
+          "#977845",
+          "#b99965",
+          "#e0bf8a",
+          "#feeccf"
+        ]
+      },
+      "now-ink": {
+        "role": "secondary",
+        "displayName": "Now Ink",
+        "canonical": "#6b3b00",
+        "tonalRamp": [
+          "#150700",
+          "#381c01",
+          "#5f3400",
+          "#82501e",
+          "#a57040",
+          "#c89161",
+          "#f0b785",
+          "#feebda"
+        ]
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Pass Green",
+        "canonical": "#2a7548",
+        "tonalRamp": [
+          "#000f05",
+          "#012d14",
+          "#014d27",
+          "#226e42",
+          "#468f60",
+          "#68b181",
+          "#8ed8a5",
+          "#c6ffd6"
+        ]
+      },
+      "ok-bg": {
+        "role": "tertiary",
+        "displayName": "Pass Wash",
+        "canonical": "#e9f4ed",
+        "tonalRamp": [
+          "#060d09",
+          "#1e2621",
+          "#39423d",
+          "#57605a",
+          "#76807a",
+          "#97a19b",
+          "#bdc7c0",
+          "#e7f2eb"
+        ]
+      },
+      "ok-line": {
+        "role": "tertiary",
+        "displayName": "Pass Rule",
+        "canonical": "#b5d9c2",
+        "tonalRamp": [
+          "#000f06",
+          "#0b2b1a",
+          "#284835",
+          "#466653",
+          "#658772",
+          "#86a892",
+          "#abceb8",
+          "#d4f9e2"
+        ]
+      },
+      "bad": {
+        "role": "tertiary",
+        "displayName": "Fail Red",
+        "canonical": "#b42318",
+        "tonalRamp": [
+          "#1f0000",
+          "#4b0000",
+          "#7c0300",
+          "#ad1a10",
+          "#d44536",
+          "#fb6957",
+          "#feac9e",
+          "#fee9e5"
+        ]
+      },
+      "bad-bg": {
+        "role": "tertiary",
+        "displayName": "Fail Wash",
+        "canonical": "#fdeeec",
+        "tonalRamp": [
+          "#110908",
+          "#2c2120",
+          "#483d3b",
+          "#675a59",
+          "#877a78",
+          "#a99b99",
+          "#cfc0be",
+          "#faebe9"
+        ]
+      },
+      "bad-line": {
+        "role": "tertiary",
+        "displayName": "Fail Rule",
+        "canonical": "#f1bdb7",
+        "tonalRamp": [
+          "#1f0001",
+          "#3d1614",
+          "#5c322f",
+          "#7d504c",
+          "#9f6f6a",
+          "#c2908b",
+          "#e9b6b0",
+          "#ffe9e6"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Lilac Ground",
+        "canonical": "#f4f4f8",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#242427",
+          "#3f3f42",
+          "#5d5d60",
+          "#7d7d80",
+          "#9e9ea2",
+          "#c4c4c7",
+          "#eeeef2"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "White Surface",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#7d7d7d",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeee"
+        ]
+      },
+      "code-bg": {
+        "role": "neutral",
+        "displayName": "Code Paper",
+        "canonical": "#fafafd",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#242426",
+          "#3f3f42",
+          "#5d5d60",
+          "#7d7d7f",
+          "#9e9ea1",
+          "#c4c4c6",
+          "#eeeef1"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#1d1f27",
+        "tonalRamp": [
+          "#090b12",
+          "#22242c",
+          "#3d3f48",
+          "#5b5d67",
+          "#7a7d87",
+          "#9b9ea8",
+          "#c1c4cf",
+          "#ebeef9"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink Two",
+        "canonical": "#4d5163",
+        "tonalRamp": [
+          "#080a18",
+          "#202333",
+          "#3b3f50",
+          "#585d6f",
+          "#787c90",
+          "#999db2",
+          "#bec3d8",
+          "#eaeefe"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink Three",
+        "canonical": "#656a7d",
+        "tonalRamp": [
+          "#070a18",
+          "#1f2333",
+          "#3a3f50",
+          "#585d6f",
+          "#777c90",
+          "#989eb2",
+          "#bdc3d8",
+          "#e9eefe"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#d9dbe6",
+        "tonalRamp": [
+          "#0a0b12",
+          "#22232b",
+          "#3e3f48",
+          "#5b5d66",
+          "#7b7d86",
+          "#9c9ea8",
+          "#c1c3ce",
+          "#eceef9"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Line",
+        "canonical": "#c3c6d6",
+        "tonalRamp": [
+          "#090a15",
+          "#21232f",
+          "#3d3f4c",
+          "#5a5d6b",
+          "#7a7c8b",
+          "#9b9dad",
+          "#c0c3d3",
+          "#eaedfe"
+        ]
+      },
+      "line-soft": {
+        "role": "neutral",
+        "displayName": "Soft Line",
+        "canonical": "#ebecf2",
+        "tonalRamp": [
+          "#0a0b0f",
+          "#232428",
+          "#3f3f44",
+          "#5c5d62",
+          "#7c7d82",
+          "#9d9ea3",
+          "#c3c4c9",
+          "#edeef4"
+        ]
+      },
+      "bar-text": {
+        "role": "neutral",
+        "displayName": "Header Text",
+        "canonical": "#dfe2f2",
+        "tonalRamp": [
+          "#090a14",
+          "#21232f",
+          "#3d3f4c",
+          "#5a5d6a",
+          "#7a7c8b",
+          "#9b9dac",
+          "#c0c3d3",
+          "#eaedfe"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page h1, one per page, in Deep PHP Purple; 23px below 760px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section and panel h2 in Deep PHP Purple."
+      },
+      "title-sm": {
+        "displayName": "Title Small",
+        "purpose": "Setting names in settings rows."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose; leads capped at 70ch, help text at 72ch. Tabular numerals throughout."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Panel text, section leads, muted lines, table cells, crumbs."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Form labels, buttons, the Example box heading."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Table header cells, manual entry type and default, footnotes."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Example boxes and build logs (log tail and chips at 12.5px)."
+      },
+      "key": {
+        "displayName": "Key",
+        "purpose": "satis.json keys in manual entries (PHP Purple), site names in request lists."
+      }
+    },
+    "shadows": [
+      {
+        "name": "input-focus-ring",
+        "value": "0 0 0 3px var(--php-200)",
+        "purpose": "With a PHP Purple border on a focused input, select or textarea."
+      },
+      {
+        "name": "busy-halo",
+        "value": "0 0 0 4px var(--now-bg)",
+        "purpose": "Around the amber build-state dot while a build is queued or running."
+      },
+      {
+        "name": "changed-highlight",
+        "value": "0 0 0 2px #fde7b6",
+        "purpose": "With a #fde7b6 background on the JSON value just rewritten in an Example box; fades to transparent over 1.1s."
+      },
+      {
+        "name": "focus-outline",
+        "value": "outline: 2px solid var(--php-700); outline-offset: 2px",
+        "purpose": "Keyboard focus on everything except text inputs; white inside the header."
+      },
+      {
+        "name": "sticky-bar",
+        "value": "background: rgba(244, 244, 248, .94); backdrop-filter: blur(6px); border-top: 1px solid var(--line)",
+        "purpose": "The configuration page's sticky action bar, the only overlapping layer."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "The one easing curve (--ease) for every transition."
+      },
+      {
+        "name": "hover",
+        "value": "150ms",
+        "purpose": "Background and border colour on buttons, nav items and inputs."
+      },
+      {
+        "name": "state-fade",
+        "value": "200ms",
+        "purpose": "Flash dismissal fade and the build-state dot changing between idle and busy."
+      },
+      {
+        "name": "changed-highlight",
+        "value": "1.1s",
+        "purpose": "The changed JSON value in an Example box fading from amber to transparent."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0s",
+        "purpose": "All transition and animation durations under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "aside-stacks",
+        "value": "1080px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action of a row or form, first in the row.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Add repository</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:6px 14px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font:600 14px/1.2 var(--sans);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease);}.ds-btn:focus-visible{outline:2px solid var(--php-700);outline-offset:2px;}.ds-btn-primary{background:var(--php-700);border-color:var(--php-700);color:#fff;}.ds-btn-primary:hover{background:var(--php-800);border-color:var(--php-800);}.ds-btn-primary:active{background:var(--php-900);}"
+    },
+    {
+      "name": "Default Button",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Secondary actions: Import composer.lock, Queue a full build, Grant.",
+      "html": "<button class=\"ds-btn\">Queue a full build</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:6px 14px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font:600 14px/1.2 var(--sans);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease);}.ds-btn:focus-visible{outline:2px solid var(--php-700);outline-offset:2px;}.ds-btn:hover{background:var(--php-50);border-color:var(--php-300);}.ds-btn:active{background:var(--php-100);}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Cancel, Keep it, Copy and Remove: purple text with no frame.",
+      "html": "<button class=\"ds-btn ds-btn-quiet\">Cancel</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:6px 14px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font:600 14px/1.2 var(--sans);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease);}.ds-btn:focus-visible{outline:2px solid var(--php-700);outline-offset:2px;}.ds-btn-quiet{background:transparent;border-color:transparent;color:var(--php-700);}.ds-btn-quiet:hover{background:var(--php-100);color:var(--php-900);}"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "A consequential action that leads to a confirmation or is reversible; the solid variant is kept for the final irreversible confirmation.",
+      "html": "<button class=\"ds-btn ds-btn-danger\">Delete repository</button> <button class=\"ds-btn ds-btn-danger-solid\">Revoke</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:6px 14px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font:600 14px/1.2 var(--sans);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease);}.ds-btn:focus-visible{outline:2px solid var(--php-700);outline-offset:2px;}.ds-btn-danger{color:var(--bad);border-color:var(--bad-line);}.ds-btn-danger:hover{background:var(--bad-bg);border-color:var(--bad);}.ds-btn-danger-solid{background:var(--bad);border-color:var(--bad);color:#fff;}.ds-btn-danger-solid:hover{background:#8f1c13;border-color:#8f1c13;}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Label above, control, help below; mono for URLs, keys, paths and JSON.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label ds-required\" for=\"ds-url\">URL</label><input class=\"ds-input ds-mono\" id=\"ds-url\" placeholder=\"git@github.com:vendor/package.git\" aria-describedby=\"ds-url-help\"><p class=\"ds-help\" id=\"ds-url-help\">The address Satis clones packages from.</p></div>",
+      "css": ".ds-field{font:15px/1.55 var(--sans);color:var(--ink);max-width:480px;}.ds-label{display:block;font-size:14px;font-weight:600;margin-bottom:6px;}.ds-required::after{content:\" *\";color:var(--bad);font-weight:400;}.ds-input{display:block;width:100%;min-height:36px;padding:6px 10px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font:15px/1.4 var(--sans);transition:border-color .15s var(--ease),box-shadow .15s var(--ease);}.ds-input.ds-mono{font:14px/1.5 var(--mono);}.ds-input::placeholder{color:#767a8c;}.ds-input:hover{border-color:var(--php-300);}.ds-input:focus{outline:none;border-color:var(--php-700);box-shadow:0 0 0 3px var(--php-200);}.ds-help{margin:6px 0 0;color:var(--ink-2);font-size:13.5px;max-width:72ch;}"
+    },
+    {
+      "name": "Header and Nav",
+      "kind": "nav",
+      "refersTo": "header-bar",
+      "description": "The solid purple header field: product and satis.json name, section nav, catalogue and log-out links.",
+      "html": "<header class=\"ds-bar\"><div class=\"ds-bar-inner\"><a class=\"ds-bar-name\" href=\"#\"><span class=\"ds-bar-product\">Satisfy</span><span class=\"ds-bar-repo\">acme/packages</span></a><nav class=\"ds-nav\" aria-label=\"Admin\"><a href=\"#\" aria-current=\"page\">Repositories</a><a href=\"#\">Build</a><a href=\"#\">Configuration</a><a href=\"#\">Import</a></nav><div class=\"ds-bar-end\"><a href=\"#\">View catalogue</a><a href=\"#\">Log out</a></div></div></header>",
+      "css": ".ds-bar{background:var(--php-700);color:#fff;font-family:var(--sans);}.ds-bar-inner{display:flex;align-items:center;gap:8px 28px;flex-wrap:wrap;padding:0 28px;min-height:58px;}.ds-bar-name{display:flex;align-items:baseline;gap:10px;color:#fff;text-decoration:none;padding:10px 0;}.ds-bar-product{font-weight:700;font-size:17px;letter-spacing:-.01em;}.ds-bar-repo{font:14px var(--mono);color:#dfe2f2;}.ds-nav{display:flex;gap:2px;flex-wrap:wrap;}.ds-nav a{display:block;padding:7px 12px;border-radius:var(--radius-sm);color:#e6e8f5;text-decoration:none;font-size:14.5px;font-weight:500;transition:background-color .15s var(--ease);}.ds-nav a:hover{background:var(--php-750);color:#fff;}.ds-nav a[aria-current=\"page\"]{background:var(--php-800);color:#fff;}.ds-bar-end{margin-left:auto;display:flex;gap:18px;font-size:14px;}.ds-bar-end a{color:#dfe2f2;text-decoration:none;}.ds-bar-end a:hover{color:#fff;text-decoration:underline;}.ds-bar a:focus-visible{outline:2px solid #fff;outline-offset:2px;}"
+    },
+    {
+      "name": "Chips and Count",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Package names as mono pills; amber chips and the count mark what is waiting on the visitor.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-count\">2</span><span class=\"ds-chip ds-chip-now\">acme/event-bus</span><span class=\"ds-chip ds-chip-now\">acme/search-client</span><span class=\"ds-chip\">acme/http-retry</span></div>",
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}.ds-chip{display:inline-block;padding:1px 8px;border-radius:999px;font:12.5px/1.6 var(--mono);background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-2);}.ds-chip-now{border-color:var(--now-line);background:var(--now-bg);color:var(--now);}.ds-count{display:inline-block;min-width:22px;padding:0 7px;border-radius:999px;font:600 12px/20px var(--sans);text-align:center;background:var(--now-bg);color:var(--now);border:1px solid var(--now-line);}"
+    },
+    {
+      "name": "Example Box",
+      "kind": "custom",
+      "refersTo": "example-box",
+      "description": "The manual's code example: the exact JSON a page reads or writes, captioned Example #n.",
+      "html": "<section class=\"ds-example\"><div class=\"ds-example-head\"><span class=\"ds-example-no\">Example #1</span><span class=\"ds-example-title\">The entry this adds to satis.json</span><button type=\"button\" class=\"ds-example-copy\">Copy</button></div><pre>{\n    <span class=\"ds-json-key\">\"type\"</span>: <span class=\"ds-json-str\">\"vcs\"</span>,\n    <span class=\"ds-json-key\">\"url\"</span>: <span class=\"ds-json-str ds-json-changed\">\"git@github.com:acme/billing-core.git\"</span>,\n    <span class=\"ds-json-key\">\"installation-source\"</span>: <span class=\"ds-json-str\">\"dist\"</span>\n}</pre></section>",
+      "css": ".ds-example{border:1px solid var(--php-300);border-radius:var(--radius);background:var(--code-bg);overflow:hidden;font-family:var(--sans);color:var(--ink);}.ds-example-head{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 14px;background:var(--php-100);border-bottom:1px solid var(--php-200);font-size:14px;font-weight:600;}.ds-example-no{color:var(--php-700);white-space:nowrap;}.ds-example-title{flex:1;min-width:0;}.ds-example-copy{min-height:30px;padding:4px 10px;border:1px solid transparent;border-radius:var(--radius-sm);background:transparent;color:var(--php-700);font:600 13px/1.2 var(--sans);cursor:pointer;transition:background-color .15s var(--ease);}.ds-example-copy:hover{background:var(--php-100);color:var(--php-900);}.ds-example-copy:focus-visible{outline:2px solid var(--php-700);outline-offset:2px;}.ds-example pre{margin:0;padding:12px 14px;font:13px/1.6 var(--mono);color:var(--php-900);white-space:pre;overflow:auto;}.ds-json-key{color:var(--php-700);}.ds-json-str{color:#1e5f7a;}.ds-json-changed{border-radius:2px;animation:ds-changed 1.1s var(--ease);}@keyframes ds-changed{0%{background:#fde7b6;box-shadow:0 0 0 2px #fde7b6;}100%{background:transparent;box-shadow:0 0 0 2px transparent;}}"
+    },
+    {
+      "name": "Manual Entry",
+      "kind": "custom",
+      "refersTo": "entry-key",
+      "description": "A configuration row: the satis.json key, type and default beside the label, control and help.",
+      "html": "<div class=\"ds-entry\"><div class=\"ds-entry-head\"><code class=\"ds-entry-key\">output-dir</code><span class=\"ds-entry-meta\">string · default <code>public</code></span></div><label class=\"ds-entry-label\" for=\"ds-out\">Output directory</label><input class=\"ds-entry-input\" id=\"ds-out\" value=\"public\"><p class=\"ds-entry-help\">Where Satis writes packages.json and the catalogue.</p></div>",
+      "css": ".ds-entry{display:grid;grid-template-columns:250px minmax(0,1fr);gap:4px 28px;padding:18px 0;border-top:1px solid #ebecf2;font:15px/1.55 var(--sans);color:var(--ink);}.ds-entry-head{grid-row:span 3;padding-top:2px;}.ds-entry-key{display:block;font:600 14px var(--mono);color:var(--php-700);word-break:break-all;}.ds-entry-meta{display:block;margin-top:2px;color:var(--ink-3);font-size:13px;}.ds-entry-meta code{font:12.5px var(--mono);color:var(--ink-2);}.ds-entry-label{display:block;font-size:14px;font-weight:600;margin-bottom:4px;}.ds-entry-input{display:block;width:100%;min-height:36px;padding:6px 10px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font:14px/1.5 var(--mono);transition:border-color .15s var(--ease),box-shadow .15s var(--ease);}.ds-entry-input:hover{border-color:var(--php-300);}.ds-entry-input:focus{outline:none;border-color:var(--php-700);box-shadow:0 0 0 3px var(--php-200);}.ds-entry-help{margin:4px 0 0;color:var(--ink-2);font-size:13.5px;max-width:72ch;}"
+    },
+    {
+      "name": "Build Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "An aside panel: heading with a right-hand link, the build state line with its amber busy dot, the log tail, one action in the foot.",
+      "html": "<section class=\"ds-panel\"><div class=\"ds-panel-head\"><h2>Build</h2><a href=\"#\">Full log</a></div><div class=\"ds-panel-body\"><div class=\"ds-state\" data-state=\"busy\"><span class=\"ds-state-dot\" aria-hidden=\"true\"></span><span>Queued, waiting for the worker</span></div><p class=\"ds-state-detail\">1 request waiting. Last log written 2026-10-22 16:35.</p><pre class=\"ds-log\">$ bin/satis build\n\nExit code 0</pre></div><div class=\"ds-panel-foot\"><button class=\"ds-panel-btn\">Queue a full build</button></div></section>",
+      "css": ".ds-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);font:15px/1.55 var(--sans);color:var(--ink);max-width:384px;}.ds-panel-head{display:flex;align-items:baseline;gap:12px;padding:14px 18px 0;}.ds-panel-head h2{flex:1;margin:0;font-size:17px;font-weight:600;line-height:1.25;color:var(--php-800);}.ds-panel-head a{font-size:14px;color:var(--php-700);text-underline-offset:.18em;}.ds-panel-head a:hover{color:var(--php-900);}.ds-panel-body{padding:10px 18px 16px;display:grid;gap:10px;}.ds-state{display:flex;align-items:center;gap:10px;font-weight:600;}.ds-state-dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--line-strong);transition:background-color .2s var(--ease),box-shadow .2s var(--ease);}.ds-state[data-state=\"busy\"] .ds-state-dot{background:var(--now-dot);box-shadow:0 0 0 4px var(--now-bg);}.ds-state-detail{margin:0;color:var(--ink-2);font-size:14px;}.ds-log{margin:0;font:12.5px/1.6 var(--mono);color:#2a2d3a;background:var(--code-bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;white-space:pre;max-height:168px;overflow:auto;}.ds-panel-foot{padding:12px 18px;border-top:1px solid var(--line);}.ds-panel-btn{min-height:36px;padding:6px 14px;border:1px solid var(--line-strong);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font:600 14px/1.2 var(--sans);cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease);}.ds-panel-btn:hover{background:var(--php-50);border-color:var(--php-300);}.ds-panel-btn:focus-visible{outline:2px solid var(--php-700);outline-offset:2px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The PHP Manual",
+    "overview": "Satisfy's admin is laid out as a reference entry, not a dashboard. It uses the PHP manual's materials, which this audience already trusts: a solid PHP-purple header, a cool lilac-grey page, white reading surfaces, every satis.json option set out as a documented entry with its key, type and default, and \"Example #n\" boxes that print the JSON a page reads or writes. Visitors come rarely and treat each visit as a first visit, so every page explains itself in a lead sentence and shows the file instead of a separate state.\n\nDensity is moderate: 15px body text, hairline rules, compact tables, and a two-column home with a 384px status column. The surface is flat; separation comes from white panels on the lilac ground and 1px rules. Colour carries meaning: purple is structure and links, amber means something is waiting on the visitor, green and red report outcomes. Only state changes move. All tokens are custom properties on `:root` in one plain stylesheet, `public/css/satisfy.css`.\n\nRejected: the Bootstrap admin of stacked full-width buttons, the metric-card SaaS dashboard, web fonts, icon libraries, and anything that hides what satis.json will contain.",
+    "keyCharacteristics": [
+      "A solid PHP-purple header field; everything below it is lilac-grey ground and white surfaces.",
+      "System mono for satis.json keys, URLs, package names, JSON and logs; system sans for everything else.",
+      "Manual entries: key, type and default beside each configuration control.",
+      "Example boxes show the exact JSON a page reads or writes; on the repository forms the box rewrites itself as you type.",
+      "Amber is reserved for what needs the visitor now.",
+      "Flat and ruled: no drop shadows, no web fonts, no icon library."
+    ],
+    "rules": [
+      {
+        "name": "The Amber Means Now Rule",
+        "body": "Amber marks only what needs the visitor now: a queued or running build, sites waiting for packages, a token shown once, a warning, and the value that just changed in an Example box. It is never emphasis, decoration or brand. A screen with nothing waiting has no amber.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Field Rule",
+        "body": "Solid purple fills two things: the header bar and the primary button. Everywhere else purple is text, a 1px rule or a pale tint.",
+        "section": "colors"
+      },
+      {
+        "name": "The Triplet Rule",
+        "body": "Status colour comes as a set of three from one family (`ok`, `bad`, `now`): dark text, a pale wash and a mid-tone rule. The only saturated status fill is the solid danger button on an irreversible confirmation.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono Means Literal Rule",
+        "body": "System mono marks only literal values: satis.json keys, URLs, package and site names, file names, JSON, logs, and values such as `vcs` or `dist`. Prose, labels, buttons, headings and status words on badges stay in sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The System Faces Rule",
+        "body": "Only the platform sans and mono stacks; no web font is loaded. Hierarchy comes from the size steps (26, 17, 15, 14, 13) and weight 600, not from another face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Natural Width Rule",
+        "body": "Buttons size to their label and sit in a wrapping row. They are never stretched to full width or stacked, at any breakpoint.",
+        "section": "layout"
+      },
+      {
+        "name": "The Ruled, Not Raised Rule",
+        "body": "Surfaces separate by a 1px rule and the step from ground to white. A box-shadow is only ever a zero-offset ring that reports state.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do show the JSON: any page that writes satis.json carries an Example box with the exact entry, captioned \"Example #n\" and a title saying what it is.",
+      "Do give every configuration control a manual entry head: the key in PHP Purple mono, then its type and default as 13px meta.",
+      "Do open every page with an h1 and a lead sentence (Ink Two, at most 70ch) that says what the page changes and when it takes effect.",
+      "Do set every literal in mono: keys, URLs, package and site names, file names, JSON, logs.",
+      "Do keep status in triplets (text, wash, rule) from the `ok`, `bad` or `now` family.",
+      "Do write timestamps as YYYY-MM-DD HH:MM in tabular numerals.",
+      "Do limit motion to state changes: 150ms on hover colour, 200ms fades, `cubic-bezier(.16, 1, .3, 1)`, and zero durations under `prefers-reduced-motion`.",
+      "Do keep the solid danger button for the final confirmation of an irreversible action; use the outline danger button everywhere else."
+    ],
+    "donts": [
+      "Don't build a SaaS dashboard: no metric cards, KPI tiles or charts on the admin pages.",
+      "Don't stack full-width buttons; buttons keep their natural width in a wrapping row at every breakpoint.",
+      "Don't use amber for anything that is not waiting on the visitor now.",
+      "Don't fill any surface with solid purple other than the header bar and the primary button.",
+      "Don't add drop shadows or raised cards; separation is a 1px rule and white on lilac.",
+      "Don't load web fonts or an icon library.",
+      "Don't animate anything on page load.",
+      "Don't set prose, labels or headings in mono, or literals in sans.",
+      "Don't hide what satis.json will contain behind a summary or a separate state."
+    ]
+  }
+}

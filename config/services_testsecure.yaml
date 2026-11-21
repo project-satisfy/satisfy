@@ -4,3 +4,13 @@ parameters:
         test:
             password: test
             roles: 'ROLE_ADMIN'
+        # The password is "secret", hashed by bin/console security:hash-password.
+        hashed:
+            password: '$2y$12$PAwDxdhvnyJuQDixTg40OesDrR5A7kUGvEk5R1zjiqLyuSgSkXlBK'
+            roles: 'ROLE_ADMIN'
+
+services:
+    # Sign-in attempts are counted in memory, which a test's kernel keeps only
+    # while it is not rebooted, so one test's failures do not throttle another's.
+    cache.rate_limiter:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter

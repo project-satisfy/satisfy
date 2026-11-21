@@ -2,31 +2,34 @@
 
 namespace Playbloom\Runner;
 
-use Playbloom\Event\BuildEvent;
+use Playbloom\Event\BuildFinishedEvent;
+use Playbloom\Event\BuildStartingEvent;
+use Playbloom\Model\BuildRequest;
+use Playbloom\Model\BuildResult;
 use Playbloom\Process\ProcessFactory;
 use Playbloom\Service\Manager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\LockInterface;
 use Symfony\Component\Process\Exception\RuntimeException;
 
+/**
+ * Runs Satis. Only the worker calls this; web requests queue builds instead.
+ */
 class SatisBuildRunner
 {
-    protected string $satisFilename;
-
-    protected ProcessFactory $processFactory;
-
-    protected int $timeout = 600;
-
     protected LockInterface $lock;
 
-    protected Manager $manager;
-
-    public function __construct(string $satisFilename, LockFactory $buildLockFactory, ProcessFactory $processFactory, Manager $manager)
-    {
-        $this->satisFilename = $satisFilename;
+    public function __construct(
+        protected string $satisFilename,
+        LockFactory $buildLockFactory,
+        protected ProcessFactory $processFactory,
+        protected Manager $manager,
+        protected EventDispatcherInterface $dispatcher,
+        protected int $timeout = 600,
+        protected ?string $logFile = null,
+    ) {
         $this->lock = $buildLockFactory->createLock('build');
-        $this->processFactory = $processFactory;
-        $this->manager = $manager;
     }
 
     public function setProcessFactory(ProcessFactory $processFactory): self
@@ -37,60 +40,85 @@ class SatisBuildRunner
     }
 
     /**
-     * @return \Generator|string[]
+     * Runs one build under the build lock, writing its output to the build log.
+     *
+     * @param callable(string): void|null $onOutput receives Satis's output as it arrives
      */
-    public function run(): \Generator
+    public function build(BuildRequest $request, ?callable $onOutput = null): BuildResult
     {
+        $started = microtime(true);
         $this->lock->acquire(true);
         try {
-            $process = $this->processFactory->create($this->getCommandLine(), $this->timeout);
-            $process->start();
+            $starting = new BuildStartingEvent($request);
+            $this->dispatcher->dispatch($starting);
+            if ($starting->isCancelled()) {
+                $reason = (string) $starting->getCancelReason();
+                $this->writeLog(sprintf("Build cancelled: %s\n", $reason), true);
 
-            yield $process->getCommandLine();
-
-            foreach ($process as $line) {
-                $line = $this->trimLine($line);
-                if (empty($line)) {
-                    continue;
-                }
-                yield $line;
+                return BuildResult::cancelled($reason, microtime(true) - $started);
             }
 
-            yield $process->getExitCodeText();
+            $process = $this->processFactory->create($this->getCommandLine($request), $this->timeout);
+            $this->writeLog('$ ' . $process->getCommandLine() . "\n", true);
+            try {
+                $exitCode = $process->run(function (string $type, string $buffer) use ($onOutput): void {
+                    $this->writeLog($buffer);
+                    if (null !== $onOutput) {
+                        $onOutput($buffer);
+                    }
+                });
+            } catch (RuntimeException $exception) {
+                $this->writeLog($exception->getMessage() . "\n");
+                $exitCode = 1;
+            }
+            $this->writeLog(sprintf("\nExit code %d\n", $exitCode));
+
+            $this->dispatcher->dispatch(new BuildFinishedEvent($request, $exitCode));
         } finally {
             $this->lock->release();
         }
+
+        return new BuildResult($exitCode, microtime(true) - $started);
     }
 
-    public function onBuild(BuildEvent $event): void
+    /**
+     * The end of the last build's log, at most $maxBytes long.
+     */
+    public function getLastLog(int $maxBytes = 65536): string
     {
-        $repository = $event->getRepository();
-        $command = $this->getCommandLine($repository ? $repository->getUrl() : null);
-        $process = $this->processFactory->create($command, $this->timeout);
+        if (null === $this->logFile || !is_readable($this->logFile)) {
+            return '';
+        }
+        $size = (int) filesize($this->logFile);
 
-        try {
-            $this->lock->acquire(true);
-            $status = $process->run();
-        } catch (RuntimeException $exception) {
-            $status = 1;
-        } finally {
-            $this->lock->release();
+        return (string) file_get_contents($this->logFile, false, null, max(0, $size - $maxBytes));
+    }
+
+    /**
+     * When the last build's log was last written, as a Unix timestamp.
+     */
+    public function getLastLogTime(): ?int
+    {
+        if (null === $this->logFile || !is_readable($this->logFile)) {
+            return null;
         }
 
-        $event->setStatus($status);
+        return filemtime($this->logFile) ?: null;
     }
 
     /**
      * @return string[]
      */
-    protected function getCommandLine(?string $repositoryUrl = null): array
+    public function getCommandLine(BuildRequest $request): array
     {
         $command = ['bin/satis', 'build'];
-        $configuration = $this->manager->getConfig();
-        $outputDir = $configuration->getOutputDir();
+        $outputDir = $this->manager->reload()->getOutputDir();
         array_push($command, $this->satisFilename, $outputDir, '--skip-errors', '--no-ansi', '--verbose');
-        if (!empty($repositoryUrl)) {
-            $command[] = sprintf('--repository-url=%s', $repositoryUrl);
+        $repositoryUrls = $request->getRepositoryUrls();
+        if (!empty($repositoryUrls)) {
+            foreach ($repositoryUrls as $repositoryUrl) {
+                $command[] = sprintf('--repository-url=%s', $repositoryUrl);
+            }
             // keep it while satis fails to build with one repo dependencies
             // https://github.com/composer/satis/issues/493
             $command[] = '--repository-strict';
@@ -99,8 +127,14 @@ class SatisBuildRunner
         return $command;
     }
 
-    protected function trimLine(string $line): string
+    protected function writeLog(string $text, bool $truncate = false): void
     {
-        return trim($line, " \t\n\r\0\x0B\x08");
+        if (null === $this->logFile) {
+            return;
+        }
+        if (!is_dir(dirname($this->logFile))) {
+            @mkdir(dirname($this->logFile), 0775, true);
+        }
+        @file_put_contents($this->logFile, $text, $truncate ? 0 : FILE_APPEND);
     }
 }

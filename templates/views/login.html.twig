@@ -1,21 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Sign in{% endblock %}
+{% block nav %}{% endblock %}
 
 {% block content %}
-<form action="{{ path('login') }}" method="post">
-    <h2 class="form-signin-heading">Sign in</h2>
+<div class="signin">
+  <h1>Sign in</h1>
+  <p class="lead">To manage the repositories in {{ satis.name }}.</p>
+  <form class="form-card" action="{{ path('login') }}" method="post">
     {% if error %}
-    <div class="alert alert-error">
-    {{ error.messageKey }}
-    </div>
+      <ul class="form-errors form-errors-top"><li>{{ error.messageKey|replace(error.messageData) }}</li></ul>
     {% endif %}
-    <div class="form-group">
-    <input type="text" id="username" name="_username" value="{{ username }}" placeholder="Username" class="form-control" required />
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="_username" value="{{ username }}" autocomplete="username" required autofocus>
     </div>
-    <div class="form-group">
-    <input type="password" id="password" name="_password" placeholder="Password" class="form-control" required />
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="_password" autocomplete="current-password" required>
     </div>
-    <button class="btn btn-large btn-block btn-primary" type="submit">Sign In</button>
-</form>
+    <div class="actions">
+      <button class="btn btn-primary" type="submit">Sign in</button>
+    </div>
+  </form>
+</div>
 {% endblock %}

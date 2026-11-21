@@ -1,15 +1,15 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Composer Repository currently not available{% endblock %}
-
-{% block header %}
-    Composer Repository currently not available
-{% endblock %}
+{% block title %}Catalogue not built yet{% endblock %}
+{% block nav %}{% endblock %}
 
 {% block content %}
-    <p class="alert alert-info">Maybe »Satis« was not started before or did not build a valid <code>package.json</code> file yet.</p>
-
-    <a href="{{ path('repository') }}" class="btn btn-large btn-block btn-primary">
-        Manage Repositories
-    </a>
+<div class="standalone">
+  <h1>The catalogue has not been built yet</h1>
+  <p class="lead">This page shows the packages once Satis has written a build here. Until then there is no packages.json for Composer to read.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="{{ path('satis_build') }}">Queue a build</a>
+    <a class="btn" href="{{ path('repository') }}">Manage repositories</a>
+  </div>
+</div>
 {% endblock %}

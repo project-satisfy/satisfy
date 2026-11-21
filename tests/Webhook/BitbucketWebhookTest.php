@@ -5,6 +5,7 @@ namespace Playbloom\Tests\Webhook;
 use Playbloom\Controller\WebhookController;
 use Playbloom\Model\Repository;
 use Playbloom\Process\ProcessFactory;
+use Playbloom\Queue\BuildQueue;
 use Playbloom\Runner\SatisBuildRunner;
 use Playbloom\Service\Manager;
 use Playbloom\Tests\Traits\VfsTrait;
@@ -55,10 +56,17 @@ class BitbucketWebhookTest extends KernelTestCase
         yield [self::createRequest($content)];
     }
 
-    public function testValidRequestMustTriggerBuild(): void
+    public function testValidRequestMustQueueBuildForTheWorker(): void
     {
         $container = self::$kernel->getContainer();
         $rootPath = $container->getParameter('kernel.project_dir');
+
+        /** @var BuildQueue $queue */
+        $queue = $container->get(BuildQueue::class);
+        $queue->recover();
+        while (null !== $leftover = $queue->claim()) {
+            $queue->complete($leftover);
+        }
 
         $processFactory = $this->prophesize(ProcessFactory::class);
         /** @var SatisBuildRunner $builder */
@@ -71,9 +79,12 @@ class BitbucketWebhookTest extends KernelTestCase
 
         $process = $this->prophesize(Process::class);
         $process
-            ->run()
+            ->run(Argument::type('callable'))
             ->shouldBeCalled()
             ->willReturn(0);
+        $process
+            ->getCommandLine()
+            ->willReturn('bin/satis build');
 
         $command = ['bin/satis', 'build', 'vfs://root/satis.json', 'public', '--skip-errors', '--no-ansi', '--verbose'];
         $command[] = '--repository-url=git@bitbucket.org:test/test.git';
@@ -90,7 +101,18 @@ class BitbucketWebhookTest extends KernelTestCase
         $webhook = $container->get(BitbucketWebhook::class);
         $response = $webhook->getResponse($request);
 
-        $this->assertEquals(0, $response->getContent());
+        $this->assertEquals(202, $response->getStatusCode());
+        $this->assertEquals('queued', $response->getContent());
+
+        $buildRequest = $queue->claim();
+        $this->assertNotNull($buildRequest);
+        $this->assertEquals(['git@bitbucket.org:test/test.git'], $buildRequest->getRepositoryUrls());
+
+        $result = $builder->build($buildRequest);
+        $queue->complete($buildRequest);
+
+        $this->assertTrue($result->isSuccessful());
+        $this->assertSame(0, $queue->pending());
     }
 
     protected static function createRequest($content, string $ipAddress = '127.0.0.1'): Request

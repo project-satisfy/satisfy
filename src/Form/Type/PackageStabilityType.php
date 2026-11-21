@@ -20,7 +20,7 @@ class PackageStabilityType extends AbstractType
         'stable' => 'stable',
     ];
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('package', TextType::class, [
@@ -43,7 +43,7 @@ class PackageStabilityType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => PackageStability::class,
@@ -51,7 +51,7 @@ class PackageStabilityType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'PackageStabilityType';
     }

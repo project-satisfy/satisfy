@@ -6,8 +6,11 @@ use Playbloom\Form\Type\ComposerLockType;
 use Playbloom\Form\Type\DeleteFormType;
 use Playbloom\Form\Type\RepositoryType;
 use Playbloom\Model\Repository;
+use Playbloom\Queue\BuildQueue;
+use Playbloom\Runner\SatisBuildRunner;
 use Playbloom\Service\LockProcessor;
 use Playbloom\Service\Manager;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +32,7 @@ class RepositoryController extends AbstractProtectedController
     }
 
     #[Route('/admin', name: 'repository', methods: ['GET'])]
-    public function indexAction(): Response
+    public function indexAction(BuildQueue $queue, SatisBuildRunner $runner): Response
     {
         $this->checkAccess();
         $this->checkEnvironment();
@@ -45,7 +48,14 @@ class RepositoryController extends AbstractProtectedController
             'repositories' => [$satisRepository],
         ];
 
-        return $this->render('views/home.html.twig', compact('config', 'repositories'));
+        // Posts to the build page, which handles a form of the same name.
+        $buildForm = $this->createFormBuilder(null, ['action' => $this->generateUrl('satis_build')])
+            ->add('build', SubmitType::class, ['label' => 'Queue a full build'])
+            ->getForm()
+            ->createView();
+        $build = SatisController::buildState($queue, $runner);
+
+        return $this->render('views/home.html.twig', compact('config', 'repositories', 'buildForm', 'build'));
     }
 
     #[Route('/admin/new', name: 'repository_new', methods: ['GET', 'POST'])]
@@ -136,8 +146,11 @@ class RepositoryController extends AbstractProtectedController
             return $this->redirectToRoute('repository');
         }
 
+        // Submitted only by a DELETE, or a POST with _method=DELETE, carrying
+        // the form's CSRF token: a cross-site form can send the method, not the token.
         $form = $this->createForm(DeleteFormType::class);
-        if (Request::METHOD_DELETE === $request->getMethod()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->manager->delete($repository);
                 $this->addFlash('success', 'Repository removed successfully');

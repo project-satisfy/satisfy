@@ -6,7 +6,14 @@ use Playbloom\Exception\MissingConfigException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
-class FilePersister implements PersisterInterface
+/**
+ * Reads and writes satis.json.
+ *
+ * Writes happen in place, under an exclusive flock() on the file itself, so
+ * that a single-file bind mount keeps pointing at the file and anything else
+ * that writes it under the same lock does not lose its changes or ours.
+ */
+class FilePersister implements LockablePersisterInterface
 {
     /** @var Filesystem */
     private $filesystem;
@@ -17,7 +24,12 @@ class FilePersister implements PersisterInterface
     /** @var string */
     private $logPath;
 
-    public function __construct(Filesystem $filesystem, string $filename, string $logPath)
+    /** @var resource|null the locked file, while the lock is held */
+    private $handle;
+
+    private int $lockDepth = 0;
+
+    public function __construct(Filesystem $filesystem, string $filename, string $logPath, private readonly int $lockTimeout = 10)
     {
         $this->filesystem = $filesystem;
         $this->filename = $filename;
@@ -38,7 +50,7 @@ class FilePersister implements PersisterInterface
         }
 
         try {
-            $content = trim(file_get_contents($this->filename));
+            $content = trim($this->read());
         } catch (\Exception $exception) {
             throw new \RuntimeException(sprintf('Unable to load the data from "%s"', $this->filename), 0, $exception);
         }
@@ -51,7 +63,7 @@ class FilePersister implements PersisterInterface
     }
 
     /**
-     * Flush content to file
+     * Flush content to file, in place and under the lock.
      *
      * @param string $content
      *
@@ -61,13 +73,61 @@ class FilePersister implements PersisterInterface
     {
         try {
             $this->checkPermissions();
-            $this->createBackup();
-            if (false === @file_put_contents($this->filename, $content)) {
-                throw new IOException(sprintf('Failed to write file "%s".', $this->filename), 0, null, $this->filename);
+            $this->lock();
+            try {
+                $this->createBackup();
+                $this->write((string) $content);
+            } finally {
+                $this->unlock();
             }
         } catch (\Exception $exception) {
             throw new \RuntimeException(sprintf('Unable to persist the data to "%s"', $this->filename), 0, $exception);
         }
+    }
+
+    public function lock(): void
+    {
+        if ($this->lockDepth++ > 0) {
+            return;
+        }
+
+        $handle = @fopen($this->filename, 'c+');
+        if (false === $handle) {
+            $this->lockDepth = 0;
+            throw new IOException(sprintf('Failed to open file "%s".', $this->filename), 0, null, $this->filename);
+        }
+
+        $deadline = microtime(true) + $this->lockTimeout;
+        while (!flock($handle, LOCK_EX | LOCK_NB)) {
+            if (microtime(true) >= $deadline) {
+                fclose($handle);
+                $this->lockDepth = 0;
+                throw new IOException(sprintf('File "%s" is locked by another writer.', $this->filename), 0, null, $this->filename);
+            }
+            usleep(100000);
+        }
+        $this->handle = $handle;
+    }
+
+    public function unlock(): void
+    {
+        if (0 === $this->lockDepth || --$this->lockDepth > 0) {
+            return;
+        }
+        if (null !== $this->handle) {
+            flock($this->handle, LOCK_UN);
+            fclose($this->handle);
+            $this->handle = null;
+        }
+    }
+
+    public function getVersion(): string
+    {
+        if (!$this->filesystem->exists($this->filename)) {
+            return sha1('');
+        }
+
+        return sha1($this->read());
     }
 
     /**
@@ -83,7 +143,7 @@ class FilePersister implements PersisterInterface
         }
 
         $path = rtrim($this->logPath, '/');
-        $name = sprintf('%s.json', date('Y-m-d_his'));
+        $name = sprintf('%s.json', date('Y-m-d_His'));
         $this->filesystem->copy($this->filename, $path . '/' . $name);
     }
 
@@ -102,6 +162,33 @@ class FilePersister implements PersisterInterface
             if (!is_writable(dirname($this->filename))) {
                 throw new IOException(sprintf('Path "%s" is not writable.', dirname($this->filename)));
             }
+        }
+    }
+
+    /**
+     * The file as it is now: through the locked handle while the lock is held,
+     * since another descriptor would see the same bytes but not hold the lock.
+     */
+    private function read(): string
+    {
+        if (null !== $this->handle) {
+            rewind($this->handle);
+
+            return (string) stream_get_contents($this->handle);
+        }
+
+        return (string) file_get_contents($this->filename);
+    }
+
+    private function write(string $content): void
+    {
+        $handle = $this->handle;
+        if (null === $handle
+            || !ftruncate($handle, 0)
+            || !rewind($handle)
+            || strlen($content) !== fwrite($handle, $content)
+            || !fflush($handle)) {
+            throw new IOException(sprintf('Failed to write file "%s".', $this->filename), 0, null, $this->filename);
         }
     }
 }

@@ -5,6 +5,12 @@ framework:
     http_method_override: true
     handle_all_throwables: true
 
+    # The proxies in front of Satisfy, comma-separated: addresses, CIDR ranges,
+    # private_ranges, or REMOTE_ADDR for whatever connects. Their
+    # X-Forwarded-For, -Proto and -Port are believed; nobody else's are.
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-proto', 'x-forwarded-port']
+
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:

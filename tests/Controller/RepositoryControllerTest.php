@@ -40,6 +40,28 @@ class RepositoryControllerTest extends WebTestCase
         }
     }
 
+    /**
+     * A cross-site form can send _method=DELETE, but not the form's token.
+     */
+    public function testDeleteNeedsTheFormsToken(): void
+    {
+        $client = self::createClient();
+        $client->disableReboot();
+        $url = 'git@github.com:YourAccount/YourRepo.git';
+        $crawler = $client->request('GET', '/admin/new');
+        $client->submit($crawler->filterXPath('//form')->form(), ['repository' => ['type' => 'git', 'url' => $url]]);
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+
+        $client->request('POST', '/admin/delete/' . md5($url), ['_method' => 'DELETE']);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $client->request('POST', '/admin/delete/' . md5($url), ['_method' => 'DELETE', 'delete_form' => ['_token' => 'forged']]);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+
+        /** @var vfsStreamFile $configHandle */
+        $configHandle = $this->vfsRoot->getChild('satis.json');
+        $this->assertSame($url, json_decode($configHandle->getContent())->repositories[0]->url);
+    }
+
     public function testRepositoryCRUD()
     {
         $client = self::createClient();
@@ -99,9 +121,9 @@ class RepositoryControllerTest extends WebTestCase
 
         // remove repository
         $crawler = $client->request('GET', '/admin/delete/' . md5($url2));
-        $form = $crawler->filterXPath('//form');
-        $client->submit($form->form());
+        $client->submit($crawler->filterXPath('//form//button[@type="submit"]')->form());
         $response = $client->getResponse();
         $this->assertEquals(302, $response->getStatusCode());
+        $this->assertSame([], json_decode($configHandle->getContent())->repositories);
     }
 }

@@ -1,0 +1,47 @@
+{
+  "ref": "refs/tags/v1.2.0",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+  "created": true,
+  "deleted": false,
+  "forced": false,
+  "base_ref": "refs/heads/main",
+  "compare": "https://github.com/example-org/widget/compare/v1.2.0",
+  "commits": [],
+  "head_commit": {
+    "id": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+    "message": "Release 1.2.0",
+    "timestamp": "2026-10-22T09:00:00Z"
+  },
+  "repository": {
+    "id": 4242,
+    "name": "widget",
+    "full_name": "example-org/widget",
+    "private": true,
+    "owner": {
+      "login": "example-org",
+      "id": 2002,
+      "type": "Organization"
+    },
+    "html_url": "https://github.com/example-org/widget",
+    "url": "https://api.github.com/repos/example-org/widget",
+    "git_url": "git://github.com/example-org/widget.git",
+    "ssh_url": "git@github.com:example-org/widget.git",
+    "clone_url": "https://github.com/example-org/widget.git",
+    "svn_url": "https://github.com/example-org/widget",
+    "default_branch": "main"
+  },
+  "pusher": {
+    "name": "example-dev",
+    "email": "dev@example.com"
+  },
+  "organization": {
+    "login": "example-org",
+    "id": 2002
+  },
+  "sender": {
+    "login": "example-dev",
+    "id": 1001,
+    "type": "User"
+  }
+}

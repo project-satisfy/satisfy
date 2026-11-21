@@ -2,72 +2,61 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}Satisfy{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Loading Bootstrap -->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
-
-    <style type="text/css">
-      h1 {
-        text-align: center;
-      }
-
-      h1 > a {
-        text-decoration: none;
-      }
-
-        h2 {
-          margin-bottom: 19px;
-          text-align: center;
-        }
-
-      form {
-        padding: 19px 29px 29px;
-        margin: 10px auto 20px;
-        background-color: #edeff1;
-        border: 1px solid #e5e5e5;
-        margin-bottom: 10px;
-        -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-                border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      }
-    </style>
+    <title>{% block title %}Repositories{% endblock %} · {{ satis.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#4f5b93">
+    <link rel="stylesheet" href="{{ asset('css/satisfy.css') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <script src="{{ asset('js/satisfy.js') }}" defer></script>
   </head>
-    <body>
-        <div class="container">
-            <a class="btn" href="{{ path('index') }}">Home page</a>
-            | <a class="btn" href="{{ path('repository') }}">Admin home page</a>
-            {% if is_granted('IS_AUTHENTICATED_FULLY')  %} | <a class="btn" href="{{ path('_logout_main') }}">Logout</a>{% endif %}
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-dismissible alert-{{ label }}" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <i class="glyphicon glyphicon-{{ label }}-sign">&nbsp;</i>
-                        {{ message }}
-                    </div>
-                {% endfor %}
+  <body>
+    {% set route = app.request.attributes.get('_route', '') %}
+    <header class="bar">
+      <div class="bar-inner">
+        <a class="bar-name" href="{{ path('repository') }}">
+          <span class="bar-product">Satisfy</span>
+          <span class="bar-repo">{{ satis.name }}</span>
+        </a>
+        {% block nav %}
+          <nav class="nav" aria-label="Admin">
+            {% set sections = {
+              'Repositories': {route: 'repository', current: route in ['repository', 'repository_new', 'repository_edit', 'repository_delete']},
+              'Build': {route: 'satis_build', current: route starts with 'satis_build'},
+              'Configuration': {route: 'configuration', current: route == 'configuration'},
+              'Import': {route: 'repository_upload', current: route == 'repository_upload'},
+            } %}
+            {% for label, section in sections %}
+              <a href="{{ path(section.route) }}"{% if section.current %} aria-current="page"{% endif %}>{{ label }}</a>
             {% endfor %}
-            <h1>
-                {% block header %}
-                    <a href="{{ path('repository') }}">
-                        {{ satis.name }}
-                    </a>
-                {% endblock %}
-            </h1>
-            {% block content %}
-            {% endblock %}
+            {% for label, linkRoute in plugin_admin_links() %}
+              <a href="{{ path(linkRoute) }}"{% if route starts with linkRoute %} aria-current="page"{% endif %}>{{ label }}</a>
+            {% endfor %}
+          </nav>
+        {% endblock %}
+        <div class="bar-end">
+          <a href="{{ path('index') }}">View catalogue</a>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}<a href="{{ path('_logout_main') }}">Log out</a>{% endif %}
         </div>
+      </div>
+    </header>
 
-        <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        {% block javascript %}{% endblock %}
-        <script>
-            $('[rel=tooltip]').tooltip();
-        </script>
-    </body>
+    <main class="page {% block page_class %}{% endblock %}">
+      {% set flashes = app.flashes %}
+      {% if flashes is not empty %}
+        <div class="flashes" role="status">
+          {% for label, messages in flashes %}
+            {% for message in messages %}
+              <div class="flash flash-{{ label }}">
+                <p>{{ message }}</p>
+                <button type="button" class="flash-dismiss" aria-label="Dismiss" data-dismiss>&times;</button>
+              </div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+    {% block javascript %}{% endblock %}
+  </body>
 </html>

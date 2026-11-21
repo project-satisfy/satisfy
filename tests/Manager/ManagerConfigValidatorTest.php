@@ -11,8 +11,6 @@ use Playbloom\Tests\Traits\SchemaValidatorTrait;
 use Playbloom\Tests\Traits\VfsTrait;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Symfony\Component\Lock\LockFactory;
-use Symfony\Component\Lock\Store\FlockStore;
 
 class ManagerConfigValidatorTest extends TestCase
 {
@@ -47,10 +45,11 @@ class ManagerConfigValidatorTest extends TestCase
         $persister
             ->flush(Argument::type(Configuration::class))
             ->shouldBeCalled();
+        $persister->lock()->shouldBeCalled();
+        $persister->unlock()->shouldBeCalled();
 
-        $lockFactory = new LockFactory(new FlockStore());
         /** @var Manager $manager */
-        $manager = new Manager($lockFactory, $persister->reveal());
+        $manager = new Manager($persister->reveal());
         $manager->addAll([]);
 
         $this->validateSchema(json_decode($this->config->getContent()), $this->getSatisSchema());

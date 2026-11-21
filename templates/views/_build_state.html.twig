@@ -1,0 +1,24 @@
+{# The build's state line; satis.js rewrites it from the status endpoint. #}
+{% set busy = build.building or build.pending > 0 %}
+<div class="state" data-state="{{ busy ? 'busy' : 'idle' }}" data-build-state>
+  <span class="state-dot" aria-hidden="true"></span>
+  <span data-build-headline>
+    {%- if build.building -%}
+      Building now
+    {%- elseif build.pending > 0 -%}
+      Queued, waiting for the worker
+    {%- else -%}
+      No build running
+    {%- endif -%}
+  </span>
+</div>
+<p class="state-detail" data-build-detail>
+  {%- if build.pending > 0 -%}
+    {{ build.pending }} {{ build.pending == 1 ? 'request' : 'requests' }} waiting.
+  {% endif -%}
+  {%- if build.updated -%}
+    Last log written <time datetime="{{ build.updated|date('c') }}">{{ build.updated|date('Y-m-d H:i') }}</time>.
+  {%- elseif build.pending == 0 -%}
+    No build has run yet.
+  {%- endif -%}
+</p>

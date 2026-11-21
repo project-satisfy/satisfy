@@ -1,0 +1,12 @@
+{
+  "Accept": "*/*",
+  "Content-Type": "application/json",
+  "User-Agent": "GitHub-Hookshot/3a706b6",
+  "X-Github-Delivery": "57a37ee4-ce4e-11f1-848d-0a35861738f1",
+  "X-Github-Event": "ping",
+  "X-Github-Hook-Id": "701809098",
+  "X-Github-Hook-Installation-Target-Id": "1429992806",
+  "X-Github-Hook-Installation-Target-Type": "repository",
+  "X-Hub-Signature": "sha1=e2df1c7d3c767565b8e7fbe3d07801397dff0e0c",
+  "X-Hub-Signature-256": "sha256=607cda448f7241fe888d752a070479429e5f7c4a9a793d5d72b9fb0af2ddc2af"
+}

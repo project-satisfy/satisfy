@@ -1,0 +1,62 @@
+{
+  "ref": "refs/heads/main",
+  "before": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+  "after": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+  "compare_url": "https://gitea.example.com/example-org/widget/compare/6dcb09b5...c0d2d6e3",
+  "commits": [
+    {
+      "id": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+      "message": "Fix the widget\n",
+      "url": "https://gitea.example.com/example-org/widget/commit/c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+      "author": {
+        "name": "Example Dev",
+        "email": "dev@example.com",
+        "username": "example-dev"
+      },
+      "committer": {
+        "name": "Example Dev",
+        "email": "dev@example.com",
+        "username": "example-dev"
+      },
+      "timestamp": "2026-10-22T09:00:00Z",
+      "added": [],
+      "removed": [],
+      "modified": [
+        "src/Widget.php"
+      ]
+    }
+  ],
+  "total_commits": 1,
+  "head_commit": {
+    "id": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+    "message": "Fix the widget\n",
+    "timestamp": "2026-10-22T09:00:00Z"
+  },
+  "repository": {
+    "id": 17,
+    "owner": {
+      "id": 3,
+      "login": "example-org",
+      "username": "example-org"
+    },
+    "name": "widget",
+    "full_name": "example-org/widget",
+    "private": true,
+    "html_url": "https://gitea.example.com/example-org/widget",
+    "url": "https://gitea.example.com/api/v1/repos/example-org/widget",
+    "ssh_url": "git@gitea.example.com:example-org/widget.git",
+    "clone_url": "https://gitea.example.com/example-org/widget.git",
+    "original_url": "",
+    "default_branch": "main"
+  },
+  "pusher": {
+    "id": 5,
+    "login": "example-dev",
+    "username": "example-dev"
+  },
+  "sender": {
+    "id": 5,
+    "login": "example-dev",
+    "username": "example-dev"
+  }
+}

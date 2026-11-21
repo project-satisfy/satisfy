@@ -11,6 +11,8 @@ config/parameters.yml
 
 # Satis default configuration
 satis.json
+!/demo/config/satis.json
+/demo/.env
 public/packages.json
 public/index.html
 public/include/*
@@ -68,6 +70,9 @@ tmtags
 /vendor/
 ###< symfony/framework-bundle ###
 
+# Symfony 7.4 writes this on every dev cache warmup; the kernel loads YAML only.
+/config/reference.php
+
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
@@ -81,3 +86,11 @@ tmtags
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+###> impeccable ###
+/.impeccable/review/
+/.impeccable/mocks/
+/.impeccable/questions/
+/.impeccable/hook.cache.json
+/.impeccable/config.local.json
+###< impeccable ###

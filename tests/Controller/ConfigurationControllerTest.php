@@ -27,6 +27,28 @@ class ConfigurationControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
+    public function testSaveIsRefusedWhenTheFileChangedSinceItWasShown(): void
+    {
+        $root = vfsStream::setup();
+        $file = $root->url() . '/satis.json';
+        file_put_contents($file, file_get_contents(__DIR__ . '/../fixtures/satis-minimal.json'));
+
+        $client = self::createClient();
+        $crawler = $client->request('GET', '/admin/configuration');
+        $form = $crawler->filterXPath('//form')->form();
+
+        // A webhook registers a repository while the form is open.
+        $changed = json_decode((string) file_get_contents($file), true);
+        $changed['repositories'] = [['type' => 'vcs', 'url' => 'https://git.example.com/added-meanwhile.git']];
+        file_put_contents($file, $content = json_encode($changed));
+
+        $client->submit($form);
+
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertStringContainsString('changed by someone else', (string) $client->getResponse()->getContent());
+        $this->assertSame($content, file_get_contents($file));
+    }
+
     public function testAddStabilityPerPackage(): void
     {
         $values = $this->getMinimalValues();

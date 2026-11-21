@@ -1,5 +1,6 @@
 <?php
 
+// Plugins are added to these by Kernel::registerBundles().
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],

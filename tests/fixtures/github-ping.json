@@ -1,0 +1,27 @@
+{
+  "zen": "Keep it logically awesome.",
+  "hook_id": 90001,
+  "hook": {
+    "type": "Organization",
+    "id": 90001,
+    "name": "web",
+    "active": true,
+    "events": [
+      "push"
+    ],
+    "config": {
+      "content_type": "json",
+      "insecure_ssl": "0",
+      "url": "https://packages.example.com/webhook/github"
+    }
+  },
+  "organization": {
+    "login": "example-org",
+    "id": 2002
+  },
+  "sender": {
+    "login": "example-dev",
+    "id": 1001,
+    "type": "User"
+  }
+}

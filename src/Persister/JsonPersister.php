@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  *
  * @author Ludovic Fleury <ludo.fleury@gmail.com>
  */
-class JsonPersister implements PersisterInterface
+class JsonPersister implements LockablePersisterInterface
 {
     use SerializerAwareTrait;
 
@@ -45,7 +45,15 @@ class JsonPersister implements PersisterInterface
 
     public function flush($object): void
     {
-        $jsonString = $this->serializer->serialize($object, 'json', [
+        $this->persister->flush($this->serialize($object));
+    }
+
+    /**
+     * The configuration as flush() would write it.
+     */
+    public function serialize(Configuration $object): string
+    {
+        return $this->serializer->serialize($object, 'json', [
             AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
             AbstractObjectNormalizer::CALLBACKS => [
                 'repositories' => [$this, 'normalizeRepositories'],
@@ -56,7 +64,25 @@ class JsonPersister implements PersisterInterface
             ],
             JsonEncode::OPTIONS => JSON_PRETTY_PRINT,
         ]);
-        $this->persister->flush($jsonString);
+    }
+
+    public function lock(): void
+    {
+        if ($this->persister instanceof LockablePersisterInterface) {
+            $this->persister->lock();
+        }
+    }
+
+    public function unlock(): void
+    {
+        if ($this->persister instanceof LockablePersisterInterface) {
+            $this->persister->unlock();
+        }
+    }
+
+    public function getVersion(): string
+    {
+        return $this->persister instanceof LockablePersisterInterface ? $this->persister->getVersion() : '';
     }
 
     public function normalizeRepositories($repositories): array

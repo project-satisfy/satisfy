@@ -2,34 +2,34 @@
 
 namespace Playbloom\Service;
 
+use Playbloom\Exception\ConfigurationChangedException;
 use Playbloom\Exception\MissingConfigException;
 use Playbloom\Model\Configuration;
 use Playbloom\Model\RepositoryInterface;
 use Playbloom\Persister\JsonPersister;
-use Playbloom\Persister\PersisterInterface;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Lock\LockFactory;
-use Symfony\Component\Lock\LockInterface;
+use Playbloom\Persister\LockablePersisterInterface;
 
 /**
  * Satis configuration definition manager
+ *
+ * satis.json may be written by other programs too: webhooks in other processes,
+ * scripts, a filter in front of the webhooks. So every change to repositories
+ * is applied to the file as it is once the lock is held, not to the copy this
+ * request read earlier, and nothing another writer added in between is lost.
  *
  * @author Ludovic Fleury <ludo.fleury@gmail.com>
  */
 class Manager
 {
-    private LockInterface $lock;
-
-    private PersisterInterface $persister;
+    private LockablePersisterInterface $persister;
 
     private ?Configuration $configuration = null;
 
     /**
      * Constructor
      */
-    public function __construct(LockFactory $satisLockFactory, JsonPersister $persister)
+    public function __construct(JsonPersister $persister)
     {
-        $this->lock = $satisLockFactory->createLock('satis');
         $this->persister = $persister;
     }
 
@@ -72,14 +72,9 @@ class Manager
      */
     public function add(RepositoryInterface $repository): void
     {
-        $lock = $this->acquireLock();
-        try {
-            $this
-                ->doAdd($repository)
-                ->flush();
-        } finally {
-            $lock->release();
-        }
+        $this->modify(function (Configuration $config) use ($repository): void {
+            $config->getRepositories()->offsetSet($repository->getId(), $repository);
+        });
     }
 
     /**
@@ -89,15 +84,11 @@ class Manager
      */
     public function addAll(array $repositories): void
     {
-        $lock = $this->acquireLock();
-        try {
+        $this->modify(function (Configuration $config) use ($repositories): void {
             foreach ($repositories as $repository) {
-                $this->doAdd($repository);
+                $config->getRepositories()->offsetSet($repository->getId(), $repository);
             }
-            $this->flush();
-        } finally {
-            $lock->release();
-        }
+        });
     }
 
     /**
@@ -107,19 +98,14 @@ class Manager
      */
     public function update(RepositoryInterface $repository, RepositoryInterface $updated): void
     {
-        $repos = $this->getRepositories();
-        if (!$repos->offsetExists($repository->getId())) {
-            throw new \RuntimeException('Unknown repository');
-        }
-
-        $lock = $this->acquireLock();
-        try {
+        $this->modify(function (Configuration $config) use ($repository, $updated): void {
+            $repos = $config->getRepositories();
+            if (!$repos->offsetExists($repository->getId())) {
+                throw new \RuntimeException('Unknown repository');
+            }
             $repos->offsetUnset($repository->getId());
             $repos->offsetSet($updated->getId(), $updated);
-            $this->flush();
-        } finally {
-            $lock->release();
-        }
+        });
     }
 
     /**
@@ -127,39 +113,38 @@ class Manager
      */
     public function delete(RepositoryInterface $repository): void
     {
-        $lock = $this->acquireLock();
+        $this->modify(function (Configuration $config) use ($repository): void {
+            $config->getRepositories()->offsetUnset($repository->getId());
+        });
+    }
+
+    /**
+     * Persist the configuration as edited in memory, replacing the file.
+     *
+     * @param string|null $expectedVersion the version of the file the edit started from;
+     *                                     if the file has changed since, nothing is written
+     *
+     * @throws ConfigurationChangedException
+     */
+    public function flush(?string $expectedVersion = null): void
+    {
+        $this->persister->lock();
         try {
-            $this
-                ->getConfig()
-                ->getRepositories()
-                ->offsetUnset($repository->getId());
-            $this->flush();
+            if (null !== $expectedVersion && $expectedVersion !== $this->persister->getVersion()) {
+                throw new ConfigurationChangedException('satis.json changed after it was read for this edit');
+            }
+            $this->persister->flush($this->getConfig());
         } finally {
-            $lock->release();
+            $this->persister->unlock();
         }
     }
 
     /**
-     * Persist current configuration
+     * The version of satis.json on disk, for flush()'s check.
      */
-    public function flush(): void
+    public function getVersion(): string
     {
-        $this->persister->flush($this->getConfig());
-    }
-
-    /**
-     * Adds a single Repository without flush
-     *
-     * @return $this
-     */
-    private function doAdd(RepositoryInterface $repository): self
-    {
-        $this
-            ->getConfig()
-            ->getRepositories()
-            ->offsetSet($repository->getId(), $repository);
-
-        return $this;
+        return $this->persister->getVersion();
     }
 
     public function getConfig(): Configuration
@@ -178,12 +163,30 @@ class Manager
         return $this->configuration;
     }
 
-    public function acquireLock(): LockInterface
+    /**
+     * Drops the cached configuration and reads the file again.
+     */
+    public function reload(): Configuration
     {
-        if (!$this->lock->acquire()) {
-            throw new IOException('Cannot acquire lock for satis configuration file');
-        }
+        $this->configuration = null;
 
-        return $this->lock;
+        return $this->getConfig();
+    }
+
+    /**
+     * Applies a change to satis.json as it is once the lock is held.
+     *
+     * @param callable(Configuration): void $change
+     */
+    public function modify(callable $change): void
+    {
+        $this->persister->lock();
+        try {
+            $config = $this->reload();
+            $change($config);
+            $this->persister->flush($config);
+        } finally {
+            $this->persister->unlock();
+        }
     }
 }

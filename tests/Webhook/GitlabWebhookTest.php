@@ -5,6 +5,8 @@ namespace Playbloom\Tests\Webhook;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Playbloom\Event\BuildEvent;
+use Playbloom\Event\RepositoryAddingEvent;
+use Playbloom\Event\WebhookReceivedEvent;
 use Playbloom\Model\Repository;
 use Playbloom\Service\Manager;
 use Playbloom\Webhook\GitlabWebhook;
@@ -19,6 +21,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class GitlabWebhookTest extends TestCase
 {
     use ProphecyTrait;
+
+    private const SECRET = 'secret';
 
     /**
      * @dataProvider invalidRequestProvider
@@ -92,8 +96,8 @@ class GitlabWebhookTest extends TestCase
             )
             ->shouldBeCalledTimes(1);
 
-        $request = self::createRequest(file_get_contents(__DIR__ . '/../fixtures/gitlab-push-nonexistant.json'));
-        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true);
+        $request = self::createRequest(file_get_contents(__DIR__ . '/../fixtures/gitlab-push-nonexistant.json'), 'push', self::SECRET);
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), self::SECRET, true);
         $response = $handler->getResponse($request);
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
@@ -156,7 +160,7 @@ class GitlabWebhookTest extends TestCase
             'project' => [
                 'git_http_url' => $url,
             ],
-        ]);
+        ], 'push', self::SECRET);
 
         $manager = $this->getManagerMock();
         $manager
@@ -175,7 +179,7 @@ class GitlabWebhookTest extends TestCase
 
                 return $event;
             });
-        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true);
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), self::SECRET, true);
         $response = $handler->getResponse($request);
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
@@ -189,7 +193,7 @@ class GitlabWebhookTest extends TestCase
                 'git_http_url' => $httpUrl,
                 'git_ssh_url' => $sshUrl,
             ],
-        ]);
+        ], 'push', self::SECRET);
 
         $repository = new Repository($sshUrl, 'git');
 
@@ -208,7 +212,7 @@ class GitlabWebhookTest extends TestCase
             ->dispatch(Argument::type(BuildEvent::class))
             ->willReturnArgument(0);
 
-        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', true);
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), self::SECRET, true, 'git', true);
         $response = $handler->getResponse($request);
     }
 
@@ -219,7 +223,7 @@ class GitlabWebhookTest extends TestCase
             'project' => [
                 'git_http_url' => $httpUrl,
             ],
-        ]);
+        ], 'push', self::SECRET);
 
         $repository = new Repository($httpUrl, 'git');
 
@@ -235,7 +239,7 @@ class GitlabWebhookTest extends TestCase
             ->dispatch(Argument::type(BuildEvent::class))
             ->willReturnArgument(0);
 
-        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', true);
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), self::SECRET, true, 'git', true);
         $response = $handler->getResponse($request);
     }
 
@@ -248,7 +252,7 @@ class GitlabWebhookTest extends TestCase
                 'git_http_url' => $httpUrl,
                 'git_ssh_url' => $sshUrl,
             ],
-        ]);
+        ], 'push', self::SECRET);
 
         $repository = new Repository($httpUrl, 'git');
 
@@ -267,7 +271,7 @@ class GitlabWebhookTest extends TestCase
             ->dispatch(Argument::type(BuildEvent::class))
             ->willReturnArgument(0);
 
-        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', false);
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), self::SECRET, true, 'git', false);
         $response = $handler->getResponse($request);
     }
 
@@ -278,7 +282,7 @@ class GitlabWebhookTest extends TestCase
             'project' => [
                 'git_ssh_url' => $sshUrl,
             ],
-        ]);
+        ], 'push', self::SECRET);
 
         $repository = new Repository($sshUrl, 'git');
 
@@ -295,8 +299,43 @@ class GitlabWebhookTest extends TestCase
             ->dispatch(Argument::type(BuildEvent::class))
             ->willReturnArgument(0);
 
-        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), null, true, 'git', false);
+        $handler = new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), self::SECRET, true, 'git', false);
         $response = $handler->getResponse($request);
+    }
+
+    /**
+     * GITLAB_SECRET left empty, as .env has it, and an empty token: the
+     * delivery is accepted, as in 3.x, but anyone could have sent it.
+     */
+    public function testAutoAddWithoutASecretIsSkipped(): void
+    {
+        $manager = $this->getManagerMock();
+        $manager->findByUrl(Argument::type('string'))->willReturn(null);
+        $manager->add(Argument::any())->shouldNotBeCalled();
+        $dispatcher = $this->getDispatcherMock();
+        $dispatcher->dispatch(Argument::type(WebhookReceivedEvent::class))->willReturnArgument(0);
+        $dispatcher->dispatch(Argument::type(BuildEvent::class))->shouldNotBeCalled();
+
+        $request = self::createRequest(['project' => ['git_http_url' => 'https://attacker.example/x/y.git']], 'push', '');
+        $response = (new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), '', true))->getResponse($request);
+
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertSame("skipped: auto-add needs the webhook's secret to be set", $response->getContent());
+    }
+
+    public function testAUrlIsMatchedLiterally(): void
+    {
+        $url = 'https://gitlab.com/example/a+b(c)|d.git';
+        $manager = $this->getManagerMock();
+        $manager
+            ->findByUrl(Argument::exact('#^' . preg_quote($url, '#') . '$#'))
+            ->willReturn(new Repository($url))
+            ->shouldBeCalledTimes(1);
+        $dispatcher = $this->getDispatcherMock();
+        $dispatcher->dispatch(Argument::any())->willReturnArgument(0);
+
+        $request = self::createRequest(['project' => ['git_http_url' => $url]], 'push', self::SECRET);
+        (new GitlabWebhook($manager->reveal(), $dispatcher->reveal(), self::SECRET))->getResponse($request);
     }
 
     protected static function createRequest($content, string $event = 'push', ?string $token = null): Request
@@ -307,7 +346,7 @@ class GitlabWebhookTest extends TestCase
         $request = Request::create('', 'GET', [], [], [], [], $content);
         $request->headers->set('X-Gitlab-Event', $event);
         if (null !== $token) {
-            $request->headers->set('X-Gitlab-Token', $event);
+            $request->headers->set('X-Gitlab-Token', $token);
         }
 
         return $request;
@@ -320,6 +359,11 @@ class GitlabWebhookTest extends TestCase
 
     protected function getDispatcherMock(): ObjectProphecy
     {
-        return $this->prophesize(EventDispatcher::class);
+        $dispatcher = $this->prophesize(EventDispatcher::class);
+        // Dispatched on every delivery; nothing in these tests listens to them.
+        $dispatcher->dispatch(Argument::type(WebhookReceivedEvent::class))->willReturnArgument(0);
+        $dispatcher->dispatch(Argument::type(RepositoryAddingEvent::class))->willReturnArgument(0);
+
+        return $dispatcher;
     }
 }

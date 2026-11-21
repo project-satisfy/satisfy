@@ -18,7 +18,7 @@ class ComposerLockValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($data, Constraint $constraint)
+    public function validate(mixed $data, Constraint $constraint): void
     {
         if (!is_object($data) || !$data instanceof UploadedFile) {
             throw new InvalidArgumentException(sprintf('This validator expects a UploadedFile, given "%s"', get_class($data)));
