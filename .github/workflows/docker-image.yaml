@@ -1,12 +1,12 @@
 name: "Docker image"
 
 # Builds docker/Dockerfile, runs docker/smoke-test.sh against it, and publishes
-# it to GHCR: the branch name for a push to 4.x or 4.x-mcp, and for a release tag the
+# it to GHCR: the branch name for a push to 4.x, and for a release tag the
 # immutable version plus the moving major.minor, major and latest tags.
 
 on:
   push:
-    branches: [ 4.x, 4.x-mcp ]
+    branches: [ 4.x ]
     tags: [ '4.*' ]
   pull_request:
     paths:

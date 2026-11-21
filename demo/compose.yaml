@@ -7,7 +7,7 @@ services:
   # by the web server's user, so that the MCP tools can change it. Removing the
   # volume (docker compose down -v) starts the demo over.
   config:
-    image: ghcr.io/fivepaths/satisfy:4.x-mcp
+    image: ghcr.io/fivepaths/satisfy:4.x
     entrypoint: ["sh", "-c", "test -f /srv/satis/satis.json || install -o www-data -g www-data -m 0664 /seed/satis.json /srv/satis/satis.json; chown www-data:www-data /srv/satis"]
     volumes:
       - ./config:/seed:ro
@@ -16,7 +16,7 @@ services:
   satisfy:
     # Published from this branch; `docker compose up --build` builds it from the
     # checkout instead.
-    image: ghcr.io/fivepaths/satisfy:4.x-mcp
+    image: ghcr.io/fivepaths/satisfy:4.x
     build:
       context: ..
       dockerfile: docker/Dockerfile

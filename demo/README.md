@@ -13,7 +13,7 @@ Satisfy with the [`mcp`](../plugins/Mcp/README.md) and [`diagnosis`](../plugins/
 1. Clone the branch and configure the demo:
 
    ```bash
-   git clone --branch 4.x-mcp https://github.com/FivePaths/satisfy.git
+   git clone --branch 4.x https://github.com/FivePaths/satisfy.git
    cd satisfy/demo
    cp .env.example .env
    ```
@@ -26,7 +26,7 @@ Satisfy with the [`mcp`](../plugins/Mcp/README.md) and [`diagnosis`](../plugins/
    docker compose up -d
    ```
 
-   This pulls `ghcr.io/fivepaths/satisfy:4.x-mcp`. `docker compose up -d --build` builds the same image from your checkout instead, which takes a few minutes.
+   This pulls `ghcr.io/fivepaths/satisfy:4.x`. `docker compose up -d --build` builds the same image from your checkout instead, which takes a few minutes.
 
 3. Issue an MCP token that may change Satisfy. It is printed once:
 
