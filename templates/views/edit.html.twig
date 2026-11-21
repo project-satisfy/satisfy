@@ -3,16 +3,24 @@
 {% set repository = form.vars.value %}
 
 {% block title %}Edit repository{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
-        <h2 class="form-signin-heading">
-            Edit repository
-        </h2>
+  <div class="page-head">
+    <div>
+      <p class="crumbs"><a href="{{ path('repository') }}">Repositories</a> /</p>
+      <h1>Edit repository</h1>
+      <span class="object-id">{{ repository.url }}</span>
+    </div>
+  </div>
 
-        {% include 'views/_form.html.twig' %}
-
-        <button class="btn btn-large btn-block btn-primary" type="submit">Update</button>
-        <a href="{{ path('repository_delete', { 'repository': repository.id }) }}" class="btn btn-large btn-block btn-danger" >Delete</a>
-    {{ form_end(form) }}
+  {{ form_start(form) }}
+    {% include 'views/_form.html.twig' with {example_title: 'The entry as it will be saved in satis.json'} %}
+    <div class="actions">
+      <button class="btn btn-primary" type="submit">Save changes</button>
+      <a class="btn btn-quiet" href="{{ path('repository') }}">Cancel</a>
+      <span class="spacer"></span>
+      <a class="btn btn-danger" href="{{ path('repository_delete', {'repository': repository.id}) }}">Delete repository</a>
+    </div>
+  {{ form_end(form) }}
 {% endblock %}

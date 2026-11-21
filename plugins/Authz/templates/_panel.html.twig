@@ -1,0 +1,17 @@
+{# The admin home page's panel: sites asking for packages. #}
+<section class="panel" aria-labelledby="authz-panel-title">
+  <div class="panel-head">
+    <h2 id="authz-panel-title">Access requests {% if requests is not empty %}<span class="count">{{ requests|length }}</span>{% endif %}</h2>
+    <a href="{{ path('authz') }}">All sites</a>
+  </div>
+  <div class="panel-body">
+    {% for site, packages in requests %}
+      <div class="request">
+        <a class="request-site" href="{{ path('authz_site', {site: site}) }}">{{ site }}</a> asks for
+        <div class="chips">{% for package in packages %}<span class="chip chip-now">{{ package }}</span>{% endfor %}</div>
+      </div>
+    {% else %}
+      <p class="muted">No site is waiting for a package.{% if not enforcing %} Credential enforcement is off, so every request is allowed.{% endif %}</p>
+    {% endfor %}
+  </div>
+</section>

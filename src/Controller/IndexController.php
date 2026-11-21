@@ -4,6 +4,7 @@ namespace Playbloom\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -20,9 +21,13 @@ class IndexController extends AbstractController
     {
         $indexFile = $this->projectDir . '/public/index.html';
         if (!file_exists($indexFile)) {
-            return new Response($this->render('unavailable.html.twig'));
+            return $this->render('unavailable.html.twig');
         }
 
-        return new Response(file_get_contents($indexFile));
+        // Streamed rather than read into memory: a large catalogue's page runs to megabytes.
+        $response = new BinaryFileResponse($indexFile);
+        $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
+
+        return $response;
     }
 }

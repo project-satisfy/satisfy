@@ -1,0 +1,14 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Playbloom\Plugin\Hookgate\:
+        resource: '../src/'
+        exclude:
+            - '../src/HookgateBundle.php'
+            - '../src/AutoRequireRefused.php'
+            - '../src/CatalogueEdit.php'
+
+    Playbloom\Plugin\Hookgate\HookgateConfig:
+        factory: [ Playbloom\Plugin\Hookgate\HookgateConfig, fromEnvironment ]

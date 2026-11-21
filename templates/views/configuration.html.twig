@@ -1,27 +1,61 @@
 {% extends "base.html.twig" %}
-{% form_theme form 'form/jquery.collection.html.twig' 'form/fields.html.twig' %}
+{% form_theme form 'form/fields.html.twig' %}
 
-{% block title %}Edit configuration{% endblock %}
+{% block title %}Configuration{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
 
 {% block content %}
-    {{ form_start(form, { attr: { class: 'form-horizontal' }}) }}
-    <h2 class="form-signin-heading">Edit configuration</h2>
-    {{ form_errors(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-large btn-block btn-primary" type="submit">Submit</button>
-    {{ form_end(form) }}
-{% endblock %}
+  <div class="page-head">
+    <div>
+      <h1>Configuration</h1>
+      <p class="lead">Every option Satisfy writes to <span class="mono">satis.json</span>, with its key. Saving replaces the file, so it is refused if the file changed after this page was opened. Builds use the new settings from the next build on.</p>
+    </div>
+  </div>
 
-{% block javascript %}
-    {{ parent() }}
-    <script src="{{ asset('js/jquery.collection.js') }}"></script>
-    <script type="text/javascript">
-        $(".collection_require").collection({
-            add: '<p class="col-sm-2"><button class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button></p>',
-            remove: '<button class="btn btn-default"><i class="glyphicon glyphicon-minus"></i></button>',
-            allow_down: false,
-            allow_up: false,
-            add_at_the_end: true
-        });
-    </script>
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <section class="section" aria-labelledby="cfg-repository">
+      <h2 id="cfg-repository">Repository</h2>
+      {{ form_row(form.name, {label: 'Name', satis_key: 'name', satis_type: 'string', attr: {class: 'mono'}}) }}
+      {{ form_row(form.description, {label: 'Description', satis_key: 'description', satis_type: 'string'}) }}
+      {{ form_row(form.homepage, {label: 'Homepage', satis_key: 'homepage', satis_type: 'string, URL', attr: {class: 'mono'}}) }}
+    </section>
+
+    <section class="section" aria-labelledby="cfg-packages">
+      <h2 id="cfg-packages">Which packages</h2>
+      {{ form_row(form.requireAll, {label: 'Include every package', satis_key: 'require-all', satis_type: 'bool', satis_default: 'false'}) }}
+      {{ form_row(form.require, {label: 'Packages to include', satis_key: 'require', satis_type: 'object: package → constraint'}) }}
+      {{ form_row(form.requireDependencies, {label: 'Include their dependencies', satis_key: 'require-dependencies', satis_type: 'bool', satis_default: 'false'}) }}
+      {{ form_row(form.requireDevDependencies, {label: 'Include their dev dependencies', satis_key: 'require-dev-dependencies', satis_type: 'bool', satis_default: 'false'}) }}
+      {{ form_row(form.requireDependencyFilter, {label: 'Only the dependency versions the constraints allow', satis_key: 'require-dependency-filter', satis_type: 'bool', satis_default: 'true'}) }}
+      {{ form_row(form.minimumStability, {label: 'Minimum stability', satis_key: 'minimum-stability', satis_type: 'string', satis_default: 'dev'}) }}
+      {{ form_row(form.minimumStabilityPerPackage, {label: 'Minimum stability per package', satis_key: 'minimum-stability-per-package', satis_type: 'object: package → stability'}) }}
+      {{ form_row(form.blacklist, {label: 'Packages to leave out', satis_key: 'blacklist', satis_type: 'object: package → constraint'}) }}
+      {{ form_row(form.abandoned, {label: 'Abandoned packages', satis_key: 'abandoned', satis_type: 'object: package → replacement'}) }}
+    </section>
+
+    <section class="section" aria-labelledby="cfg-output">
+      <h2 id="cfg-output">Output</h2>
+      {{ form_row(form.outputDir, {label: 'Output directory', satis_key: 'output-dir', satis_type: 'string', satis_default: 'public', attr: {class: 'mono'}}) }}
+      {{ form_row(form.outputHtml, {label: 'Build an HTML catalogue page', satis_key: 'output-html', satis_type: 'bool', satis_default: 'true'}) }}
+      {{ form_row(form.twigTemplate, {label: 'Catalogue template', satis_key: 'twig-template', satis_type: 'string, path', attr: {class: 'mono'}}) }}
+      {{ form_row(form.includeFilename, {label: 'Package list file name', satis_key: 'include-filename', satis_type: 'string', attr: {class: 'mono'}}) }}
+      {{ form_row(form.prettyPrint, {label: 'Indent the JSON', satis_key: 'pretty-print', satis_type: 'bool', satis_default: 'true'}) }}
+      {{ form_row(form.providers, {label: 'Write provider files', satis_key: 'providers', satis_type: 'bool', satis_default: 'false'}) }}
+    </section>
+
+    <section class="section" aria-labelledby="cfg-composer">
+      <h2 id="cfg-composer">Composer and notifications</h2>
+      {{ form_row(form.config, {label: 'Composer configuration', satis_key: 'config', satis_type: 'object, JSON', attr: {class: 'mono', rows: 5, spellcheck: 'false'}}) }}
+      {{ form_row(form.notifyBatch, {label: 'Notify batch URL', satis_key: 'notify-batch', satis_type: 'string, URL', attr: {class: 'mono'}}) }}
+    </section>
+
+    {{ form_rest(form) }}
+
+    <div class="actions actions-sticky">
+      <button class="btn btn-primary" type="submit">Save configuration</button>
+      <a class="btn btn-quiet" href="{{ path('repository') }}">Cancel</a>
+    </div>
+  {{ form_end(form) }}
 {% endblock %}

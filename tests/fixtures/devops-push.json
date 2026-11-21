@@ -1,7 +1,64 @@
 {
+  "subscriptionId": "00000000-0000-0000-0000-000000000000",
+  "notificationId": 3,
+  "id": "03c164c2-8912-4d5e-8009-3707d5f83734",
+  "eventType": "git.push",
+  "publisherId": "tfs",
+  "message": {
+    "text": "Example Dev pushed updates to widget:main."
+  },
   "resource": {
+    "commits": [
+      {
+        "commitId": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+        "comment": "Fix the widget",
+        "author": {
+          "name": "Example Dev",
+          "email": "dev@example.com",
+          "date": "2026-10-22T09:00:00Z"
+        },
+        "url": "https://dev.azure.com/example-org/_apis/git/repositories/278d5cd2-584d-4b63-824a-2ba458937249/commits/c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0"
+      }
+    ],
+    "refUpdates": [
+      {
+        "name": "refs/heads/main",
+        "oldObjectId": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+        "newObjectId": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0"
+      }
+    ],
     "repository": {
-      "url": "https://dev.azure.com/path/to/repo/_git/satisfy"
+      "id": "278d5cd2-584d-4b63-824a-2ba458937249",
+      "name": "widget",
+      "url": "https://dev.azure.com/example-org/_apis/git/repositories/278d5cd2-584d-4b63-824a-2ba458937249",
+      "project": {
+        "id": "6ce954b1-ce1f-45d1-b94d-e6bf2464ba2c",
+        "name": "Example",
+        "url": "https://dev.azure.com/example-org/_apis/projects/6ce954b1-ce1f-45d1-b94d-e6bf2464ba2c",
+        "state": "wellFormed"
+      },
+      "defaultBranch": "refs/heads/main",
+      "remoteUrl": "https://example-org@dev.azure.com/example-org/Example/_git/widget"
+    },
+    "pushedBy": {
+      "displayName": "Example Dev",
+      "uniqueName": "dev@example.com"
+    },
+    "pushId": 14,
+    "date": "2026-10-22T09:00:00Z",
+    "url": "https://dev.azure.com/example-org/_apis/git/repositories/278d5cd2-584d-4b63-824a-2ba458937249/pushes/14"
+  },
+  "resourceVersion": "1.0",
+  "resourceContainers": {
+    "collection": {
+      "id": "c12d0eb8-e382-443b-9f9c-c52cba5014c2"
+    },
+    "account": {
+      "id": "f844ec47-a9db-4511-8281-8b63f4eaf94e"
+    },
+    "project": {
+      "id": "6ce954b1-ce1f-45d1-b94d-e6bf2464ba2c"
     }
-  }
+  },
+  "createdDate": "2026-10-22T09:00:05Z"
 }

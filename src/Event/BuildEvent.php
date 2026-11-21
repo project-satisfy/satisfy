@@ -15,6 +15,8 @@ class BuildEvent extends Event
     /** @var int|null */
     private $status;
 
+    private bool $queued = false;
+
     public function __construct(?RepositoryInterface $repository = null)
     {
         $this->repository = $repository;
@@ -39,5 +41,18 @@ class BuildEvent extends Event
     public function setStatus(int $status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * The build was queued for the worker rather than run.
+     */
+    public function markQueued(): void
+    {
+        $this->queued = true;
+    }
+
+    public function isQueued(): bool
+    {
+        return $this->queued;
     }
 }

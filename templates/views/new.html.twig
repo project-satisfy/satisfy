@@ -1,15 +1,22 @@
 {% extends "base.html.twig" %}
 
-{% block title %}New repository{% endblock %}
+{% block title %}Add repository{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
-        <h2 class="form-signin-heading">
-            New repository
-        </h2>
+  <div class="page-head">
+    <div>
+      <p class="crumbs"><a href="{{ path('repository') }}">Repositories</a> /</p>
+      <h1>Add repository</h1>
+      <p class="lead">Satis reads its packages on the next build. A webhook from its host can queue that build when you push.</p>
+    </div>
+  </div>
 
-        {% include 'views/_form.html.twig' %}
-
-        <button class="btn btn-large btn-block btn-primary" type="submit">Register</button>
-    {{ form_end(form) }}
+  {{ form_start(form) }}
+    {% include 'views/_form.html.twig' with {example_title: 'The entry this adds to satis.json'} %}
+    <div class="actions">
+      <button class="btn btn-primary" type="submit">Add repository</button>
+      <a class="btn btn-quiet" href="{{ path('repository') }}">Cancel</a>
+    </div>
+  {{ form_end(form) }}
 {% endblock %}

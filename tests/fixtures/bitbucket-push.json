@@ -1,0 +1,70 @@
+{
+  "actor": {
+    "type": "user",
+    "display_name": "Example Dev",
+    "uuid": "{7c9e1a3b-5d7f-4b2d-a6c8-0e2a4c6e8a0b}",
+    "nickname": "example-dev"
+  },
+  "repository": {
+    "type": "repository",
+    "uuid": "{0b5e6f9a-7c3d-4e2b-9a1f-2d8c4b6e0a13}",
+    "name": "widget",
+    "full_name": "example-ws/widget",
+    "is_private": true,
+    "scm": "git",
+    "links": {
+      "self": {
+        "href": "https://api.bitbucket.org/2.0/repositories/example-ws/widget"
+      },
+      "html": {
+        "href": "https://bitbucket.org/example-ws/widget"
+      },
+      "avatar": {
+        "href": "https://bytebucket.org/ravatar/%7B0b5e6f9a%7D"
+      }
+    },
+    "workspace": {
+      "type": "workspace",
+      "slug": "example-ws",
+      "name": "Example",
+      "uuid": "{5a1c9e2b-3d4f-4a6b-8c0d-e2f4a6b8c0d1}"
+    },
+    "project": {
+      "type": "project",
+      "key": "EX",
+      "name": "Example"
+    }
+  },
+  "push": {
+    "changes": [
+      {
+        "new": {
+          "type": "tag",
+          "name": "v1.2.0",
+          "target": {
+            "type": "commit",
+            "hash": "c0d2d6e3c0a1b2f8e5d4a7b9c3e1f0a2b4d6e8f0",
+            "message": "Release 1.2.0\n",
+            "date": "2026-10-22T09:00:00+00:00"
+          },
+          "links": {
+            "html": {
+              "href": "https://bitbucket.org/example-ws/widget/commits/tag/v1.2.0"
+            }
+          }
+        },
+        "old": null,
+        "links": {
+          "html": {
+            "href": "https://bitbucket.org/example-ws/widget/branch/v1.2.0"
+          }
+        },
+        "created": true,
+        "closed": false,
+        "forced": false,
+        "commits": [],
+        "truncated": false
+      }
+    ]
+  }
+}

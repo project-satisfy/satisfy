@@ -2,11 +2,12 @@ parameters:
 	level: 5
 	paths:
 		- src
+		- plugins
 		- tests
 	fileExtensions:
 		- php
 	symfony:
-		container_xml_path: var/cache/test/Playbloom_KernelTestDebugContainer.xml
+		containerXmlPath: var/cache/test/Playbloom_KernelTestDebugContainer.xml
 	ignoreErrors:
 		- '#Call to an undefined method Prophecy\\Prophecy\\ObjectProphecy.+\(\)#'
 	reportUnmatchedIgnoredErrors: false

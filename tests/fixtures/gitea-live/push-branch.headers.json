@@ -1,0 +1,19 @@
+{
+  "User-Agent": "Go-http-client/1.1",
+  "Content-Type": "application/json",
+  "X-GitHub-Delivery": "241aebb7-50c0-4d58-b5ab-7164cae94f62",
+  "X-GitHub-Event": "push",
+  "X-GitHub-Event-Type": "push",
+  "X-GitHub-Hook-Installation-Target-Type": "repository",
+  "X-Gitea-Delivery": "241aebb7-50c0-4d58-b5ab-7164cae94f62",
+  "X-Gitea-Event": "push",
+  "X-Gitea-Event-Type": "push",
+  "X-Gitea-Hook-Installation-Target-Type": "repository",
+  "X-Gitea-Signature": "358eb9eac005e67bd230f6f29feeabcab0b3d3a43cff58d1002c2772215a6824",
+  "X-Gogs-Delivery": "241aebb7-50c0-4d58-b5ab-7164cae94f62",
+  "X-Gogs-Event": "push",
+  "X-Gogs-Event-Type": "push",
+  "X-Gogs-Signature": "358eb9eac005e67bd230f6f29feeabcab0b3d3a43cff58d1002c2772215a6824",
+  "X-Hub-Signature": "sha1=d340696fa3f388b3220646140e5ceab3eebf411f",
+  "X-Hub-Signature-256": "sha256=358eb9eac005e67bd230f6f29feeabcab0b3d3a43cff58d1002c2772215a6824"
+}

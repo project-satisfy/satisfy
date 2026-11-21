@@ -1,4 +1,5 @@
 framework:
     lock:
-        satis: '%env(LOCK_DSN)%'
+        # Builds. satis.json itself is locked with flock() on the file, which
+        # other programs that write it can take too (FilePersister).
         build: '%env(LOCK_DSN)%'

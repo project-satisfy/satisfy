@@ -2,28 +2,15 @@
 
 namespace Playbloom\Webhook;
 
-use Laminas\Diactoros\ResponseFactory;
-use Laminas\Diactoros\ServerRequestFactory;
-use Laminas\Diactoros\StreamFactory;
-use Laminas\Diactoros\UploadedFileFactory;
+use Playbloom\Exception\WebhookSkippedException;
 use Playbloom\Model\Repository;
 use Playbloom\Model\RepositoryInterface;
-use Psr\Http\Message\RequestInterface;
-use Swop\GitHubWebHook\Event\GitHubEventFactory;
-use Swop\GitHubWebHook\Exception\GitHubWebHookException;
-use Swop\GitHubWebHook\Exception\InvalidGitHubRequestSignatureException;
-use Swop\GitHubWebHook\Security\SignatureValidator;
-use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 class GithubWebhook extends AbstractWebhook
 {
     /** @var string[] */
-    protected array $sourceUrls = ['git_url', 'ssh_url', 'clone_url', 'svn_url'];
+    protected array $sourceUrls = ['clone_url', 'ssh_url', 'git_url', 'svn_url', 'html_url'];
 
     protected bool $autoAdd = false;
 
@@ -61,58 +48,26 @@ class GithubWebhook extends AbstractWebhook
         return $this;
     }
 
-    public function getResponse(Request $request): Response
-    {
-        try {
-            $this->validate($request);
-            $repository = $this->getRepository($request);
-        } catch (\InvalidArgumentException $exception) {
-            throw new BadRequestHttpException($exception->getMessage(), $exception);
-        } catch (\Throwable $exception) {
-            throw new ServiceUnavailableHttpException();
-        }
-
-        $callback = function () use ($repository) {
-            echo 'OK';
-            $this->handle($repository);
-        };
-
-        // instruct client to close connection after 2 bytes "OK"
-        return new StreamedResponse($callback, Response::HTTP_OK, ['Connection' => 'close', 'Content-Length' => 2]);
-    }
-
     protected function validate(Request $request): void
     {
         if (!empty($this->secret)) {
-            $psrRequest = $this->createPsr7Request($request);
-            $validator = new SignatureValidator();
-            try {
-                $validator->validate($psrRequest, $this->secret);
-            } catch (InvalidGitHubRequestSignatureException $exception) {
-                throw new \InvalidArgumentException($exception->getMessage());
-            }
+            $this->verifySignature($request, 'X-Hub-Signature-256');
         }
     }
 
     protected function getUrlPattern(string $url): string
     {
-        $pattern = '#^' . $url . '$#';
-        $pattern = str_replace(['.', ':'], ['\.', '\:'], $pattern);
-
-        return $pattern;
+        return '#^' . preg_quote($url, '#') . '$#';
     }
 
     protected function getRepository(Request $request): RepositoryInterface
     {
-        $psrRequest = $this->createPsr7Request($request);
-        $eventFactory = new GitHubEventFactory();
-        try {
-            $event = $eventFactory->buildFromRequest($psrRequest);
-        } catch (GitHubWebHookException $exception) {
-            throw new \InvalidArgumentException($exception->getMessage(), 0, $exception);
+        // Sent once when the webhook is created; an organisation's names no repository.
+        if ('ping' === $request->headers->get('X-GitHub-Event')) {
+            throw new WebhookSkippedException('ping');
         }
 
-        $payload = $event->getPayload();
+        $payload = $this->getPayload($request);
         $repositoryData = $payload['repository'] ?? [];
 
         $urls = [];
@@ -129,24 +84,12 @@ class GithubWebhook extends AbstractWebhook
         if (!$repository) {
             if ($this->autoAdd && !empty($originalUrls)) {
                 $repository = new Repository($originalUrls[0], $this->autoAddType);
-                $this->manager->add($repository);
+                $this->addRepository($repository, $request);
             } else {
                 throw new \InvalidArgumentException('Cannot find specified repository');
             }
         }
 
         return $repository;
-    }
-
-    protected function createPsr7Request(Request $request): RequestInterface
-    {
-        $psr7Factory = new PsrHttpFactory(
-            new ServerRequestFactory(),
-            new StreamFactory(),
-            new UploadedFileFactory(),
-            new ResponseFactory()
-        );
-
-        return $psr7Factory->createRequest($request);
     }
 }

@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Playbloom\Plugin\Authz\:
+        resource: '../src/'
+        exclude:
+            - '../src/AuthzBundle.php'
+            - '../src/Cache.php'
+            - '../src/Uri.php'
+
+    Playbloom\Plugin\Authz\AuthzConfig:
+        factory: [ Playbloom\Plugin\Authz\AuthzConfig, fromEnvironment ]
+        arguments: [ '%kernel.project_dir%' ]
+
+    Playbloom\Plugin\Authz\Controller\AuthzController:
+        public: true
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }

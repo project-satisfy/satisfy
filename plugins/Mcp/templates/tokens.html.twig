@@ -1,0 +1,81 @@
+{% extends "base.html.twig" %}
+
+{% block title %}MCP tokens{% endblock %}
+
+{% block content %}
+    <div class="page-head">
+        <div>
+            <h1>MCP tokens</h1>
+            <p class="lead">An MCP client, such as Claude Code, sends one of these as a bearer token to <span class="mono">{{ endpoint }}</span>. A read token can look at <span class="mono">satis.json</span>, the catalogue and builds; a write token can also change <span class="mono">satis.json</span> and queue builds.</p>
+        </div>
+    </div>
+
+    {% if issued %}
+        <section class="secret" aria-labelledby="secret-title">
+            <h2 id="secret-title">Token issued to {{ issued.name }}, {{ issued.scope }} scope: shown once, only its hash is kept</h2>
+            <p>Copy it now. Issuing a token under a name that had one replaces it.</p>
+            <p class="secret-label">Token</p>
+            <pre>{{ issued.token }}</pre>
+            <p class="secret-label">For Claude Code</p>
+            <pre>claude mcp add --transport http satisfy {{ endpoint }} --header "Authorization: Bearer {{ issued.token }}"</pre>
+        </section>
+    {% endif %}
+
+    <section class="section" aria-labelledby="tokens-title">
+        <h2 id="tokens-title">Tokens</h2>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Scope</th>
+                        <th scope="col" class="col-hide-sm">Issued</th>
+                        <th scope="col" class="col-hide-sm">Last used</th>
+                        <th scope="col" class="col-end"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name, token in tokens %}
+                        <tr>
+                            <td><b class="mono">{{ name }}</b></td>
+                            <td><span class="badge {{ token.scope == 'write' ? 'badge-php' : '' }}">{{ token.scope }}</span></td>
+                            <td class="col-meta col-hide-sm">{{ token.created|date('Y-m-d H:i') }}</td>
+                            <td class="col-meta col-hide-sm">{{ token.last_used is null ? 'never' : token.last_used|date('Y-m-d H:i') }}</td>
+                            <td class="col-end">
+                                <form method="post" action="{{ path('mcp_tokens_action') }}" class="inline-form">
+                                    <input type="hidden" name="_token" value="{{ csrf_token(csrf) }}">
+                                    <input type="hidden" name="action" value="revoke">
+                                    <input type="hidden" name="name" value="{{ name }}">
+                                    <button class="btn btn-sm btn-danger">Revoke</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr class="table-empty"><td colspan="5">No tokens yet, so the MCP server refuses every request. Issue one below.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section" aria-labelledby="issue-title">
+        <h2 id="issue-title">Issue a token</h2>
+        <p class="section-lead">Name it for the client that will send it. The same tokens are managed with <span class="mono">bin/console satisfy:mcp-token</span>.</p>
+        <form method="post" action="{{ path('mcp_tokens_action') }}" class="row-form">
+            <input type="hidden" name="_token" value="{{ csrf_token(csrf) }}">
+            <input type="hidden" name="action" value="issue">
+            <div class="field">
+                <label for="issue-name">Name</label>
+                <input type="text" id="issue-name" class="mono" name="name" placeholder="laptop-claude" required pattern="{{ name_pattern }}" autocomplete="off">
+            </div>
+            <div class="field">
+                <label for="issue-scope">Scope</label>
+                <select id="issue-scope" name="scope">
+                    <option value="read">read</option>
+                    <option value="write">write: also changes satis.json and queues builds</option>
+                </select>
+            </div>
+            <button class="btn btn-primary">Issue</button>
+        </form>
+    </section>
+{% endblock %}

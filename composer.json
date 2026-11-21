@@ -23,56 +23,62 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "ext-json": "*",
         "ext-xml": "*",
         "composer/composer": "^2.4",
         "composer/satis": "dev-main",
-        "doctrine/annotations": "~1.6",
-        "doctrine/instantiator": "~1.1",
         "incenteev/composer-parameter-handler": "^2.1",
         "ninsuo/symfony-collection": "^2.1",
-        "ramunasd/symfony-container-mocks": "^0.6.0",
-        "swop/github-webhook": "^3.1",
-        "symfony/asset": "6.4.*",
-        "symfony/form": "6.4.*",
-        "symfony/framework-bundle": "6.4.*",
-        "symfony/lock": "6.4.*",
-        "symfony/property-info": "6.4.*",
-        "symfony/psr-http-message-bridge": "6.4.*",
-        "symfony/security-bundle": "6.4.*",
-        "symfony/serializer": "6.4.*",
-        "symfony/twig-bundle": "6.4.*",
-        "symfony/validator": "6.4.*",
-        "symfony/yaml": "6.4.*",
-        "laminas/laminas-diactoros": "^3.6",
+        "symfony/asset": "7.4.*",
+        "symfony/form": "7.4.*",
+        "symfony/framework-bundle": "7.4.*",
+        "symfony/lock": "7.4.*",
+        "symfony/property-info": "7.4.*",
+        "symfony/security-bundle": "7.4.*",
+        "symfony/serializer": "7.4.*",
+        "symfony/twig-bundle": "7.4.*",
+        "symfony/validator": "7.4.*",
+        "symfony/yaml": "7.4.*",
         "symfony/monolog-bundle": "^3.8",
-        "symfony/dependency-injection": "6.4.*",
-        "symfony/event-dispatcher": "6.4.*",
-        "symfony/proxy-manager-bridge": "6.4.*",
-        "symfony/dotenv": "6.4.*",
+        "symfony/dependency-injection": "7.4.*",
+        "symfony/event-dispatcher": "7.4.*",
+        "symfony/dotenv": "7.4.*",
         "symfony/flex": "^2.4",
-        "symfony/console": "^7.1.5",
-        "symfony/runtime": "6.4.*",
+        "symfony/console": "7.4.*",
+        "symfony/runtime": "7.4.*",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.0",
-        "symfony/property-access": "6.4.*"
+        "symfony/property-access": "7.4.*",
+        "symfony/rate-limiter": "7.4.*",
+        "symfony/mcp-bundle": "^1.0@beta",
+        "nyholm/psr7": "^1.8",
+        "symfony/ai-agent": "^1.0@beta",
+        "symfony/ai-platform": "^1.0@beta",
+        "symfony/ai-store": "^1.0@beta",
+        "symfony/ai-generic-platform": "^1.0@beta"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
         "friendsofphp/php-cs-fixer": "^3.1",
-        "phpstan/phpstan": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "phpstan/phpstan-symfony": "^1.0",
+        "phpstan/phpstan": "^2.3",
+        "phpstan/phpstan-phpunit": "^2.1",
+        "phpstan/phpstan-symfony": "^2.1",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^10.5",
-        "symfony/browser-kit": "6.4.*",
-        "symfony/stopwatch": "6.4.*",
-        "symfony/web-profiler-bundle": "6.4.*",
-        "symfony/css-selector": "6.4.*"
+        "symfony/browser-kit": "7.4.*",
+        "symfony/stopwatch": "7.4.*",
+        "symfony/web-profiler-bundle": "7.4.*",
+        "symfony/css-selector": "7.4.*"
     },
     "autoload": {
-        "psr-4": { "Playbloom\\": "src/" }
+        "psr-4": {
+            "Playbloom\\": "src/",
+            "Playbloom\\Plugin\\Authz\\": "plugins/Authz/src/",
+            "Playbloom\\Plugin\\Diagnosis\\": "plugins/Diagnosis/src/",
+            "Playbloom\\Plugin\\Hookgate\\": "plugins/Hookgate/src/",
+            "Playbloom\\Plugin\\Mcp\\": "plugins/Mcp/src/"
+        }
     },
     "autoload-dev": {
         "psr-4": { "Playbloom\\Tests\\": "tests" }
@@ -100,7 +106,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.4.*"
+            "require": "7.4.*"
         },
         "branch-alias": {
             "dev-master": "1.0.x-dev"

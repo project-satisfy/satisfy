@@ -1,0 +1,98 @@
+{#
+ # The admin's form theme, on top of Symfony's div layout.
+ #
+ # A row given satis_key (and optionally satis_type, satis_default) renders
+ # as a manual entry: the satis.json key and its type beside the control.
+ #}
+{% use 'form_div_layout.html.twig' %}
+
+{%- block form_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~ '_help'}} -%}
+    {%- endif -%}
+    {%- set key = satis_key|default(null) -%}
+    <div{% with {attr: row_attr|merge({class: ((key ? 'entry' : 'field') ~ (valid ? '' : ' has-error') ~ ' ' ~ row_attr.class|default(''))|trim})} %}{{ block('attributes') }}{% endwith %}>
+        {{- block('satis_entry_head') -}}
+        {%- if compound and 'collection' in block_prefixes -%}
+            <span class="field-label" id="{{ id }}_label">{{ label is same as(false) ? '' : (label ?: name|humanize) }}</span>
+        {%- else -%}
+            {{- form_label(form) -}}
+        {%- endif -%}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block checkbox_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~ '_help'}} -%}
+    {%- endif -%}
+    {%- set key = satis_key|default(null) -%}
+    <div class="{{ key ? 'entry' : 'field' }}{{ valid ? '' : ' has-error' }}">
+        {{- block('satis_entry_head') -}}
+        <div class="check">
+            {{- form_widget(form, widget_attr) -}}
+            {{- form_label(form) -}}
+        </div>
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock checkbox_row -%}
+
+{%- block satis_entry_head -%}
+    {%- if satis_key|default(null) -%}
+        <div class="entry-head">
+            <code class="entry-key">{{ satis_key }}</code>
+            <span class="entry-meta">
+                {{- satis_type|default('') -}}
+                {%- if satis_default|default(null) is not null %} · default <code>{{ satis_default }}</code>{% endif -%}
+            </span>
+        </div>
+    {%- endif -%}
+{%- endblock satis_entry_head -%}
+
+{%- block collection_widget -%}
+    {%- if prototype is defined and not prototype.rendered -%}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype), 'data-prototype-name': prototype.vars.name}) -%}
+    {%- endif -%}
+    {%- set attr = attr|merge({
+        class: ('collection ' ~ attr.class|default(''))|trim,
+        'data-allow-add': allow_add ? 1 : 0,
+        'data-allow-remove': allow_delete ? 1 : 0,
+        'aria-labelledby': id ~ '_label',
+        role: 'group',
+    }) -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form -%}
+            {{- form_row(child) -}}
+        {%- endfor -%}
+    </div>
+{%- endblock collection_widget -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul class="form-errors{{ form.parent is null ? ' form-errors-top' : '' }}">
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{%- block form_help -%}
+    {%- if help is not empty -%}
+        <p id="{{ id }}_help" class="help-text">{{ help|trans(help_translation_parameters, translation_domain) }}</p>
+    {%- endif -%}
+{%- endblock form_help -%}
+
+{%- block button_row -%}
+    {{- form_widget(form) -}}
+{%- endblock button_row -%}
+
+{%- block button_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('btn btn-primary'))|trim}) -%}
+    {{- parent() -}}
+{%- endblock button_widget -%}

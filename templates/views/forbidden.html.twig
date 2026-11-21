@@ -1,11 +1,11 @@
 {% extends "base.html.twig" %}
 
+{% block title %}Not signed in{% endblock %}
+{% block nav %}{% endblock %}
+
 {% block content %}
-
-    <div class="alert alert-error">
-        <strong>Sorry</strong>, you could not have been authenticated.
-    </div>
-
+<div class="signin">
+  <h1>You could not be signed in</h1>
+  <p class="lead">Check the username and password, then <a href="{{ path('login') }}">try again</a>.</p>
+</div>
 {% endblock %}
-
-

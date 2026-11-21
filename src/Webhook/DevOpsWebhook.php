@@ -27,7 +27,12 @@ class DevOpsWebhook extends AbstractWebhook
      */
     protected function validate(Request $request): void
     {
-        if ($request->headers->get(self::HTTP_TOKEN) !== $this->secret) {
+        // The header is one the service hook is set up to send, under "HTTP headers".
+        $token = $request->headers->get(self::HTTP_TOKEN);
+        $matches = null === $token || null === $this->secret
+            ? $token === $this->secret
+            : hash_equals($this->secret, $token);
+        if (!$matches) {
             throw new \InvalidArgumentException('Invalid Token');
         }
     }
@@ -37,25 +42,41 @@ class DevOpsWebhook extends AbstractWebhook
      */
     protected function getRepository(Request $request): RepositoryInterface
     {
-        $content = json_decode($request->getContent(), true);
-        if (
-            !is_array($content)
-            || !array_key_exists('resource', $content)
-            || !is_array($content['resource'])
-            || !array_key_exists('repository', $content['resource'])
-            || !is_array($content['resource']['repository'])
-            || !array_key_exists('url', $content['resource']['repository'])
-            || empty($content['resource']['repository']['url'])
-        ) {
+        $repository = $this->getPayload($request)['resource']['repository'] ?? null;
+        if (!is_array($repository)) {
             throw new \InvalidArgumentException('Invalid Request');
         }
-        $repositoryUrlHttp = $content['resource']['repository']['url'];
-        $repositoryUrlPattern = preg_replace('/(https:\/\/)([^\/]+)(.+)/', '$3', $repositoryUrlHttp);
-        $repository = $this->manager->findByUrl('#'.$repositoryUrlPattern.'$#');
-        if (!$repository instanceof RepositoryInterface) {
+
+        // remoteUrl is the clone URL; url is the repository's REST API URL,
+        // kept for deliveries that put a clone URL there.
+        $patterns = [];
+        foreach (['remoteUrl', 'url'] as $key) {
+            $url = $repository[$key] ?? null;
+            if (!is_string($url) || !str_starts_with($url, 'https://')) {
+                continue;
+            }
+            $path = (string) parse_url($url, PHP_URL_PATH);
+            if ('' === $path || '/' === $path) {
+                continue;
+            }
+            // Matched by path, since a clone URL may carry a user name.
+            $patterns[] = '#' . preg_quote($path, '#') . '$#i';
+            if (preg_match('#^/([^/]+)/([^/]+)/_git/([^/]+)$#', $path, $parts)) {
+                $patterns[] = '#[:/]v3/' . preg_quote("{$parts[1]}/{$parts[2]}/{$parts[3]}", '#') . '$#i';
+            }
+        }
+        if (is_string($repository['sshUrl'] ?? null) && '' !== $repository['sshUrl']) {
+            $patterns[] = '#^' . preg_quote($repository['sshUrl'], '#') . '$#i';
+        }
+        if ([] === $patterns) {
+            throw new \InvalidArgumentException('Invalid Request');
+        }
+
+        $found = $this->findRepository($patterns);
+        if (!$found instanceof RepositoryInterface) {
             throw new \InvalidArgumentException('Invalid Repository');
         }
 
-        return $repository;
+        return $found;
     }
 }

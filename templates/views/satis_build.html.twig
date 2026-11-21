@@ -1,26 +1,23 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Satis build{% endblock %}
+{% block title %}Build{% endblock %}
 
 {% block content %}
-    <pre id="satisOutput"></pre>
-{% endblock %}
+  <div class="page-head">
+    <div>
+      <h1>Build</h1>
+      <p class="lead">Builds run in the worker, one at a time. A webhook queues a build of the repository that was pushed to. A full build rebuilds everything in satis.json.</p>
+    </div>
+    {{ form_start(form) }}
+      {{ form_widget(form.build) }}
+    {{ form_end(form) }}
+  </div>
 
-{% block javascript %}
-    <script type="text/javascript">
-    $(function(){
-        var output = $("#satisOutput");
-        var outputSource = new EventSource("{{ path('satis_build_run') }}");
-        outputSource.onmessage = function(event){
-            if (event.data == '__done__') {
-                outputSource.close();
-                return;
-            }
-            output
-                .append(event.data)
-                .append("\n");
-            window.scrollTo(0, document.body.scrollHeight);
-        };
-    });
-    </script>
+  <section class="panel" aria-labelledby="log-title">
+    <div class="panel-body" data-build-status="{{ path('satis_build_status') }}" data-build-interval="2000">
+      {% include 'views/_build_state.html.twig' %}
+      <h2 id="log-title" class="visually-hidden">Last build log</h2>
+      <pre class="log log-full" data-build-log data-follow>{{ build.log|trim }}</pre>
+    </div>
+  </section>
 {% endblock %}

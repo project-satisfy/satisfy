@@ -21,7 +21,7 @@ class ApplicationKernelTest extends WebTestCase
             $crawler = $client->request('GET', '/');
             $response = $client->getResponse();
             $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-            self::assertPageTitleSame('Composer Repository currently not available');
+            self::assertPageTitleContains('Catalogue not built yet');
         } finally {
             if (isset($renamed)) {
                 $filesystem->rename($renamed, $webDir.'/index.html');

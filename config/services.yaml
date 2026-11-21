@@ -7,6 +7,8 @@ parameters:
     secret: '%env(APP_SECRET)%'
     satis_filename: '%env(resolve:SATIS_CONFIG)%'
     satis_log_path: '%env(resolve:SATIS_LOG)%'
+    satisfy.queue_dir: '%env(resolve:SATISFY_QUEUE_DIR)%'
+    satisfy.build_timeout: '%env(int:SATISFY_BUILD_TIMEOUT)%'
     admin.auth: false
     admin.users: {  }
     composer.home: '%env(resolve:COMPOSER_HOME)%'
@@ -14,7 +16,7 @@ parameters:
     log.handler: 'file_log'
     log.level: 'error'
     github.secret: '%env(GITHUB_SECRET)%'
-    github.source_urls: [ 'git_url', 'ssh_url', 'clone_url', 'svn_url' ]
+    github.source_urls: [ 'clone_url', 'ssh_url', 'git_url', 'svn_url', 'html_url' ]
     github.auto_add_repo: false
     github.auto_add_repo_type: false
     gitlab.secret: '%env(GITLAB_SECRET)%'
@@ -22,10 +24,11 @@ parameters:
     gitlab.auto_add_repo_type: ~
     gitlab.prefer_ssh_url_type: false
     gitea.secret: '%env(GITEA_SECRET)%'
-    gitea.source_urls: [ 'git_url', 'ssh_url', 'clone_url', 'svn_url' ]
+    gitea.source_urls: [ 'clone_url', 'ssh_url', 'git_url', 'svn_url', 'html_url' ]
     gitea.auto_add_repo: false
     gitea.auto_add_repo_type: false
     devops.secret: '%env(DEVOPS_SECRET)%'
+    bitbucket.secret: '%env(BITBUCKET_SECRET)%'
 
 services:
     # default configuration for services in *this* file
@@ -109,12 +112,21 @@ services:
         public: true
         arguments:
             $satisFilename: "%satis_filename%"
+            $timeout: "%satisfy.build_timeout%"
+            $logFile: "%kernel.logs_dir%/build.log"
+
+    Playbloom\Queue\BuildQueue:
+        public: true
+        arguments:
+            $queueDir: "%satisfy.queue_dir%"
         tags:
             - { name: kernel.event_listener, event: Playbloom\Event\BuildEvent, method: onBuild }
 
     ### Webhook handlers
     Playbloom\Webhook\BitbucketWebhook:
         public: true
+        calls:
+            - [ setSecret, [ "%bitbucket.secret%" ] ]
 
     Playbloom\Webhook\GithubWebhook:
         public: true

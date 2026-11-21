@@ -2,7 +2,6 @@
 
 namespace Playbloom\Tests\Persister;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use org\bovigo\vfs\vfsStreamFile;
 use Playbloom\Model\Configuration;
 use Playbloom\Model\PackageConstraint;
@@ -89,12 +88,12 @@ class FilePersisterTest extends KernelTestCase
 
         self::bootKernel();
 
-        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader(new AnnotationReader()));
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
         $serializer = new Serializer(
             [
                 new ConfigurationNormalizer(),
                 new ObjectNormalizer(
-                    classMetadataFactory: new ClassMetadataFactory(new AttributeLoader(new AnnotationReader())),
+                    classMetadataFactory: new ClassMetadataFactory(new AttributeLoader()),
                     nameConverter: new MetadataAwareNameConverter($classMetadataFactory, new CamelCaseToSnakeCaseNameConverter()),
                     propertyTypeExtractor: new PropertyInfoExtractor([], [new PhpDocExtractor(), new ReflectionExtractor()])
                 ),
@@ -117,7 +116,7 @@ class FilePersisterTest extends KernelTestCase
         $this->assertCount(1, $repositories);
         $this->assertIsString($repositories->key());
         $this->assertInstanceOf(RepositoryInterface::class, $repositories->current());
-        self::assertIsArray($stability = $config->getMinimumStabilityPerPackage());
+        $stability = $config->getMinimumStabilityPerPackage();
         self::assertArrayHasKey(0, $stability);
 
         // append additional repo

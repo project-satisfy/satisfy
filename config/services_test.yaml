@@ -3,4 +3,5 @@ parameters:
     log.level: 'error'
     satis_filename: "vfs://root/satis.json"
     satis_log_path: "vfs://root/satis/"
+    satisfy.queue_dir: "%kernel.cache_dir%/queue"
     admin.auth: false

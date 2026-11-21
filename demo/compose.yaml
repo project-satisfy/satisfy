@@ -1,0 +1,42 @@
+# The demo of the mcp and diagnosis plugins: Satisfy with both enabled, and a
+# config/satis.json whose first build fails. demo/README.md walks through it.
+name: satisfy-demo
+
+services:
+  # Copies config/satis.json into the satis-config volume the first time, owned
+  # by the web server's user, so that the MCP tools can change it. Removing the
+  # volume (docker compose down -v) starts the demo over.
+  config:
+    image: ghcr.io/fivepaths/satisfy:4.x
+    entrypoint: ["sh", "-c", "test -f /srv/satis/satis.json || install -o www-data -g www-data -m 0664 /seed/satis.json /srv/satis/satis.json; chown www-data:www-data /srv/satis"]
+    volumes:
+      - ./config:/seed:ro
+      - satis-config:/srv/satis
+
+  satisfy:
+    # Published from this branch; `docker compose up --build` builds it from the
+    # checkout instead.
+    image: ghcr.io/fivepaths/satisfy:4.x
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    depends_on:
+      config:
+        condition: service_completed_successfully
+    ports:
+      - "${SATISFY_PORT:-8000}:80"
+    volumes:
+      - satis-config:/srv/satis
+    environment:
+      SATIS_CONFIG: /srv/satis/satis.json
+      SATISFY_PLUGINS: mcp,diagnosis
+      SATISFY_MCP_ALLOWED_HOSTS: ${SATISFY_MCP_ALLOWED_HOSTS:-}
+      SATISFY_DIAGNOSIS_URL: ${SATISFY_DIAGNOSIS_URL:-}
+      SATISFY_DIAGNOSIS_MODEL: ${SATISFY_DIAGNOSIS_MODEL:-}
+      SATISFY_DIAGNOSIS_API_KEY: ${SATISFY_DIAGNOSIS_API_KEY:-}
+    extra_hosts:
+      # An Ollama on the host, on Linux as on Docker Desktop.
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  satis-config:

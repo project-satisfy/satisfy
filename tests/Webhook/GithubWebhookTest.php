@@ -4,6 +4,8 @@ namespace Playbloom\Tests\Webhook;
 
 use PHPUnit\Framework\TestCase;
 use Playbloom\Event\BuildEvent;
+use Playbloom\Event\RepositoryAddingEvent;
+use Playbloom\Event\WebhookReceivedEvent;
 use Playbloom\Model\Repository;
 use Playbloom\Service\Manager;
 use Playbloom\Webhook\GithubWebhook;
@@ -12,7 +14,6 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class GithubWebhookTest extends TestCase
@@ -63,12 +64,9 @@ class GithubWebhookTest extends TestCase
         $handler = new GithubWebhook($manager->reveal(), $dispatcher->reveal());
         $response = $handler->getResponse($request);
 
-        $this->assertInstanceOf(StreamedResponse::class, $response);
-        ob_start();
-        $response->sendContent();
-        $result = ob_get_clean();
-
-        $this->assertEquals('OK', $result);
+        // The mock ran the build in place, as 3.x did; the queue answers 202.
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('0', $response->getContent());
     }
 
     public function testValidRequestWithRepoAutoAdd(): void
@@ -77,7 +75,7 @@ class GithubWebhookTest extends TestCase
         $manager
             ->findByUrl(Argument::type('string'))
             ->willReturn(null)
-            ->shouldBeCalledTimes(4);
+            ->shouldBeCalledTimes(5);
 
         $manager
             ->add(Argument::type(Repository::class))
@@ -96,17 +94,16 @@ class GithubWebhookTest extends TestCase
             ->shouldBeCalledTimes(1);
 
         $request = self::createRequest(file_get_contents(__DIR__ . '/../fixtures/github-push.json'));
+        $request->headers->set('X-Hub-Signature-256', 'sha256=' . hash_hmac('sha256', $request->getContent(), 'secret'));
         $handler = new GithubWebhook($manager->reveal(), $dispatcher->reveal());
+        $handler->setSecret('secret');
         $handler->setAutoAdd(true);
         $handler->setAutoAddType('github');
         $response = $handler->getResponse($request);
 
-        $this->assertInstanceOf(StreamedResponse::class, $response);
-        ob_start();
-        $response->sendContent();
-        $result = ob_get_clean();
-
-        $this->assertEquals('OK', $result);
+        // The mock ran the build in place, as 3.x did; the queue answers 202.
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('0', $response->getContent());
     }
 
     protected static function createRequest($content, string $event = 'push'): Request
@@ -127,6 +124,11 @@ class GithubWebhookTest extends TestCase
 
     protected function getDispatcherMock(): ObjectProphecy
     {
-        return $this->prophesize(EventDispatcher::class);
+        $dispatcher = $this->prophesize(EventDispatcher::class);
+        // Dispatched on every delivery; nothing in these tests listens to them.
+        $dispatcher->dispatch(Argument::type(WebhookReceivedEvent::class))->willReturnArgument(0);
+        $dispatcher->dispatch(Argument::type(RepositoryAddingEvent::class))->willReturnArgument(0);
+
+        return $dispatcher;
     }
 }
