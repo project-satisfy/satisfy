@@ -75,6 +75,21 @@ class WebhookReceivedEvent extends Event
     }
 
     /**
+     * The branch this delivery reports as pushed, or null for anything else,
+     * including a deleted branch. Of several, the first.
+     */
+    public function getPushedBranch(): ?string
+    {
+        foreach ($this->getRefUpdates() as [$ref, $deleted]) {
+            if (!$deleted && str_starts_with($ref, 'refs/heads/') && 'refs/heads/' !== $ref) {
+                return substr($ref, strlen('refs/heads/'));
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * The refs a push delivery updated, each as [ref, deleted], in the shape
      * each provider sends them.
      *
