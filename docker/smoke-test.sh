@@ -4,8 +4,8 @@
 # nginx serves the catalogue as files, PHP serves the admin UI and webhooks,
 # the worker builds what is queued, and no process serving HTTP holds
 # COMPOSER_AUTH. Then the cases a 3.x deployment brings with it: a public/
-# volume an older image filled, a mounted parameters.yml, and the web server
-# and the worker in separate containers.
+# volume an older image filled, a mounted parameters.yml, the web server and
+# the worker in separate containers, and both starting at once on one volume.
 #
 # Usage: docker/smoke-test.sh <image>
 
@@ -248,6 +248,24 @@ wait_for 200 /packages.json
 expect 200 /packages.json
 echo "ok   a build queued through the web container was built by the worker container"
 docker rm -f "$prefix-web" "$prefix-worker" >/dev/null
+
+echo "-- a web and a worker container started at once on one public/ volume an older image filled"
+volume "$prefix-race"
+docker run --rm -v "$prefix-race:/p" --entrypoint sh "$image" -c '
+  printf "<?php exit(1);\n" > /p/index.php
+  chown -R www-data:www-data /p'
+race=(-v "$dir/satis.json:/var/www/html/satis.json" -v "$prefix-race:/var/www/html/public")
+start "$prefix-race-worker" "${race[@]}" "$image" worker
+start "$prefix-race-web" -p "127.0.0.1:$port:80" "${race[@]}" "$image" web
+wait_for 200 /login
+expect 200 /login
+sleep 2
+for c in "$prefix-race-worker" "$prefix-race-web"; do
+  [ "$(docker inspect -f '{{.State.Running}}' "$c")" = true ] || { name="$c"; fail "$c stopped"; }
+done
+docker exec "$prefix-race-web" grep -q 'exit(1)' public/index.php && fail "the old front controller was kept"
+echo "ok   only the web container put the image's files in the shared volume, and both kept running"
+docker rm -f "$prefix-race-web" "$prefix-race-worker" >/dev/null
 
 echo "-- the authz and hookgate plugins"
 start "$prefix-plugins" -p "127.0.0.1:$port:80" \

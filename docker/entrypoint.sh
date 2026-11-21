@@ -22,11 +22,16 @@ if [ "$(id -u)" -eq 0 ]; then
   as_app=(env HOME=/var/www setpriv --reuid=www-data --regid=www-data --init-groups)
 fi
 
+# prepare [serves]: "serves" for the roles that answer HTTP requests.
 prepare() {
   # A volume mounted on public/ keeps whatever image first filled it. Put this
   # image's front controller and assets back; the catalogue's files are left alone.
-  if [ "${SATISFY_SYNC_PUBLIC:-1}" = 1 ]; then
-    cp -a /usr/local/share/satisfy-public/. "$app/public/"
+  # Only the roles that serve them do it, so a worker sharing the volume does not
+  # race the web role. Two web containers starting at once can still both create
+  # one file, which makes cp fail; the second pass finds every file there.
+  if [ "${1:-}" = serves ] && [ "${SATISFY_SYNC_PUBLIC:-1}" = 1 ]; then
+    cp -a /usr/local/share/satisfy-public/. "$app/public/" 2>/dev/null \
+      || cp -a /usr/local/share/satisfy-public/. "$app/public/"
   fi
   queue="${SATISFY_QUEUE_DIR:-$app/var/queue}"
   mkdir -p "$app/var" "$queue"
@@ -130,13 +135,13 @@ supervise() {
 role="${1:-all}"
 case "$role" in
   all)
-    prepare
+    prepare serves
     start_web
     start_worker
     supervise
     ;;
   web)
-    prepare
+    prepare serves
     start_web
     supervise
     ;;

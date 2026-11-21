@@ -78,7 +78,7 @@ The delete page's form is checked for its CSRF token, as every other admin form 
 - nginx serves `packages.json`, `p2/`, `include/`, `dist/` and the HTML catalogue from `public/` directly. PHP serves only the admin UI, `/login` and `/webhook/*`, and its responses carry `X-Frame-Options: DENY` and `X-Content-Type-Options: nosniff`.
 - nginx and php-fpm start without `COMPOSER_AUTH`; only the worker gets it. A Composer `auth.json` mounted into `/var/www/.composer` is still readable by every process in the container, so mount it into a separate worker container if that matters to you (README, "Running the web server and the worker apart").
 - The configuration is compiled afresh on every start, so a changed `parameters.yml` or environment takes effect without `cache:clear`.
-- If `public/` is a volume, the entrypoint copies the image's `index.php` and assets back into it on every start, because a volume keeps whatever image first filled it, and 3.x's `index.php` does not run on 4.0. The catalogue's files are not touched. Set `SATISFY_SYNC_PUBLIC=0` to stop it, as `docker-compose.yml` does for development.
+- If `public/` is a volume, the entrypoint of the `all` and `web` roles copies the image's `index.php` and assets back into it on every start, because a volume keeps whatever image first filled it, and 3.x's `index.php` does not run on 4.0. The catalogue's files are not touched. Set `SATISFY_SYNC_PUBLIC=0` to stop it, as `docker-compose.yml` does for development.
 - In the image the queue is `/var/www/queue` (`SATISFY_QUEUE_DIR`), a volume of its own, so separate web and worker containers can share it.
 - The image is published to GHCR by `.github/workflows/docker-image.yaml`, after `docker/smoke-test.sh` has passed against it.
 
