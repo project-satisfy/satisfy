@@ -61,8 +61,14 @@ class Kernel extends BaseKernel
         $routes->import($configDir . '/{routes}/*.yaml');
         $routes->import($configDir . '/routes.yaml');
         foreach ($this->getBundles() as $bundle) {
-            if ($bundle instanceof AbstractPlugin && null !== $path = $bundle->getControllerPath()) {
+            if (!$bundle instanceof AbstractPlugin) {
+                continue;
+            }
+            if (null !== $path = $bundle->getControllerPath()) {
                 $routes->import(['path' => $path, 'namespace' => $bundle->getNamespace() . '\\Controller'], 'attribute');
+            }
+            if (null !== $path = $bundle->getRoutesPath()) {
+                $routes->import($path);
             }
         }
     }

@@ -50,7 +50,13 @@
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.0",
         "symfony/property-access": "7.4.*",
-        "symfony/rate-limiter": "7.4.*"
+        "symfony/rate-limiter": "7.4.*",
+        "symfony/mcp-bundle": "^1.0@beta",
+        "nyholm/psr7": "^1.8",
+        "symfony/ai-agent": "^1.0@beta",
+        "symfony/ai-platform": "^1.0@beta",
+        "symfony/ai-store": "^1.0@beta",
+        "symfony/ai-generic-platform": "^1.0@beta"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6",
@@ -69,7 +75,9 @@
         "psr-4": {
             "Playbloom\\": "src/",
             "Playbloom\\Plugin\\Authz\\": "plugins/Authz/src/",
-            "Playbloom\\Plugin\\Hookgate\\": "plugins/Hookgate/src/"
+            "Playbloom\\Plugin\\Diagnosis\\": "plugins/Diagnosis/src/",
+            "Playbloom\\Plugin\\Hookgate\\": "plugins/Hookgate/src/",
+            "Playbloom\\Plugin\\Mcp\\": "plugins/Mcp/src/"
         }
     },
     "autoload-dev": {

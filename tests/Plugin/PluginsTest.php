@@ -6,7 +6,9 @@ use PHPUnit\Framework\TestCase;
 use Playbloom\Kernel;
 use Playbloom\Plugin\Authz\AuthzBundle;
 use Playbloom\Plugin\Hookgate\HookgateBundle;
+use Playbloom\Plugin\Mcp\McpServerBundle;
 use Playbloom\Plugin\Plugins;
+use Symfony\AI\McpBundle\McpBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 
 class PluginsTest extends TestCase
@@ -18,6 +20,14 @@ class PluginsTest extends TestCase
             HookgateBundle::class => ['all' => true],
             TwigBundle::class => ['all' => true],
         ], Plugins::bundles(' authz , Hookgate,,' . TwigBundle::class));
+    }
+
+    public function testAPluginBringsTheBundlesItNeedsAheadOfIt(): void
+    {
+        $this->assertSame([
+            McpBundle::class => ['all' => true],
+            McpServerBundle::class => ['all' => true],
+        ], Plugins::bundles('mcp'));
     }
 
     /**

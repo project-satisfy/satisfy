@@ -3,7 +3,9 @@
 namespace Playbloom\Plugin;
 
 use Playbloom\Plugin\Authz\AuthzBundle;
+use Playbloom\Plugin\Diagnosis\DiagnosisBundle;
 use Playbloom\Plugin\Hookgate\HookgateBundle;
+use Playbloom\Plugin\Mcp\McpServerBundle;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -17,7 +19,9 @@ final class Plugins
      */
     public const BUILT_IN = [
         'authz' => AuthzBundle::class,
+        'diagnosis' => DiagnosisBundle::class,
         'hookgate' => HookgateBundle::class,
+        'mcp' => McpServerBundle::class,
     ];
 
     /**
@@ -30,6 +34,11 @@ final class Plugins
             $class = self::BUILT_IN[strtolower($name)] ?? $name;
             if (!is_a($class, BundleInterface::class, true)) {
                 throw new \InvalidArgumentException(sprintf('SATISFY_PLUGINS names "%s", which is neither a plugin in this release nor a bundle class.', $name));
+            }
+            if (is_a($class, AbstractPlugin::class, true)) {
+                foreach ($class::requiredBundles() as $required) {
+                    $bundles[$required] = ['all' => true];
+                }
             }
             $bundles[$class] = ['all' => true];
         }

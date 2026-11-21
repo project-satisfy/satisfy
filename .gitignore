@@ -11,6 +11,8 @@ config/parameters.yml
 
 # Satis default configuration
 satis.json
+!/demo/config/satis.json
+/demo/.env
 public/packages.json
 public/index.html
 public/include/*

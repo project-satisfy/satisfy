@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Playbloom\Plugin\Diagnosis\:
+        resource: '../src/'
+        exclude:
+            - '../src/DiagnosisBundle.php'
+            # Made for each diagnosis, around that build's log.
+            - '../src/Tool/'
+
+    Playbloom\Plugin\Diagnosis\DiagnosisConfig:
+        factory: [ Playbloom\Plugin\Diagnosis\DiagnosisConfig, fromEnvironment ]
+        arguments: [ '%kernel.project_dir%' ]

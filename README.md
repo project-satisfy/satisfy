@@ -2,6 +2,8 @@
 
 [Satis Composer repository manager](https://getcomposer.org/doc/articles/handling-private-packages.md) with a web UI.
 
+[demo/README.md](demo/README.md) runs the [`mcp`](plugins/Mcp/README.md) and [`diagnosis`](plugins/Diagnosis/README.md) plugins with Docker: from `git clone` to Claude Code fixing a failed build and publishing a package.
+
 <p>
   <a href="docs/images/admin.png"><img src="docs/images/admin.png" width="420" alt="Repositories, beside the build queue, the sites asking for packages and the composer.json snippet"></a>
   <a href="docs/images/edit-repository.png"><img src="docs/images/edit-repository.png" width="420" alt="Editing a repository, with the satis.json entry it writes"></a>
@@ -18,7 +20,7 @@ Satisfy provides:
 * webhook endpoints for GitLab, GitHub, Gitea, Bitbucket and Azure DevOps, which queue a build of the repository pushed to
 * a worker that runs the queued builds, so no web request waits for Satis
 * Satis itself
-* optional plugins, enabled with `SATISFY_PLUGINS`: per-token access to the catalogue with per-package grants (`authz`), and a registration gate and publishing on tag for GitLab system hooks (`hookgate`). See [docs/plugins.md](docs/plugins.md), and each plugin's README: [authz](plugins/Authz/README.md), [hookgate](plugins/Hookgate/README.md)
+* optional plugins, enabled with `SATISFY_PLUGINS`: per-token access to the catalogue with per-package grants (`authz`), a registration gate and publishing on tag for GitLab system hooks (`hookgate`), an MCP server for agents (`mcp`), and a diagnosis of failed builds by a model (`diagnosis`). See [docs/plugins.md](docs/plugins.md), and each plugin's README: [authz](plugins/Authz/README.md), [hookgate](plugins/Hookgate/README.md), [mcp](plugins/Mcp/README.md), [diagnosis](plugins/Diagnosis/README.md)
 
 Satisfy saves you hand-editing `satis.json`. Every change made in the admin UI is written to the file; the repository pages show the entry they write, and the configuration page gives each option's key.
 

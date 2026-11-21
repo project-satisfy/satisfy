@@ -1,0 +1,4 @@
+# The route of the MCP server the plugin configures, at /admin/mcp.
+mcp:
+    resource: .
+    type: mcp
