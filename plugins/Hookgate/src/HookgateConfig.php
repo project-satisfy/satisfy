@@ -11,10 +11,13 @@ namespace Playbloom\Plugin\Hookgate;
  *  HOOKGATE_PACKAGE_TYPES     the Composer types published, comma-separated
  *  HOOKGATE_CHECKER           a command that checks a candidate satis.json before auto-require writes it
  *  HOOKGATE_DRUPAL_ORG_P2     where to ask whether drupal.org serves a drupal/ name
+ *  HOOKGATE_REFORWARD_DELAY   seconds after a branch push to build it once more (default 35; 0 is off)
  */
 final class HookgateConfig
 {
     public const MODES = ['off', 'observe', 'on'];
+
+    public const REBUILD_DELAY = 35;
 
     /**
      * @param string[] $packageTypes
@@ -26,6 +29,7 @@ final class HookgateConfig
         private readonly array $packageTypes,
         private readonly ?string $checker,
         private readonly string $drupalOrg,
+        private readonly int $rebuildDelay = self::REBUILD_DELAY,
     ) {
     }
 
@@ -33,6 +37,7 @@ final class HookgateConfig
     {
         $mode = strtolower(trim((string) self::env('HOOKGATE_AUTO_REQUIRE')));
         $types = self::env('HOOKGATE_PACKAGE_TYPES');
+        $delay = self::env('HOOKGATE_REFORWARD_DELAY');
 
         return new self(
             self::env('HOOKGATE_GITLAB_API_TOKEN') ?? self::env('GITLAB_API_TOKEN'),
@@ -43,6 +48,7 @@ final class HookgateConfig
                 : array_values(array_filter(array_map(static fn (string $type) => strtolower(trim($type)), explode(',', $types)), static fn (string $type): bool => '' !== $type)),
             self::env('HOOKGATE_CHECKER'),
             rtrim(self::env('HOOKGATE_DRUPAL_ORG_P2') ?? 'https://packages.drupal.org/files/packages/8/p2', '/'),
+            null === $delay ? self::REBUILD_DELAY : max(0, (int) $delay),
         );
     }
 
@@ -85,6 +91,15 @@ final class HookgateConfig
     public function getDrupalOrg(): string
     {
         return $this->drupalOrg;
+    }
+
+    /**
+     * Seconds after a GitLab branch push to build its repository once more;
+     * 0 turns that off.
+     */
+    public function getRebuildDelay(): int
+    {
+        return $this->rebuildDelay;
     }
 
     private static function env(string $name): ?string

@@ -137,4 +137,38 @@ class BuildQueueTest extends TestCase
 
         $this->assertTrue($queue->claim()->isFull());
     }
+    public function testDelayedRequestWaitsUntilDue(): void
+    {
+        $queue = new BuildQueue($this->dir);
+        $queue->enqueue('git@example.com:vendor/a.git', 60);
+
+        $this->assertSame(1, $queue->pending());
+        $this->assertNull($queue->claim());
+
+        $file = $this->dir . '/later-repo-' . sha1('git@example.com:vendor/a.git') . '.json';
+        $data = json_decode((string) file_get_contents($file), true);
+        $data['not_before'] = time() - 1;
+        file_put_contents($file, json_encode($data));
+
+        $request = $queue->claim();
+        $this->assertNotNull($request);
+        $this->assertSame(['git@example.com:vendor/a.git'], $request->getRepositoryUrls());
+    }
+
+    public function testDelayedAndImmediateRequestsForOneRepositoryAreKeptApart(): void
+    {
+        $queue = new BuildQueue($this->dir);
+        $queue->enqueue('git@example.com:vendor/a.git');
+        $queue->enqueue('git@example.com:vendor/a.git', 60);
+        $queue->enqueue('git@example.com:vendor/a.git', 60);
+
+        $this->assertSame(2, $queue->pending());
+
+        $request = $queue->claim();
+        $this->assertCount(1, $request->getEntries());
+        $queue->complete($request);
+
+        $this->assertSame(1, $queue->pending());
+        $this->assertNull($queue->claim());
+    }
 }
