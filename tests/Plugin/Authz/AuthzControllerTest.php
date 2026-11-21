@@ -35,7 +35,7 @@ class AuthzControllerTest extends WebTestCase
         $client = self::createClient();
 
         $crawler = $client->request('GET', '/admin');
-        $this->assertCount(1, $crawler->selectLink('Package access: sites, tokens and grants'));
+        $this->assertCount(1, $crawler->selectLink('Package access'));
 
         $crawler = $client->request('GET', '/admin/authz');
         $this->assertResponseIsSuccessful();
@@ -43,13 +43,13 @@ class AuthzControllerTest extends WebTestCase
         $this->assertResponseRedirects('/admin/authz/site/site-a');
 
         $crawler = $client->followRedirect();
-        $this->assertSelectorTextContains('.panel-heading', 'Token issued');
-        $this->assertMatchesRegularExpression('/^[0-9a-f]{64}$/', trim($crawler->filter('.panel-body pre')->first()->text()));
+        $this->assertSelectorTextContains('.secret h2', 'Token issued');
+        $this->assertMatchesRegularExpression('/^[0-9a-f]{64}$/', trim($crawler->filter('.secret pre')->first()->text()));
 
         $client->submit($crawler->selectButton('Grant')->form(['package' => 'acme/app']));
         $crawler = $client->followRedirect();
-        $this->assertStringContainsString('Granted acme/app to site-a', $crawler->filter('.alert')->text());
-        $this->assertCount(0, $crawler->filter('.panel-body pre'), 'The token was shown a second time');
+        $this->assertStringContainsString('Granted acme/app to site-a', $crawler->filter('.flash')->text());
+        $this->assertCount(0, $crawler->filter('.secret pre'), 'The token was shown a second time');
 
         $crawler = $client->request('GET', '/admin/authz');
         $this->assertStringContainsString('a test site', $crawler->filter('table')->text());

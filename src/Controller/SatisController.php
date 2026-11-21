@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class SatisController extends AbstractProtectedController
 {
     #[Route('/admin/satis/build', name: 'satis_build', methods: ['GET', 'POST'])]
-    public function buildAction(Request $request, EventDispatcherInterface $dispatcher): Response
+    public function buildAction(Request $request, EventDispatcherInterface $dispatcher, BuildQueue $queue, SatisBuildRunner $runner): Response
     {
         $this->checkAccess();
 
@@ -35,7 +35,10 @@ class SatisController extends AbstractProtectedController
             return $this->redirectToRoute('satis_build');
         }
 
-        return $this->render('views/satis_build.html.twig', ['form' => $form->createView()]);
+        return $this->render('views/satis_build.html.twig', [
+            'form' => $form->createView(),
+            'build' => self::buildState($queue, $runner),
+        ]);
     }
 
     #[Route('/admin/satis/build/status', name: 'satis_build_status', methods: ['GET'])]
@@ -43,10 +46,21 @@ class SatisController extends AbstractProtectedController
     {
         $this->checkAccess();
 
-        return new JsonResponse([
+        return new JsonResponse(self::buildState($queue, $runner));
+    }
+
+    /**
+     * What the build page, its status endpoint and the admin home page show.
+     *
+     * @return array{pending: int, building: bool, log: string, updated: int|null}
+     */
+    public static function buildState(BuildQueue $queue, SatisBuildRunner $runner): array
+    {
+        return [
             'pending' => $queue->pending(),
             'building' => $queue->isBuilding(),
             'log' => $runner->getLastLog(),
-        ]);
+            'updated' => $runner->getLastLogTime(),
+        ];
     }
 }

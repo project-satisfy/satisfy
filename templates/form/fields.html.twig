@@ -1,38 +1,25 @@
-{% block PackageConstraintType_row %}
-    <div class="clearfix">
-    {{ form_errors(form) }}
-    {{ form_widget(form) }}
-    </div>
-{% endblock %}
+{# One row of each configuration collection: a package and its value. #}
 
-{% block PackageConstraintType_widget %}
-    <div class="col-sm-6">{{ form_widget(form.package) }} {{ form_errors(form.package) }}</div>
-    <div class="col-sm-4">{{ form_widget(form.constraint) }} {{ form_errors(form.constraint) }}</div>
-    <div class="col-sm-2 {{ form.parent.vars.id }}-collection-actions"></div>
+{% block PackageConstraintType_row %}
+    <div class="pair">
+        {{ form_widget(form.package, {attr: {'aria-label': 'Package name', class: 'mono'}}) }}
+        {{ form_widget(form.constraint, {attr: {'aria-label': 'Version constraint', class: 'mono'}}) }}
+        {{ form_errors(form) }}{{ form_errors(form.package) }}{{ form_errors(form.constraint) }}
+    </div>
 {% endblock %}
 
 {% block PackageStabilityType_row %}
-    <div class="clearfix">
-        {{ form_errors(form) }}
-        {{ form_widget(form) }}
+    <div class="pair">
+        {{ form_widget(form.package, {attr: {'aria-label': 'Package name', class: 'mono'}}) }}
+        {{ form_widget(form.stability, {attr: {'aria-label': 'Minimum stability'}}) }}
+        {{ form_errors(form) }}{{ form_errors(form.package) }}{{ form_errors(form.stability) }}
     </div>
-{% endblock %}
-
-{% block PackageStabilityType_widget %}
-    <div class="col-sm-6">{{ form_widget(form.package) }} {{ form_errors(form.package) }}</div>
-    <div class="col-sm-2">{{ form_widget(form.stability) }} {{ form_errors(form.stability) }}</div>
-    <div class="col-sm-2 {{ form.parent.vars.id }}-collection-actions"></div>
 {% endblock %}
 
 {% block AbandonedType_row %}
-    <div class="clearfix">
-        {{ form_errors(form) }}
-        {{ form_widget(form) }}
+    <div class="pair">
+        {{ form_widget(form.package, {attr: {'aria-label': 'Abandoned package', class: 'mono'}}) }}
+        {{ form_widget(form.replacement, {attr: {'aria-label': 'Replacement package or URL', class: 'mono'}}) }}
+        {{ form_errors(form) }}{{ form_errors(form.package) }}{{ form_errors(form.replacement) }}
     </div>
-{% endblock %}
-
-{% block AbandonedType_widget %}
-    <div class="col-sm-6">{{ form_widget(form.package) }} {{ form_errors(form.package) }}</div>
-    <div class="col-sm-4">{{ form_widget(form.replacement) }} {{ form_errors(form.replacement) }}</div>
-    <div class="col-sm-2 {{ form.parent.vars.id }}-collection-actions"></div>
 {% endblock %}

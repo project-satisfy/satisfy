@@ -95,6 +95,18 @@ class SatisBuildRunner
     }
 
     /**
+     * When the last build's log was last written, as a Unix timestamp.
+     */
+    public function getLastLogTime(): ?int
+    {
+        if (null === $this->logFile || !is_readable($this->logFile)) {
+            return null;
+        }
+
+        return filemtime($this->logFile) ?: null;
+    }
+
+    /**
      * @return string[]
      */
     public function getCommandLine(BuildRequest $request): array

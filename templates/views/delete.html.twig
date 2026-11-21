@@ -1,20 +1,35 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Delete repository{% endblock %}
+{% block page_class %}page-narrow{% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
-        <h2 class="form-signin-heading">
-            Delete repository ?
-        </h2>
+  <div class="page-head">
+    <div>
+      <p class="crumbs"><a href="{{ path('repository') }}">Repositories</a> /</p>
+      <h1>Delete this repository?</h1>
+      <span class="object-id">{{ repository.url }}</span>
+      <p class="lead">This removes the entry below from satis.json. The packages it provided stay in the catalogue until the next full build.</p>
+    </div>
+  </div>
 
-        <div class="control-group error">
-            <input type="text" disabled="disabled" value="{{ repository.url }}" class="input-block-level"/>
-        </div>
+  <section class="example" aria-labelledby="entry-title">
+    <div class="example-head">
+      <span class="example-no">Example #1</span>
+      <span class="example-title" id="entry-title">The entry this removes</span>
+    </div>
+    <pre>{
+    <span class="json-key">"type"</span>: <span class="json-str">{{ repository.type|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}</span>,
+    <span class="json-key">"url"</span>: <span class="json-str">{{ repository.url|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}</span>,
+    <span class="json-key">"installation-source"</span>: <span class="json-str">{{ repository.installationSource|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}</span>
+}</pre>
+  </section>
 
-        {{ form_errors(form) }}
-
-        {{ form_widget(form.submit, {label: 'Confirm deletion', attr: {class: 'btn btn-large btn-block btn-danger'}}) }}
-        <a href="{{ path('repository') }}" class="btn btn-large btn-block btn-inverse" >Cancel</a>
-    {{ form_end(form) }}
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="actions">
+      {{ form_widget(form.submit, {attr: {class: 'btn btn-danger-solid'}}) }}
+      <a class="btn btn-quiet" href="{{ path('repository_edit', {'repository': repository.id}) }}">Keep it</a>
+    </div>
+  {{ form_end(form) }}
 {% endblock %}

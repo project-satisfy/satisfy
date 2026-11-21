@@ -1,6 +1,6 @@
 twig:
     file_name_pattern: '*.twig'
-    form_themes: [ 'bootstrap_3_layout.html.twig' ]
+    form_themes: [ 'form/satisfy.html.twig' ]
     globals:
         satis: '@Playbloom\Model\Configuration'
 

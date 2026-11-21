@@ -30,6 +30,14 @@ Without the image:
 - A webhook delivery that a plugin skips, or whose auto-add a plugin refuses, is answered 200 with `skipped: <reason>`.
 - For code that extends Satisfy: two new events, `WebhookReceivedEvent` and `RepositoryAddingEvent`; `AbstractWebhook::addRepository()` dispatches the second before an auto-add, and the GitLab, GitHub and Gitea webhooks use it. `Manager::modify()` applies a change to `satis.json` under the lock, and `JsonPersister::serialize()` gives the JSON a flush would write.
 
+## The admin UI no longer uses Bootstrap or jQuery
+
+- The admin pages keep their URLs and form field names, and are restyled by one stylesheet, `public/css/satisfy.css`, and one script, `public/js/satisfy.js`. Bootstrap 3, jQuery, `jquery.collection.js` and the glyphicon fonts are gone from `public/`.
+- The forms use the `form/satisfy.html.twig` theme instead of `bootstrap_3_layout.html.twig`. A template of your own that extends `base.html.twig` and relies on Bootstrap's classes needs restyling.
+- The home page shows the build's state and the last lines of its log beside the repository list; the configuration page shows each option's `satis.json` key; the repository pages show the entry they write.
+- Plugin links from `AdminLinkInterface` are in the navigation rather than buttons on the home page. `AdminPanelInterface` adds a panel to the home page; `authz` lists the sites asking for packages there.
+- `/admin/satis/build/status` also returns `updated`, when the last build's log was written, as a Unix timestamp or `null`.
+
 ## Auto-add needs the webhook's secret
 
 - `gitlab.auto_add_repo`, `github.auto_add_repo` and `gitea.auto_add_repo` add a repository only for a delivery checked against the webhook's secret: `GITLAB_SECRET`, `GITHUB_SECRET` or `GITEA_SECRET`. Without one, anyone who could reach the webhook could add a repository of theirs to `satis.json`, and the catalogue would publish its packages. Such a delivery for a repository `satis.json` does not list is answered `200 skipped: auto-add needs the webhook's secret to be set`.

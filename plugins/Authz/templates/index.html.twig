@@ -3,63 +3,88 @@
 {% block title %}Package access{% endblock %}
 
 {% block content %}
-    <h2>Package access</h2>
+    <div class="page-head">
+        <div>
+            <h1>Package access</h1>
+            <p class="lead">Each site fetches from the catalogue with its own token, sent as HTTP Basic credentials. A site under package enforcement gets only the packages granted to it and what they require.</p>
+        </div>
+    </div>
 
     {% if requests is not empty %}
-        <div class="panel panel-warning">
-            <div class="panel-heading">
-                {{ requests|length }} site{{ requests|length == 1 ? '' : 's' }} asking for packages
-            </div>
-            <ul class="list-group">
-                {% for name, rows in requests %}
-                    <li class="list-group-item">
-                        <span class="pull-right">
-                            {% include '@Authz/_action.html.twig' with {action: 'approve_all', site: name, back: 'index', label: 'Approve all ' ~ rows|length, class: 'btn-primary'} %}
-                        </span>
-                        <a href="{{ path('authz_site', {site: name}) }}"><code>{{ name }}</code></a>
-                        wants
-                        {% for row in rows %}<span class="label label-default">{{ row.package }}</span> {% endfor %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+        <section class="callout callout-now" aria-labelledby="requests-title">
+            <h2 id="requests-title">{{ requests|length }} site{{ requests|length == 1 ? '' : 's' }} asking for packages <span class="count">{{ requests|length }}</span></h2>
+            {% for name, rows in requests %}
+                <div class="setting">
+                    <div>
+                        <a class="request-site" href="{{ path('authz_site', {site: name}) }}">{{ name }}</a> asks for
+                        <div class="chips">{% for row in rows %}<span class="chip chip-now">{{ row.package }}</span>{% endfor %}</div>
+                    </div>
+                    {% include '@Authz/_action.html.twig' with {action: 'approve_all', site: name, back: 'index', label: 'Approve all ' ~ rows|length, class: 'btn-primary'} %}
+                </div>
+            {% endfor %}
+        </section>
     {% endif %}
 
-    <table class="table table-condensed table-striped">
-        <thead>
-            <tr><th>Site</th><th>State</th><th>Packages</th><th>Grants</th><th>Asking</th><th>Last seen</th><th>Note</th></tr>
-        </thead>
-        <tbody>
-            {% for name, s in sites %}
-                <tr>
-                    <td><a href="{{ path('authz_site', {site: name}) }}"><code>{{ name }}</code></a></td>
-                    <td>{{ s.active ? 'active' : 'revoked' }}</td>
-                    <td>{{ s.package_enforce ? 'enforcing' : 'observing' }}</td>
-                    <td>{{ s.grants }}</td>
-                    <td>{{ s.pending ?: '' }}</td>
-                    <td>{{ observed[name] is defined ? observed[name].last|date('Y-m-d H:i') : 'never' }}</td>
-                    <td>{{ s.note }}</td>
-                </tr>
-            {% else %}
-                <tr><td colspan="7">No sites yet.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section class="section" aria-labelledby="sites-title">
+        <h2 id="sites-title">Sites</h2>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Site</th>
+                        <th scope="col">Token</th>
+                        <th scope="col">Packages</th>
+                        <th scope="col" class="col-end">Grants</th>
+                        <th scope="col" class="col-end">Asking</th>
+                        <th scope="col" class="col-hide-sm">Last seen</th>
+                        <th scope="col" class="col-hide-sm">Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name, s in sites %}
+                        <tr>
+                            <td><a class="url" href="{{ path('authz_site', {site: name}) }}"><b>{{ name }}</b></a></td>
+                            <td><span class="badge {{ s.active ? 'badge-ok' : 'badge-bad' }}">{{ s.active ? 'active' : 'revoked' }}</span></td>
+                            <td><span class="badge {{ s.package_enforce ? 'badge-php' : '' }}">{{ s.package_enforce ? 'enforcing' : 'observing' }}</span></td>
+                            <td class="col-end col-meta">{{ s.grants }}</td>
+                            <td class="col-end">{% if s.pending %}<span class="count">{{ s.pending }}</span>{% endif %}</td>
+                            <td class="col-meta col-hide-sm">{{ observed[name] is defined ? observed[name].last|date('Y-m-d H:i') : 'never' }}</td>
+                            <td class="col-hide-sm">{{ s.note }}</td>
+                        </tr>
+                    {% else %}
+                        <tr class="table-empty"><td colspan="7">No sites yet. Issue a token below to add the first one.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-    <h3>Issue a token</h3>
-    <form method="post" action="{{ path('authz_action') }}" class="form-inline">
-        <input type="hidden" name="_token" value="{{ csrf_token(csrf) }}">
-        <input type="hidden" name="action" value="issue">
-        <input class="form-control" name="site" placeholder="site name" required pattern="[A-Za-z0-9._\-]{1,64}">
-        <input class="form-control" name="note" placeholder="what it is" size="40">
-        <button class="btn btn-primary">Issue</button>
-    </form>
+    <section class="section" aria-labelledby="issue-title">
+        <h2 id="issue-title">Issue a token</h2>
+        <p class="section-lead">Creates the site and shows its token once. Only the token's hash is kept.</p>
+        <form method="post" action="{{ path('authz_action') }}" class="row-form">
+            <input type="hidden" name="_token" value="{{ csrf_token(csrf) }}">
+            <input type="hidden" name="action" value="issue">
+            <div class="field">
+                <label for="issue-site">Site name</label>
+                <input type="text" id="issue-site" class="mono" name="site" placeholder="shop-prod" required pattern="[A-Za-z0-9._\-]{1,64}" autocomplete="off">
+            </div>
+            <div class="field field-wide">
+                <label for="issue-note">Note</label>
+                <input type="text" id="issue-note" name="note" placeholder="What it is, who runs it">
+            </div>
+            <button class="btn btn-primary">Issue</button>
+        </form>
+    </section>
 
-    <h3>Credential enforcement</h3>
-    <p>
-        Currently <strong>{{ enforcing ? 'on' : 'off: requests are recorded and allowed' }}</strong>.
-        Requests seen without a valid token: <strong>{{ unauth }}</strong>, canary probes excluded.
-        Per-site package rules apply only while this is on.
-    </p>
-    {% include '@Authz/_action.html.twig' with {action: 'enforce', value: enforcing ? 'off' : 'on', label: enforcing ? 'Switch to permissive' : 'Enable enforcement', class: enforcing ? 'btn-default' : 'btn-danger'} %}
+    <section class="section" aria-labelledby="enforce-title">
+        <h2 id="enforce-title">Credential enforcement</h2>
+        <div class="setting">
+            <div>
+                <h3>{{ enforcing ? 'On: requests without a valid token are refused' : 'Off: requests are recorded and allowed' }}</h3>
+                <p>Requests seen without a valid token: <strong>{{ unauth }}</strong>, canary probes excluded. Per-site package rules apply only while this is on.</p>
+            </div>
+            {% include '@Authz/_action.html.twig' with {action: 'enforce', value: enforcing ? 'off' : 'on', label: enforcing ? 'Switch to permissive' : 'Enable enforcement', class: enforcing ? '' : 'btn-danger'} %}
+        </div>
+    </section>
 {% endblock %}

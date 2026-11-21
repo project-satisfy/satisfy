@@ -8,6 +8,6 @@ final class AdminLinks implements AdminLinkInterface
 {
     public function getAdminLinks(): array
     {
-        return ['Package access: sites, tokens and grants' => 'authz'];
+        return ['Package access' => 'authz'];
     }
 }

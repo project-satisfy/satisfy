@@ -1,10 +1,10 @@
 {# A one-button form posting one authz action. #}
-<form method="post" action="{{ path('authz_action') }}" class="form-inline" style="display:inline;padding:0;margin:0;background:none;border:0;box-shadow:none">
+<form method="post" action="{{ path('authz_action') }}" class="inline-form">
     <input type="hidden" name="_token" value="{{ csrf_token(csrf) }}">
     <input type="hidden" name="action" value="{{ action }}">
     <input type="hidden" name="site" value="{{ site|default('') }}">
     {% if package is defined %}<input type="hidden" name="package" value="{{ package }}">{% endif %}
     {% if value is defined %}<input type="hidden" name="value" value="{{ value }}">{% endif %}
     {% if back is defined %}<input type="hidden" name="back" value="{{ back }}">{% endif %}
-    <button class="btn btn-sm {{ class|default('btn-default') }}">{{ label }}</button>
+    <button class="btn btn-sm {{ class|default('') }}">{{ label }}</button>
 </form>

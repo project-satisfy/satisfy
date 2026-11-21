@@ -21,7 +21,7 @@ class IndexController extends AbstractController
     {
         $indexFile = $this->projectDir . '/public/index.html';
         if (!file_exists($indexFile)) {
-            return new Response($this->render('unavailable.html.twig'));
+            return $this->render('unavailable.html.twig');
         }
 
         // Streamed rather than read into memory: a large catalogue's page runs to megabytes.

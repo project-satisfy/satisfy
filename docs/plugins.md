@@ -20,7 +20,7 @@ The plugins in this repository live in `plugins/<Name>/`, extend `Playbloom\Plug
 | `templates/` | Twig templates, as `@<Name>/...` |
 | `README.md` | What it does, its configuration, and anything it stores |
 
-A service implementing `Playbloom\Plugin\AdminLinkInterface` adds buttons to the admin home page.
+A service implementing `Playbloom\Plugin\AdminLinkInterface` adds links to the admin navigation. One implementing `Playbloom\Plugin\AdminPanelInterface` adds a panel to the admin home page's side column, from a template and its context; `authz` uses it to list the sites asking for packages.
 
 ### Events
 

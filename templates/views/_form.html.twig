@@ -1,3 +1,24 @@
+{# The repository form, and the entry it writes to satis.json. #}
 {{ form_errors(form) }}
-{{ form_row(form.type, {'label': 'Type'}) }}
-{{ form_row(form.url, {'label': 'URL'}) }}
+<div class="form-card">
+  {{ form_row(form.type, {label: 'Type', help: 'vcs reads Git, Mercurial and Subversion hosts; composer reads another Composer repository; path reads a directory on this server.'}) }}
+  {{ form_row(form.url, {label: 'URL', attr: {class: 'mono', placeholder: 'git@github.com:vendor/package.git', autocomplete: 'off', spellcheck: 'false'}}) }}
+  {{ form_row(form.installationSource, {label: 'Installs from', help: 'Whether Composer installs this repository’s packages from dist archives or from source.'}) }}
+</div>
+
+{% set entry = {
+  type: form.type.vars.value ?: (form.type.vars.choices|first).value,
+  url: form.url.vars.value,
+  source: form.installationSource.vars.value ?: 'dist',
+} %}
+<section class="example" aria-labelledby="entry-title" data-repo-preview="{{ form.vars.id }}">
+  <div class="example-head">
+    <span class="example-no">Example #1</span>
+    <span class="example-title" id="entry-title">{{ example_title }}</span>
+  </div>
+  <pre aria-live="polite">{
+    <span class="json-key">"type"</span>: <span class="json-str" data-preview="type">{{ entry.type|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}</span>,
+    <span class="json-key">"url"</span>: <span class="json-str" data-preview="url">{{ entry.url|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}</span>,
+    <span class="json-key">"installation-source"</span>: <span class="json-str" data-preview="installationSource">{{ entry.source|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}</span>
+}</pre>
+</section>

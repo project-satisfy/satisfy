@@ -1,42 +1,91 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-<pre>
-    <span class="badge badge-info pull-right" rel="tooltip" data-placement="auto bottom" data-title="Add this to your 'composer.json' to require packages from this server.">?</span>
-<code>{{ config|json_encode(constant('JSON_PRETTY_PRINT')) }}</code>
-</pre>
+<div class="layout">
+  <section aria-labelledby="repositories-title">
+    <div class="page-head">
+      <div>
+        <h1 id="repositories-title">Repositories</h1>
+        <p class="lead">
+          {{ repositories|length }} {{ repositories|length == 1 ? 'repository' : 'repositories' }} in <span class="mono">satis.json</span>. Satis reads each one on the next build.
+        </p>
+      </div>
+    </div>
 
-    <a href="{{ path('repository_new') }}" class="btn btn-large btn-block btn-primary">
-        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-        Add a new repository
-    </a>
+    {% if repositories is empty %}
+      <div class="empty">
+        <h2>No repositories yet</h2>
+        <p>Add the URL of a Git, Mercurial or Subversion repository, or import every package a project uses from its composer.lock.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="{{ path('repository_new') }}">Add repository</a>
+          <a class="btn" href="{{ path('repository_upload') }}">Import composer.lock</a>
+        </div>
+      </div>
+    {% else %}
+      <div class="toolbar">
+        <label class="visually-hidden" for="repository-filter">Filter repositories</label>
+        <input class="search" id="repository-filter" type="search" placeholder="Filter by URL or type" autocomplete="off" data-filter="#repository-rows">
+        <a class="btn" href="{{ path('repository_upload') }}">Import composer.lock</a>
+        <a class="btn btn-primary" href="{{ path('repository_new') }}">Add repository</a>
+      </div>
 
-    <a href="{{ path('repository_upload') }}" class="btn btn-large btn-block btn-primary">
-        <i class="glyphicon glyphicon-upload" aria-hidden="true"></i>
-        Add all repositories from a composer.lock
-    </a>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">URL</th>
+              <th scope="col">Type</th>
+              <th scope="col" class="col-hide-sm">Installs from</th>
+              <th scope="col" class="col-end"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="repository-rows">
+            {% for repository in repositories %}
+              {% set tail = repository.url|split('/')|last %}
+              <tr data-filter-text="{{ repository.url|lower }} {{ repository.type }}">
+                <td><a class="url" href="{{ path('repository_edit', {'repository': repository.id}) }}">{{ repository.url|slice(0, repository.url|length - tail|length)|e|replace({'/': '/<wbr>', ':': ':<wbr>'})|raw }}<b>{{ tail }}</b></a></td>
+                <td class="col-meta">{{ repository.type }}</td>
+                <td class="col-meta col-hide-sm">{{ repository.installationSource }}</td>
+                <td class="col-end"><a href="{{ path('repository_edit', {'repository': repository.id}) }}">Edit<span class="visually-hidden"> {{ repository.url }}</span></a></td>
+              </tr>
+            {% endfor %}
+            <tr class="table-empty" hidden data-filter-empty><td colspan="4">No repository matches that filter.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </section>
 
-    <a href="{{ path('configuration') }}" class="btn btn-large btn-block btn-primary">
-        <i class="glyphicon glyphicon-check" aria-hidden="true"></i>
-        Edit configuration
-    </a>
-    <a href="{{ path('satis_build') }}" class="btn btn-large btn-block btn-primary">
-        <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i>
-        Build packages
-    </a>
-    {% for label, route in plugin_admin_links() %}
-    <a href="{{ path(route) }}" class="btn btn-large btn-block btn-default">{{ label }}</a>
+  <aside aria-label="Status">
+    <section class="panel" aria-labelledby="build-title">
+      <div class="panel-head">
+        <h2 id="build-title">Build</h2>
+        <a href="{{ path('satis_build') }}">Full log</a>
+      </div>
+      <div class="panel-body" data-build-status="{{ path('satis_build_status') }}" data-build-interval="5000">
+        {% include 'views/_build_state.html.twig' %}
+        <pre class="log" data-build-log data-build-log-lines="8">{{ build.log|trim|split("\n")|slice(-8)|join("\n") }}</pre>
+      </div>
+      <div class="panel-foot">
+        {{ form_start(buildForm) }}
+          {{ form_widget(buildForm.build, {attr: {class: 'btn'}}) }}
+        {{ form_end(buildForm) }}
+      </div>
+    </section>
+
+    {% for panel in plugin_admin_panels() %}
+      {% include panel.template with panel.context only %}
     {% endfor %}
 
-    <ul class="nav nav-pills nav-stacked">
-    {% for repository in repositories %}
-        <li>
-            <a href="{{ path('repository_edit', {'repository': repository.id }) }}">
-                {{ repository.url }}
-            </a>
-        </li>
-    {% endfor %}
-    </ul>
+    <section class="example" aria-labelledby="example-title">
+      <div class="example-head">
+        <span class="example-no">Example #1</span>
+        <span class="example-title" id="example-title">Use this repository</span>
+        <button type="button" class="btn btn-sm btn-quiet" data-copy="#composer-snippet">Copy</button>
+      </div>
+      <pre><code id="composer-snippet">{{ config|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES'))|replace({'    ': '  '}) }}</code></pre>
+      <p class="example-foot">Add this to a project's composer.json, then require any package hosted here.</p>
+    </section>
+  </aside>
+</div>
 {% endblock %}
-
-

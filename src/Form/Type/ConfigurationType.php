@@ -23,6 +23,7 @@ class ConfigurationType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'help' => 'The repository\'s name, in vendor/name form. The catalogue page shows it.',
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -30,15 +31,18 @@ class ConfigurationType extends AbstractType
                 ],
             ])
             ->add('description', TextareaType::class, [
+                'help' => 'Shown on the catalogue page under the name.',
                 'required' => false,
             ])
             ->add('homepage', UrlType::class, [
+                'help' => 'The URL this repository is served from. Composer reads packages from here, and the home page\'s composer.json snippet uses it.',
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
             ])
             ->add('require', CollectionType::class, [
+                'help' => 'Packages to include, each with the versions to include. Leave empty and turn on require-all to include everything.',
                 'required' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -53,6 +57,7 @@ class ConfigurationType extends AbstractType
                 ],
             ])
             ->add('blacklist', CollectionType::class, [
+                'help' => 'Packages and versions to leave out after the packages above are selected.',
                 'required' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -61,14 +66,13 @@ class ConfigurationType extends AbstractType
                 'prototype' => true,
                 'attr' => [
                     'class' => 'collection_require',
-                    'rel' => 'tooltip',
-                    'data-title' => 'Package name (keys) and version constraints (values) to exclude after selecting packages',
                 ],
                 'constraints' => [
                     new Assert\Valid(),
                 ],
             ])
             ->add('abandoned', CollectionType::class, [
+                'help' => 'Packages to mark as abandoned, each with the package to use instead, if there is one.',
                 'required' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -77,36 +81,29 @@ class ConfigurationType extends AbstractType
                 'prototype' => true,
                 'attr' => [
                     'class' => 'collection_require',
-                    'rel' => 'tooltip',
-                    'data-title' => 'List of packages marked as abandoned for this repository',
                 ],
                 'constraints' => [
                     new Assert\Valid(),
                 ],
             ])
             ->add('requireAll', Type\CheckboxType::class, [
+                'help' => 'Include every version of every package in the repositories.',
                 'required' => false,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => 'selects all versions of all packages in the repositories you defined',
-                ],
             ])
             ->add('requireDependencies', Type\CheckboxType::class, [
+                'help' => 'Also include the packages the selected packages require, resolved from the listed repositories.',
                 'required' => false,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => <<<END
-satis will attempt to resolve all the required packages from the listed repositories
-END,
-                ],
             ])
             ->add('requireDevDependencies', Type\CheckboxType::class, [
+                'help' => 'With require-dependencies, also include their require-dev packages.',
                 'required' => false,
             ])
             ->add('requireDependencyFilter', Type\CheckboxType::class, [
+                'help' => 'When off, every version of a dependency is included, not only the versions its constraints allow.',
                 'required' => false,
             ])
             ->add('minimumStability', ChoiceType::class, [
+                'help' => 'The least stable versions to include.',
                 'required' => false,
                 'choices' => PackageStabilityType::STABILITY_LEVELS,
                 'constraints' => [
@@ -114,6 +111,7 @@ END,
                 ],
             ])
             ->add('minimumStabilityPerPackage', CollectionType::class, [
+                'help' => 'Overrides minimum-stability for single packages.',
                 'required' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -128,73 +126,45 @@ END,
                 ],
             ])
             ->add('includeFilename', TextType::class, [
+                'help' => 'File name for the package list, instead of include/all$<sha1>.json.',
                 'required' => false,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => <<<END
-Specify filename instead of default include/all\${SHA1_HASH}.json
-END,
-                ],
             ])
             ->add('outputDir', TextType::class, [
+                'help' => 'Where the build writes packages.json and the catalogue, unless the build command is given another directory.',
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
                 'empty_data' => Configuration::DEFAULT_OUTPUT_DIR,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => <<<END
-defines where to output the repository files if not provided as an argument when calling the build command
-END,
-                ],
             ])
             ->add('outputHtml', Type\CheckboxType::class, [
+                'help' => 'Build a static HTML catalogue page beside packages.json.',
                 'required' => false,
                 'label' => 'Output HTML',
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => 'If enabled, build a static web page',
-                ],
             ])
             ->add('providers', Type\CheckboxType::class, [
+                'help' => 'Write provider files, the Composer 1 metadata format.',
                 'required' => false,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => 'If enabled, dump package providers',
-                ],
             ])
             ->add('config', TextareaType::class, [
+                'help' => 'Composer configuration to apply during the build, as JSON.',
                 'required' => false,
                 'empty_data' => '',
                 'trim' => true,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => 'a configuration options in json format',
-                ],
             ])
             ->add('twigTemplate', TextType::class, [
+                'help' => 'Path to a Twig template for the catalogue\'s index.html.',
                 'required' => false,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => 'a path to a personalized Twig template for the output-dir/index.html page',
-                ],
             ])
             ->add('notifyBatch', UrlType::class, [
+                'help' => 'A URL Composer calls every time a package is installed from this repository.',
                 'label' => 'Notify batch URL',
                 'required' => false,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => 'specify a URL that will be called every time a user installs a package',
-                ],
             ])
             ->add('prettyPrint', Type\CheckboxType::class, [
+                'help' => 'Indent the JSON the build writes. Turn off for smaller files.',
                 'label' => 'Pretty print',
                 'required' => false,
-                'attr' => [
-                    'rel' => 'tooltip',
-                    'data-title' => 'when not checked, the JSON_PRETTY_PRINT option will not be used on encoding.',
-                ],
             ]);
         $builder->get('config')->addModelTransformer(new JsonTextTransformer());
     }

@@ -84,3 +84,11 @@ tmtags
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+###> impeccable ###
+/.impeccable/review/
+/.impeccable/mocks/
+/.impeccable/questions/
+/.impeccable/hook.cache.json
+/.impeccable/config.local.json
+###< impeccable ###
